@@ -4,29 +4,146 @@
 local_backend: true
 
 backend:
-  name: git-gateway
-  branch: main
+    name: git-gateway
+    branch: main
 
 media_folder: static/uploads
 public_folder: /uploads
 
 collections:
-  - name: pages
-    label: Pages
-    folder: content/pages
-    create: true
-    extension: json
-    format: json
-    slug: "{{slug}}"
-    fields:
-      - { label: Title, name: title, widget: string }
-      - { label: Body, name: body, widget: markdown }
-  - name: posts
-    label: Posts
-    folder: content/posts
-    create: true
-    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
-    fields:
-      - { label: Title, name: title, widget: string }
-      - { label: Publish Date, name: date, widget: datetime }
-      - { label: Body, name: body, widget: markdown }
+    - name: education_mode
+      label: Ausbildungsmodi
+      folder: content/education_modes
+      label_singular: Ausbildungsmodus
+      create: true
+      extension: json
+      format: json
+      slug: "{{slug}}"
+      sortable_fields: ["title"]
+      fields:
+          - { label: Titel, name: title, widget: string }
+          - label: Lehrjahre
+            name: years
+            label_singular: Lehrjahr
+            widget: list
+            min: 0
+            summary: "Lehrjahr {{fields.year}}"
+            fields:
+                - { label: Jahr, name: year, widget: number }
+                - label: Themenbereiche
+                  name: themenbereiche
+                  label_singular: Themenbereich
+                  widget: list
+                  min: 0
+                  summary: "{{fields.number}}. {{fields.title}}"
+                  fields:
+                      - { label: Nummer, name: number, widget: number }
+                      - { label: Titel, name: title, widget: string }
+                      - { label: Lektionen, name: lessons, widget: number }
+                      - {
+                            label: Beschreibung,
+                            name: description,
+                            widget: markdown,
+                        }
+                      - label: Schlüsselkompetenzen
+                        name: essential_competences
+                        widget: relation
+                        required: false
+                        multiple: true
+                        collection: competences
+                        search_fields: ["title", "aspect"]
+                        display_fields: ["{{title}} - {{aspect}}"]
+                        value_field: "{{slug}}"
+                        filters:
+                            - field: aspect
+                              values: ["Schlüsselkompetenzen"]
+                      - label: Individueller Lebensbezug
+                        name: individual_reference
+                        widget: list
+                        summary: "{{fields.number}}. {{fields.title}}"
+                        fields:
+                            - { label: Titel, name: title, widget: markdown }
+                            - { label: Nummer, name: number, widget: number }
+                            - {
+                                  label: Lektionen,
+                                  name: lessons,
+                                  widget: number,
+                              }
+                            - label: Lerninhalte
+                              name: learning_contents
+                              widget: list
+                              summary: "{{fields.number}}. {{fields.titel}}"
+                              fields:
+                                  - {
+                                        label: Titel,
+                                        name: titel,
+                                        widget: markdown,
+                                    }
+                                  - {
+                                        label: Nummer,
+                                        name: number,
+                                        widget: number,
+                                    }
+                                  - label: Gesellschaftliche Aspekte
+                                    name: social_aspects
+                                    widget: relation
+                                    required: false
+                                    multiple: true
+                                    collection: competences
+                                    search_fields: ["title", "aspect"]
+                                    display_fields: ["{{title}} - {{aspect}}"]
+                                    value_field: "{{slug}}"
+                                    filters:
+                                        - field: aspect
+                                          values: ["Gesellschaftliche Aspekte"]
+                                  - label: Sprachmodi
+                                    name: language_aspects
+                                    widget: relation
+                                    required: false
+                                    multiple: true
+                                    collection: competences
+                                    search_fields: ["title", "aspect"]
+                                    display_fields: ["{{title}} - {{aspect}}"]
+                                    value_field: "{{slug}}"
+                                    filters:
+                                        - field: aspect
+                                          values: ["Sprachmodi"]
+                - {
+                      label: Weiter Lektionen,
+                      name: additional_lessons,
+                      widget: number,
+                  }
+    - name: aspects
+      label: Aspekte
+      label_singular: Aspekt
+      folder: content/aspects
+      create: false
+      extension: json
+      format: json
+      slug: "{{slug}}"
+      sortable_fields: ["title"]
+      fields:
+          - { label: Titel, name: title, widget: string }
+          - { label: Beschreibung, name: description, widget: markdown }
+          - { label: Farbe, name: color, widget: color }
+    - name: competences
+      label: Kompetenzen
+      label_singular: Kompetenz
+      folder: content/competences
+      create: true
+      extension: json
+      format: json
+      slug: "{{slug}}"
+      sortable_fields: ["title", "aspect"]
+      summary: "{{fields.title}} - {{fields.aspect}}"
+      fields:
+          - { label: Titel, name: title, widget: string }
+          - { label: Beschreibung, name: description, widget: markdown }
+          - { label: Farbe, name: color, widget: color }
+          - label: Aspekt
+            name: aspect
+            widget: relation
+            collection: aspects
+            search_fields: ["title"]
+            display_fields: ["title"]
+            value_field: "title"

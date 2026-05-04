@@ -1,0 +1,128 @@
+{
+  "title": "2-jährige EBA",
+  "years": [
+    {
+      "year": 1,
+      "themenbereiche": [
+        {
+          "number": 1,
+          "title": "Ins Berufsleben einsteigen",
+          "lessons": 22,
+          "description": "Ich finde meinen Platz in der Berufswelt und gestalte meinen Einstieg in die Arbeits- und Ausbildungswelt aktiv, reflektiert und verantwortungsbewusst. Der Beginn meiner beruflichen Grundbildung ist für mich der Übergang in eine neue Lebensphase. Ich übernehme eine neue Rolle im Betrieb und in der Schule, lerne Anforderungen, Regeln und Kommunikationsformen kennen und orientiere mich in einer neuen Umgebung.\nDabei setze ich mich mit wichtigen Dokumenten wie Lehrvertrag und Hausordnung auseinander, lerne meine Rechte und Pflichten kennen, entwickle meine Lern- und Arbeitstechniken weiter und sammle erste Erfahrungen in Zusammenarbeit und Kommunikation.",
+          "individual_reference": [
+            {
+              "learning_contents": [
+                {
+                  "titel": "Ich orientiere mich in der Arbeits- und Ausbildungswelt anhand von vielfältigen Informationen wie Hausordnungen, Stipendienverordnung, Lehrvertrag, etc. und hole bei dafür vorgesehenen Kontaktstellen Unterstützung.",
+                  "number": 1,
+                  "social_aspects": [
+                    "ethik",
+                    "identität-sozialisation",
+                    "recht",
+                    "technologie-transformation"
+                  ],
+                  "language_aspects": [
+                    "rezeption-mündlich",
+                    "produktion-schriftlich-bildlich",
+                    "produktion-multimedial"
+                  ]
+                },
+                {
+                  "titel": "Ich kann Finanzierungsformen (z. B. Abo mit Ratenzahlung, Leasing, Kredit) unterscheiden, deren Konsequenzen abschätzen und eine für mich passende Option begründet auswählen.",
+                  "number": 2,
+                  "social_aspects": [
+                    "ethik",
+                    "politik"
+                  ],
+                  "language_aspects": [
+                    "rezeption-mündlich",
+                    "rezeption-audiovisuell",
+                    "interaktion-kollaboration-mündlich"
+                  ]
+                }
+              ],
+              "title": "Ich finde mich im Betrieb und in der Berufsfachschule zurecht, kenne Lernstrategien, achte auf mich und arbeite ressourcenschonend.",
+              "number": 1,
+              "lessons": 11,
+              "essential_competences": [
+                "quellen-unterscheiden"
+              ]
+            },
+            {
+              "title": "Ich finde mich im Betrieb und in der Berufsfachschule zurecht, kenne Lernstrategien, achte auf mich und arbeite ressourcenschonend.",
+              "number": 2,
+              "lessons": 11,
+              "learning_contents": [
+                {
+                  "titel": "Ich orientiere mich in der Arbeits- und Ausbildungswelt anhand von vielfältigen Informationen wie Hausordnungen, Stipendienverordnung, Lehrvertrag, etc. und hole bei dafür vorgesehenen Kontaktstellen Unterstützung.",
+                  "number": 1,
+                  "social_aspects": [
+                    "recht",
+                    "technologie-transformation",
+                    "ökologie"
+                  ],
+                  "language_aspects": [
+                    "rezeption-audiovisuell",
+                    "rezeption-schriftlich-bildlich"
+                  ]
+                }
+              ]
+            }
+          ],
+          "essential_competences": [
+            "quellen-unterscheiden",
+            "partizipation",
+            "werthaltungen-reflektieren",
+            "lebensphasen-planen"
+          ]
+        },
+        {
+          "number": 2,
+          "title": "Bewusst kunsumieren und handeln",
+          "lessons": 22,
+          "description": "Beschreibung folgt.",
+          "essential_competences": [
+            "quellen-unterscheiden",
+            "partizipation",
+            "werthaltungen-reflektieren"
+          ],
+          "individual_reference": [
+            {
+              "title": "Ich orientiere mich in der Arbeits- und Ausbildungswelt anhand von vielfältigen Informationen wie Hausordnungen, Stipendienverordnung, Lehrvertrag, etc. und hole bei dafür vorgesehenen Kontaktstellen Unterstützung.",
+              "number": 1,
+              "lessons": 14,
+              "learning_contents": [
+                {
+                  "titel": "Ich orientiere mich in der Arbeits- und Ausbildungswelt anhand von vielfältigen Informationen wie Hausordnungen, Stipendienverordnung, Lehrvertrag, etc. und hole bei dafür vorgesehenen Kontaktstellen Unterstützung.",
+                  "number": 1,
+                  "social_aspects": [
+                    "technologie-transformation",
+                    "recht"
+                  ],
+                  "language_aspects": [
+                    "rezeption-mündlich",
+                    "interaktion-kollaboration-mündlich",
+                    "rezeption-audiovisuell"
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "additional_lessons": 22
+    },
+    {
+      "year": 2,
+      "themenbereiche": [
+        {
+          "number": 5,
+          "title": "Meinung bilden, akzeptieren, mitgestalten",
+          "lessons": 22,
+          "description": "Beschreibung folgt."
+        }
+      ],
+      "additional_lessons": 22
+    }
+  ]
+}

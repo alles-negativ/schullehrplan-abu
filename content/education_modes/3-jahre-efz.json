@@ -1,0 +1,16 @@
+{
+  "title": "3-jährige EFZ",
+  "years": [
+    {
+      "year": 1,
+      "themenbereiche": [
+        {
+          "number": 1,
+          "title": "Irgend eine Thema",
+          "lessons": 24,
+          "description": "Hier ist der Text."
+        }
+      ]
+    }
+  ]
+}

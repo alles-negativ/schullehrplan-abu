@@ -1,0 +1,105 @@
+export type LearningContent = {
+	title?: string;
+	titel?: string;
+	number?: number;
+	social_aspects?: string[];
+	language_aspects?: string[];
+	essential_competences?: string[];
+};
+
+export type IndividualReference = {
+	title?: string;
+	titel?: string;
+	number?: number;
+	lessons?: number;
+	essential_competences?: string[];
+	learning_contents?: LearningContent[];
+};
+
+export type Topic = {
+	title?: string;
+	titel?: string;
+	description?: string;
+	beschreibung?: string;
+	body?: string;
+	number?: number;
+	lessons?: number;
+	essential_competences?: string[];
+	individual_reference?: IndividualReference[];
+};
+
+export type YearEntry = {
+	year?: number | string;
+	jahr?: number | string;
+	additional_lessons?: number;
+	themenbereiche?: Topic[];
+};
+
+export type EducationMode = {
+	title: string;
+	slug: string;
+	years?: YearEntry[];
+	lehrjahre?: YearEntry[];
+};
+
+export type Competence = {
+	slug: string;
+	title: string;
+	description?: string;
+	color?: string;
+	aspect?: string;
+};
+
+const rawModules = import.meta.glob('../../../content/education_modes/*.json', {
+	eager: true
+});
+
+const rawCompetenceModules = import.meta.glob('../../../content/competences/*.json', {
+	eager: true
+});
+
+const competenceBySlug: Record<string, Competence> = Object.fromEntries(
+	Object.entries(rawCompetenceModules).map(([path, mod]) => {
+		const data = (mod as { default: Partial<Competence> }).default ?? {};
+		const slug = path.split('/').pop()?.replace('.json', '') ?? '';
+		return [
+			slug,
+			{
+				slug,
+				title: data.title ?? slug,
+				description: data.description,
+				color: data.color,
+				aspect: data.aspect
+			}
+		];
+	})
+);
+
+export const getAllEducationModes = (): EducationMode[] =>
+	Object.entries(rawModules)
+		.map(([path, mod]) => {
+			const data = (mod as { default: Partial<EducationMode> }).default ?? {};
+			const slug = path.split('/').pop()?.replace('.json', '') ?? '';
+
+			return {
+				title: data.title ?? slug,
+				slug,
+				years: data.years,
+				lehrjahre: data.lehrjahre
+			};
+		})
+		.sort((a, b) => a.title.localeCompare(b.title, 'de-CH'));
+
+export const getEducationModeBySlug = (slug: string): EducationMode | undefined =>
+	getAllEducationModes().find((mode) => mode.slug === slug);
+
+export const getModeYears = (mode: EducationMode): YearEntry[] => mode.years ?? mode.lehrjahre ?? [];
+
+export const getYearLabel = (year: YearEntry): string => String(year.year ?? year.jahr ?? '-');
+
+export const getTopicTitle = (topic: Topic): string => topic.title ?? topic.titel ?? 'Ohne Titel';
+
+export const getTopicDescription = (topic: Topic): string | undefined =>
+	topic.description ?? topic.beschreibung ?? topic.body;
+
+export const getCompetenceBySlug = (slug: string): Competence | undefined => competenceBySlug[slug];

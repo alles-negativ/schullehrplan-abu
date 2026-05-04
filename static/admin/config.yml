@@ -1,5 +1,5 @@
-# Decap CMS — use with `npm run cms` (decap-server) while developing.
-# Production: point `backend` at Git Gateway / your Git host integration.
+# Netlify: enable Identity + Git Gateway (branch must match `backend.branch` below).
+# Local: run `npm run cms` (decap-server) in a second terminal, then open /admin on localhost.
 
 local_backend: true
 

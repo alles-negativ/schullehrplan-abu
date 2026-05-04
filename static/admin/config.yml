@@ -1,0 +1,32 @@
+# Decap CMS — use with `npm run cms` (decap-server) while developing.
+# Production: point `backend` at Git Gateway / your Git host integration.
+
+local_backend: true
+
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: static/uploads
+public_folder: /uploads
+
+collections:
+  - name: pages
+    label: Pages
+    folder: content/pages
+    create: true
+    extension: json
+    format: json
+    slug: "{{slug}}"
+    fields:
+      - { label: Title, name: title, widget: string }
+      - { label: Body, name: body, widget: markdown }
+  - name: posts
+    label: Posts
+    folder: content/posts
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - { label: Title, name: title, widget: string }
+      - { label: Publish Date, name: date, widget: datetime }
+      - { label: Body, name: body, widget: markdown }

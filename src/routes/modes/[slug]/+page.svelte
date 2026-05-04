@@ -3,10 +3,19 @@
     import { page } from "$app/state";
     import SideNavigation from "$lib/components/SideNavigation.svelte";
     import Topic from "$lib/components/Topic.svelte";
-    import { getModeYears, getYearLabel, type Topic as TopicType } from "$lib/data/education-modes";
+    import {
+        getModeYears,
+        getYearLabel,
+        type Topic as TopicType,
+    } from "$lib/data/education-modes";
 
     let { data } = $props();
     const years = $derived(getModeYears(data.mode));
+    const currentView = $derived(
+        page.url.searchParams.get("view") === "zirkularitaet"
+            ? "zirkularitaet"
+            : "lehrplan",
+    );
 
     type SelectedTopic = {
         key: string;
@@ -51,7 +60,13 @@
     const normalizedSearch = $derived.by(() => {
         if (!selectedTopic) return null;
         const [yearIndex, topicIndex] = selectedTopic.key.split("-");
-        return `?year=${yearIndex}&topic=${topicIndex}`;
+        const params = new URLSearchParams();
+        params.set("year", yearIndex);
+        params.set("topic", topicIndex);
+        if (currentView === "zirkularitaet") {
+            params.set("view", "zirkularitaet");
+        }
+        return `?${params.toString()}`;
     });
 
     $effect(() => {
@@ -61,32 +76,41 @@
         goto(`${page.url.pathname}${normalizedSearch}`, {
             replaceState: true,
             keepFocus: true,
-            noScroll: true
+            noScroll: true,
         });
     });
 
     const getTopicHref = (yearIndex: number, topicIndex: number) =>
-        `${page.url.pathname}?year=${yearIndex}&topic=${topicIndex}`;
+        `${page.url.pathname}?year=${yearIndex}&topic=${topicIndex}${currentView === "zirkularitaet" ? "&view=zirkularitaet" : ""}`;
 </script>
 
-<div class="mode-route">
-    <SideNavigation
-        mode={data.mode}
-        selectedTopicKey={selectedTopic?.key}
-        {getTopicHref}
-    />
+<div class="spacer"></div>
 
-    <section class="topics-content">
-        {#if !selectedTopic}
-            <p>Bitte wähle ein Thema in der Seitennavigation.</p>
-        {:else}
-            <Topic
-                topic={selectedTopic.topic}
-                yearLabel={selectedTopic.yearLabel}
-            />
-        {/if}
+{#if currentView === "lehrplan"}
+    <div class="mode-route">
+        <SideNavigation
+            mode={data.mode}
+            selectedTopicKey={selectedTopic?.key}
+            {getTopicHref}
+        />
+
+        <section class="topics-content">
+            {#if !selectedTopic}
+                <p>Bitte wähle ein Thema in der Seitennavigation.</p>
+            {:else}
+                <Topic
+                    topic={selectedTopic.topic}
+                    yearLabel={selectedTopic.yearLabel}
+                />
+            {/if}
+        </section>
+    </div>
+{:else}
+    <section class="circularity-content">
+        <h2>Zirkularität</h2>
+        <p>Die Zirkularitätsansicht wird hier angezeigt.</p>
     </section>
-</div>
+{/if}
 
 <style>
     .mode-route {
@@ -98,5 +122,13 @@
 
     .topics-content {
         min-width: 0;
+    }
+
+    .circularity-content {
+        margin-top: 1rem;
+    }
+
+    .spacer {
+        height: 50px;
     }
 </style>

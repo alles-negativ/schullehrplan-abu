@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { browser } from "$app/environment";
     import { page } from "$app/state";
     import { getAllEducationModes } from "$lib/data/education-modes";
 
@@ -64,14 +65,16 @@
 
     const getModeHref = (slug: string) => {
         const modePath = getModePath(slug);
-        const view = page.url.searchParams.get("view");
+        const view = browser ? page.url.searchParams.get("view") : null;
         if (view === "zirkularitaet") {
             return `${modePath}?view=zirkularitaet`;
         }
         return modePath;
     };
     const getViewPath = (view: "lehrplan" | "zirkularitaet") => {
-        const params = new URLSearchParams(page.url.searchParams);
+        const params = browser
+            ? new URLSearchParams(page.url.searchParams)
+            : new URLSearchParams();
         if (view === "lehrplan") {
             params.delete("view");
         } else {
@@ -82,7 +85,7 @@
         return `${page.url.pathname}${query ? `?${query}` : ""}`;
     };
     const currentView = $derived(
-        page.url.searchParams.get("view") === "zirkularitaet"
+        browser && page.url.searchParams.get("view") === "zirkularitaet"
             ? "zirkularitaet"
             : "lehrplan",
     );

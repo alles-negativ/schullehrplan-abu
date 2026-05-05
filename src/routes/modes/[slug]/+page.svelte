@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { browser } from "$app/environment";
     import { goto } from "$app/navigation";
     import { page } from "$app/state";
     import SideNavigation from "$lib/components/SideNavigation.svelte";
@@ -12,7 +13,7 @@
     let { data } = $props();
     const years = $derived(getModeYears(data.mode));
     const currentView = $derived(
-        page.url.searchParams.get("view") === "zirkularitaet"
+        browser && page.url.searchParams.get("view") === "zirkularitaet"
             ? "zirkularitaet"
             : "lehrplan",
     );
@@ -39,8 +40,12 @@
     });
 
     const selectedTopic = $derived.by(() => {
-        const yearParam = Number(page.url.searchParams.get("year"));
-        const topicParam = Number(page.url.searchParams.get("topic"));
+        const yearParam = Number(
+            browser ? page.url.searchParams.get("year") : null,
+        );
+        const topicParam = Number(
+            browser ? page.url.searchParams.get("topic") : null,
+        );
 
         if (Number.isInteger(yearParam) && Number.isInteger(topicParam)) {
             const year = years[yearParam];

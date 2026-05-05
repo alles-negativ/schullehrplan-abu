@@ -2,6 +2,7 @@
     import { browser } from "$app/environment";
     import { goto } from "$app/navigation";
     import { page } from "$app/state";
+    import CircularityOverview from "$lib/components/CircularityOverview.svelte";
     import SideNavigation from "$lib/components/SideNavigation.svelte";
     import Topic from "$lib/components/Topic.svelte";
     import {
@@ -63,14 +64,17 @@
     });
 
     const normalizedSearch = $derived.by(() => {
-        if (!selectedTopic) return null;
-        const [yearIndex, topicIndex] = selectedTopic.key.split("-");
         const params = new URLSearchParams();
-        params.set("year", yearIndex);
-        params.set("topic", topicIndex);
+
         if (currentView === "zirkularitaet") {
             params.set("view", "zirkularitaet");
+            return `?${params.toString()}`;
         }
+
+        if (!selectedTopic) return null;
+        const [yearIndex, topicIndex] = selectedTopic.key.split("-");
+        params.set("year", yearIndex);
+        params.set("topic", topicIndex);
         return `?${params.toString()}`;
     });
 
@@ -112,15 +116,14 @@
     </div>
 {:else}
     <section class="circularity-content">
-        <h2>Zirkularität</h2>
-        <p>Die Zirkularitätsansicht wird hier angezeigt.</p>
+        <CircularityOverview mode={data.mode} />
     </section>
 {/if}
 
 <style>
     .mode-route {
         display: grid;
-        grid-template-columns: minmax(16rem, 30%) 1fr;
+        grid-template-columns: minmax(14rem, var(--mode-button-width, 18rem)) 1fr;
         gap: 1rem;
         align-items: start;
     }
@@ -134,6 +137,6 @@
     }
 
     .spacer {
-        height: 50px;
+        height: 80px;
     }
 </style>

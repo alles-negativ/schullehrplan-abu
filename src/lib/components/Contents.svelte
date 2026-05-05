@@ -52,17 +52,17 @@
 </script>
 
 <li class="content-item">
-    {#if content.number != null}
-        <span class="content-number">{content.number}. </span>
-    {/if}
-    <!-- Content is authored in CMS markdown -->
     <div class="content-body">
+        {#if content.number != null}
+            <p class="content-label">Lerninhalt {content.number}</p>
+        {/if}
+        <!-- Content is authored in CMS markdown -->
         <div class="content-text">{@html html}</div>
         <div class="content-tags">
             {#if socialAspects.length > 0}
                 <div class="tag-group">
                     <span class="tag-group-label"
-                        >Gesellschaftliche Aspekte:</span
+                        >Gesellschaftliche Aspekte</span
                     >
                     {#each socialAspects as item}
                         <button
@@ -77,7 +77,7 @@
             {/if}
             {#if languageAspects.length > 0}
                 <div class="tag-group">
-                    <span class="tag-group-label">Sprachmodi:</span>
+                    <span class="tag-group-label">Sprachmodi</span>
                     {#each languageAspects as item}
                         <button
                             type="button"
@@ -91,7 +91,7 @@
             {/if}
             {#if essentialCompetences.length > 0}
                 <div class="tag-group">
-                    <span class="tag-group-label">Schlüsselkompetenzen:</span>
+                    <span class="tag-group-label">Schlüsselkompetenzen</span>
                     {#each essentialCompetences as item}
                         <button
                             type="button"
@@ -146,57 +146,63 @@
 
 <style>
     .content-item {
-        margin: 0.25rem 0;
-        display: flex;
-        gap: 0.25rem;
-        align-items: flex-start;
-    }
-
-    .content-number {
-        font-weight: 600;
-        min-width: 1.5rem;
+        margin: 3rem 0 0;
     }
 
     .content-text :global(p) {
         margin: 0;
+        line-height: 1.45;
+        font-size: 0.9rem;
+        font-weight: 300;
     }
 
     .content-body {
         min-width: 0;
         display: flex;
         flex-direction: column;
-        gap: 0.5rem;
+        gap: 0.35rem;
+    }
+
+    .content-label {
+        margin: 0;
+        font-weight: 600;
+        font-size: 0.82rem;
+        line-height: 1.15;
+        color: #2f2f33;
     }
 
     .content-tags {
         width: 100%;
         display: flex;
         flex-wrap: wrap;
-        gap: 0.8rem;
+        gap: 0.65rem;
         align-items: flex-start;
-        justify-content: space-between;
+        justify-content: flex-start;
+        margin-top: 0.5rem;
     }
 
     .tag-group {
         display: flex;
         flex-direction: column;
-        gap: 0.25rem;
-        margin-top: 0.4rem;
-        min-width: 11rem;
-        flex: 1 1 11rem;
+        gap: 0.3rem;
+        margin-top: 0.2rem;
+        min-width: 10.5rem;
+        flex: 1 1 10.5rem;
     }
 
     .tag-group-label {
-        font-size: 0.85rem;
-        color: #475569;
+        font-weight: 600;
+        font-size: 0.82rem;
+        line-height: 1.15;
+        color: #2f2f33;
     }
 
     .tag {
         display: block;
-        padding: 0.1rem 0.45rem;
+        padding: 0.2rem 0.65rem;
         border-radius: 999px;
-        font-size: 0.8rem;
-        line-height: 1.4;
+        font-size: 0.9rem;
+        line-height: 1.3;
         background: color-mix(in srgb, var(--tag-color) 18%, white);
         border: 1px solid color-mix(in srgb, var(--tag-color) 45%, #94a3b8);
         color: #0f172a;

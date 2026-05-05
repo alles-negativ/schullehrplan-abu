@@ -5,6 +5,7 @@
 
     const educationModes = getAllEducationModes();
     const getModePath = (slug: string) => `/modes/${encodeURIComponent(slug)}`;
+    const qvPath = "/qv";
     const activeModeIndex = $derived(
         educationModes.findIndex(
             (mode) => page.url.pathname === getModePath(mode.slug),
@@ -18,6 +19,16 @@
     let submenuReady = $state(false);
     let suppressSlideTransition = $state(false);
 
+    const updateModeButtonWidthVar = () => {
+        if (typeof document === "undefined") return;
+        const modeButton = modeButtonRefs.find(Boolean);
+        if (!modeButton) return;
+        document.documentElement.style.setProperty(
+            "--mode-button-width",
+            `${modeButton.getBoundingClientRect().width}px`,
+        );
+    };
+
     const updateSubmenuPosition = () => {
         if (
             activeModeIndex < 0 ||
@@ -29,7 +40,8 @@
         }
 
         const containerRect = modeListElement.getBoundingClientRect();
-        const buttonRect = modeButtonRefs[activeModeIndex].getBoundingClientRect();
+        const buttonRect =
+            modeButtonRefs[activeModeIndex].getBoundingClientRect();
         const isBecomingVisible = !submenuReady;
 
         if (isBecomingVisible) {
@@ -38,6 +50,7 @@
         submenuLeft = buttonRect.left - containerRect.left;
         submenuWidth = buttonRect.width;
         submenuReady = true;
+        updateModeButtonWidthVar();
 
         if (isBecomingVisible && typeof window !== "undefined") {
             requestAnimationFrame(() => {
@@ -53,12 +66,18 @@
         modeButtonRefs;
 
         if (typeof window === "undefined") return;
-        requestAnimationFrame(updateSubmenuPosition);
+        requestAnimationFrame(() => {
+            updateSubmenuPosition();
+            updateModeButtonWidthVar();
+        });
     });
 
     $effect(() => {
         if (typeof window === "undefined") return;
-        const onResize = () => updateSubmenuPosition();
+        const onResize = () => {
+            updateSubmenuPosition();
+            updateModeButtonWidthVar();
+        };
         window.addEventListener("resize", onResize);
         return () => window.removeEventListener("resize", onResize);
     });
@@ -94,57 +113,70 @@
 <nav aria-label="Ausbildungsmodi">
     <a class="mode-button" href="/">Schullehrplan ABU</a>
     <div class="mode-list-wrap">
-    <ul class="mode-list" bind:this={modeListElement}>
-        {#each educationModes as mode, index}
-            <li>
+        <ul class="mode-list" bind:this={modeListElement}>
+            {#each educationModes as mode, index}
+                <li>
+                    <a
+                        class="mode-button"
+                        class:is-current={activeModeIndex === index}
+                        href={getModeHref(mode.slug)}
+                        aria-current={page.url.pathname ===
+                        getModePath(mode.slug)
+                            ? "page"
+                            : undefined}
+                        bind:this={modeButtonRefs[index]}
+                    >
+                        {mode.title}
+                    </a>
+                </li>
+            {/each}
+            <li class="mode-qv-item">
                 <a
-                    class="mode-button"
-                    class:is-current={activeModeIndex === index}
-                    href={getModeHref(mode.slug)}
-                    aria-current={page.url.pathname === getModePath(mode.slug)
+                    class="mode-button mode-button--qv"
+                    class:is-current={page.url.pathname === qvPath}
+                    href={qvPath}
+                    aria-current={page.url.pathname === qvPath
                         ? "page"
                         : undefined}
-                    bind:this={modeButtonRefs[index]}
                 >
-                    {mode.title}
+                    QV
                 </a>
             </li>
-        {/each}
-    </ul>
-    {#if activeModeIndex >= 0}
-        <div
-            class="mode-submenu-track"
-            class:no-slide={suppressSlideTransition}
-            style={`transform: translateX(${submenuLeft}px); width: ${submenuWidth}px; opacity: ${submenuReady ? 1 : 0};`}
-        >
-            <ul class="mode-list-sub">
-                <li>
-                    <a
-                        class="mode-sub-button"
-                        class:is-active={currentView === "lehrplan"}
-                        href={getViewPath("lehrplan")}
-                        aria-current={currentView === "lehrplan"
-                            ? "page"
-                            : undefined}
-                    >
-                        Lehrplan
-                    </a>
-                </li>
-                <li>
-                    <a
-                        class="mode-sub-button"
-                        class:is-active={currentView === "zirkularitaet"}
-                        href={getViewPath("zirkularitaet")}
-                        aria-current={currentView === "zirkularitaet"
-                            ? "page"
-                            : undefined}
-                    >
-                        Zirkularität
-                    </a>
-                </li>
-            </ul>
-        </div>
-    {/if}
+        </ul>
+        {#if activeModeIndex >= 0}
+            <div
+                class="mode-submenu-track"
+                class:no-slide={suppressSlideTransition}
+                style={`transform: translateX(${submenuLeft}px); width: ${submenuWidth}px; opacity: ${submenuReady ? 1 : 0};`}
+            >
+                <ul class="mode-list-sub">
+                    <li>
+                        <a
+                            class="mode-sub-button"
+                            class:is-active={currentView === "lehrplan"}
+                            href={getViewPath("lehrplan")}
+                            aria-current={currentView === "lehrplan"
+                                ? "page"
+                                : undefined}
+                        >
+                            Lehrplan
+                        </a>
+                    </li>
+                    <li>
+                        <a
+                            class="mode-sub-button"
+                            class:is-active={currentView === "zirkularitaet"}
+                            href={getViewPath("zirkularitaet")}
+                            aria-current={currentView === "zirkularitaet"
+                                ? "page"
+                                : undefined}
+                        >
+                            Zirkularität
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        {/if}
     </div>
 </nav>
 
@@ -166,6 +198,11 @@
 
     .mode-list li {
         flex: 1 1 12rem;
+        min-width: 0;
+    }
+
+    .mode-list li.mode-qv-item {
+        flex: 0 0 auto;
     }
 
     .mode-submenu-track {
@@ -180,8 +217,7 @@
     }
 
     .mode-submenu-track.no-slide {
-        transition:
-            opacity 140ms ease;
+        transition: opacity 140ms ease;
     }
 
     .mode-list-sub {
@@ -199,14 +235,15 @@
 
     .mode-sub-button {
         display: block;
-        /* width: 100%; */
-        padding: 0.35rem 0.75rem;
-        border: 1px solid #cfd4dc;
+        width: 100%;
+        box-sizing: border-box;
+        padding: 0.35rem 0.9rem;
+        border: 1px solid #3f3f46;
         border-radius: 9999px;
         background: #ffffff;
-        color: #1f2937;
+        color: #2d2d31;
         font-size: 0.9rem;
-        font-weight: 500;
+        font-weight: 400;
         line-height: 1.2;
         text-align: center;
         white-space: nowrap;
@@ -222,44 +259,42 @@
     }
 
     .mode-sub-button:hover {
-        background: #eef2ff;
-        border-color: #a5b4fc;
-        color: #111827;
+        background: #f4f4f5;
     }
 
     .mode-sub-button:active {
-        background: #e0e7ff;
-        border-color: #818cf8;
+        background: #ebebee;
+        border-color: #3f3f46;
         transform: translateY(1px);
     }
 
     .mode-sub-button:focus-visible {
-        outline: 2px solid #6366f1;
+        outline: 2px solid #2f2f33;
         outline-offset: 2px;
     }
 
     .mode-sub-button.is-active {
-        background: #2563eb;
-        border-color: #1d4ed8;
+        background: #2f2f33;
+        border-color: #2f2f33;
         color: #ffffff;
     }
 
     .mode-sub-button.is-active:hover,
     .mode-sub-button.is-active:active {
-        background: #1d4ed8;
-        border-color: #1e40af;
+        background: #2f2f33;
+        border-color: #2f2f33;
         color: #ffffff;
     }
 
     .mode-button {
         display: block;
-        padding: 0.5rem 0.875rem;
-        border: 1px solid #cfd4dc;
+        padding: 0.5rem 0.95rem;
+        border: 1px solid #3f3f46;
         border-radius: 9999px;
-        background: #f6f8fb;
-        color: #1f2937;
+        background: #ffffff;
+        color: #2d2d31;
         text-decoration: none;
-        font-weight: 600;
+        font-weight: 500;
         line-height: 1.2;
         text-align: center;
         transition:
@@ -269,38 +304,41 @@
             transform 60ms ease;
     }
 
+    .mode-button--qv {
+        width: max-content;
+        padding-inline: 1rem;
+    }
+
     .mode-button:hover {
-        background: #eaf0ff;
-        border-color: #8fb0ff;
-        color: #111827;
+        background: #f4f4f5;
     }
 
     .mode-button:active {
-        background: #dce7ff;
-        border-color: #6f95ff;
+        background: #ebebee;
+        border-color: #3f3f46;
         transform: translateY(1px);
     }
 
     .mode-button:focus-visible {
-        outline: 2px solid #2563eb;
+        outline: 2px solid #2f2f33;
         outline-offset: 2px;
     }
 
     .mode-button.is-current {
-        background: #2563eb;
-        border-color: #1d4ed8;
+        background: #2f2f33;
+        border-color: #2f2f33;
         color: #ffffff;
     }
 
     .mode-button.is-current:hover,
     .mode-button.is-current:active {
-        background: #1d4ed8;
-        border-color: #1e40af;
+        background: #2f2f33;
+        border-color: #2f2f33;
         color: #ffffff;
     }
 
     .mode-button.is-current:focus-visible {
-        outline-color: #1e40af;
+        outline-color: #2f2f33;
     }
 
     @media (prefers-reduced-motion: reduce) {

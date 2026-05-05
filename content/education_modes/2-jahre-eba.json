@@ -80,7 +80,7 @@
           "number": 2,
           "title": "Bewusst kunsumieren und handeln",
           "lessons": 22,
-          "description": "Beschreibung folgt.",
+          "description": "Ich finde meinen Platz in der Berufswelt und gestalte meinen Einstieg in die Arbeits- und Ausbildungswelt aktiv, reflektiert und verantwortungsbewusst. Der Beginn meiner beruflichen Grundbildung ist für mich der Übergang in eine neue Lebensphase. Ich übernehme eine neue Rolle im Betrieb und in der Schule, lerne Anforderungen, Regeln und Kommunikationsformen kennen und orientiere mich in einer neuen Umgebung. Dabei setze ich mich mit wichtigen Dokumenten wie Lehrvertrag und Hausordnung auseinander, lerne meine Rechte und Pflichten kennen, entwickle meine Lern- und Arbeitstechniken weiter und sammle erste Erfahrungen in Zusammenarbeit und Kommunikation.",
           "essential_competences": [
             "quellen-unterscheiden",
             "partizipation",
@@ -118,8 +118,49 @@
         {
           "number": 5,
           "title": "Meinung bilden, akzeptieren, mitgestalten",
-          "lessons": 22,
-          "description": "Beschreibung folgt."
+          "lessons": 32,
+          "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+          "essential_competences": [
+            "lebensphasen-planen",
+            "verständnis-fördern",
+            "werthaltungen-reflektieren"
+          ],
+          "individual_reference": [
+            {
+              "title": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+              "number": 1,
+              "lessons": 26,
+              "learning_contents": [
+                {
+                  "titel": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+                  "number": 1,
+                  "social_aspects": [
+                    "kultur",
+                    "recht",
+                    "technologie-transformation"
+                  ],
+                  "language_aspects": [
+                    "rezeption-audiovisuell",
+                    "interaktion-kollaboration-mündlich",
+                    "rezeption-schriftlich-bildlich"
+                  ]
+                },
+                {
+                  "titel": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+                  "number": 2,
+                  "social_aspects": [
+                    "technologie-transformation",
+                    "ökologie"
+                  ],
+                  "language_aspects": [
+                    "rezeption-audiovisuell",
+                    "interaktion-kollaboration-mündlich",
+                    "produktion-schriftlich-bildlich"
+                  ]
+                }
+              ]
+            }
+          ]
         }
       ],
       "additional_lessons": 22

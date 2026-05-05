@@ -50,11 +50,22 @@ export type Competence = {
 	aspect?: string;
 };
 
+export type Aspect = {
+	slug: string;
+	title: string;
+	description?: string;
+	color?: string;
+};
+
 const rawModules = import.meta.glob('../../../content/education_modes/*.json', {
 	eager: true
 });
 
 const rawCompetenceModules = import.meta.glob('../../../content/competences/*.json', {
+	eager: true
+});
+
+const rawAspectModules = import.meta.glob('../../../content/aspects/*.json', {
 	eager: true
 });
 
@@ -70,6 +81,23 @@ const competenceBySlug: Record<string, Competence> = Object.fromEntries(
 				description: data.description,
 				color: data.color,
 				aspect: data.aspect
+			}
+		];
+	})
+);
+
+const aspectByTitle: Record<string, Aspect> = Object.fromEntries(
+	Object.entries(rawAspectModules).map(([path, mod]) => {
+		const data = (mod as { default: Partial<Aspect> }).default ?? {};
+		const slug = path.split('/').pop()?.replace('.json', '') ?? '';
+		const title = data.title ?? slug;
+		return [
+			title,
+			{
+				slug,
+				title,
+				description: data.description,
+				color: data.color
 			}
 		];
 	})
@@ -103,3 +131,8 @@ export const getTopicDescription = (topic: Topic): string | undefined =>
 	topic.description ?? topic.beschreibung ?? topic.body;
 
 export const getCompetenceBySlug = (slug: string): Competence | undefined => competenceBySlug[slug];
+
+export const getAllCompetences = (): Competence[] =>
+	Object.values(competenceBySlug).sort((a, b) => a.title.localeCompare(b.title, 'de-CH'));
+
+export const getAspectByTitle = (title: string): Aspect | undefined => aspectByTitle[title];

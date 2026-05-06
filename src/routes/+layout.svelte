@@ -10,6 +10,15 @@
     <link rel="icon" href={favicon} />
 </svelte:head>
 
-<Navigation />
+<div class="page-foreground">
+    <Navigation />
 
-{@render children()}
+    {@render children()}
+</div>
+
+<style>
+    .page-foreground {
+        position: relative;
+        z-index: 1;
+    }
+</style>

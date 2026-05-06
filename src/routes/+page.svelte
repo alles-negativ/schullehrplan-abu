@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { marked } from "marked";
+    import InteractivePhysics from "$lib/components/InteractivePhysics.svelte";
 </script>
 
-<p>Home content of the ABU Schullehrplan page.</p>
+<InteractivePhysics />

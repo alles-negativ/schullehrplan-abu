@@ -1,6 +1,5 @@
 <script lang="ts">
     import { browser } from "$app/environment";
-    import { goto } from "$app/navigation";
     import { page } from "$app/state";
     import CircularityOverview from "$lib/components/CircularityOverview.svelte";
     import SideNavigation from "$lib/components/SideNavigation.svelte";
@@ -10,13 +9,25 @@
         getYearLabel,
         type Topic as TopicType,
     } from "$lib/data/education-modes";
+    import { marked } from "marked";
 
     let { data } = $props();
     const years = $derived(getModeYears(data.mode));
+    const isOverview = $derived(
+        !page.url.searchParams.get("view") &&
+            !page.url.searchParams.get("year") &&
+            !page.url.searchParams.get("topic"),
+    );
     const currentView = $derived(
-        browser && page.url.searchParams.get("view") === "zirkularitaet"
+        page.url.searchParams.get("view") === "zirkularitaet"
             ? "zirkularitaet"
-            : "lehrplan",
+            : isOverview
+              ? "overview"
+              : "lehrplan",
+    );
+    const hasSelectedTopic = $derived(
+        page.url.searchParams.get("year") != null &&
+            page.url.searchParams.get("topic") != null,
     );
 
     type SelectedTopic = {
@@ -25,22 +36,9 @@
         yearLabel: string;
     };
 
-    const firstTopic = $derived.by(() => {
-        for (let yearIndex = 0; yearIndex < years.length; yearIndex++) {
-            const year = years[yearIndex];
-            const topics = year.themenbereiche ?? [];
-            if (topics.length > 0) {
-                return {
-                    key: `${yearIndex}-0`,
-                    topic: topics[0],
-                    yearLabel: getYearLabel(year),
-                } satisfies SelectedTopic;
-            }
-        }
-        return null;
-    });
-
     const selectedTopic = $derived.by(() => {
+        if (!hasSelectedTopic) return null;
+
         const yearParam = Number(
             browser ? page.url.searchParams.get("year") : null,
         );
@@ -60,59 +58,38 @@
             }
         }
 
-        return firstTopic;
-    });
-
-    const normalizedSearch = $derived.by(() => {
-        const params = new URLSearchParams();
-
-        if (currentView === "zirkularitaet") {
-            params.set("view", "zirkularitaet");
-            return `?${params.toString()}`;
-        }
-
-        if (!selectedTopic) return null;
-        const [yearIndex, topicIndex] = selectedTopic.key.split("-");
-        params.set("year", yearIndex);
-        params.set("topic", topicIndex);
-        return `?${params.toString()}`;
-    });
-
-    $effect(() => {
-        if (!normalizedSearch) return;
-        if (page.url.search === normalizedSearch) return;
-
-        goto(`${page.url.pathname}${normalizedSearch}`, {
-            replaceState: true,
-            keepFocus: true,
-            noScroll: true,
-        });
+        return null;
     });
 
     const getTopicHref = (yearIndex: number, topicIndex: number) =>
-        `${page.url.pathname}?year=${yearIndex}&topic=${topicIndex}${currentView === "zirkularitaet" ? "&view=zirkularitaet" : ""}`;
+        `${page.url.pathname}?year=${yearIndex}&topic=${topicIndex}`;
 </script>
 
-<div class="spacer"></div>
-
-{#if currentView === "lehrplan"}
-    <div class="mode-route">
+{#if currentView === "overview"}
+    <section class="mode-overview mode-grid">
+        {#if data.mode.overview}
+            <div class="overview-content">
+                {@html marked.parse(data.mode.overview) as string}
+            </div>
+        {/if}
+    </section>
+{:else if currentView === "lehrplan"}
+    <div class="mode-route mode-grid" class:is-expanded={!hasSelectedTopic}>
         <SideNavigation
             mode={data.mode}
             selectedTopicKey={selectedTopic?.key}
+            expanded={!hasSelectedTopic}
             {getTopicHref}
         />
 
-        <section class="topics-content">
-            {#if !selectedTopic}
-                <p>Bitte wähle ein Thema in der Seitennavigation.</p>
-            {:else}
+        {#if selectedTopic}
+            <section class="topics-content">
                 <Topic
                     topic={selectedTopic.topic}
                     yearLabel={selectedTopic.yearLabel}
                 />
-            {/if}
-        </section>
+            </section>
+        {/if}
     </div>
 {:else}
     <section class="circularity-content">
@@ -121,14 +98,27 @@
 {/if}
 
 <style>
-    .mode-route {
+    .mode-grid {
         display: grid;
-        grid-template-columns: minmax(14rem, var(--mode-button-width, 18rem)) 1fr;
-        gap: 1rem;
+        grid-template-columns: repeat(var(--grid-columns), minmax(0, 1fr));
+        column-gap: var(--grid-gutter);
+    }
+
+    .mode-route {
         align-items: start;
     }
 
+    .mode-route.is-expanded > :global(.side-navigation) {
+        grid-column: 1 / span 16;
+    }
+
+    .mode-route:not(.is-expanded) > :global(.side-navigation) {
+        grid-column: 1 / span 6;
+    }
+
+    .overview-content,
     .topics-content {
+        grid-column: 7 / span 10;
         min-width: 0;
     }
 
@@ -136,7 +126,15 @@
         margin-top: 1rem;
     }
 
-    .spacer {
-        height: 80px;
+    .mode-overview {
+        margin: 0 33px;
+    }
+
+    .overview-content :global(p) {
+        margin: 0 0 2rem;
+    }
+
+    .overview-content :global(p:last-child) {
+        margin-bottom: 0;
     }
 </style>

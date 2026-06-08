@@ -100,18 +100,30 @@
             ? new URLSearchParams(page.url.searchParams)
             : new URLSearchParams();
         if (view === "lehrplan") {
-            params.delete("view");
+            params.delete("year");
+            params.delete("topic");
+            params.set("view", "lehrplan");
         } else {
             params.set("view", view);
+            params.delete("year");
+            params.delete("topic");
         }
 
         const query = params.toString();
         return `${page.url.pathname}${query ? `?${query}` : ""}`;
     };
+    const isOverview = $derived(
+        activeModeIndex >= 0 &&
+            !page.url.searchParams.get("view") &&
+            !page.url.searchParams.get("year") &&
+            !page.url.searchParams.get("topic"),
+    );
     const currentView = $derived(
-        browser && page.url.searchParams.get("view") === "zirkularitaet"
+        page.url.searchParams.get("view") === "zirkularitaet"
             ? "zirkularitaet"
-            : "lehrplan",
+            : isOverview
+              ? "overview"
+              : "lehrplan",
     );
 </script>
 
@@ -194,13 +206,8 @@
 </nav>
 
 <style>
-    .main-nav {
-        /* background: #f4f4f5; */
-        padding: 0.75rem 1rem 1rem;
-    }
-
     .main-nav.has-submenu {
-        padding-bottom: 2.75rem;
+        padding-bottom: 180px;
     }
 
     .nav-top {
@@ -236,7 +243,7 @@
     .mode-submenu-track {
         position: absolute;
         left: 0;
-        top: calc(100% + 0.5rem);
+        top: calc(100% + 10px);
         transition:
             transform 220ms ease,
             opacity 140ms ease;
@@ -265,14 +272,16 @@
         display: inline-block;
         width: auto;
         box-sizing: border-box;
-        padding: 0.4rem 1.1rem;
-        border: 1px solid #000000;
+        max-height: 45px;
+        padding: 5px 25px;
+        border: 1.5px solid var(--color-black);
         border-radius: 9999px;
-        background: #ffffff;
-        color: #000000;
-        font-size: 0.875rem;
-        font-weight: 400;
-        line-height: 1.2;
+        background: var(--color-white);
+        color: var(--color-black);
+        font-size: var(--h3-size);
+        line-height: var(--h3-line-height);
+        font-weight: var(--h3-weight);
+        letter-spacing: var(--h3-letter-spacing);
         text-align: center;
         white-space: nowrap;
         overflow: hidden;
@@ -286,44 +295,27 @@
             transform 60ms ease;
     }
 
-    .mode-sub-button:hover {
-        background: #fafafa;
-    }
-
-    .mode-sub-button:active {
-        background: #f0f0f0;
-        transform: translateY(1px);
-    }
-
-    .mode-sub-button:focus-visible {
-        outline: 2px solid #000000;
-        outline-offset: 2px;
-    }
-
-    .mode-sub-button.is-active {
-        background: #000000;
-        border-color: transparent;
-        color: #ffffff;
-    }
-
-    .mode-sub-button.is-active:hover,
-    .mode-sub-button.is-active:active {
-        background: #000000;
-        border-color: transparent;
-        color: #ffffff;
+    .mode-sub-button:hover,
+    .mode-sub-button.is-active,
+    .mode-sub-button.is-active:hover {
+        background: var(--color-darkblue);
+        color: var(--color-white);
     }
 
     .mode-button {
         display: inline-block;
-        padding: 0.5rem 1.25rem;
-        border: 1px solid #000000;
+        max-height: 55px;
+        padding: 7px 25px;
+        border: 1.5px solid var(--color-black);
         border-radius: 9999px;
-        background: #ffffff;
-        color: #000000;
+        background: var(--color-white);
+        color: var(--color-black);
         text-decoration: none;
-        font-weight: 400;
+        font-size: var(--h2-size);
+        line-height: var(--h2-line-height);
+        font-weight: var(--h2-weight);
+        letter-spacing: var(--h2-letter-spacing);
         white-space: nowrap;
-        line-height: 1.2;
         text-align: center;
         transition:
             background-color 120ms ease,
@@ -336,35 +328,11 @@
         padding-inline: 1.25rem;
     }
 
-    .mode-button:hover {
-        background: #fafafa;
-    }
-
-    .mode-button:active {
-        background: #f0f0f0;
-        transform: translateY(1px);
-    }
-
-    .mode-button:focus-visible {
-        outline: 2px solid #000000;
-        outline-offset: 2px;
-    }
-
-    .mode-button.is-current {
-        background: #000000;
-        border-color: transparent;
-        color: #ffffff;
-    }
-
-    .mode-button.is-current:hover,
-    .mode-button.is-current:active {
-        background: #000000;
-        border-color: transparent;
-        color: #ffffff;
-    }
-
-    .mode-button.is-current:focus-visible {
-        outline-color: #000000;
+    .mode-button:hover,
+    .mode-button.is-current,
+    .mode-button.is-current:hover {
+        background: var(--color-darkblue);
+        color: var(--color-white);
     }
 
     @media (prefers-reduced-motion: reduce) {

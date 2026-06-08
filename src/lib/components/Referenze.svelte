@@ -132,17 +132,19 @@
 
     .reference-summary :global(p) {
         margin: 0.12rem 0 0;
-        font-weight: 300;
-        font-size: 1.2rem;
-        line-height: 1.25;
+        font-size: var(--h3-size);
+        line-height: var(--h3-line-height);
+        font-weight: var(--h3-weight);
+        letter-spacing: var(--h3-letter-spacing);
         color: #2d2d31;
     }
 
     .reference-heading {
         display: block;
-        font-weight: 600;
-        font-size: 0.82rem;
-        line-height: 1.15;
+        font-size: var(--h4-size);
+        line-height: var(--h4-line-height);
+        font-weight: var(--h4-weight);
+        letter-spacing: var(--h4-letter-spacing);
         color: #2d2d31;
     }
 
@@ -151,7 +153,11 @@
         position: absolute;
         right: -1rem;
         bottom: 0;
-        font-size: 0.72rem;
+        font-family: var(--font-mono);
+        font-size: var(--h6-size);
+        line-height: var(--h6-line-height);
+        font-weight: var(--h6-weight);
+        letter-spacing: var(--h6-letter-spacing);
         color: #3f3f46;
     }
 

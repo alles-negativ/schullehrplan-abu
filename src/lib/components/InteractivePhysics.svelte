@@ -287,9 +287,10 @@
         background: color-mix(in srgb, var(--pill-color) 20%, white);
         color: #0f172a;
         padding: 0.35rem 0.8rem;
-        font-size: 1.25rem;
-        font-weight: 300;
-        line-height: 1.3;
+        font-size: var(--h3-size);
+        line-height: var(--h3-line-height);
+        font-weight: var(--h3-weight);
+        letter-spacing: var(--h3-letter-spacing);
         max-width: min(40rem, 85vw);
         user-select: none;
         cursor: grab;
@@ -302,15 +303,18 @@
     }
 
     .pill-title {
-        font-size: 1.35em;
-        line-height: 1.2;
+        font-size: var(--h2-size);
+        line-height: var(--h2-line-height);
+        font-weight: var(--h2-weight);
+        letter-spacing: var(--h2-letter-spacing);
         text-wrap: balance;
     }
 
     .pill-description {
-        font-size: 0.7em;
-        line-height: 1.35;
-        font-weight: 400;
+        font-size: var(--body-size);
+        line-height: var(--body-line-height);
+        font-weight: var(--body-weight);
+        letter-spacing: var(--body-letter-spacing);
         opacity: 0.9;
     }
 

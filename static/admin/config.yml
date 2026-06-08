@@ -22,6 +22,12 @@ collections:
       sortable_fields: ["title"]
       fields:
           - { label: Titel, name: title, widget: string }
+          - {
+                label: Übersicht,
+                name: overview,
+                widget: markdown,
+                required: false,
+            }
           - label: Lehrjahre
             name: years
             label_singular: Lehrjahr

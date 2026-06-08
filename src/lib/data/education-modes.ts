@@ -38,6 +38,7 @@ export type YearEntry = {
 export type EducationMode = {
 	title: string;
 	slug: string;
+	overview?: string;
 	years?: YearEntry[];
 	lehrjahre?: YearEntry[];
 };
@@ -112,6 +113,7 @@ export const getAllEducationModes = (): EducationMode[] =>
 			return {
 				title: data.title ?? slug,
 				slug,
+				overview: data.overview,
 				years: data.years,
 				lehrjahre: data.lehrjahre
 			};

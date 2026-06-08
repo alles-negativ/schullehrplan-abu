@@ -151,9 +151,10 @@
 
     .content-text :global(p) {
         margin: 0;
-        line-height: 1.45;
-        font-size: 0.9rem;
-        font-weight: 300;
+        font-size: var(--body-size);
+        line-height: var(--body-line-height);
+        font-weight: var(--body-weight);
+        letter-spacing: var(--body-letter-spacing);
     }
 
     .content-body {
@@ -165,9 +166,10 @@
 
     .content-label {
         margin: 0;
-        font-weight: 600;
-        font-size: 0.82rem;
-        line-height: 1.15;
+        font-size: var(--h4-size);
+        line-height: var(--h4-line-height);
+        font-weight: var(--h4-weight);
+        letter-spacing: var(--h4-letter-spacing);
         color: #2f2f33;
     }
 
@@ -191,9 +193,10 @@
     }
 
     .tag-group-label {
-        font-weight: 600;
-        font-size: 0.82rem;
-        line-height: 1.15;
+        font-size: var(--h4-size);
+        line-height: var(--h4-line-height);
+        font-weight: var(--h4-weight);
+        letter-spacing: var(--h4-letter-spacing);
         color: #2f2f33;
     }
 
@@ -201,8 +204,10 @@
         display: block;
         padding: 0.2rem 0.65rem;
         border-radius: 999px;
-        font-size: 0.9rem;
-        line-height: 1.3;
+        font-size: var(--h5-size);
+        line-height: var(--h5-line-height);
+        font-weight: var(--h5-weight);
+        letter-spacing: var(--h5-letter-spacing);
         background: color-mix(in srgb, var(--tag-color) 18%, white);
         border: 1px solid color-mix(in srgb, var(--tag-color) 45%, #94a3b8);
         color: #0f172a;
@@ -248,7 +253,10 @@
     .modal-aspect {
         margin-top: 0.15rem;
         color: #334155;
-        font-weight: 600;
+        font-size: var(--h4-size);
+        line-height: var(--h4-line-height);
+        font-weight: var(--h4-weight);
+        letter-spacing: var(--h4-letter-spacing);
     }
 
     .modal-description :global(p) {

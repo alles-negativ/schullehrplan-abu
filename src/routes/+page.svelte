@@ -2,4 +2,4 @@
     import InteractivePhysics from "$lib/components/InteractivePhysics.svelte";
 </script>
 
-<InteractivePhysics />
+<!-- <InteractivePhysics /> -->

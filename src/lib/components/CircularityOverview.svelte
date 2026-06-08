@@ -302,8 +302,10 @@
         border-radius: 999px;
         padding: 0.35rem 0.8rem;
         text-align: center;
-        font-size: 1.3rem;
-        font-weight: 500;
+        font-size: var(--h3-size);
+        line-height: var(--h3-line-height);
+        font-weight: var(--h3-weight);
+        letter-spacing: var(--h3-letter-spacing);
         background: #ffffff;
         color: #1f2937;
         width: 100%;
@@ -329,8 +331,10 @@
         background: #ffffff;
         color: #0f172a;
         padding: 0.2rem 0.65rem;
-        font-size: 0.9rem;
-        line-height: 1.3;
+        font-size: var(--h5-size);
+        line-height: var(--h5-line-height);
+        font-weight: var(--h5-weight);
+        letter-spacing: var(--h5-letter-spacing);
         white-space: nowrap;
     }
 
@@ -347,8 +351,6 @@
 
     .year-section h2 {
         margin: 0 0 0.6rem;
-        font-size: 1.2rem;
-        font-weight: 500;
         border-bottom: 2px solid #334155;
         padding-bottom: 0.35rem;
     }
@@ -369,13 +371,17 @@
     }
 
     .topic-title {
-        font-size: 1.05rem;
-        line-height: 1.3;
+        font-size: var(--h5-size);
+        line-height: var(--h5-line-height);
+        font-weight: var(--h5-weight);
+        letter-spacing: var(--h5-letter-spacing);
     }
 
     .reference-row {
         color: #334155;
-        font-size: 0.92rem;
+        font-size: var(--body-size);
+        line-height: var(--body-line-height);
+        letter-spacing: var(--body-letter-spacing);
         padding-left: 1.6rem;
     }
 
@@ -391,7 +397,6 @@
     }
 
     .compact {
-        font-size: 0.9rem;
         padding: 0.2rem 0.65rem;
     }
 
@@ -432,7 +437,10 @@
     .modal-aspect {
         margin-top: 0.15rem;
         color: #334155;
-        font-weight: 600;
+        font-size: var(--h4-size);
+        line-height: var(--h4-line-height);
+        font-weight: var(--h4-weight);
+        letter-spacing: var(--h4-letter-spacing);
     }
 
     .modal-description :global(p) {

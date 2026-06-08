@@ -13,21 +13,22 @@
 
     let { data } = $props();
     const years = $derived(getModeYears(data.mode));
+    const getSearchParam = (key: string) =>
+        browser ? page.url.searchParams.get(key) : null;
     const isOverview = $derived(
-        !page.url.searchParams.get("view") &&
-            !page.url.searchParams.get("year") &&
-            !page.url.searchParams.get("topic"),
+        !getSearchParam("view") &&
+            !getSearchParam("year") &&
+            !getSearchParam("topic"),
     );
     const currentView = $derived(
-        page.url.searchParams.get("view") === "zirkularitaet"
+        getSearchParam("view") === "zirkularitaet"
             ? "zirkularitaet"
             : isOverview
               ? "overview"
               : "lehrplan",
     );
     const hasSelectedTopic = $derived(
-        page.url.searchParams.get("year") != null &&
-            page.url.searchParams.get("topic") != null,
+        getSearchParam("year") != null && getSearchParam("topic") != null,
     );
 
     type SelectedTopic = {
@@ -39,12 +40,8 @@
     const selectedTopic = $derived.by(() => {
         if (!hasSelectedTopic) return null;
 
-        const yearParam = Number(
-            browser ? page.url.searchParams.get("year") : null,
-        );
-        const topicParam = Number(
-            browser ? page.url.searchParams.get("topic") : null,
-        );
+        const yearParam = Number(getSearchParam("year"));
+        const topicParam = Number(getSearchParam("topic"));
 
         if (Number.isInteger(yearParam) && Number.isInteger(topicParam)) {
             const year = years[yearParam];
@@ -113,7 +110,7 @@
     }
 
     .mode-route:not(.is-expanded) > :global(.side-navigation) {
-        grid-column: 1 / span 6;
+        grid-column: 1 / span 5;
     }
 
     .overview-content,

@@ -7,12 +7,12 @@
         <img src={mbaLogo} alt="MBA Logo" class="footer-logo" />
     </div>
     <div class="footer-navigation">
-        <a href="#" class="footer-navigation-link">Rahmenlehrplan.pdf</a>
-        <a href="#" class="footer-navigation-link">VMAB-Verordnung</a>
+        <span class="footer-navigation-link">Rahmenlehrplan.pdf</span>
+        <span class="footer-navigation-link">VMAB-Verordnung</span>
     </div>
     <div class="footer-bottom-navigation">
-        <a href="#" class="footer-bottom-navigation-link">Datenschutz</a>
-        <a href="#" class="footer-bottom-navigation-link">Impressum</a>
+        <span class="footer-bottom-navigation-link">Datenschutz</span>
+        <span class="footer-bottom-navigation-link">Impressum</span>
     </div>
 </footer>
 

@@ -87,9 +87,12 @@
         return () => window.removeEventListener("resize", onResize);
     });
 
+    const getSearchParam = (key: string) =>
+        browser ? page.url.searchParams.get(key) : null;
+
     const getModeHref = (slug: string) => {
         const modePath = getModePath(slug);
-        const view = browser ? page.url.searchParams.get("view") : null;
+        const view = getSearchParam("view");
         if (view === "zirkularitaet") {
             return `${modePath}?view=zirkularitaet`;
         }
@@ -114,12 +117,12 @@
     };
     const isOverview = $derived(
         activeModeIndex >= 0 &&
-            !page.url.searchParams.get("view") &&
-            !page.url.searchParams.get("year") &&
-            !page.url.searchParams.get("topic"),
+            !getSearchParam("view") &&
+            !getSearchParam("year") &&
+            !getSearchParam("topic"),
     );
     const currentView = $derived(
-        page.url.searchParams.get("view") === "zirkularitaet"
+        getSearchParam("view") === "zirkularitaet"
             ? "zirkularitaet"
             : isOverview
               ? "overview"

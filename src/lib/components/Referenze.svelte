@@ -114,10 +114,10 @@
     .reference-item {
         position: relative;
         margin-top: 0.65rem;
-        border: 1px solid #3f3f46;
+        border: 1.5px solid var(--color-black);
         border-radius: 30px; /* must remain that way*/
         padding: 1.2rem 2rem;
-        background: #ffffff;
+        background: var(--color-white);
     }
 
     .reference-header {

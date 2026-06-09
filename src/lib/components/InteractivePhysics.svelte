@@ -1,15 +1,15 @@
 <script lang="ts">
     import { onMount, tick } from "svelte";
-    import {
-        getAllCompetences,
-        type Competence,
-    } from "$lib/data/education-modes";
+    import type { Competence } from "$lib/data/education-modes";
 
-    const competences = getAllCompetences();
+    let { competences = [] }: { competences?: Competence[] } = $props();
+
     let containerEl = $state<HTMLDivElement | null>(null);
     let itemElements = new Map<string, HTMLButtonElement>();
     let selectedSlug = $state<string | null>(null);
     let syncBodySizesFn: (() => void) | null = null;
+    let spawnCompetencesFn: ((list: Competence[]) => void) | null = null;
+    let latestCompetences: Competence[] = [];
 
     const trackItem = (node: HTMLButtonElement, slug: string) => {
         itemElements.set(slug, node);
@@ -26,6 +26,13 @@
         syncBodySizesFn?.();
     };
 
+    $effect(() => {
+        latestCompetences = competences;
+        tick().then(() => {
+            spawnCompetencesFn?.(latestCompetences);
+        });
+    });
+
     onMount(() => {
         if (!containerEl) return;
         const stage = containerEl;
@@ -36,6 +43,7 @@
         let worldBodies = new Map<string, import("matter-js").Body>();
         let bodySizes = new Map<string, { width: number; height: number }>();
         let boundaries: import("matter-js").Body[] = [];
+        let activeSlugs = new Set<string>();
 
         const setup = async () => {
             const Matter = await import("matter-js");
@@ -47,14 +55,14 @@
                 null;
 
             const syncBodySizes = () => {
-                for (const competence of competences) {
-                    const body = worldBodies.get(competence.slug);
-                    const el = itemElements.get(competence.slug);
+                for (const slug of activeSlugs) {
+                    const body = worldBodies.get(slug);
+                    const el = itemElements.get(slug);
                     if (!body || !el) continue;
 
                     const targetWidth = el.offsetWidth || 120;
                     const targetHeight = el.offsetHeight || 32;
-                    const knownSize = bodySizes.get(competence.slug);
+                    const knownSize = bodySizes.get(slug);
                     const currentWidth = knownSize?.width ?? targetWidth;
                     const currentHeight = knownSize?.height ?? targetHeight;
                     if (!currentWidth || !currentHeight) continue;
@@ -70,10 +78,49 @@
                         continue;
 
                     Body.scale(body, scaleX, scaleY);
-                    bodySizes.set(competence.slug, {
+                    bodySizes.set(slug, {
                         width: targetWidth,
                         height: targetHeight,
                     });
+                }
+            };
+
+            const clearBodies = () => {
+                for (const body of worldBodies.values()) {
+                    World.remove(engine.world, body);
+                }
+                worldBodies.clear();
+                bodySizes.clear();
+                activeSlugs.clear();
+            };
+
+            const spawnBodies = (list: Competence[]) => {
+                const width = containerEl?.clientWidth ?? 0;
+                const height = containerEl?.clientHeight ?? 0;
+                if (!width || !height) return;
+
+                clearBodies();
+
+                for (const competence of list) {
+                    const el = itemElements.get(competence.slug);
+                    if (!el) continue;
+
+                    const itemWidth = el.offsetWidth || 120;
+                    const itemHeight = el.offsetHeight || 32;
+                    const x = 80 + Math.random() * Math.max(width - 160, 1);
+                    const y = -(40 + Math.random() * 120);
+                    const body = Bodies.rectangle(x, y, itemWidth, itemHeight, {
+                        restitution: 0.75,
+                        friction: 0.02,
+                        frictionAir: 0.01,
+                    });
+                    worldBodies.set(competence.slug, body);
+                    bodySizes.set(competence.slug, {
+                        width: itemWidth,
+                        height: itemHeight,
+                    });
+                    activeSlugs.add(competence.slug);
+                    World.add(engine.world, body);
                 }
             };
 
@@ -86,7 +133,6 @@
                     World.remove(engine.world, boundary);
                 boundaries = [];
 
-                // Extra-thick boundaries reduce tunneling when pills get large.
                 const wallThickness = 320;
                 const wallInset = wallThickness / 2;
                 boundaries = [
@@ -121,51 +167,21 @@
                 ];
                 World.add(engine.world, boundaries);
 
-                if (worldBodies.size === 0) {
-                    for (const competence of competences) {
-                        const el = itemElements.get(competence.slug);
-                        if (!el) continue;
-                        const itemWidth = el.offsetWidth || 120;
-                        const itemHeight = el.offsetHeight || 32;
-                        const x = 80 + Math.random() * Math.max(width - 160, 1);
-                        const y =
-                            20 + Math.random() * Math.max(height * 0.3, 1);
-                        const body = Bodies.rectangle(
-                            x,
-                            y,
-                            itemWidth,
-                            itemHeight,
-                            {
-                                restitution: 0.75,
-                                friction: 0.02,
-                                frictionAir: 0.01,
-                            },
-                        );
-                        worldBodies.set(competence.slug, body);
-                        bodySizes.set(competence.slug, {
-                            width: itemWidth,
-                            height: itemHeight,
-                        });
-                        World.add(engine.world, body);
-                    }
-                } else {
-                    // Keep bodies stable across resize and just ensure they stay inside walls.
-                    for (const competence of competences) {
-                        const body = worldBodies.get(competence.slug);
-                        if (!body) continue;
-                        const size = bodySizes.get(competence.slug);
-                        const halfW = (size?.width ?? 120) / 2;
-                        const halfH = (size?.height ?? 32) / 2;
-                        const clampedX = Math.max(
-                            halfW,
-                            Math.min(width - halfW, body.position.x),
-                        );
-                        const clampedY = Math.max(
-                            halfH,
-                            Math.min(height - halfH, body.position.y),
-                        );
-                        Body.setPosition(body, { x: clampedX, y: clampedY });
-                    }
+                for (const slug of activeSlugs) {
+                    const body = worldBodies.get(slug);
+                    if (!body) continue;
+                    const size = bodySizes.get(slug);
+                    const halfW = (size?.width ?? 120) / 2;
+                    const halfH = (size?.height ?? 32) / 2;
+                    const clampedX = Math.max(
+                        halfW,
+                        Math.min(width - halfW, body.position.x),
+                    );
+                    const clampedY = Math.max(
+                        halfH,
+                        Math.min(height - halfH, body.position.y),
+                    );
+                    Body.setPosition(body, { x: clampedX, y: clampedY });
                 }
 
                 const mouse = Mouse.create(stage);
@@ -180,15 +196,18 @@
                 });
                 World.add(engine.world, mouseConstraint);
             };
+
             syncBodySizesFn = syncBodySizes;
+            spawnCompetencesFn = spawnBodies;
 
             rebuildScene();
+            tick().then(() => spawnBodies(latestCompetences));
 
             const frame = () => {
                 Engine.update(engine, 1000 / 60);
-                for (const competence of competences) {
-                    const body = worldBodies.get(competence.slug);
-                    const el = itemElements.get(competence.slug);
+                for (const slug of activeSlugs) {
+                    const body = worldBodies.get(slug);
+                    const el = itemElements.get(slug);
                     if (!body || !el) continue;
                     const x = body.position.x - (el.offsetWidth || 120) / 2;
                     const y = body.position.y - (el.offsetHeight || 32) / 2;
@@ -211,6 +230,7 @@
                 World.clear(engine.world, false);
                 Engine.clear(engine);
                 syncBodySizesFn = null;
+                spawnCompetencesFn = null;
             };
         };
 
@@ -256,13 +276,11 @@
 
 <style>
     .interactive-wrap {
-        position: fixed;
+        position: absolute;
         inset: 0;
-        z-index: -1;
-        width: 100vw;
-        height: 100vh;
-        padding: 0;
-        /* background: linear-gradient(160deg, #f8fafc, #dde5ff); */
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
     }
 
     .physics-stage {
@@ -270,8 +288,6 @@
         width: 100%;
         height: 100%;
         overflow: hidden;
-        border: 0;
-        border-radius: 0;
     }
 
     .pill {
@@ -279,27 +295,28 @@
         left: 0;
         top: 0;
         display: inline-flex;
-        flex-direction: column;
-        align-items: flex-start;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
         gap: 0.2rem;
-        border-radius: 40px;
-        border: 1px solid color-mix(in srgb, var(--pill-color) 45%, #94a3b8);
-        background: color-mix(in srgb, var(--pill-color) 20%, white);
-        color: #0f172a;
-        padding: 0.35rem 0.8rem;
-        font-size: var(--h3-size);
-        line-height: var(--h3-line-height);
-        font-weight: var(--h3-weight);
-        letter-spacing: var(--h3-letter-spacing);
-        max-width: min(40rem, 85vw);
+        border-radius: 9999px;
+        border: 1.5px solid var(--color-black);
+        background: var(--pill-color);
+        color: var(--color-black);
+        padding: 0px 40px;
+        max-width: 400px;
+        min-width: 200px;
         user-select: none;
         cursor: grab;
         will-change: transform;
+        pointer-events: auto;
         transition:
             max-width 180ms ease,
             padding 180ms ease,
             box-shadow 180ms ease,
             background 180ms ease;
+        height: 120px;
+        width: fit-content;
     }
 
     .pill-title {

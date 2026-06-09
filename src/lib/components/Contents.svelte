@@ -126,9 +126,8 @@
             {/if}
         </div>
     </div>
+    <CompetenceModal bind:competence={selectedCompetence} />
 </li>
-
-<CompetenceModal bind:competence={selectedCompetence} />
 
 <style>
     .content-item {

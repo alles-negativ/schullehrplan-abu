@@ -366,8 +366,13 @@
         cursor: pointer;
     }
 
-    .pill.is-active {
+    .pill.is-active,
+    .pill:hover {
         background: var(--pill-color);
+    }
+
+    .pill.is-active:hover {
+        filter: brightness(1.1);
     }
 
     .years {

@@ -153,3 +153,7 @@ strong {
     max-width: 100%;
     cursor: pointer;
 }
+
+.tag:hover {
+    filter: brightness(1.1);
+}

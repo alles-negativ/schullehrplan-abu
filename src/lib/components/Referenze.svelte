@@ -174,11 +174,13 @@
         border: 1.5px solid var(--color-black);
         padding: 0;
         cursor: pointer;
-        transition: background-color 120ms ease;
+        transition:
+            background-color 120ms ease,
+            filter 60ms ease;
     }
 
     .reference-toggle:hover {
-        background: var(--color-black);
+        filter: brightness(1.2);
     }
 
     .reference-toggle-icon {

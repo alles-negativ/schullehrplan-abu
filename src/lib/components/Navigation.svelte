@@ -90,14 +90,7 @@
     const getSearchParam = (key: string) =>
         browser ? page.url.searchParams.get(key) : null;
 
-    const getModeHref = (slug: string) => {
-        const modePath = getModePath(slug);
-        const view = getSearchParam("view");
-        if (view === "zirkularitaet") {
-            return `${modePath}?view=zirkularitaet`;
-        }
-        return modePath;
-    };
+    const getModeHref = (slug: string) => getModePath(slug);
     const getViewPath = (view: "lehrplan" | "zirkularitaet") => {
         const params = browser
             ? new URLSearchParams(page.url.searchParams)
@@ -233,7 +226,7 @@
         display: flex;
         flex-wrap: nowrap;
         align-items: center;
-        gap: 0.5rem;
+        gap: 10px;
         padding: 0;
         margin: 0;
         list-style: none;
@@ -259,7 +252,7 @@
     .mode-list-sub {
         display: flex;
         justify-content: center;
-        gap: 0.5rem;
+        gap: 10px;
         padding: 0;
         margin: 0;
         list-style: none;
@@ -295,14 +288,17 @@
             background-color 120ms ease,
             border-color 120ms ease,
             color 120ms ease,
-            transform 60ms ease;
+            transform 60ms ease,
+            filter 60ms ease;
     }
 
     .mode-sub-button:hover,
-    .mode-sub-button.is-active,
-    .mode-sub-button.is-active:hover {
+    .mode-sub-button.is-active {
         background: var(--color-darkblue);
         color: var(--color-white);
+    }
+    .mode-sub-button.is-active:hover {
+        filter: brightness(1.2);
     }
 
     .mode-button {
@@ -324,7 +320,8 @@
             background-color 120ms ease,
             border-color 120ms ease,
             color 120ms ease,
-            transform 60ms ease;
+            transform 60ms ease,
+            filter 60ms ease;
     }
 
     .mode-button--qv {
@@ -332,10 +329,13 @@
     }
 
     .mode-button:hover,
-    .mode-button.is-current,
-    .mode-button.is-current:hover {
+    .mode-button.is-current {
         background: var(--color-darkblue);
         color: var(--color-white);
+    }
+
+    .mode-button.is-current:hover {
+        filter: brightness(1.2);
     }
 
     @media (prefers-reduced-motion: reduce) {

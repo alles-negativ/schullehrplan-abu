@@ -49,7 +49,11 @@
 </script>
 
 {#if lessonsReady}
-    <aside class="side-navigation" class:is-expanded={expanded}>
+    <aside
+        class="side-navigation"
+        class:is-expanded={expanded}
+        class:show-lessons={showLessons}
+    >
         <div class="lessons-toggle">
             <span class="lessons-toggle-label">
                 <!-- {showLessons ? "Lektionen ausblenden" : "Lektionen einblenden"} -->
@@ -77,11 +81,7 @@
                 <section>
                     <h5 class="year-title">
                         <span>{getYearLabel(year)}. Lehrjahr</span>
-                        {#if showLessons}
-                            <span class="lesson-count"
-                                >{getYearLessons(year)}</span
-                            >
-                        {/if}
+                        <span class="lesson-count">{getYearLessons(year)}</span>
                     </h5>
                     {#if (year.themenbereiche?.length ?? 0) === 0}
                         <p>Keine Themenbereiche definiert.</p>
@@ -109,7 +109,7 @@
                                             {/if}
                                             <span>{getTopicTitle(topic)}</span>
                                         </span>
-                                        {#if showLessons && topic.lessons != null}
+                                        {#if topic.lessons != null}
                                             <span class="topic-lessons"
                                                 >{topic.lessons}</span
                                             >
@@ -117,7 +117,7 @@
                                     </a>
                                 </li>
                             {/each}
-                            {#if showLessons && year.additional_lessons != null}
+                            {#if year.additional_lessons != null}
                                 <li class="year-meta">
                                     <span>Weitere Lektionen</span>
                                     <span>{year.additional_lessons}</span>
@@ -208,7 +208,8 @@
         display: flex;
         align-items: flex-end;
         justify-content: space-between;
-        gap: 25px;
+        flex-wrap: nowrap;
+        gap: 0;
         padding: 3px 15px 4px 15px;
         border-radius: 9999px;
         border: 1.5px solid var(--color-black);
@@ -222,19 +223,39 @@
         line-height: var(--h5-line-height);
         font-weight: var(--h5-weight);
         letter-spacing: var(--h5-letter-spacing);
+        white-space: nowrap;
+        transition: gap 350ms cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .side-navigation.show-lessons .year-title {
+        gap: 25px;
     }
 
     .side-navigation.is-expanded .year-title {
     }
 
     .lesson-count {
-        flex-shrink: 0;
+        flex-shrink: 1;
+        min-width: 0;
         font-family: var(--font-mono);
         font-size: var(--h6-size);
         line-height: var(--h6-line-height);
         font-weight: var(--h6-weight);
         letter-spacing: var(--h6-letter-spacing);
         margin-bottom: 0.05rem;
+        max-width: 0;
+        opacity: 0;
+        overflow: hidden;
+        transition:
+            max-width 350ms cubic-bezier(0.4, 0, 0.2, 1),
+            opacity 350ms cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .side-navigation.show-lessons .lesson-count {
+        flex-shrink: 0;
+        min-width: auto;
+        max-width: 4rem;
+        opacity: 1;
     }
 
     .topic-list {
@@ -250,7 +271,7 @@
         display: inline-flex;
         align-items: flex-end;
         justify-content: space-between;
-        gap: 25px;
+        gap: 0;
         width: fit-content;
         max-width: 100%;
         box-sizing: border-box;
@@ -270,7 +291,18 @@
         transition:
             background-color 120ms ease,
             color 120ms ease,
-            border-color 120ms ease;
+            border-color 120ms ease,
+            font-size 350ms cubic-bezier(0.4, 0, 0.2, 1),
+            line-height 350ms cubic-bezier(0.4, 0, 0.2, 1),
+            padding 350ms cubic-bezier(0.4, 0, 0.2, 1),
+            letter-spacing 350ms cubic-bezier(0.4, 0, 0.2, 1),
+            font-weight 350ms cubic-bezier(0.4, 0, 0.2, 1),
+            gap 350ms cubic-bezier(0.4, 0, 0.2, 1),
+            filter 60ms ease;
+    }
+
+    .side-navigation.show-lessons .topic-button {
+        gap: 25px;
     }
 
     .side-navigation.is-expanded .topic-button {
@@ -290,13 +322,28 @@
     }
 
     .topic-lessons {
-        flex-shrink: 0;
+        flex-shrink: 1;
+        min-width: 0;
         align-self: flex-end;
         font-family: var(--font-mono);
         font-size: var(--h6-size);
         line-height: var(--h6-line-height);
         letter-spacing: var(--h6-letter-spacing);
         transform: translateY(-2px);
+        max-width: 0;
+        opacity: 0;
+        overflow: hidden;
+        transition:
+            max-width 350ms cubic-bezier(0.4, 0, 0.2, 1),
+            opacity 350ms cubic-bezier(0.4, 0, 0.2, 1),
+            transform 350ms cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .side-navigation.show-lessons .topic-lessons {
+        flex-shrink: 0;
+        min-width: auto;
+        max-width: 4rem;
+        opacity: 1;
     }
 
     .side-navigation.is-expanded .topic-lessons {
@@ -309,6 +356,10 @@
         color: var(--color-white);
     }
 
+    .topic-button.is-active:hover {
+        filter: brightness(1.2);
+    }
+
     .year-meta {
         width: fit-content;
         max-width: 100%;
@@ -316,7 +367,10 @@
         align-items: center;
         justify-content: space-between;
         gap: 10px;
-        margin-top: 5px;
+        margin-top: 0;
+        max-height: 0;
+        opacity: 0;
+        overflow: hidden;
         padding: 0px 0px 0px 30px;
         color: var(--color-black);
         font-family: var(--font-mono);
@@ -324,12 +378,26 @@
         line-height: var(--h6-line-height);
         letter-spacing: var(--h6-letter-spacing);
         box-sizing: border-box;
+        transition:
+            max-height 350ms cubic-bezier(0.4, 0, 0.2, 1),
+            opacity 350ms cubic-bezier(0.4, 0, 0.2, 1),
+            margin-top 350ms cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .side-navigation.show-lessons .year-meta {
+        max-height: 40px;
+        opacity: 1;
+        margin-top: 5px;
     }
 
     @media (prefers-reduced-motion: reduce) {
         .toggle-switch,
         .toggle-thumb,
-        .topic-button {
+        .topic-button,
+        .topic-lessons,
+        .year-title,
+        .lesson-count,
+        .year-meta {
             transition: none;
         }
     }

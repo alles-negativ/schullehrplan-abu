@@ -136,3 +136,20 @@ p {
 strong {
     font-weight: 600;
 }
+
+/* Reusable elements */
+.tag {
+    display: block;
+    padding: 5px 15px;
+    border-radius: 999px;
+    font-size: var(--h5-size);
+    line-height: var(--h5-line-height);
+    font-weight: var(--h5-weight);
+    letter-spacing: var(--h5-letter-spacing);
+    background: var(--tag-color);
+    border: 1px solid var(--color-black);
+    color: var(--color-black);
+    width: fit-content;
+    max-width: 100%;
+    cursor: pointer;
+}

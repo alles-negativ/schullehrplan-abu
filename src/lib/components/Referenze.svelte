@@ -115,7 +115,7 @@
         margin-top: 0.65rem;
         border: 1.5px solid var(--color-black);
         border-radius: 30px; /* must remain that way*/
-        padding: 23px 33px 30px 33px;
+        padding: 23px 21px 30px 33px;
         background: var(--color-white);
     }
 
@@ -150,7 +150,7 @@
     .reference-lessons {
         margin: 0;
         position: absolute;
-        right: -9px;
+        right: 0px;
         bottom: -13px;
         font-family: var(--font-mono);
         font-size: var(--h6-size);
@@ -163,7 +163,7 @@
     .reference-toggle {
         position: absolute;
         top: -2px;
-        right: -12px;
+        right: 0px;
         border: 0;
         border-radius: 9999px;
         width: 52px;

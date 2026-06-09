@@ -104,28 +104,52 @@ collections:
                                     }
                                   - label: Gesellschaftliche Aspekte
                                     name: social_aspects
-                                    widget: relation
+                                    widget: list
                                     required: false
-                                    multiple: true
-                                    collection: competences
-                                    search_fields: ["title", "aspect"]
-                                    display_fields: ["{{title}} - {{aspect}}"]
-                                    value_field: "{{slug}}"
-                                    filters:
-                                        - field: aspect
-                                          values: ["Gesellschaftliche Aspekte"]
-                                  - label: Sprachmodi
+                                    summary: "{{fields.aspect}}"
+                                    fields:
+                                        - label: Aspekt
+                                          name: aspect
+                                          widget: relation
+                                          collection: competences
+                                          search_fields: ["title", "aspect"]
+                                          display_fields:
+                                              ["{{title}} - {{aspect}}"]
+                                          value_field: "{{slug}}"
+                                          filters:
+                                              - field: aspect
+                                                values:
+                                                    [
+                                                        "Gesellschaftliche Aspekte",
+                                                    ]
+                                        - label: Konkretisierung
+                                          name: specification
+                                          widget: text
+                                          required: false
+                                  - label: Sprache und Kommunikation
                                     name: language_aspects
-                                    widget: relation
+                                    widget: list
                                     required: false
-                                    multiple: true
-                                    collection: competences
-                                    search_fields: ["title", "aspect"]
-                                    display_fields: ["{{title}} - {{aspect}}"]
-                                    value_field: "{{slug}}"
-                                    filters:
-                                        - field: aspect
-                                          values: ["Sprachmodi"]
+                                    summary: "{{fields.aspect}}"
+                                    fields:
+                                        - label: Aspekt
+                                          name: aspect
+                                          widget: relation
+                                          collection: competences
+                                          search_fields: ["title", "aspect"]
+                                          display_fields:
+                                              ["{{title}} - {{aspect}}"]
+                                          value_field: "{{slug}}"
+                                          filters:
+                                              - field: aspect
+                                                values:
+                                                    [
+                                                        "Sprache und Kommunikation",
+                                                    ]
+                                        - label: Konkretisierung
+                                          name: specification
+                                          widget: text
+                                          required: false
                 - {
                       label: Weiter Lektionen,
                       name: additional_lessons,

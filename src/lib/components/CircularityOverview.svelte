@@ -3,6 +3,7 @@
     import {
         getAllCompetences,
         getAspectByTitle,
+        getAspectSlug,
         getCompetenceBySlug,
         getModeYears,
         getTopicTitle,
@@ -37,7 +38,7 @@
 
     const aspectOrder = [
         "Gesellschaftliche Aspekte",
-        "Sprachmodi",
+        "Sprache und Kommunikation",
         "Schlüsselkompetenzen",
     ] as const;
 
@@ -92,38 +93,77 @@
         highlightedAspectTitle = null;
     };
 
+    const hasActiveFilter = $derived(
+        highlightedCompetenceSlug != null || highlightedAspectTitle != null,
+    );
+
+    const isCompetenceVisible = (competence: Competence | null | undefined) => {
+        if (!competence || !hasActiveFilter) return false;
+        if (highlightedCompetenceSlug) {
+            return competence.slug === highlightedCompetenceSlug;
+        }
+        if (highlightedAspectTitle) {
+            return competence.aspect === highlightedAspectTitle;
+        }
+        return false;
+    };
+
+    const collectReferenceSlugs = (
+        reference: NonNullable<Topic["individual_reference"]>[number],
+    ) => {
+        const slugs = new Set<string>(reference.essential_competences ?? []);
+        for (const content of reference.learning_contents ?? []) {
+            for (const entry of content.social_aspects ?? [])
+                slugs.add(getAspectSlug(entry));
+            for (const entry of content.language_aspects ?? [])
+                slugs.add(getAspectSlug(entry));
+            for (const slug of content.essential_competences ?? [])
+                slugs.add(slug);
+        }
+        return slugs;
+    };
+
+    const isSchluesselkompetenz = (competence: Competence) =>
+        competence.aspect === "Schlüsselkompetenzen";
+
+    const uniqueSlugs = (slugs: Iterable<string>) =>
+        slugs instanceof Set ? slugs : new Set(slugs);
+
+    const slugsToCompetences = (slugs: Iterable<string>) =>
+        Array.from(uniqueSlugs(slugs))
+            .map((slug) => getCompetenceBySlug(slug))
+            .filter((entry): entry is Competence => entry != null);
+
+    const slugsToReferenceCompetences = (slugs: Iterable<string>) =>
+        slugsToCompetences(slugs).filter(
+            (competence) => !isSchluesselkompetenz(competence),
+        );
+
+    const addCompetenceCounts = (
+        counts: Map<string, number>,
+        competences: Competence[],
+    ) => {
+        for (const competence of competences) {
+            counts.set(competence.slug, (counts.get(competence.slug) ?? 0) + 1);
+        }
+    };
+
     const competenceCountBySlug = $derived.by(() => {
         const counts = new Map<string, number>();
-        const addSlug = (
-            slug: string | undefined,
-            source: "topic" | "reference",
-        ) => {
-            if (!slug) return;
-            const competence = getCompetenceBySlug(slug);
-            if (
-                source === "reference" &&
-                competence?.aspect === "Schlüsselkompetenzen"
-            ) {
-                return;
-            }
-            counts.set(slug, (counts.get(slug) ?? 0) + 1);
-        };
 
         for (const year of years) {
             for (const topic of year.themenbereiche ?? []) {
-                for (const slug of topic.essential_competences ?? [])
-                    addSlug(slug, "topic");
+                addCompetenceCounts(
+                    counts,
+                    slugsToCompetences(topic.essential_competences ?? []),
+                );
                 for (const reference of topic.individual_reference ?? []) {
-                    for (const slug of reference.essential_competences ?? [])
-                        addSlug(slug, "reference");
-                    for (const content of reference.learning_contents ?? []) {
-                        for (const slug of content.social_aspects ?? [])
-                            addSlug(slug, "reference");
-                        for (const slug of content.language_aspects ?? [])
-                            addSlug(slug, "reference");
-                        for (const slug of content.essential_competences ?? [])
-                            addSlug(slug, "reference");
-                    }
+                    addCompetenceCounts(
+                        counts,
+                        slugsToReferenceCompetences(
+                            collectReferenceSlugs(reference),
+                        ),
+                    );
                 }
             }
         }
@@ -131,28 +171,22 @@
         return counts;
     });
 
-    const getReferenceCompetences = (topic: Topic) =>
-        (topic.individual_reference ?? []).map((reference) => {
-            const slugs = new Set<string>(reference.essential_competences ?? []);
-            for (const content of reference.learning_contents ?? []) {
-                for (const slug of content.social_aspects ?? []) slugs.add(slug);
-                for (const slug of content.language_aspects ?? []) slugs.add(slug);
-                for (const slug of content.essential_competences ?? [])
-                    slugs.add(slug);
-            }
-            return Array.from(slugs)
-                .map((slug) => getCompetenceBySlug(slug))
-                .filter(
-                    (entry): entry is Competence =>
-                        entry != null &&
-                        entry.aspect !== "Schlüsselkompetenzen",
-                );
-        });
+    const getTopicCompetences = (topic: Topic) =>
+        slugsToCompetences(topic.essential_competences ?? []);
 
-    const getReferenceTitle = (topic: Topic, index: number): string => {
-        const reference = topic.individual_reference?.[index];
-        if (!reference) return "";
-        return reference.title ?? reference.titel ?? "";
+    const getReferenceCompetences = (topic: Topic) =>
+        (topic.individual_reference ?? []).map((reference) =>
+            slugsToReferenceCompetences(collectReferenceSlugs(reference)),
+        );
+
+    const getReferenceLabel = (
+        topic: Topic,
+        reference: NonNullable<Topic["individual_reference"]>[number],
+    ) => {
+        if (topic.number != null && reference.number != null) {
+            return `${topic.number}.${reference.number}`;
+        }
+        return "";
     };
 </script>
 
@@ -174,11 +208,16 @@
                         <button
                             type="button"
                             class="pill pill-button"
-                            class:is-active={isCompetenceHighlighted(competence)}
+                            class:is-active={isCompetenceHighlighted(
+                                competence,
+                            )}
                             style={`--pill-color: ${competence.color ?? "#64748b"}`}
-                            onclick={() => toggleCompetenceHighlight(competence.slug)}
+                            onclick={() =>
+                                toggleCompetenceHighlight(competence.slug)}
                         >
-                            {competence.title} ({competenceCountBySlug.get(competence.slug) ?? 0})
+                            {competence.title} ({competenceCountBySlug.get(
+                                competence.slug,
+                            ) ?? 0})
                         </button>
                     {/each}
                 </div>
@@ -189,59 +228,87 @@
     <div class="years">
         {#each years as year}
             <section class="year-section">
-                <h2>{getYearLabel(year)}. Lehrjahr</h2>
+                <div class="year-header">
+                    <h5>{getYearLabel(year)}. Lehrjahr</h5>
+                    <h5 class="year-column-label">Kompetenzkategorien</h5>
+                </div>
                 <div class="topic-list">
                     {#each year.themenbereiche ?? [] as topic}
-                        {@const references = getReferenceCompetences(topic)}
-                        <article class="topic-row">
-                            <div class="topic-title">
-                                {#if topic.number != null}
-                                    {topic.number}.
-                                {/if}
-                                {getTopicTitle(topic)}
-                            </div>
-                            <div class="topic-tags">
-                                {#each topic.essential_competences ?? [] as slug}
-                                    {@const competence = getCompetenceBySlug(slug)}
-                                    {#if competence}
-                                        <button
-                                            type="button"
-                                            class="pill compact pill-button"
-                                            class:is-active={isCompetenceHighlighted(
-                                                competence,
-                                            )}
-                                            style={`--pill-color: ${competence.color ?? "#64748b"}`}
-                                            onclick={() => (selectedCompetence = competence)}
-                                            >{competence.title}</button
-                                        >
-                                    {/if}
-                                {/each}
-                            </div>
-                        </article>
-
-                        {#each references as competenceItems, index}
-                            {@const title = getReferenceTitle(topic, index)}
-                            {#if title || competenceItems.length > 0}
-                                <div class="reference-row">
-                                    <span>{title}</span>
-                                    <div class="topic-tags">
-                                        {#each competenceItems as competence}
+                        {@const topicCompetences = getTopicCompetences(topic)}
+                        {@const referenceCompetences =
+                            getReferenceCompetences(topic)}
+                        <article class="topic-card">
+                            <div class="list-row topic-row">
+                                <div class="row-content">
+                                    <h3 class="topic-card-title">
+                                        {#if topic.number != null}
+                                            {topic.number}.
+                                        {/if}
+                                        {getTopicTitle(topic)}
+                                    </h3>
+                                </div>
+                                <div class="row-tags">
+                                    {#each topicCompetences as competence}
+                                        {#if isCompetenceVisible(competence)}
                                             <button
                                                 type="button"
-                                                class="pill compact pill-button"
+                                                class="pill list-pill pill-button"
                                                 class:is-active={isCompetenceHighlighted(
                                                     competence,
                                                 )}
                                                 style={`--pill-color: ${competence.color ?? "#64748b"}`}
                                                 onclick={() =>
-                                                    (selectedCompetence = competence)}
+                                                    (selectedCompetence =
+                                                        competence)}
                                                 >{competence.title}</button
                                             >
+                                        {/if}
+                                    {/each}
+                                </div>
+                            </div>
+
+                            {#each topic.individual_reference ?? [] as reference, index}
+                                {@const competenceItems =
+                                    referenceCompetences[index] ?? []}
+                                {@const referenceLabel = getReferenceLabel(
+                                    topic,
+                                    reference,
+                                )}
+                                <div class="list-row reference-row">
+                                    <div class="row-content">
+                                        {#if referenceLabel}
+                                            <span class="reference-number"
+                                                >{referenceLabel}</span
+                                            >
+                                        {/if}
+                                        {#if reference.title ?? reference.titel}
+                                            <span class="reference-text"
+                                                >{reference.title ??
+                                                    reference.titel}</span
+                                            >
+                                        {/if}
+                                    </div>
+                                    <div class="row-tags">
+                                        {#each competenceItems as competence}
+                                            {#if isCompetenceVisible(competence)}
+                                                <button
+                                                    type="button"
+                                                    class="pill list-pill pill-button"
+                                                    class:is-active={isCompetenceHighlighted(
+                                                        competence,
+                                                    )}
+                                                    style={`--pill-color: ${competence.color ?? "#64748b"}`}
+                                                    onclick={() =>
+                                                        (selectedCompetence =
+                                                            competence)}
+                                                    >{competence.title}</button
+                                                >
+                                            {/if}
                                         {/each}
                                     </div>
                                 </div>
-                            {/if}
-                        {/each}
+                            {/each}
+                        </article>
                     {/each}
                 </div>
             </section>
@@ -266,8 +333,10 @@
             aria-label={`Kompetenz: ${selectedCompetence.title}`}
             style={`--modal-color: ${selectedCompetence.color ?? "#334155"}`}
         >
-            <button class="modal-close" type="button" onclick={closeCompetenceModal}
-                >Schliessen</button
+            <button
+                class="modal-close"
+                type="button"
+                onclick={closeCompetenceModal}>Schliessen</button
             >
             <h4>{selectedCompetence.title}</h4>
             {#if selectedCompetence.aspect}
@@ -275,7 +344,9 @@
             {/if}
             {#if selectedCompetence.description}
                 <div class="modal-description">
-                    {@html marked.parse(selectedCompetence.description) as string}
+                    {@html marked.parse(
+                        selectedCompetence.description,
+                    ) as string}
                 </div>
             {/if}
         </div>
@@ -297,24 +368,27 @@
     }
 
     .aspect-title-button {
-        margin: 0 0 0.75rem;
-        border: 1px solid #64748b;
+        margin: 0 0 35px;
+        border: 2px solid var(--color-black);
         border-radius: 999px;
-        padding: 0.35rem 0.8rem;
+        padding: 0;
         text-align: center;
-        font-size: var(--h3-size);
-        line-height: var(--h3-line-height);
-        font-weight: var(--h3-weight);
-        letter-spacing: var(--h3-letter-spacing);
-        background: #ffffff;
-        color: #1f2937;
+        font-size: var(--h2-size);
+        line-height: var(--h2-line-height);
+        font-weight: var(--h2-weight);
+        letter-spacing: var(--h2-letter-spacing);
+        background: var(--aspect-color);
+        color: var(--color-black);
         width: 100%;
         cursor: pointer;
+        height: 120px;
+        transition: all 120ms ease;
     }
 
-    .aspect-title-button.is-active {
-        background: color-mix(in srgb, var(--aspect-color) 20%, white);
-        border-color: color-mix(in srgb, var(--aspect-color) 55%, #94a3b8);
+    .aspect-title-button.is-active,
+    .aspect-title-button:hover {
+        box-shadow: 0px 7px 0px var(--color-black);
+        transform: translateY(-7px);
     }
 
     .pill-wrap {
@@ -326,78 +400,134 @@
     .pill {
         display: inline-flex;
         align-items: center;
+        padding: 5px 15px;
         border-radius: 999px;
-        border: 1px solid #cbd5e1;
-        background: #ffffff;
-        color: #0f172a;
-        padding: 0.2rem 0.65rem;
         font-size: var(--h5-size);
         line-height: var(--h5-line-height);
         font-weight: var(--h5-weight);
         letter-spacing: var(--h5-letter-spacing);
-        white-space: nowrap;
+        background: var(--color-white);
+        border: 1px solid var(--color-black);
+        width: fit-content;
+        max-width: 100%;
+        cursor: pointer;
     }
 
     .pill.is-active {
-        border-color: color-mix(in srgb, var(--pill-color) 45%, #94a3b8);
-        background: color-mix(in srgb, var(--pill-color) 20%, white);
+        background: var(--pill-color);
     }
 
     .years {
         display: flex;
         flex-direction: column;
-        gap: 2rem;
+        gap: 2.5rem;
     }
 
-    .year-section h2 {
-        margin: 0 0 0.6rem;
-        border-bottom: 2px solid #334155;
-        padding-bottom: 0.35rem;
+    .year-header {
+        display: grid;
+        grid-template-columns: 1fr minmax(14rem, 28rem);
+        align-items: end;
+        margin: 10px 25px;
+    }
+
+    .year-header h5 {
+        margin: 0;
+    }
+
+    .year-column-label {
+        justify-self: end;
+        font-size: var(--h5-size);
+        line-height: var(--h5-line-height);
+        font-weight: var(--h5-weight);
+        letter-spacing: var(--h5-letter-spacing);
+        text-align: right;
     }
 
     .topic-list {
         display: flex;
         flex-direction: column;
+        gap: 1.25rem;
     }
 
-    .topic-row,
-    .reference-row {
-        border-bottom: 1px solid #cbd5e1;
-        padding: 0.45rem 0;
-        display: grid;
-        grid-template-columns: minmax(18rem, 1fr) minmax(18rem, 1fr);
-        gap: 0.75rem;
-        align-items: start;
+    .topic-card {
+        background: var(--color-white);
+        border-radius: 25px;
+        padding: 35px 40px;
     }
 
-    .topic-title {
+    .topic-card-title {
+        margin: 0;
+        font-size: var(--h2-size);
+        line-height: var(--h2-line-height);
+        font-weight: var(--h2-weight);
+        letter-spacing: var(--h2-letter-spacing);
+        margin-left: -33px;
+    }
+
+    .list-row {
+        display: flex;
+        flex-direction: row;
+        align-items: flex-start;
+        gap: 1.5rem;
+        padding: 0.85rem 0;
+        border-top: 5px solid var(--color-background);
+        margin-left: 35px;
+        position: relative;
+    }
+
+    .topic-row {
+        border-top: 0;
+        padding-top: 0;
+    }
+
+    .row-content {
+        display: flex;
+        flex: 1 1 auto;
+        gap: 0.35rem;
+        min-width: 0;
+        font-size: var(--body-size);
+        line-height: var(--body-line-height);
+        font-weight: var(--body-weight);
+        letter-spacing: var(--body-letter-spacing);
+        width: 50%;
+    }
+
+    .reference-number {
+        flex: 0 0 auto;
         font-size: var(--h5-size);
         line-height: var(--h5-line-height);
         font-weight: var(--h5-weight);
         letter-spacing: var(--h5-letter-spacing);
+        position: absolute;
+        left: -40px;
+        top: 18px;
     }
 
-    .reference-row {
-        color: #334155;
-        font-size: var(--body-size);
-        line-height: var(--body-line-height);
-        letter-spacing: var(--body-letter-spacing);
-        padding-left: 1.6rem;
+    .reference-text {
+        min-width: 0;
+        font-size: var(--h3-size);
+        line-height: var(--h3-line-height);
+        font-weight: var(--h3-weight);
+        letter-spacing: var(--h3-letter-spacing);
     }
 
-    .topic-tags {
-        justify-self: end;
+    .row-tags {
+        flex: 0 1 auto;
         display: flex;
         flex-wrap: wrap;
-        gap: 0.45rem;
+        gap: 0.5rem;
         justify-content: flex-end;
-        align-content: flex-start;
-        align-items: flex-start;
-        align-self: start;
+        align-items: center;
+        margin-left: auto;
+        width: 50%;
     }
 
-    .compact {
-        padding: 0.2rem 0.65rem;
+    .list-pill {
+        flex-shrink: 0;
+        padding: 5px 15px;
+        background: var(--pill-color);
+        color: var(--color-black);
+        white-space: nowrap;
     }
 
     .pill-button {
@@ -452,14 +582,17 @@
             grid-template-columns: 1fr;
         }
 
-        .topic-row,
-        .reference-row {
+        .year-header {
             grid-template-columns: 1fr;
         }
 
-        .topic-tags {
+        .year-column-label {
             justify-self: start;
-            justify-content: flex-start;
+            text-align: left;
+        }
+
+        .topic-card {
+            padding: 1.25rem 1rem;
         }
     }
 </style>

@@ -267,7 +267,7 @@
         gap: 0.45rem;
     }
 
-    .tag {
+    /* .tag {
         display: block;
         padding: 0.2rem 0.65rem;
         border-radius: 999px;
@@ -284,7 +284,7 @@
         overflow: hidden;
         text-overflow: ellipsis;
         cursor: pointer;
-    }
+    } */
 
     .modal-backdrop {
         position: fixed;

@@ -1,6 +1,6 @@
 {
     "title": "2-jährige EBA",
-    "overview": "Der Schullehrplan für die zweijährige Grundbildung (EBA) umfasst sechs Themen, die über zwei Jahre verteilt werden. Der Fokus liegt auf der Kompetenzentwicklung und dem Einstieg in die Berufswelt.\n\nDie Themen verbinden zentrale Lebensbereiche mit gesellschaftlichen Inhalten, Sprachmodi und Schlüsselkompetenzen – vom ersten Schritt ins Berufsleben bis zur Vorbereitung auf die Berufswelt.\n\n**Alle Themen sind einheitlich aufgebaut:** Leitidee, individuelle Lebensbezüge, Kerninhalte, Sprachmodi, Schlüsselkompetenzen, Kompetenzen und gesellschaftliche Inhalte.",
+    "overview": "Der Schullehrplan für die zweijährige Grundbildung (EBA) umfasst sechs Themen, die über zwei Jahre verteilt werden. Der Fokus liegt auf der Kompetenzentwicklung und dem Einstieg in die Berufswelt.\n\nDie Themen verbinden zentrale Lebensbereiche mit gesellschaftlichen Inhalten, Sprache und Kommunikation und Schlüsselkompetenzen – vom ersten Schritt ins Berufsleben bis zur Vorbereitung auf die Berufswelt.\n\n**Alle Themen sind einheitlich aufgebaut:** Leitidee, individuelle Lebensbezüge, Kerninhalte, Sprache und Kommunikation, Schlüsselkompetenzen, Kompetenzen und gesellschaftliche Inhalte.",
     "years": [
         {
             "year": 1,
@@ -19,25 +19,64 @@
                                     "titel": "Ich orientiere mich in der Arbeits- und Ausbildungswelt anhand von vielfältigen Informationen wie Hausordnungen, Stipendienverordnung, Lehrvertrag, etc. und hole bei dafür vorgesehenen Kontaktstellen Unterstützung.",
                                     "number": 1,
                                     "social_aspects": [
-                                        "ethik",
-                                        "identität-sozialisation",
-                                        "recht",
-                                        "technologie-transformation"
+                                        {
+                                            "aspect": "ethik",
+                                            "specification": "Ethische Fragen beim Einstieg ins Berufsleben reflektieren."
+                                        },
+                                        {
+                                            "aspect": "identität-sozialisation",
+                                            "specification": "Eigene Rolle in Betrieb und Schule einordnen."
+                                        },
+                                        {
+                                            "aspect": "recht",
+                                            "specification": "Rechte und Pflichten aus Lehrvertrag und Regelwerken verstehen."
+                                        },
+                                        {
+                                            "aspect": "technologie-transformation",
+                                            "specification": "IT-Infrastruktur und digitale Kommunikation im Betrieb nutzen."
+                                        }
                                     ],
                                     "language_aspects": [
-                                        "rezeption-mündlich",
-                                        "produktion-schriftlich-bildlich",
-                                        "produktion-multimedial"
+                                        {
+                                            "aspect": "rezeption-mündlich",
+                                            "specification": "Mündliche Informationen in Betrieb und Schule verstehen."
+                                        },
+                                        {
+                                            "aspect": "produktion-schriftlich-bildlich",
+                                            "specification": "Schriftliche und bildliche Inhalte für den Einstieg erstellen."
+                                        },
+                                        {
+                                            "aspect": "produktion-multimedial",
+                                            "specification": "Multimediale Formate für die Orientierung einsetzen."
+                                        }
                                     ]
                                 },
                                 {
                                     "titel": "Ich kann Finanzierungsformen (z. B. Abo mit Ratenzahlung, Leasing, Kredit) unterscheiden, deren Konsequenzen abschätzen und eine für mich passende Option begründet auswählen.",
                                     "number": 2,
-                                    "social_aspects": ["ethik", "politik"],
+                                    "social_aspects": [
+                                        {
+                                            "aspect": "ethik",
+                                            "specification": "Verantwortungsvollen Umgang mit Finanzierungsformen beurteilen."
+                                        },
+                                        {
+                                            "aspect": "politik",
+                                            "specification": "Gesellschaftliche Rahmenbedingungen von Konsum und Kredit einordnen."
+                                        }
+                                    ],
                                     "language_aspects": [
-                                        "rezeption-mündlich",
-                                        "rezeption-audiovisuell",
-                                        "interaktion-kollaboration-mündlich"
+                                        {
+                                            "aspect": "rezeption-mündlich",
+                                            "specification": "Beratungsgespräche zu Finanzierungsoptionen verstehen."
+                                        },
+                                        {
+                                            "aspect": "rezeption-audiovisuell",
+                                            "specification": "Audiovisuelle Informationen zu Krediten und Abos auswerten."
+                                        },
+                                        {
+                                            "aspect": "interaktion-kollaboration-mündlich",
+                                            "specification": "Finanzierungsentscheidungen mündlich begründen und diskutieren."
+                                        }
                                     ]
                                 }
                             ],
@@ -55,13 +94,28 @@
                                     "titel": "Ich orientiere mich in der Arbeits- und Ausbildungswelt anhand von vielfältigen Informationen wie Hausordnungen, Stipendienverordnung, Lehrvertrag, etc. und hole bei dafür vorgesehenen Kontaktstellen Unterstützung.",
                                     "number": 1,
                                     "social_aspects": [
-                                        "recht",
-                                        "technologie-transformation",
-                                        "ökologie"
+                                        {
+                                            "aspect": "recht",
+                                            "specification": "Relevante Regelungen für Lern- und Arbeitsorganisation anwenden."
+                                        },
+                                        {
+                                            "aspect": "technologie-transformation",
+                                            "specification": "Digitale Werkzeuge für effizientes Lernen einsetzen."
+                                        },
+                                        {
+                                            "aspect": "ökologie",
+                                            "specification": "Ressourcenschonendes Arbeiten im Alltag umsetzen."
+                                        }
                                     ],
                                     "language_aspects": [
-                                        "rezeption-audiovisuell",
-                                        "rezeption-schriftlich-bildlich"
+                                        {
+                                            "aspect": "rezeption-audiovisuell",
+                                            "specification": "Lernvideos und Anleitungen verstehen und nutzen."
+                                        },
+                                        {
+                                            "aspect": "rezeption-schriftlich-bildlich",
+                                            "specification": "Lernpläne und Arbeitsanweisungen lesen und umsetzen."
+                                        }
                                     ]
                                 }
                             ]
@@ -94,13 +148,28 @@
                                     "titel": "Ich orientiere mich in der Arbeits- und Ausbildungswelt anhand von vielfältigen Informationen wie Hausordnungen, Stipendienverordnung, Lehrvertrag, etc. und hole bei dafür vorgesehenen Kontaktstellen Unterstützung.",
                                     "number": 1,
                                     "social_aspects": [
-                                        "technologie-transformation",
-                                        "recht"
+                                        {
+                                            "aspect": "technologie-transformation",
+                                            "specification": "Digitale Informationsquellen beim Konsumverhalten nutzen."
+                                        },
+                                        {
+                                            "aspect": "recht",
+                                            "specification": "Verbraucherrechte und gesetzliche Vorgaben beim Konsum beachten."
+                                        }
                                     ],
                                     "language_aspects": [
-                                        "rezeption-mündlich",
-                                        "interaktion-kollaboration-mündlich",
-                                        "rezeption-audiovisuell"
+                                        {
+                                            "aspect": "rezeption-mündlich",
+                                            "specification": "Beratungs- und Verkaufsgespräche kritisch verfolgen."
+                                        },
+                                        {
+                                            "aspect": "interaktion-kollaboration-mündlich",
+                                            "specification": "Kaufentscheidungen im Austausch mit anderen begründen."
+                                        },
+                                        {
+                                            "aspect": "rezeption-audiovisuell",
+                                            "specification": "Werbung und Produktinformationen audiovisuell analysieren."
+                                        }
                                     ]
                                 }
                             ]
@@ -133,27 +202,60 @@
                                     "titel": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
                                     "number": 1,
                                     "social_aspects": [
-                                        "kultur",
-                                        "recht",
-                                        "technologie-transformation"
+                                        {
+                                            "aspect": "kultur",
+                                            "specification": "Kulturelle Vielfalt bei der Meinungsbildung berücksichtigen."
+                                        },
+                                        {
+                                            "aspect": "recht",
+                                            "specification": "Rechtliche Grenzen der Meinungsäusserung kennen."
+                                        },
+                                        {
+                                            "aspect": "technologie-transformation",
+                                            "specification": "Digitale Medien bei der Meinungsbildung kritisch nutzen."
+                                        }
                                     ],
                                     "language_aspects": [
-                                        "rezeption-audiovisuell",
-                                        "interaktion-kollaboration-mündlich",
-                                        "rezeption-schriftlich-bildlich"
+                                        {
+                                            "aspect": "rezeption-audiovisuell",
+                                            "specification": "Audiovisuelle Medienbeiträge verstehen und einordnen."
+                                        },
+                                        {
+                                            "aspect": "interaktion-kollaboration-mündlich",
+                                            "specification": "Standpunkte in Diskussionen vertreten und zuhören."
+                                        },
+                                        {
+                                            "aspect": "rezeption-schriftlich-bildlich",
+                                            "specification": "Schriftliche und bildliche Argumente in Medien analysieren."
+                                        }
                                     ]
                                 },
                                 {
                                     "titel": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
                                     "number": 2,
                                     "social_aspects": [
-                                        "technologie-transformation",
-                                        "ökologie"
+                                        {
+                                            "aspect": "technologie-transformation",
+                                            "specification": "Technologische Einflüsse auf gesellschaftliche Debatten erkennen."
+                                        },
+                                        {
+                                            "aspect": "ökologie",
+                                            "specification": "Ökologische Aspekte in politischen Diskussionen einbeziehen."
+                                        }
                                     ],
                                     "language_aspects": [
-                                        "rezeption-audiovisuell",
-                                        "interaktion-kollaboration-mündlich",
-                                        "produktion-schriftlich-bildlich"
+                                        {
+                                            "aspect": "rezeption-audiovisuell",
+                                            "specification": "Debatten und Reportagen audiovisuell verfolgen."
+                                        },
+                                        {
+                                            "aspect": "interaktion-kollaboration-mündlich",
+                                            "specification": "Gemeinsam Positionen entwickeln und vertreten."
+                                        },
+                                        {
+                                            "aspect": "produktion-schriftlich-bildlich",
+                                            "specification": "Eigene Standpunkte schriftlich und bildlich formulieren."
+                                        }
                                     ]
                                 }
                             ]

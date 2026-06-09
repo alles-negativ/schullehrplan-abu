@@ -7,10 +7,10 @@
 
     let {
         references,
-        inheritedEssentialCompetences = [],
+        topicNumber,
     }: {
         references: IndividualReference[];
-        inheritedEssentialCompetences?: string[];
+        topicNumber?: number;
     } = $props();
 
     let collapsedByIndex = $state<Record<number, boolean>>({});
@@ -30,6 +30,7 @@
 
 {#if references.length > 0}
     <section class="referenze">
+        <h4 class="section-label">Lebensbezüge und Kompetenzen</h4>
         {#each references as ref, index}
             <article
                 class="reference-item"
@@ -41,7 +42,7 @@
                             <div class="reference-title">
                                 {#if ref.number != null}
                                     <span class="reference-heading"
-                                        >{ref.number}. Individueller Lebensbezug
+                                        >{topicNumber}.{ref.number}
                                     </span>
                                 {/if}
                                 <span class="reference-summary"
@@ -93,10 +94,8 @@
                         {#each ref.learning_contents ?? [] as content}
                             <Contents
                                 {content}
-                                inheritedEssentialCompetences={[
-                                    ...inheritedEssentialCompetences,
-                                    ...(ref.essential_competences ?? []),
-                                ]}
+                                {topicNumber}
+                                referenceNumber={ref.number}
                             />
                         {/each}
                     </ul>
@@ -108,7 +107,7 @@
 
 <style>
     .referenze {
-        margin-top: 1rem;
+        margin-top: 80px;
     }
 
     .reference-item {
@@ -116,7 +115,7 @@
         margin-top: 0.65rem;
         border: 1.5px solid var(--color-black);
         border-radius: 30px; /* must remain that way*/
-        padding: 1.2rem 2rem;
+        padding: 23px 33px 30px 33px;
         background: var(--color-white);
     }
 
@@ -131,59 +130,60 @@
     }
 
     .reference-summary :global(p) {
-        margin: 0.12rem 0 0;
-        font-size: var(--h3-size);
-        line-height: var(--h3-line-height);
-        font-weight: var(--h3-weight);
-        letter-spacing: var(--h3-letter-spacing);
-        color: #2d2d31;
+        margin: 5px 0 0;
+        font-size: var(--h2-size);
+        line-height: var(--h2-line-height);
+        font-weight: var(--h2-weight);
+        letter-spacing: var(--h2-letter-spacing);
+        color: var(--color-black);
     }
 
     .reference-heading {
         display: block;
-        font-size: var(--h4-size);
-        line-height: var(--h4-line-height);
-        font-weight: var(--h4-weight);
-        letter-spacing: var(--h4-letter-spacing);
-        color: #2d2d31;
+        font-size: var(--h5-size);
+        line-height: var(--h5-line-height);
+        font-weight: var(--h5-weight);
+        letter-spacing: var(--h5-letter-spacing);
+        color: var(--color-black);
     }
 
     .reference-lessons {
         margin: 0;
         position: absolute;
-        right: -1rem;
-        bottom: 0;
+        right: -9px;
+        bottom: -13px;
         font-family: var(--font-mono);
         font-size: var(--h6-size);
         line-height: var(--h6-line-height);
         font-weight: var(--h6-weight);
         letter-spacing: var(--h6-letter-spacing);
-        color: #3f3f46;
+        color: var(--color-black);
     }
 
     .reference-toggle {
         position: absolute;
-        top: -0rem;
-        right: -0.8rem;
+        top: -2px;
+        right: -12px;
         border: 0;
         border-radius: 9999px;
-        width: 1.55rem;
-        height: 1.55rem;
+        width: 52px;
+        height: 52px;
         display: inline-grid;
         place-items: center;
-        background: #2f2f33;
+        background: var(--color-darkblue);
+        border: 1.5px solid var(--color-black);
         padding: 0;
         cursor: pointer;
         transition: background-color 120ms ease;
     }
 
     .reference-toggle:hover {
-        background: #1f1f22;
+        background: var(--color-black);
     }
 
     .reference-toggle-icon {
-        width: 1rem;
-        height: 1rem;
+        /* width: 40px; */
+        height: 30px;
         display: block;
         transform: rotate(180deg);
         transition: transform 120ms ease;
@@ -201,5 +201,9 @@
         margin: 0;
         padding: 0;
         list-style: none;
+    }
+
+    .section-label {
+        margin-left: 33px;
     }
 </style>

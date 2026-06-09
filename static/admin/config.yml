@@ -51,6 +51,18 @@ collections:
                             name: description,
                             widget: markdown,
                         }
+                      - {
+                            label: Detaillierte Erweiterung,
+                            name: additional_description,
+                            widget: markdown,
+                            required: false,
+                        }
+                      - {
+                            label: Kerninhalte,
+                            name: kerninhalte,
+                            widget: text,
+                            required: false,
+                        }
                       - label: Schlüsselkompetenzen
                         name: essential_competences
                         widget: relation

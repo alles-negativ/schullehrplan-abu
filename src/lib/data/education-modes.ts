@@ -22,6 +22,10 @@ export type Topic = {
 	description?: string;
 	beschreibung?: string;
 	body?: string;
+	additional_description?: string;
+	detaillierte_erweiterung?: string;
+	kerninhalte?: string;
+	core_contents?: string;
 	number?: number;
 	lessons?: number;
 	essential_competences?: string[];
@@ -131,6 +135,12 @@ export const getTopicTitle = (topic: Topic): string => topic.title ?? topic.tite
 
 export const getTopicDescription = (topic: Topic): string | undefined =>
 	topic.description ?? topic.beschreibung ?? topic.body;
+
+export const getAdditionalTopicDescription = (topic: Topic): string | undefined =>
+	topic.additional_description ?? topic.detaillierte_erweiterung;
+
+export const getTopicCoreContents = (topic: Topic): string | undefined =>
+	topic.kerninhalte ?? topic.core_contents;
 
 export const getCompetenceBySlug = (slug: string): Competence | undefined => competenceBySlug[slug];
 

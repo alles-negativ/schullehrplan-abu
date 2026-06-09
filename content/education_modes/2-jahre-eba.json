@@ -10,6 +10,8 @@
                     "title": "Ins Berufsleben einsteigen",
                     "lessons": 22,
                     "description": "Ich finde meinen Platz in der Berufswelt und gestalte meinen Einstieg in die Arbeits- und Ausbildungswelt aktiv, reflektiert und verantwortungsbewusst. Der Beginn meiner beruflichen Grundbildung ist für mich der Übergang in eine neue Lebensphase. Ich übernehme eine neue Rolle im Betrieb und in der Schule, lerne Anforderungen, Regeln und Kommunikationsformen kennen und orientiere mich in einer neuen Umgebung.\nDabei setze ich mich mit wichtigen Dokumenten wie Lehrvertrag und Hausordnung auseinander, lerne meine Rechte und Pflichten kennen, entwickle meine Lern- und Arbeitstechniken weiter und sammle erste Erfahrungen in Zusammenarbeit und Kommunikation.",
+                    "kerninhalte": "Lehrvertragsrecht, Nutzung IT-Infrastruktur, Kommunikationsregeln, Lernplanung, Lernstrategien inkl. KI-Nutzung, Bedürfnisse, Budget, Schuldenprävention",
+                    "additional_description": "Ich setze mich mit den Inhalten meines Lehrvertrags auseinander und erkenne meine Rechte und Pflichten im Berufsalltag. Dazu lese und verarbeite ich unterschiedliche Quellen, z. B. Verträge oder betriebliche Regelwerke und nutze Informationen gezielt für meine Situation. Ausserdem mache ich erste Erfahr- ungen damit, wie in meiner neuen Rolle kommuniziert wird, wie Zusammenarbeit im Team gelingt und wie Konflikte fair gelöst werden. Dabei tausche ich mich mit anderen Lernenden und Mitarbeitenden über Erlebnisse und Herausforderungen aus und bringe meine Sichtweise ein. Ich erweitere meine Lern- und Arbeits- techniken und gehe bei meinem Einstieg in die Arbeitswelt bewusst mit meinen Ressourcen um, indem ich meine eigene Arbeit gezielt organisiere. Ich gehe mit meinem Geld verantwortungsbewusst um und lerne, meine Ausgaben zu planen und zu kontrollieren. So gestalte ich meinen Alltag im neuen Lebensabschnitt eigenständig und nachhaltig.",
                     "individual_reference": [
                         {
                             "learning_contents": [
@@ -39,13 +41,13 @@
                                     ]
                                 }
                             ],
-                            "title": "Ich finde mich im Betrieb und in der Berufsfachschule zurecht, kenne Lernstrategien, achte auf mich und arbeite ressourcenschonend.",
+                            "title": "Ich finde mich in der Berufsfachschule zurecht, kenne Lernstrategien, achte auf mich und arbeite ressourcenschonend.",
                             "number": 1,
-                            "lessons": 11,
+                            "lessons": 20,
                             "essential_competences": ["quellen-unterscheiden"]
                         },
                         {
-                            "title": "Ich finde mich im Betrieb und in der Berufsfachschule zurecht, kenne Lernstrategien, achte auf mich und arbeite ressourcenschonend.",
+                            "title": "Ich lerne effektiv und setze meine Ressourcen effizient ein.",
                             "number": 2,
                             "lessons": 11,
                             "learning_contents": [

@@ -8,10 +8,12 @@
 
     let {
         content,
-        inheritedEssentialCompetences = [],
+        topicNumber,
+        referenceNumber,
     }: {
         content: LearningContent;
-        inheritedEssentialCompetences?: string[];
+        topicNumber?: number;
+        referenceNumber?: number;
     } = $props();
 
     const title = $derived(content.titel ?? content.title ?? "");
@@ -26,17 +28,6 @@
             .map((slug) => getCompetenceBySlug(slug))
             .filter((entry): entry is Competence => Boolean(entry)),
     );
-    const essentialCompetences = $derived(
-        Array.from(
-            new Set([
-                ...(inheritedEssentialCompetences ?? []),
-                ...(content.essential_competences ?? []),
-            ]),
-        )
-            .map((slug) => getCompetenceBySlug(slug))
-            .filter((entry): entry is Competence => Boolean(entry)),
-    );
-
     let selectedCompetence = $state<Competence | null>(null);
     const closeCompetenceModal = () => (selectedCompetence = null);
     const onBackdropKeydown = (event: KeyboardEvent) => {
@@ -52,9 +43,14 @@
 </script>
 
 <li class="content-item">
+    <div class="line-container">
+        <div class="line"></div>
+    </div>
     <div class="content-body">
         {#if content.number != null}
-            <p class="content-label">Lerninhalt {content.number}</p>
+            <p class="content-label">
+                {topicNumber}.{referenceNumber}.{content.number}
+            </p>
         {/if}
         <!-- Content is authored in CMS markdown -->
         <div class="content-text">{@html html}</div>
@@ -79,20 +75,6 @@
                 <div class="tag-group">
                     <span class="tag-group-label">Sprachmodi</span>
                     {#each languageAspects as item}
-                        <button
-                            type="button"
-                            class="tag"
-                            style={`--tag-color: ${item.color ?? "#64748b"}`}
-                            onclick={() => (selectedCompetence = item)}
-                            >{item.title}</button
-                        >
-                    {/each}
-                </div>
-            {/if}
-            {#if essentialCompetences.length > 0}
-                <div class="tag-group">
-                    <span class="tag-group-label">Schlüsselkompetenzen</span>
-                    {#each essentialCompetences as item}
                         <button
                             type="button"
                             class="tag"
@@ -146,15 +128,18 @@
 
 <style>
     .content-item {
-        margin: 3rem 0 0;
+        margin: 0px 0 80px 0;
+    }
+    .content-item:last-child {
+        margin-bottom: 0px;
     }
 
     .content-text :global(p) {
         margin: 0;
-        font-size: var(--body-size);
-        line-height: var(--body-line-height);
-        font-weight: var(--body-weight);
-        letter-spacing: var(--body-letter-spacing);
+        font-size: var(--p-size);
+        line-height: var(--p-line-height);
+        font-weight: var(--p-weight);
+        letter-spacing: var(--p-letter-spacing);
     }
 
     .content-body {
@@ -166,11 +151,11 @@
 
     .content-label {
         margin: 0;
-        font-size: var(--h4-size);
-        line-height: var(--h4-line-height);
-        font-weight: var(--h4-weight);
-        letter-spacing: var(--h4-letter-spacing);
-        color: #2f2f33;
+        font-size: var(--h5-size);
+        line-height: var(--h5-line-height);
+        font-weight: var(--h5-weight);
+        letter-spacing: var(--h5-letter-spacing);
+        color: var(--color-black);
     }
 
     .content-tags {
@@ -261,5 +246,12 @@
 
     .modal-description :global(p) {
         margin: 0.5rem 0;
+    }
+
+    .line {
+        width: 100%;
+        height: 8px;
+        background: var(--color-background);
+        margin: 35px 0 35px 0;
     }
 </style>

@@ -2,6 +2,7 @@
     import { marked } from "marked";
     import { slide } from "svelte/transition";
     import arrowIconSmall from "$lib/assets/arrowIconSmall.png";
+    import CompetenceModal from "$lib/components/CompetenceModal.svelte";
     import Referenze from "$lib/components/Referenze.svelte";
     import {
         getAdditionalTopicDescription,
@@ -30,17 +31,6 @@
     );
 
     let selectedCompetence = $state<Competence | null>(null);
-    const closeCompetenceModal = () => (selectedCompetence = null);
-    const onBackdropKeydown = (event: KeyboardEvent) => {
-        if (event.key === "Escape") {
-            closeCompetenceModal();
-        }
-    };
-    const onBackdropClick = (event: MouseEvent) => {
-        if (event.target === event.currentTarget) {
-            closeCompetenceModal();
-        }
-    };
 </script>
 
 <article class="topic">
@@ -128,42 +118,7 @@
     />
 </article>
 
-{#if selectedCompetence}
-    <div
-        class="modal-backdrop"
-        role="button"
-        tabindex="0"
-        aria-label="Kompetenz-Dialog schliessen"
-        onclick={onBackdropClick}
-        onkeydown={onBackdropKeydown}
-    >
-        <div
-            class="modal-card"
-            role="dialog"
-            tabindex="-1"
-            aria-modal="true"
-            aria-label={`Kompetenz: ${selectedCompetence.title}`}
-            style={`--modal-color: ${selectedCompetence.color ?? "#334155"}`}
-        >
-            <button
-                class="modal-close"
-                type="button"
-                onclick={closeCompetenceModal}>Schliessen</button
-            >
-            <h4>{selectedCompetence.title}</h4>
-            {#if selectedCompetence.aspect}
-                <p class="modal-aspect">{selectedCompetence.aspect}</p>
-            {/if}
-            {#if selectedCompetence.description}
-                <div class="modal-description">
-                    {@html marked.parse(
-                        selectedCompetence.description,
-                    ) as string}
-                </div>
-            {/if}
-        </div>
-    </div>
-{/if}
+<CompetenceModal bind:competence={selectedCompetence} />
 
 <style>
     .content-wrap {
@@ -286,46 +241,4 @@
         cursor: pointer;
     } */
 
-    .modal-backdrop {
-        position: fixed;
-        inset: 0;
-        display: grid;
-        place-items: center;
-        padding: 1rem;
-        z-index: 1000;
-        border: 0;
-        width: 100%;
-        text-align: initial;
-    }
-
-    .modal-card {
-        width: min(42rem, 100%);
-        padding: 1rem;
-        border-radius: 0.75rem;
-        border: 1px solid color-mix(in srgb, var(--modal-color) 55%, #1f2937);
-        background: color-mix(in srgb, var(--modal-color) 18%, white);
-        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
-    }
-
-    .modal-close {
-        float: right;
-        border: 1px solid #64748b;
-        border-radius: 0.45rem;
-        background: #ffffff;
-        padding: 0.25rem 0.6rem;
-        cursor: pointer;
-    }
-
-    .modal-aspect {
-        margin-top: 0.15rem;
-        color: #334155;
-        font-size: var(--h4-size);
-        line-height: var(--h4-line-height);
-        font-weight: var(--h4-weight);
-        letter-spacing: var(--h4-letter-spacing);
-    }
-
-    .modal-description :global(p) {
-        margin: 0.5rem 0;
-    }
 </style>

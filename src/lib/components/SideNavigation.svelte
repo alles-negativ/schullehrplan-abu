@@ -156,6 +156,7 @@
         position: absolute;
         top: -70px;
         margin-left: 30px;
+        z-index: 10000;
     }
 
     .lessons-toggle-label {
@@ -164,7 +165,7 @@
         font-family: var(--font-mono);
         font-weight: var(--h6-weight);
         letter-spacing: var(--h6-letter-spacing);
-        color: #2d2d31;
+        color: var(--color-black);
         white-space: nowrap;
     }
 

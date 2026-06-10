@@ -62,17 +62,17 @@
         ];
     };
 
-    const pickRandomAspect = () =>
-        aspectOrder[Math.floor(Math.random() * aspectOrder.length)];
-
-    const pickInitialAspect = () => {
-        const aspect = pickRandomAspect();
-        selectedAspect = aspect;
-        pickFromAspect(aspect, 5 + Math.floor(Math.random() * 4));
+    const pickRandomAspect = (
+        exclude?: (typeof aspectOrder)[number] | null,
+    ) => {
+        const pool = exclude
+            ? aspectOrder.filter((aspect) => aspect !== exclude)
+            : aspectOrder;
+        return pool[Math.floor(Math.random() * pool.length)];
     };
 
     const addMoreCompetences = () => {
-        const aspect = pickRandomAspect();
+        const aspect = pickRandomAspect(selectedAspect);
         selectedAspect = aspect;
         pickFromAspect(aspect, 2 + Math.floor(Math.random() * 3));
     };
@@ -84,7 +84,13 @@
     );
 
     onMount(() => {
-        pickInitialAspect();
+        const aspect = pickRandomAspect();
+        selectedAspect = aspect;
+
+        const timeout = setTimeout(() => {
+            pickFromAspect(aspect, 5 + Math.floor(Math.random() * 4));
+        }, 700);
+        return () => clearTimeout(timeout);
     });
 </script>
 
@@ -151,7 +157,6 @@
 
     .hero {
         position: relative;
-        z-index: 1;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -162,6 +167,8 @@
     }
 
     .hero-text {
+        position: relative;
+        z-index: 1;
         font-size: 50px;
         line-height: 120%;
         font-weight: var(--h1-weight);
@@ -171,11 +178,14 @@
     }
 
     .hero-button {
+        position: relative;
+        z-index: 3;
         pointer-events: auto;
         padding: 50px 100px;
         border: 3px solid var(--color-black);
         border-radius: 9999px;
         background: var(--button-color);
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
         color: var(--color-black);
         font-size: 50px;
         line-height: 56px;

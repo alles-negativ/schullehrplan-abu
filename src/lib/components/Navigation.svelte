@@ -202,6 +202,11 @@
 </nav>
 
 <style>
+    .main-nav {
+        position: relative;
+        z-index: 4;
+    }
+
     .main-nav.has-submenu {
         padding-bottom: 180px;
     }

@@ -50,9 +50,36 @@
             } = Matter;
             const engine = Engine.create();
             engine.gravity.y = 0.9;
+            engine.enableSleeping = true;
             const wallThickness = 320;
+            const stagePadding = 2;
             let mouseConstraint: import("matter-js").MouseConstraint | null =
                 null;
+
+            const clampBodyToStage = (
+                body: import("matter-js").Body,
+                width: number,
+                height: number,
+            ) => {
+                const { min, max } = body.bounds;
+                let dx = 0;
+                let dy = 0;
+
+                if (min.x < stagePadding) dx = stagePadding - min.x;
+                else if (max.x > width - stagePadding)
+                    dx = width - stagePadding - max.x;
+
+                if (min.y < stagePadding) dy = stagePadding - min.y;
+                else if (max.y > height - stagePadding)
+                    dy = height - stagePadding - max.y;
+
+                if (dx || dy) {
+                    Body.setPosition(body, {
+                        x: body.position.x + dx,
+                        y: body.position.y + dy,
+                    });
+                }
+            };
 
             const spawnPill = (pill: PhysicsPill) => {
                 if (activeSlugs.has(pill.id)) return;
@@ -72,13 +99,18 @@
                 }
                 const chamferRadius = Math.min(itemWidth, itemHeight) / 2;
                 const halfH = itemHeight / 2;
-                const x = 80 + Math.random() * Math.max(width - 160, 1);
+                const halfDiag = Math.hypot(itemWidth / 2, halfH);
+                const x =
+                    halfDiag +
+                    Math.random() * Math.max(width - halfDiag * 2, 1);
                 const y = -(halfH + 40 + Math.random() * 120);
                 const body = Bodies.rectangle(x, y, itemWidth, itemHeight, {
-                    restitution: 0.75,
-                    friction: 0.02,
-                    frictionAir: 0.01,
+                    restitution: 0.55,
+                    friction: 0.08,
+                    frictionStatic: 0.12,
+                    frictionAir: 0.02,
                     chamfer: { radius: chamferRadius, quality: 8 },
+                    sleepThreshold: 40,
                 });
                 Body.setAngle(body, (Math.random() - 0.5) * Math.PI);
                 Body.setVelocity(body, { x: 0, y: 0 });
@@ -105,20 +137,20 @@
                 boundaries = [
                     Bodies.rectangle(
                         width / 2,
-                        height + wallInset,
+                        height - stagePadding + wallInset,
                         width,
                         wallThickness,
                         { isStatic: true },
                     ),
                     Bodies.rectangle(
-                        -wallInset,
+                        stagePadding - wallInset,
                         height / 2,
                         wallThickness,
                         height,
                         { isStatic: true },
                     ),
                     Bodies.rectangle(
-                        width + wallInset,
+                        width - stagePadding + wallInset,
                         height / 2,
                         wallThickness,
                         height,
@@ -130,21 +162,18 @@
                 for (const slug of activeSlugs) {
                     const body = worldBodies.get(slug);
                     if (!body) continue;
-                    const size = bodySizes.get(slug);
-                    const halfW = (size?.width ?? 120) / 2;
-                    const halfH = (size?.height ?? 32) / 2;
-                    const clampedX = Math.max(
-                        halfW,
-                        Math.min(width - halfW, body.position.x),
-                    );
-                    const clampedY = Math.max(
-                        halfH,
-                        Math.min(height - halfH, body.position.y),
-                    );
-                    Body.setPosition(body, { x: clampedX, y: clampedY });
+                    clampBodyToStage(body, width, height);
                 }
 
                 const mouse = Mouse.create(stage);
+                stage.removeEventListener(
+                    "wheel",
+                    (
+                        mouse as unknown as {
+                            mousewheel: (event: WheelEvent) => void;
+                        }
+                    ).mousewheel,
+                );
                 if (mouseConstraint) {
                     World.remove(engine.world, mouseConstraint);
                     dragging = false;
@@ -232,6 +261,7 @@
     .interactive-wrap {
         position: absolute;
         inset: 0;
+        z-index: 2;
         width: 100vw;
         height: 100vh;
         pointer-events: none;
@@ -244,6 +274,7 @@
         width: 100%;
         height: 100%;
         overflow: hidden;
+        pointer-events: auto;
     }
 
     .pill {
@@ -259,7 +290,7 @@
         height: 120px;
         padding: 0 1.5rem;
         border-radius: 9999px;
-        border: 2px solid var(--color-black);
+        box-shadow: inset 0 0 0 2px var(--color-black);
         background: var(--pill-color);
         color: var(--color-black);
         user-select: none;

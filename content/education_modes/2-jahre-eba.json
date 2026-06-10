@@ -1,269 +1,269 @@
 {
-    "title": "2-jährige EBA",
-    "overview": "Der Schullehrplan für die zweijährige Grundbildung (EBA) umfasst sechs Themen, die über zwei Jahre verteilt werden. Der Fokus liegt auf der Kompetenzentwicklung und dem Einstieg in die Berufswelt.\n\nDie Themen verbinden zentrale Lebensbereiche mit gesellschaftlichen Inhalten, Sprache und Kommunikation und Schlüsselkompetenzen – vom ersten Schritt ins Berufsleben bis zur Vorbereitung auf die Berufswelt.\n\n**Alle Themen sind einheitlich aufgebaut:** Leitidee, individuelle Lebensbezüge, Kerninhalte, Sprache und Kommunikation, Schlüsselkompetenzen, Kompetenzen und gesellschaftliche Inhalte.",
-    "years": [
+  "title": "2-jährige EBA",
+  "overview": "Der Schullehrplan für die zweijährige Grundbildung (EBA) umfasst sechs Themen, die über zwei Jahre verteilt werden. Der Fokus liegt auf der Kompetenzentwicklung und dem Einstieg in die Berufswelt.\n\nDie Themen verbinden zentrale Lebensbereiche mit gesellschaftlichen Inhalten, Sprache und Kommunikation und Schlüsselkompetenzen – vom ersten Schritt ins Berufsleben bis zur Vorbereitung auf die Berufswelt.\n\n**Alle Themen sind einheitlich aufgebaut:** Leitidee, individuelle Lebensbezüge, Kerninhalte, Sprache und Kommunikation, Schlüsselkompetenzen, Kompetenzen und gesellschaftliche Inhalte.",
+  "years": [
+    {
+      "year": 1,
+      "themenbereiche": [
         {
-            "year": 1,
-            "themenbereiche": [
+          "number": 1,
+          "title": "Ins Berufsleben einsteigen",
+          "description": "Ich finde meinen Platz in der Berufswelt und gestalte meinen Einstieg in die Arbeits- und Ausbildungswelt aktiv, reflektiert und verantwortungsbewusst. Der Beginn meiner beruflichen Grundbildung ist für mich der Übergang in eine neue Lebensphase. Ich übernehme eine neue Rolle im Betrieb und in der Schule, lerne Anforderungen, Regeln und Kommunikationsformen kennen und orientiere mich in einer neuen Umgebung.\nDabei setze ich mich mit wichtigen Dokumenten wie Lehrvertrag und Hausordnung auseinander, lerne meine Rechte und Pflichten kennen, entwickle meine Lern- und Arbeitstechniken weiter und sammle erste Erfahrungen in Zusammenarbeit und Kommunikation.",
+          "kerninhalte": "Lehrvertragsrecht, Nutzung IT-Infrastruktur, Kommunikationsregeln, Lernplanung, Lernstrategien inkl. KI-Nutzung, Bedürfnisse, Budget, Schuldenprävention",
+          "additional_description": "Ich setze mich mit den Inhalten meines Lehrvertrags auseinander und erkenne meine Rechte und Pflichten im Berufsalltag. Dazu lese und verarbeite ich unterschiedliche Quellen, z. B. Verträge oder betriebliche Regelwerke und nutze Informationen gezielt für meine Situation. Ausserdem mache ich erste Erfahr- ungen damit, wie in meiner neuen Rolle kommuniziert wird, wie Zusammenarbeit im Team gelingt und wie Konflikte fair gelöst werden. Dabei tausche ich mich mit anderen Lernenden und Mitarbeitenden über Erlebnisse und Herausforderungen aus und bringe meine Sichtweise ein. Ich erweitere meine Lern- und Arbeits- techniken und gehe bei meinem Einstieg in die Arbeitswelt bewusst mit meinen Ressourcen um, indem ich meine eigene Arbeit gezielt organisiere. Ich gehe mit meinem Geld verantwortungsbewusst um und lerne, meine Ausgaben zu planen und zu kontrollieren. So gestalte ich meinen Alltag im neuen Lebensabschnitt eigenständig und nachhaltig.",
+          "individual_reference": [
+            {
+              "learning_contents": [
                 {
-                    "number": 1,
-                    "title": "Ins Berufsleben einsteigen",
-                    "lessons": 22,
-                    "description": "Ich finde meinen Platz in der Berufswelt und gestalte meinen Einstieg in die Arbeits- und Ausbildungswelt aktiv, reflektiert und verantwortungsbewusst. Der Beginn meiner beruflichen Grundbildung ist für mich der Übergang in eine neue Lebensphase. Ich übernehme eine neue Rolle im Betrieb und in der Schule, lerne Anforderungen, Regeln und Kommunikationsformen kennen und orientiere mich in einer neuen Umgebung.\nDabei setze ich mich mit wichtigen Dokumenten wie Lehrvertrag und Hausordnung auseinander, lerne meine Rechte und Pflichten kennen, entwickle meine Lern- und Arbeitstechniken weiter und sammle erste Erfahrungen in Zusammenarbeit und Kommunikation.",
-                    "kerninhalte": "Lehrvertragsrecht, Nutzung IT-Infrastruktur, Kommunikationsregeln, Lernplanung, Lernstrategien inkl. KI-Nutzung, Bedürfnisse, Budget, Schuldenprävention",
-                    "additional_description": "Ich setze mich mit den Inhalten meines Lehrvertrags auseinander und erkenne meine Rechte und Pflichten im Berufsalltag. Dazu lese und verarbeite ich unterschiedliche Quellen, z. B. Verträge oder betriebliche Regelwerke und nutze Informationen gezielt für meine Situation. Ausserdem mache ich erste Erfahr- ungen damit, wie in meiner neuen Rolle kommuniziert wird, wie Zusammenarbeit im Team gelingt und wie Konflikte fair gelöst werden. Dabei tausche ich mich mit anderen Lernenden und Mitarbeitenden über Erlebnisse und Herausforderungen aus und bringe meine Sichtweise ein. Ich erweitere meine Lern- und Arbeits- techniken und gehe bei meinem Einstieg in die Arbeitswelt bewusst mit meinen Ressourcen um, indem ich meine eigene Arbeit gezielt organisiere. Ich gehe mit meinem Geld verantwortungsbewusst um und lerne, meine Ausgaben zu planen und zu kontrollieren. So gestalte ich meinen Alltag im neuen Lebensabschnitt eigenständig und nachhaltig.",
-                    "individual_reference": [
-                        {
-                            "learning_contents": [
-                                {
-                                    "titel": "Ich orientiere mich in der Arbeits- und Ausbildungswelt anhand von vielfältigen Informationen wie Hausordnungen, Stipendienverordnung, Lehrvertrag, etc. und hole bei dafür vorgesehenen Kontaktstellen Unterstützung.",
-                                    "number": 1,
-                                    "social_aspects": [
-                                        {
-                                            "aspect": "ethik",
-                                            "specification": "Ethische Fragen beim Einstieg ins Berufsleben reflektieren."
-                                        },
-                                        {
-                                            "aspect": "identität-sozialisation",
-                                            "specification": "Eigene Rolle in Betrieb und Schule einordnen."
-                                        },
-                                        {
-                                            "aspect": "recht",
-                                            "specification": "Rechte und Pflichten aus Lehrvertrag und Regelwerken verstehen."
-                                        },
-                                        {
-                                            "aspect": "technologie-transformation",
-                                            "specification": "IT-Infrastruktur und digitale Kommunikation im Betrieb nutzen."
-                                        }
-                                    ],
-                                    "language_aspects": [
-                                        {
-                                            "aspect": "rezeption-mündlich",
-                                            "specification": "Mündliche Informationen in Betrieb und Schule verstehen."
-                                        },
-                                        {
-                                            "aspect": "produktion-schriftlich-bildlich",
-                                            "specification": "Schriftliche und bildliche Inhalte für den Einstieg erstellen."
-                                        },
-                                        {
-                                            "aspect": "produktion-multimedial",
-                                            "specification": "Multimediale Formate für die Orientierung einsetzen."
-                                        }
-                                    ]
-                                },
-                                {
-                                    "titel": "Ich kann Finanzierungsformen (z. B. Abo mit Ratenzahlung, Leasing, Kredit) unterscheiden, deren Konsequenzen abschätzen und eine für mich passende Option begründet auswählen.",
-                                    "number": 2,
-                                    "social_aspects": [
-                                        {
-                                            "aspect": "ethik",
-                                            "specification": "Verantwortungsvollen Umgang mit Finanzierungsformen beurteilen."
-                                        },
-                                        {
-                                            "aspect": "politik",
-                                            "specification": "Gesellschaftliche Rahmenbedingungen von Konsum und Kredit einordnen."
-                                        }
-                                    ],
-                                    "language_aspects": [
-                                        {
-                                            "aspect": "rezeption-mündlich",
-                                            "specification": "Beratungsgespräche zu Finanzierungsoptionen verstehen."
-                                        },
-                                        {
-                                            "aspect": "rezeption-audiovisuell",
-                                            "specification": "Audiovisuelle Informationen zu Krediten und Abos auswerten."
-                                        },
-                                        {
-                                            "aspect": "interaktion-kollaboration-mündlich",
-                                            "specification": "Finanzierungsentscheidungen mündlich begründen und diskutieren."
-                                        }
-                                    ]
-                                }
-                            ],
-                            "title": "Ich finde mich in der Berufsfachschule zurecht, kenne Lernstrategien, achte auf mich und arbeite ressourcenschonend.",
-                            "number": 1,
-                            "lessons": 20,
-                            "essential_competences": ["quellen-unterscheiden"]
-                        },
-                        {
-                            "title": "Ich lerne effektiv und setze meine Ressourcen effizient ein.",
-                            "number": 2,
-                            "lessons": 11,
-                            "learning_contents": [
-                                {
-                                    "titel": "Ich orientiere mich in der Arbeits- und Ausbildungswelt anhand von vielfältigen Informationen wie Hausordnungen, Stipendienverordnung, Lehrvertrag, etc. und hole bei dafür vorgesehenen Kontaktstellen Unterstützung.",
-                                    "number": 1,
-                                    "social_aspects": [
-                                        {
-                                            "aspect": "recht",
-                                            "specification": "Relevante Regelungen für Lern- und Arbeitsorganisation anwenden."
-                                        },
-                                        {
-                                            "aspect": "technologie-transformation",
-                                            "specification": "Digitale Werkzeuge für effizientes Lernen einsetzen."
-                                        },
-                                        {
-                                            "aspect": "ökologie",
-                                            "specification": "Ressourcenschonendes Arbeiten im Alltag umsetzen."
-                                        }
-                                    ],
-                                    "language_aspects": [
-                                        {
-                                            "aspect": "rezeption-audiovisuell",
-                                            "specification": "Lernvideos und Anleitungen verstehen und nutzen."
-                                        },
-                                        {
-                                            "aspect": "rezeption-schriftlich-bildlich",
-                                            "specification": "Lernpläne und Arbeitsanweisungen lesen und umsetzen."
-                                        }
-                                    ]
-                                }
-                            ]
-                        }
-                    ],
-                    "essential_competences": [
-                        "quellen-unterscheiden",
-                        "partizipation",
-                        "werthaltungen-reflektieren",
-                        "lebensphasen-planen"
-                    ]
+                  "titel": "Ich orientiere mich in der Arbeits- und Ausbildungswelt anhand von vielfältigen Informationen wie Hausordnungen, Stipendienverordnung, Lehrvertrag, etc. und hole bei dafür vorgesehenen Kontaktstellen Unterstützung.",
+                  "number": 1,
+                  "social_aspects": [
+                    {
+                      "aspect": "ethik",
+                      "specification": "Ethische Fragen beim Einstieg ins Berufsleben reflektieren."
+                    },
+                    {
+                      "aspect": "identität-sozialisation",
+                      "specification": "Eigene Rolle in Betrieb und Schule einordnen."
+                    },
+                    {
+                      "aspect": "recht",
+                      "specification": "Rechte und Pflichten aus Lehrvertrag und Regelwerken verstehen."
+                    },
+                    {
+                      "aspect": "technologie-transformation",
+                      "specification": "IT-Infrastruktur und digitale Kommunikation im Betrieb nutzen."
+                    }
+                  ],
+                  "language_aspects": [
+                    {
+                      "aspect": "rezeption-mündlich",
+                      "specification": "Mündliche Informationen in Betrieb und Schule verstehen."
+                    },
+                    {
+                      "aspect": "produktion-schriftlich-bildlich",
+                      "specification": "Schriftliche und bildliche Inhalte für den Einstieg erstellen."
+                    },
+                    {
+                      "aspect": "produktion-multimedial",
+                      "specification": "Multimediale Formate für die Orientierung einsetzen."
+                    }
+                  ]
                 },
                 {
-                    "number": 2,
-                    "title": "Bewusst kunsumieren und handeln",
-                    "lessons": 22,
-                    "description": "Ich finde meinen Platz in der Berufswelt und gestalte meinen Einstieg in die Arbeits- und Ausbildungswelt aktiv, reflektiert und verantwortungsbewusst. Der Beginn meiner beruflichen Grundbildung ist für mich der Übergang in eine neue Lebensphase. Ich übernehme eine neue Rolle im Betrieb und in der Schule, lerne Anforderungen, Regeln und Kommunikationsformen kennen und orientiere mich in einer neuen Umgebung. Dabei setze ich mich mit wichtigen Dokumenten wie Lehrvertrag und Hausordnung auseinander, lerne meine Rechte und Pflichten kennen, entwickle meine Lern- und Arbeitstechniken weiter und sammle erste Erfahrungen in Zusammenarbeit und Kommunikation.",
-                    "essential_competences": [
-                        "quellen-unterscheiden",
-                        "partizipation",
-                        "werthaltungen-reflektieren"
-                    ],
-                    "individual_reference": [
-                        {
-                            "title": "Ich orientiere mich in der Arbeits- und Ausbildungswelt anhand von vielfältigen Informationen wie Hausordnungen, Stipendienverordnung, Lehrvertrag, etc. und hole bei dafür vorgesehenen Kontaktstellen Unterstützung.",
-                            "number": 1,
-                            "lessons": 14,
-                            "learning_contents": [
-                                {
-                                    "titel": "Ich orientiere mich in der Arbeits- und Ausbildungswelt anhand von vielfältigen Informationen wie Hausordnungen, Stipendienverordnung, Lehrvertrag, etc. und hole bei dafür vorgesehenen Kontaktstellen Unterstützung.",
-                                    "number": 1,
-                                    "social_aspects": [
-                                        {
-                                            "aspect": "technologie-transformation",
-                                            "specification": "Digitale Informationsquellen beim Konsumverhalten nutzen."
-                                        },
-                                        {
-                                            "aspect": "recht",
-                                            "specification": "Verbraucherrechte und gesetzliche Vorgaben beim Konsum beachten."
-                                        }
-                                    ],
-                                    "language_aspects": [
-                                        {
-                                            "aspect": "rezeption-mündlich",
-                                            "specification": "Beratungs- und Verkaufsgespräche kritisch verfolgen."
-                                        },
-                                        {
-                                            "aspect": "interaktion-kollaboration-mündlich",
-                                            "specification": "Kaufentscheidungen im Austausch mit anderen begründen."
-                                        },
-                                        {
-                                            "aspect": "rezeption-audiovisuell",
-                                            "specification": "Werbung und Produktinformationen audiovisuell analysieren."
-                                        }
-                                    ]
-                                }
-                            ]
-                        }
-                    ]
+                  "titel": "Ich kann Finanzierungsformen (z. B. Abo mit Ratenzahlung, Leasing, Kredit) unterscheiden, deren Konsequenzen abschätzen und eine für mich passende Option begründet auswählen.",
+                  "number": 2,
+                  "social_aspects": [
+                    {
+                      "aspect": "ethik",
+                      "specification": "Verantwortungsvollen Umgang mit Finanzierungsformen beurteilen."
+                    },
+                    {
+                      "aspect": "politik",
+                      "specification": "Gesellschaftliche Rahmenbedingungen von Konsum und Kredit einordnen."
+                    }
+                  ],
+                  "language_aspects": [
+                    {
+                      "aspect": "rezeption-mündlich",
+                      "specification": "Beratungsgespräche zu Finanzierungsoptionen verstehen."
+                    },
+                    {
+                      "aspect": "rezeption-audiovisuell",
+                      "specification": "Audiovisuelle Informationen zu Krediten und Abos auswerten."
+                    },
+                    {
+                      "aspect": "interaktion-kollaboration-mündlich",
+                      "specification": "Finanzierungsentscheidungen mündlich begründen und diskutieren."
+                    }
+                  ]
                 }
-            ],
-            "additional_lessons": 22
+              ],
+              "title": "Ich finde mich in der Berufsfachschule zurecht, kenne Lernstrategien, achte auf mich und arbeite ressourcenschonend.",
+              "number": 1,
+              "lessons": 20,
+              "essential_competences": [
+                "quellen-unterscheiden"
+              ]
+            },
+            {
+              "title": "Ich lerne effektiv und setze meine Ressourcen effizient ein.",
+              "number": 2,
+              "lessons": 11,
+              "learning_contents": [
+                {
+                  "titel": "Ich orientiere mich in der Arbeits- und Ausbildungswelt anhand von vielfältigen Informationen wie Hausordnungen, Stipendienverordnung, Lehrvertrag, etc. und hole bei dafür vorgesehenen Kontaktstellen Unterstützung.",
+                  "number": 1,
+                  "social_aspects": [
+                    {
+                      "aspect": "recht",
+                      "specification": "Relevante Regelungen für Lern- und Arbeitsorganisation anwenden."
+                    },
+                    {
+                      "aspect": "technologie-transformation",
+                      "specification": "Digitale Werkzeuge für effizientes Lernen einsetzen."
+                    },
+                    {
+                      "aspect": "ökologie",
+                      "specification": "Ressourcenschonendes Arbeiten im Alltag umsetzen."
+                    }
+                  ],
+                  "language_aspects": [
+                    {
+                      "aspect": "rezeption-audiovisuell",
+                      "specification": "Lernvideos und Anleitungen verstehen und nutzen."
+                    },
+                    {
+                      "aspect": "rezeption-schriftlich-bildlich",
+                      "specification": "Lernpläne und Arbeitsanweisungen lesen und umsetzen."
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "essential_competences": [
+            "quellen-unterscheiden",
+            "partizipation",
+            "werthaltungen-reflektieren",
+            "lebensphasen-planen"
+          ]
         },
         {
-            "year": 2,
-            "themenbereiche": [
+          "number": 2,
+          "title": "Bewusst kunsumieren und handeln",
+          "description": "Ich finde meinen Platz in der Berufswelt und gestalte meinen Einstieg in die Arbeits- und Ausbildungswelt aktiv, reflektiert und verantwortungsbewusst. Der Beginn meiner beruflichen Grundbildung ist für mich der Übergang in eine neue Lebensphase. Ich übernehme eine neue Rolle im Betrieb und in der Schule, lerne Anforderungen, Regeln und Kommunikationsformen kennen und orientiere mich in einer neuen Umgebung. Dabei setze ich mich mit wichtigen Dokumenten wie Lehrvertrag und Hausordnung auseinander, lerne meine Rechte und Pflichten kennen, entwickle meine Lern- und Arbeitstechniken weiter und sammle erste Erfahrungen in Zusammenarbeit und Kommunikation.",
+          "essential_competences": [
+            "quellen-unterscheiden",
+            "partizipation",
+            "werthaltungen-reflektieren"
+          ],
+          "individual_reference": [
+            {
+              "title": "Ich orientiere mich in der Arbeits- und Ausbildungswelt anhand von vielfältigen Informationen wie Hausordnungen, Stipendienverordnung, Lehrvertrag, etc. und hole bei dafür vorgesehenen Kontaktstellen Unterstützung.",
+              "number": 1,
+              "lessons": 14,
+              "learning_contents": [
                 {
-                    "number": 5,
-                    "title": "Meinung bilden, akzeptieren, mitgestalten",
-                    "lessons": 32,
-                    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-                    "essential_competences": [
-                        "lebensphasen-planen",
-                        "verständnis-fördern",
-                        "werthaltungen-reflektieren"
-                    ],
-                    "individual_reference": [
-                        {
-                            "title": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-                            "number": 1,
-                            "lessons": 26,
-                            "learning_contents": [
-                                {
-                                    "titel": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-                                    "number": 1,
-                                    "social_aspects": [
-                                        {
-                                            "aspect": "kultur",
-                                            "specification": "Kulturelle Vielfalt bei der Meinungsbildung berücksichtigen."
-                                        },
-                                        {
-                                            "aspect": "recht",
-                                            "specification": "Rechtliche Grenzen der Meinungsäusserung kennen."
-                                        },
-                                        {
-                                            "aspect": "technologie-transformation",
-                                            "specification": "Digitale Medien bei der Meinungsbildung kritisch nutzen."
-                                        }
-                                    ],
-                                    "language_aspects": [
-                                        {
-                                            "aspect": "rezeption-audiovisuell",
-                                            "specification": "Audiovisuelle Medienbeiträge verstehen und einordnen."
-                                        },
-                                        {
-                                            "aspect": "interaktion-kollaboration-mündlich",
-                                            "specification": "Standpunkte in Diskussionen vertreten und zuhören."
-                                        },
-                                        {
-                                            "aspect": "rezeption-schriftlich-bildlich",
-                                            "specification": "Schriftliche und bildliche Argumente in Medien analysieren."
-                                        }
-                                    ]
-                                },
-                                {
-                                    "titel": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-                                    "number": 2,
-                                    "social_aspects": [
-                                        {
-                                            "aspect": "technologie-transformation",
-                                            "specification": "Technologische Einflüsse auf gesellschaftliche Debatten erkennen."
-                                        },
-                                        {
-                                            "aspect": "ökologie",
-                                            "specification": "Ökologische Aspekte in politischen Diskussionen einbeziehen."
-                                        }
-                                    ],
-                                    "language_aspects": [
-                                        {
-                                            "aspect": "rezeption-audiovisuell",
-                                            "specification": "Debatten und Reportagen audiovisuell verfolgen."
-                                        },
-                                        {
-                                            "aspect": "interaktion-kollaboration-mündlich",
-                                            "specification": "Gemeinsam Positionen entwickeln und vertreten."
-                                        },
-                                        {
-                                            "aspect": "produktion-schriftlich-bildlich",
-                                            "specification": "Eigene Standpunkte schriftlich und bildlich formulieren."
-                                        }
-                                    ]
-                                }
-                            ]
-                        }
-                    ]
+                  "titel": "Ich orientiere mich in der Arbeits- und Ausbildungswelt anhand von vielfältigen Informationen wie Hausordnungen, Stipendienverordnung, Lehrvertrag, etc. und hole bei dafür vorgesehenen Kontaktstellen Unterstützung.",
+                  "number": 1,
+                  "social_aspects": [
+                    {
+                      "aspect": "technologie-transformation",
+                      "specification": "Digitale Informationsquellen beim Konsumverhalten nutzen."
+                    },
+                    {
+                      "aspect": "recht",
+                      "specification": "Verbraucherrechte und gesetzliche Vorgaben beim Konsum beachten."
+                    }
+                  ],
+                  "language_aspects": [
+                    {
+                      "aspect": "rezeption-mündlich",
+                      "specification": "Beratungs- und Verkaufsgespräche kritisch verfolgen."
+                    },
+                    {
+                      "aspect": "interaktion-kollaboration-mündlich",
+                      "specification": "Kaufentscheidungen im Austausch mit anderen begründen."
+                    },
+                    {
+                      "aspect": "rezeption-audiovisuell",
+                      "specification": "Werbung und Produktinformationen audiovisuell analysieren."
+                    }
+                  ]
                 }
-            ],
-            "additional_lessons": 22
+              ]
+            }
+          ]
         }
-    ]
+      ],
+      "additional_lessons": 22
+    },
+    {
+      "year": 2,
+      "themenbereiche": [
+        {
+          "number": 5,
+          "title": "Meinung bilden, akzeptieren, mitgestalten",
+          "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+          "essential_competences": [
+            "lebensphasen-planen",
+            "verständnis-fördern",
+            "werthaltungen-reflektieren"
+          ],
+          "individual_reference": [
+            {
+              "title": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+              "number": 1,
+              "lessons": 26,
+              "learning_contents": [
+                {
+                  "titel": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+                  "number": 1,
+                  "social_aspects": [
+                    {
+                      "aspect": "kultur",
+                      "specification": "Kulturelle Vielfalt bei der Meinungsbildung berücksichtigen."
+                    },
+                    {
+                      "aspect": "recht",
+                      "specification": "Rechtliche Grenzen der Meinungsäusserung kennen."
+                    },
+                    {
+                      "aspect": "technologie-transformation",
+                      "specification": "Digitale Medien bei der Meinungsbildung kritisch nutzen."
+                    }
+                  ],
+                  "language_aspects": [
+                    {
+                      "aspect": "rezeption-audiovisuell",
+                      "specification": "Audiovisuelle Medienbeiträge verstehen und einordnen."
+                    },
+                    {
+                      "aspect": "interaktion-kollaboration-mündlich",
+                      "specification": "Standpunkte in Diskussionen vertreten und zuhören."
+                    },
+                    {
+                      "aspect": "rezeption-schriftlich-bildlich",
+                      "specification": "Schriftliche und bildliche Argumente in Medien analysieren."
+                    }
+                  ]
+                },
+                {
+                  "titel": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+                  "number": 2,
+                  "social_aspects": [
+                    {
+                      "aspect": "technologie-transformation",
+                      "specification": "Technologische Einflüsse auf gesellschaftliche Debatten erkennen."
+                    },
+                    {
+                      "aspect": "ökologie",
+                      "specification": "Ökologische Aspekte in politischen Diskussionen einbeziehen."
+                    }
+                  ],
+                  "language_aspects": [
+                    {
+                      "aspect": "rezeption-audiovisuell",
+                      "specification": "Debatten und Reportagen audiovisuell verfolgen."
+                    },
+                    {
+                      "aspect": "interaktion-kollaboration-mündlich",
+                      "specification": "Gemeinsam Positionen entwickeln und vertreten."
+                    },
+                    {
+                      "aspect": "produktion-schriftlich-bildlich",
+                      "specification": "Eigene Standpunkte schriftlich und bildlich formulieren."
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "additional_lessons": 22
+    }
+  ],
+  "implementation_examples_pdf": "/uploads/get_started_with_smallpdf.pdf"
 }

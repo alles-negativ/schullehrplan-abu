@@ -242,6 +242,7 @@
         user-select: none;
         pointer-events: none;
         font-weight: 900;
+        letter-spacing: -1.6px;
     }
 
     .tag-specification-label {

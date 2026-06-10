@@ -1,12 +1,13 @@
 <script lang="ts">
     import { browser } from "$app/environment";
+    import pdfIcon from "$lib/assets/pdf-icon.svg";
     import {
         getModeYears,
+        getTopicLessons,
         getTopicTitle,
         getYearLabel,
+        getYearLessons,
         type EducationMode,
-        type Topic,
-        type YearEntry,
     } from "$lib/data/education-modes";
 
     const LESSONS_STORAGE_KEY = "abu-show-lessons";
@@ -37,14 +38,6 @@
         if (browser) {
             localStorage.setItem(LESSONS_STORAGE_KEY, String(showLessons));
         }
-    };
-
-    const getYearLessons = (year: YearEntry) => {
-        const topicLessons = (year.themenbereiche ?? []).reduce(
-            (sum: number, topic: Topic) => sum + (topic.lessons ?? 0),
-            0,
-        );
-        return topicLessons + (year.additional_lessons ?? 0);
     };
 </script>
 
@@ -88,6 +81,7 @@
                     {:else}
                         <ul class="topic-list">
                             {#each year.themenbereiche ?? [] as topic, topicIndex}
+                                {@const topicLessons = getTopicLessons(topic)}
                                 <li>
                                     <a
                                         class="topic-button"
@@ -109,9 +103,9 @@
                                             {/if}
                                             <span>{getTopicTitle(topic)}</span>
                                         </span>
-                                        {#if topic.lessons != null}
+                                        {#if topicLessons > 0}
                                             <span class="topic-lessons"
-                                                >{topic.lessons}</span
+                                                >{topicLessons}</span
                                             >
                                         {/if}
                                     </a>
@@ -127,6 +121,18 @@
                     {/if}
                 </section>
             {/each}
+        {/if}
+
+        {#if mode.implementation_examples_pdf}
+            <a
+                class="pdf-link"
+                href={mode.implementation_examples_pdf}
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+                <img src={pdfIcon} alt="" class="pdf-icon" aria-hidden="true" />
+                <span>Umsetzungsbeispiele</span>
+            </a>
         {/if}
     </aside>
 {/if}
@@ -390,6 +396,62 @@
         margin-top: 5px;
     }
 
+    .pdf-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        width: fit-content;
+        max-width: 100%;
+        box-sizing: border-box;
+        margin-top: 10px;
+        padding: 3px 15px 3px 12px;
+        border-radius: 9999px;
+        border: 1.5px solid var(--color-black);
+        background: var(--color-white);
+        color: var(--color-black);
+        text-decoration: none;
+        font-family: var(--font-sans);
+        font-size: var(--h5-size);
+        line-height: var(--h5-line-height);
+        font-weight: var(--h5-weight);
+        letter-spacing: var(--h5-letter-spacing);
+        transition:
+            background-color 120ms ease,
+            color 120ms ease,
+            font-size 350ms cubic-bezier(0.4, 0, 0.2, 1),
+            line-height 350ms cubic-bezier(0.4, 0, 0.2, 1),
+            padding 350ms cubic-bezier(0.4, 0, 0.2, 1),
+            letter-spacing 350ms cubic-bezier(0.4, 0, 0.2, 1),
+            font-weight 350ms cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .side-navigation.is-expanded .pdf-link {
+        font-size: var(--h1-size);
+        line-height: var(--h1-line-height);
+        font-weight: var(--h1-weight);
+        letter-spacing: var(--h1-letter-spacing);
+        padding: 10px 30px 10px 24px;
+        gap: 16px;
+    }
+
+    .pdf-icon {
+        flex-shrink: 0;
+    }
+
+    .side-navigation.is-expanded .pdf-icon {
+        width: 32px;
+        height: 32px;
+    }
+
+    .pdf-link:hover {
+        background: var(--color-darkblue);
+        color: var(--color-white);
+    }
+
+    .pdf-link:hover .pdf-icon {
+        filter: invert(1);
+    }
+
     @media (prefers-reduced-motion: reduce) {
         .toggle-switch,
         .toggle-thumb,
@@ -397,7 +459,8 @@
         .topic-lessons,
         .year-title,
         .lesson-count,
-        .year-meta {
+        .year-meta,
+        .pdf-link {
             transition: none;
         }
     }

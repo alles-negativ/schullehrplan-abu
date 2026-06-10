@@ -96,11 +96,13 @@
         background: var(--color-darkblue);
         padding: 0;
         cursor: pointer;
-        transition: background-color 120ms ease;
+        transition:
+            background-color 120ms ease,
+            brightness 60ms ease;
     }
 
     .modal-close:hover {
-        background: var(--color-black);
+        filter: brightness(1.2);
     }
 
     .modal-close-icon {

@@ -2,28 +2,25 @@
     import { onMount, tick } from "svelte";
     import type { Competence } from "$lib/data/education-modes";
 
-    let { competences = [] }: { competences?: Competence[] } = $props();
+    type PhysicsPill = Competence & { id: string };
+
+    let {
+        competences = [],
+        dragging = $bindable(false),
+    }: { competences?: PhysicsPill[]; dragging?: boolean } = $props();
 
     let containerEl = $state<HTMLDivElement | null>(null);
-    let itemElements = new Map<string, HTMLButtonElement>();
-    let selectedSlug = $state<string | null>(null);
-    let syncBodySizesFn: (() => void) | null = null;
-    let spawnCompetencesFn: ((list: Competence[]) => void) | null = null;
-    let latestCompetences: Competence[] = [];
+    let itemElements = new Map<string, HTMLDivElement>();
+    let spawnCompetencesFn: ((list: PhysicsPill[]) => void) | null = null;
+    let latestCompetences: PhysicsPill[] = [];
 
-    const trackItem = (node: HTMLButtonElement, slug: string) => {
+    const trackItem = (node: HTMLDivElement, slug: string) => {
         itemElements.set(slug, node);
         return {
             destroy() {
                 itemElements.delete(slug);
             },
         };
-    };
-
-    const togglePill = async (slug: string) => {
-        selectedSlug = selectedSlug === slug ? null : slug;
-        await tick();
-        syncBodySizesFn?.();
     };
 
     $effect(() => {
@@ -47,79 +44,48 @@
 
         const setup = async () => {
             const Matter = await import("matter-js");
-            const { Engine, World, Bodies, Body, Mouse, MouseConstraint } =
-                Matter;
+            const {
+                Engine,
+                World,
+                Bodies,
+                Body,
+                Mouse,
+                MouseConstraint,
+                Events,
+            } = Matter;
             const engine = Engine.create();
             engine.gravity.y = 0.9;
             let mouseConstraint: import("matter-js").MouseConstraint | null =
                 null;
 
-            const syncBodySizes = () => {
-                for (const slug of activeSlugs) {
-                    const body = worldBodies.get(slug);
-                    const el = itemElements.get(slug);
-                    if (!body || !el) continue;
-
-                    const targetWidth = el.offsetWidth || 120;
-                    const targetHeight = el.offsetHeight || 32;
-                    const knownSize = bodySizes.get(slug);
-                    const currentWidth = knownSize?.width ?? targetWidth;
-                    const currentHeight = knownSize?.height ?? targetHeight;
-                    if (!currentWidth || !currentHeight) continue;
-
-                    const scaleX = targetWidth / currentWidth;
-                    const scaleY = targetHeight / currentHeight;
-                    if (!Number.isFinite(scaleX) || !Number.isFinite(scaleY))
-                        continue;
-                    if (
-                        Math.abs(scaleX - 1) < 0.01 &&
-                        Math.abs(scaleY - 1) < 0.01
-                    )
-                        continue;
-
-                    Body.scale(body, scaleX, scaleY);
-                    bodySizes.set(slug, {
-                        width: targetWidth,
-                        height: targetHeight,
-                    });
-                }
-            };
-
-            const clearBodies = () => {
-                for (const body of worldBodies.values()) {
-                    World.remove(engine.world, body);
-                }
-                worldBodies.clear();
-                bodySizes.clear();
-                activeSlugs.clear();
-            };
-
-            const spawnBodies = (list: Competence[]) => {
+            const spawnBodies = (list: PhysicsPill[]) => {
                 const width = containerEl?.clientWidth ?? 0;
                 const height = containerEl?.clientHeight ?? 0;
                 if (!width || !height) return;
 
-                clearBodies();
-
                 for (const competence of list) {
-                    const el = itemElements.get(competence.slug);
+                    if (activeSlugs.has(competence.id)) continue;
+
+                    const el = itemElements.get(competence.id);
                     if (!el) continue;
 
                     const itemWidth = el.offsetWidth || 120;
                     const itemHeight = el.offsetHeight || 32;
+                    const chamferRadius = Math.min(itemWidth, itemHeight) / 2;
                     const x = 80 + Math.random() * Math.max(width - 160, 1);
                     const y = -(40 + Math.random() * 120);
                     const body = Bodies.rectangle(x, y, itemWidth, itemHeight, {
                         restitution: 0.75,
                         friction: 0.02,
                         frictionAir: 0.01,
+                        chamfer: { radius: chamferRadius, quality: 8 },
                     });
-                    worldBodies.set(competence.slug, body);
-                    bodySizes.set(competence.slug, {
+                    worldBodies.set(competence.id, body);
+                    bodySizes.set(competence.id, {
                         width: itemWidth,
                         height: itemHeight,
                     });
-                    activeSlugs.add(competence.slug);
+                    activeSlugs.add(competence.id);
                     World.add(engine.world, body);
                 }
             };
@@ -187,6 +153,7 @@
                 const mouse = Mouse.create(stage);
                 if (mouseConstraint) {
                     World.remove(engine.world, mouseConstraint);
+                    dragging = false;
                 }
                 mouseConstraint = MouseConstraint.create(engine, {
                     mouse,
@@ -194,10 +161,15 @@
                         stiffness: 0.2,
                     },
                 });
+                Events.on(mouseConstraint, "startdrag", () => {
+                    dragging = true;
+                });
+                Events.on(mouseConstraint, "enddrag", () => {
+                    dragging = false;
+                });
                 World.add(engine.world, mouseConstraint);
             };
 
-            syncBodySizesFn = syncBodySizes;
             spawnCompetencesFn = spawnBodies;
 
             rebuildScene();
@@ -220,16 +192,15 @@
 
             resizeObserver = new ResizeObserver(() => {
                 rebuildScene();
-                requestAnimationFrame(() => syncBodySizes());
             });
             resizeObserver.observe(stage);
 
             return () => {
                 cancelAnimationFrame(raf);
                 resizeObserver?.disconnect();
+                dragging = false;
                 World.clear(engine.world, false);
                 Engine.clear(engine);
-                syncBodySizesFn = null;
                 spawnCompetencesFn = null;
             };
         };
@@ -247,29 +218,14 @@
 
 <section class="interactive-wrap">
     <div class="physics-stage" bind:this={containerEl}>
-        {#each competences as competence (competence.slug)}
-            <button
-                type="button"
+        {#each competences as competence (competence.id)}
+            <div
                 class="pill"
-                class:selected={selectedSlug === competence.slug}
                 style={`--pill-color: ${competence.color ?? "#64748b"}`}
-                use:trackItem={competence.slug}
-                aria-expanded={selectedSlug === competence.slug}
-                onclick={() => togglePill(competence.slug)}
+                use:trackItem={competence.id}
             >
                 <span class="pill-title">{competence.title}</span>
-                {#if selectedSlug === competence.slug}
-                    {#if competence.description}
-                        <span class="pill-description"
-                            >{competence.description}</span
-                        >
-                    {:else}
-                        <span class="pill-description">
-                            Keine weitere Beschreibung vorhanden.
-                        </span>
-                    {/if}
-                {/if}
-            </button>
+            </div>
         {/each}
     </div>
 </section>
@@ -278,9 +234,11 @@
     .interactive-wrap {
         position: absolute;
         inset: 0;
-        width: 100%;
-        height: 100%;
+        width: 100vw;
+        height: 100vh;
         pointer-events: none;
+        top: -85px;
+        left: -30px;
     }
 
     .physics-stage {
@@ -294,53 +252,35 @@
         position: absolute;
         left: 0;
         top: 0;
+        box-sizing: border-box;
         display: inline-flex;
-        flex-direction: row;
         align-items: center;
         justify-content: center;
-        gap: 0.2rem;
+        width: max-content;
+        max-width: 450px;
+        height: 120px;
+        padding: 0 1.5rem;
         border-radius: 9999px;
-        border: 1.5px solid var(--color-black);
+        border: 2px solid var(--color-black);
         background: var(--pill-color);
         color: var(--color-black);
-        padding: 0px 40px;
-        max-width: 400px;
-        min-width: 200px;
         user-select: none;
         cursor: grab;
         will-change: transform;
         pointer-events: auto;
-        transition:
-            max-width 180ms ease,
-            padding 180ms ease,
-            box-shadow 180ms ease,
-            background 180ms ease;
-        height: 120px;
-        width: fit-content;
     }
 
     .pill-title {
+        min-width: 200px;
+        max-width: 100%;
         font-size: var(--h2-size);
         line-height: var(--h2-line-height);
         font-weight: var(--h2-weight);
         letter-spacing: var(--h2-letter-spacing);
+        text-align: center;
         text-wrap: balance;
-    }
-
-    .pill-description {
-        font-size: var(--body-size);
-        line-height: var(--body-line-height);
-        font-weight: var(--body-weight);
-        letter-spacing: var(--body-letter-spacing);
-        opacity: 0.9;
-    }
-
-    .pill.selected {
-        padding: 0.8rem 1rem;
-        max-width: min(48rem, 90vw);
-        box-shadow: 0 12px 30px
-            color-mix(in srgb, var(--pill-color) 20%, #0f172a 8%);
-        background: color-mix(in srgb, var(--pill-color) 35%, white);
+        overflow-wrap: break-word;
+        hyphens: auto;
     }
 
     .pill:active {

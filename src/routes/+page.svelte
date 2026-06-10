@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { onMount } from "svelte";
     import InteractivePhysics from "$lib/components/InteractivePhysics.svelte";
     import {
         getAllCompetences,
@@ -35,20 +36,45 @@
         },
     ];
 
-    let fallingCompetences = $state<Competence[]>([]);
-    let selectedAspect = $state<(typeof aspectOrder)[number] | null>(null);
+    type FallingCompetence = Competence & { id: string };
 
-    const pickRandomCompetences = () => {
-        const aspect =
-            aspectOrder[Math.floor(Math.random() * aspectOrder.length)];
+    let fallingCompetences = $state<FallingCompetence[]>([]);
+    let selectedAspect = $state<(typeof aspectOrder)[number] | null>(null);
+    let pillDragging = $state(false);
+    let nextPillId = 0;
+
+    const pickFromAspect = (
+        aspect: (typeof aspectOrder)[number],
+        count: number,
+    ) => {
         const pool = getAllCompetences().filter(
             (competence) => competence.aspect === aspect,
         );
-        const count = Math.min(pool.length, 5 + Math.floor(Math.random() * 4));
         const shuffled = [...pool].sort(() => Math.random() - 0.5);
+        const picked = shuffled.slice(0, Math.min(count, pool.length));
 
+        fallingCompetences = [
+            ...fallingCompetences,
+            ...picked.map((competence) => ({
+                ...competence,
+                id: `pill-${nextPillId++}`,
+            })),
+        ];
+    };
+
+    const pickRandomAspect = () =>
+        aspectOrder[Math.floor(Math.random() * aspectOrder.length)];
+
+    const pickInitialAspect = () => {
+        const aspect = pickRandomAspect();
         selectedAspect = aspect;
-        fallingCompetences = shuffled.slice(0, count);
+        pickFromAspect(aspect, 5 + Math.floor(Math.random() * 4));
+    };
+
+    const addMoreCompetences = () => {
+        const aspect = pickRandomAspect();
+        selectedAspect = aspect;
+        pickFromAspect(aspect, 2 + Math.floor(Math.random() * 3));
     };
 
     const aspectColor = $derived(
@@ -56,34 +82,41 @@
             ? (getAspectByTitle(selectedAspect)?.color ?? "#FF9193")
             : "#FF9193",
     );
+
+    onMount(() => {
+        pickInitialAspect();
+    });
 </script>
 
 <main class="start-page">
     <section class="intro-stage" aria-label="Willkommen">
         <div class="hero">
             <p class="hero-text">
-                Ich bin der neue Schullehrplan Allgemeinbildung. Lernen ist bei
-                mir kompetenzorientiert, vernetzt und aufbauend.
+                Ich bin der neue Schullehrplan Allgemeinbildung.
+                <br />
+                Lernen ist bei mir kompetenzorientiert, vernetzt und aufbauend.
             </p>
-            <button
-                type="button"
-                class="hero-button"
-                style={`--button-color: ${aspectColor}`}
-                onclick={pickRandomCompetences}
-            >
-                {#if selectedAspect}
+            {#if selectedAspect}
+                <button
+                    type="button"
+                    class="hero-button"
+                    style={`--button-color: ${aspectColor}`}
+                    disabled={pillDragging}
+                    onclick={addMoreCompetences}
+                >
                     {#if selectedAspect === "Schlüsselkompetenzen"}
                         Schlüssel-kompetenzen
                     {:else}
                         {selectedAspect}
                     {/if}
-                {:else}
-                    Zufällige Kompetenzen
-                {/if}
-            </button>
+                </button>
+            {/if}
         </div>
 
-        <InteractivePhysics competences={fallingCompetences} />
+        <InteractivePhysics
+            competences={fallingCompetences}
+            bind:dragging={pillDragging}
+        />
     </section>
 
     <section class="storytelling" aria-label="Aufbau des Themen-Schullehrplans">
@@ -140,9 +173,9 @@
     .hero-button {
         pointer-events: auto;
         padding: 50px 100px;
-        border: 1.5px solid var(--color-black);
+        border: 3px solid var(--color-black);
         border-radius: 9999px;
-        background: color-mix(in srgb, var(--button-color) 55%, white);
+        background: var(--button-color);
         color: var(--color-black);
         font-size: 50px;
         line-height: 56px;
@@ -151,18 +184,48 @@
         cursor: pointer;
         transition:
             background-color 160ms ease,
-            transform 80ms ease;
+            filter 160ms ease;
         width: 600px;
         height: 240px;
         white-space: pre-line;
     }
 
-    .hero-button:hover {
-        background: color-mix(in srgb, var(--button-color) 70%, white);
+    .hero-button:hover:not(:disabled) {
+        filter: brightness(1.1);
+        animation: hero-shake 3s ease-in-out infinite;
     }
 
-    .hero-button:active {
+    .hero-button:active:not(:disabled) {
+        animation: none;
         transform: scale(0.98);
+    }
+
+    @keyframes hero-shake {
+        0%,
+        18%,
+        100% {
+            transform: rotate(0deg) translateX(0);
+        }
+        3% {
+            transform: rotate(-0.5deg) translateX(-1px);
+        }
+        6% {
+            transform: rotate(0.5deg) translateX(1px);
+        }
+        9% {
+            transform: rotate(-0.35deg) translateX(-1px);
+        }
+        12% {
+            transform: rotate(0.35deg) translateX(1px);
+        }
+        15% {
+            transform: rotate(0deg) translateX(0);
+        }
+    }
+
+    .hero-button:disabled {
+        pointer-events: none;
+        cursor: default;
     }
 
     .storytelling {

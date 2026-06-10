@@ -38,7 +38,6 @@ export type Topic = {
 	kerninhalte?: string;
 	core_contents?: string;
 	number?: number;
-	lessons?: number;
 	essential_competences?: string[];
 	individual_reference?: IndividualReference[];
 };
@@ -54,6 +53,7 @@ export type EducationMode = {
 	title: string;
 	slug: string;
 	overview?: string;
+	implementation_examples_pdf?: string;
 	years?: YearEntry[];
 	lehrjahre?: YearEntry[];
 };
@@ -129,6 +129,7 @@ export const getAllEducationModes = (): EducationMode[] =>
 				title: data.title ?? slug,
 				slug,
 				overview: data.overview,
+				implementation_examples_pdf: data.implementation_examples_pdf,
 				years: data.years,
 				lehrjahre: data.lehrjahre
 			};
@@ -152,6 +153,17 @@ export const getAdditionalTopicDescription = (topic: Topic): string | undefined 
 
 export const getTopicCoreContents = (topic: Topic): string | undefined =>
 	topic.kerninhalte ?? topic.core_contents;
+
+export const getTopicLessons = (topic: Topic): number =>
+	(topic.individual_reference ?? []).reduce((sum, reference) => sum + (reference.lessons ?? 0), 0);
+
+export const getYearLessons = (year: YearEntry): number => {
+	const topicLessons = (year.themenbereiche ?? []).reduce(
+		(sum, topic) => sum + getTopicLessons(topic),
+		0
+	);
+	return topicLessons + (year.additional_lessons ?? 0);
+};
 
 export const getCompetenceBySlug = (slug: string): Competence | undefined => competenceBySlug[slug];
 

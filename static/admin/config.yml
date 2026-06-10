@@ -7,7 +7,7 @@ backend:
     name: git-gateway
     branch: main
 
-media_folder: static/uploads
+media_folder: ../uploads
 public_folder: /uploads
 
 collections:
@@ -28,6 +28,12 @@ collections:
                 widget: markdown,
                 required: false,
             }
+          - {
+                label: Umsetzungsbeispiele (PDF),
+                name: implementation_examples_pdf,
+                widget: file,
+                required: false,
+            }
           - label: Lehrjahre
             name: years
             label_singular: Lehrjahr
@@ -45,7 +51,6 @@ collections:
                   fields:
                       - { label: Nummer, name: number, widget: number }
                       - { label: Titel, name: title, widget: string }
-                      - { label: Lektionen, name: lessons, widget: number }
                       - {
                             label: Beschreibung,
                             name: description,

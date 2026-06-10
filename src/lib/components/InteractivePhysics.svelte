@@ -11,24 +11,19 @@
 
     let containerEl = $state<HTMLDivElement | null>(null);
     let itemElements = new Map<string, HTMLDivElement>();
-    let spawnCompetencesFn: ((list: PhysicsPill[]) => void) | null = null;
-    let latestCompetences: PhysicsPill[] = [];
+    let spawnPillFn: ((pill: PhysicsPill) => void) | null = null;
 
-    const trackItem = (node: HTMLDivElement, slug: string) => {
-        itemElements.set(slug, node);
+    const trackItem = (node: HTMLDivElement, pill: PhysicsPill) => {
+        itemElements.set(pill.id, node);
+        requestAnimationFrame(() => {
+            spawnPillFn?.(pill);
+        });
         return {
             destroy() {
-                itemElements.delete(slug);
+                itemElements.delete(pill.id);
             },
         };
     };
-
-    $effect(() => {
-        latestCompetences = competences;
-        tick().then(() => {
-            spawnCompetencesFn?.(latestCompetences);
-        });
-    });
 
     onMount(() => {
         if (!containerEl) return;
@@ -55,39 +50,46 @@
             } = Matter;
             const engine = Engine.create();
             engine.gravity.y = 0.9;
+            const wallThickness = 320;
             let mouseConstraint: import("matter-js").MouseConstraint | null =
                 null;
 
-            const spawnBodies = (list: PhysicsPill[]) => {
+            const spawnPill = (pill: PhysicsPill) => {
+                if (activeSlugs.has(pill.id)) return;
+
+                const el = itemElements.get(pill.id);
+                if (!el) return;
+
                 const width = containerEl?.clientWidth ?? 0;
                 const height = containerEl?.clientHeight ?? 0;
                 if (!width || !height) return;
 
-                for (const competence of list) {
-                    if (activeSlugs.has(competence.id)) continue;
-
-                    const el = itemElements.get(competence.id);
-                    if (!el) continue;
-
-                    const itemWidth = el.offsetWidth || 120;
-                    const itemHeight = el.offsetHeight || 32;
-                    const chamferRadius = Math.min(itemWidth, itemHeight) / 2;
-                    const x = 80 + Math.random() * Math.max(width - 160, 1);
-                    const y = -(40 + Math.random() * 120);
-                    const body = Bodies.rectangle(x, y, itemWidth, itemHeight, {
-                        restitution: 0.75,
-                        friction: 0.02,
-                        frictionAir: 0.01,
-                        chamfer: { radius: chamferRadius, quality: 8 },
-                    });
-                    worldBodies.set(competence.id, body);
-                    bodySizes.set(competence.id, {
-                        width: itemWidth,
-                        height: itemHeight,
-                    });
-                    activeSlugs.add(competence.id);
-                    World.add(engine.world, body);
+                const itemWidth = el.offsetWidth;
+                const itemHeight = el.offsetHeight;
+                if (!itemWidth || !itemHeight) {
+                    requestAnimationFrame(() => spawnPill(pill));
+                    return;
                 }
+                const chamferRadius = Math.min(itemWidth, itemHeight) / 2;
+                const halfH = itemHeight / 2;
+                const x = 80 + Math.random() * Math.max(width - 160, 1);
+                const y = -(halfH + 40 + Math.random() * 120);
+                const body = Bodies.rectangle(x, y, itemWidth, itemHeight, {
+                    restitution: 0.75,
+                    friction: 0.02,
+                    frictionAir: 0.01,
+                    chamfer: { radius: chamferRadius, quality: 8 },
+                });
+                Body.setAngle(body, (Math.random() - 0.5) * Math.PI);
+                Body.setVelocity(body, { x: 0, y: 0 });
+                Body.setAngularVelocity(body, 0);
+                worldBodies.set(pill.id, body);
+                bodySizes.set(pill.id, {
+                    width: itemWidth,
+                    height: itemHeight,
+                });
+                activeSlugs.add(pill.id);
+                World.add(engine.world, body);
             };
 
             const rebuildScene = () => {
@@ -99,16 +101,8 @@
                     World.remove(engine.world, boundary);
                 boundaries = [];
 
-                const wallThickness = 320;
                 const wallInset = wallThickness / 2;
                 boundaries = [
-                    Bodies.rectangle(
-                        width / 2,
-                        -wallInset,
-                        width,
-                        wallThickness,
-                        { isStatic: true },
-                    ),
                     Bodies.rectangle(
                         width / 2,
                         height + wallInset,
@@ -170,10 +164,14 @@
                 World.add(engine.world, mouseConstraint);
             };
 
-            spawnCompetencesFn = spawnBodies;
+            spawnPillFn = spawnPill;
 
             rebuildScene();
-            tick().then(() => spawnBodies(latestCompetences));
+            tick().then(() => {
+                for (const pill of competences) {
+                    spawnPill(pill);
+                }
+            });
 
             const frame = () => {
                 Engine.update(engine, 1000 / 60);
@@ -201,7 +199,7 @@
                 dragging = false;
                 World.clear(engine.world, false);
                 Engine.clear(engine);
-                spawnCompetencesFn = null;
+                spawnPillFn = null;
             };
         };
 
@@ -222,7 +220,7 @@
             <div
                 class="pill"
                 style={`--pill-color: ${competence.color ?? "#64748b"}`}
-                use:trackItem={competence.id}
+                use:trackItem={competence}
             >
                 <span class="pill-title">{competence.title}</span>
             </div>

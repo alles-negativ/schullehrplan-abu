@@ -146,13 +146,17 @@
     }
 
     .intro-stage {
-        position: relative;
+        /* position: relative; */
         min-height: calc(100vh - 120px);
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        padding: 2rem 0 4rem;
+        /* padding: 2rem 0 4rem; */
+        top: 0;
+        position: relative;
+        top: 0px;
+        height: 100vh;
     }
 
     .hero {
@@ -164,6 +168,7 @@
         max-width: 80%;
         text-align: center;
         pointer-events: none;
+        top: -85px;
     }
 
     .hero-text {

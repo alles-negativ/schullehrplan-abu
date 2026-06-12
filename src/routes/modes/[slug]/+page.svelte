@@ -105,6 +105,7 @@
         align-items: start;
         grid-template-columns: minmax(0, 16fr);
         transition: grid-template-columns 350ms cubic-bezier(0.4, 0, 0.2, 1);
+        margin-top: 180px;
     }
 
     .mode-route:not(.is-expanded) {
@@ -132,6 +133,7 @@
 
     .mode-overview {
         margin: 0 33px;
+        margin-top: 180px;
     }
 
     .overview-content :global(p) {

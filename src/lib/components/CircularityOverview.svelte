@@ -311,6 +311,7 @@
         display: flex;
         flex-direction: column;
         gap: 2rem;
+        margin-top: 120px;
     }
 
     .aspect-grid {
@@ -324,7 +325,7 @@
         margin: 0 0 35px;
         border: 2px solid var(--color-black);
         border-radius: 999px;
-        padding: 0;
+        padding: 0 30px;
         text-align: center;
         font-size: var(--h2-size);
         line-height: var(--h2-line-height);

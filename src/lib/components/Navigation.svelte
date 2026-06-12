@@ -182,11 +182,7 @@
     );
 </script>
 
-<nav
-    class="main-nav"
-    class:has-submenu={submenuMounted}
-    aria-label="Ausbildungsmodi"
->
+<nav class="main-nav" aria-label="Ausbildungsmodi">
     <div class="nav-top">
         <a class="mode-button nav-home" href="/">Schullehrplan ABU</a>
         <div class="mode-list-wrap">
@@ -270,10 +266,8 @@
     .main-nav {
         position: relative;
         z-index: 4;
-    }
-
-    .main-nav.has-submenu {
-        padding-bottom: 180px;
+        /* Reserve space for the absolutely positioned submenu row */
+        /* padding-bottom: 180px; */
     }
 
     .nav-top {

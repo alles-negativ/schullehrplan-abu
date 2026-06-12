@@ -32,7 +32,7 @@
 <style>
     .page-foreground {
         margin: 30px;
-        position: relative;
+        /* position: relative; */
         z-index: 1;
     }
 </style>

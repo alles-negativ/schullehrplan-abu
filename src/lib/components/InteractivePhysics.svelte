@@ -12,15 +12,122 @@
     let containerEl = $state<HTMLDivElement | null>(null);
     let itemElements = new Map<string, HTMLDivElement>();
     let spawnPillFn: ((pill: PhysicsPill) => void) | null = null;
+    let pillSizes = $state<Record<string, { pill: number; inner: number }>>({});
+
+    const PILL_MAX_WIDTH = 450;
+    const PILL_H_PADDING = 76;
+    const PILL_MIN_CONTENT = 200;
+
+    let measurer: HTMLDivElement | null = null;
+
+    const getMeasurer = (title: HTMLElement) => {
+        if (!measurer) {
+            measurer = document.createElement("div");
+            measurer.style.cssText =
+                "position:absolute;top:-99999px;left:-99999px;visibility:hidden;pointer-events:none;padding:0;margin:0;border:0;display:inline-block;";
+            document.body.appendChild(measurer);
+        }
+
+        const cs = getComputedStyle(title);
+        const m = measurer.style;
+        m.fontFamily = cs.fontFamily;
+        m.fontSize = cs.fontSize;
+        m.fontWeight = cs.fontWeight;
+        m.fontStyle = cs.fontStyle;
+        m.letterSpacing = cs.letterSpacing;
+        m.lineHeight = cs.lineHeight;
+        m.textTransform = cs.textTransform;
+        m.overflowWrap = "break-word";
+        m.wordBreak = cs.wordBreak;
+        m.hyphens = cs.hyphens;
+        (m as unknown as { webkitHyphens: string }).webkitHyphens = cs.hyphens;
+        m.textAlign = "left";
+        m.boxSizing = "content-box";
+        measurer.textContent = title.textContent;
+        return measurer;
+    };
+
+    // Sizes the pill to its content: grows on a single line until it would
+    // exceed maxContent, then shrinks to the narrowest width that keeps the
+    // same line count (a middle ground between max-content and min-content).
+    const fitPillWidth = (pill: HTMLDivElement, id: string) => {
+        const title = pill.querySelector<HTMLElement>(".pill-title");
+        if (!title) return;
+
+        const m = getMeasurer(title);
+        const maxContent = PILL_MAX_WIDTH - PILL_H_PADDING;
+        const lineHeight =
+            parseFloat(getComputedStyle(m).lineHeight) ||
+            parseFloat(getComputedStyle(m).fontSize) * 1.2 ||
+            1;
+        const linesAt = (w: number) => {
+            m.style.width = `${w}px`;
+            return Math.max(1, Math.round(m.scrollHeight / lineHeight));
+        };
+
+        m.style.whiteSpace = "nowrap";
+        m.style.width = "auto";
+        const oneLine = Math.ceil(m.getBoundingClientRect().width);
+        m.style.whiteSpace = "normal";
+
+        let contentWidth: number;
+
+        if (oneLine <= maxContent) {
+            contentWidth = Math.max(oneLine, PILL_MIN_CONTENT);
+        } else {
+            const targetLines = linesAt(maxContent);
+
+            let lo = PILL_MIN_CONTENT;
+            let hi = maxContent;
+            let best = maxContent;
+
+            while (lo <= hi) {
+                const mid = (lo + hi) >> 1;
+                if (linesAt(mid) <= targetLines) {
+                    best = mid;
+                    hi = mid - 1;
+                } else {
+                    lo = mid + 1;
+                }
+            }
+
+            contentWidth = Math.min(best + 1, maxContent);
+        }
+
+        const size = {
+            pill: Math.round(contentWidth + PILL_H_PADDING),
+            inner: Math.round(contentWidth),
+        };
+        pillSizes = { ...pillSizes, [id]: size };
+        return size;
+    };
 
     const trackItem = (node: HTMLDivElement, pill: PhysicsPill) => {
         itemElements.set(pill.id, node);
-        requestAnimationFrame(() => {
-            spawnPillFn?.(pill);
-        });
+
+        const spawnWhenReady = async () => {
+            if (document.fonts?.ready) {
+                await document.fonts.ready;
+            }
+
+            const trySpawn = () => {
+                if (spawnPillFn) {
+                    spawnPillFn(pill);
+                } else {
+                    requestAnimationFrame(trySpawn);
+                }
+            };
+
+            requestAnimationFrame(() => requestAnimationFrame(trySpawn));
+        };
+
+        void spawnWhenReady();
+
         return {
             destroy() {
                 itemElements.delete(pill.id);
+                const { [pill.id]: _, ...rest } = pillSizes;
+                pillSizes = rest;
             },
         };
     };
@@ -47,6 +154,7 @@
                 Mouse,
                 MouseConstraint,
                 Events,
+                Sleeping,
             } = Matter;
             const engine = Engine.create();
             engine.gravity.y = 0.9;
@@ -87,47 +195,60 @@
                 const el = itemElements.get(pill.id);
                 if (!el) return;
 
-                const width = containerEl?.clientWidth ?? 0;
-                const height = containerEl?.clientHeight ?? 0;
-                if (!width || !height) return;
+                const measured = fitPillWidth(el, pill.id);
+                if (!measured) return;
 
-                const itemWidth = el.offsetWidth;
-                const itemHeight = el.offsetHeight;
-                if (!itemWidth || !itemHeight) {
-                    requestAnimationFrame(() => spawnPill(pill));
-                    return;
-                }
-                const chamferRadius = Math.min(itemWidth, itemHeight) / 2;
-                const halfH = itemHeight / 2;
-                const halfDiag = Math.hypot(itemWidth / 2, halfH);
-                const x =
-                    halfDiag +
-                    Math.random() * Math.max(width - halfDiag * 2, 1);
-                const y = -(halfH + 40 + Math.random() * 120);
-                const body = Bodies.rectangle(x, y, itemWidth, itemHeight, {
-                    restitution: 0.55,
-                    friction: 0.08,
-                    frictionStatic: 0.12,
-                    frictionAir: 0.02,
-                    chamfer: { radius: chamferRadius, quality: 8 },
-                    sleepThreshold: 40,
+                void tick().then(() => {
+                    if (activeSlugs.has(pill.id)) return;
+
+                    const width = containerEl?.clientWidth ?? 0;
+                    const height = containerEl?.clientHeight ?? 0;
+                    if (!width || !height) return;
+
+                    const itemWidth = el.offsetWidth || measured.pill;
+                    const itemHeight = el.offsetHeight;
+                    if (!itemWidth || !itemHeight) {
+                        requestAnimationFrame(() => spawnPill(pill));
+                        return;
+                    }
+                    const chamferRadius = Math.min(itemWidth, itemHeight) / 2;
+                    const halfH = itemHeight / 2;
+                    const halfDiag = Math.hypot(itemWidth / 2, halfH);
+                    const x =
+                        halfDiag +
+                        Math.random() * Math.max(width - halfDiag * 2, 1);
+                    const y = -(halfH + 40 + Math.random() * 120);
+                    const body = Bodies.rectangle(x, y, itemWidth, itemHeight, {
+                        restitution: 0.55,
+                        friction: 0.08,
+                        frictionStatic: 0.12,
+                        frictionAir: 0.02,
+                        chamfer: { radius: chamferRadius, quality: 8 },
+                        sleepThreshold: 40,
+                    });
+                    Body.setAngle(body, (Math.random() - 0.5) * Math.PI);
+                    Body.setVelocity(body, { x: 0, y: 0 });
+                    Body.setAngularVelocity(body, 0);
+                    worldBodies.set(pill.id, body);
+                    bodySizes.set(pill.id, {
+                        width: itemWidth,
+                        height: itemHeight,
+                    });
+                    activeSlugs.add(pill.id);
+                    World.add(engine.world, body);
                 });
-                Body.setAngle(body, (Math.random() - 0.5) * Math.PI);
-                Body.setVelocity(body, { x: 0, y: 0 });
-                Body.setAngularVelocity(body, 0);
-                worldBodies.set(pill.id, body);
-                bodySizes.set(pill.id, {
-                    width: itemWidth,
-                    height: itemHeight,
-                });
-                activeSlugs.add(pill.id);
-                World.add(engine.world, body);
             };
 
-            const rebuildScene = () => {
+            let stageWidth = 0;
+            let stageHeight = 0;
+
+            const updateBoundaries = () => {
                 const width = containerEl?.clientWidth ?? 0;
                 const height = containerEl?.clientHeight ?? 0;
                 if (!width || !height) return;
+
+                const scaleX = stageWidth ? width / stageWidth : 1;
+                const scaleY = stageHeight ? height / stageHeight : 1;
 
                 for (const boundary of boundaries)
                     World.remove(engine.world, boundary);
@@ -162,9 +283,27 @@
                 for (const slug of activeSlugs) {
                     const body = worldBodies.get(slug);
                     if (!body) continue;
+
+                    if (stageWidth && stageHeight) {
+                        Body.setPosition(body, {
+                            x: body.position.x * scaleX,
+                            y: body.position.y * scaleY,
+                        });
+                        Body.setVelocity(body, {
+                            x: body.velocity.x * scaleX,
+                            y: body.velocity.y * scaleY,
+                        });
+                        Sleeping.set(body, false);
+                    }
+
                     clampBodyToStage(body, width, height);
                 }
 
+                stageWidth = width;
+                stageHeight = height;
+            };
+
+            const setupMouse = () => {
                 const mouse = Mouse.create(stage);
                 stage.removeEventListener(
                     "wheel",
@@ -174,10 +313,6 @@
                         }
                     ).mousewheel,
                 );
-                if (mouseConstraint) {
-                    World.remove(engine.world, mouseConstraint);
-                    dragging = false;
-                }
                 mouseConstraint = MouseConstraint.create(engine, {
                     mouse,
                     constraint: {
@@ -195,12 +330,8 @@
 
             spawnPillFn = spawnPill;
 
-            rebuildScene();
-            tick().then(() => {
-                for (const pill of competences) {
-                    spawnPill(pill);
-                }
-            });
+            updateBoundaries();
+            setupMouse();
 
             const frame = () => {
                 Engine.update(engine, 1000 / 60);
@@ -217,18 +348,26 @@
 
             frame();
 
+            let resizeRaf = 0;
             resizeObserver = new ResizeObserver(() => {
-                rebuildScene();
+                if (resizeRaf) return;
+                resizeRaf = requestAnimationFrame(() => {
+                    resizeRaf = 0;
+                    updateBoundaries();
+                });
             });
             resizeObserver.observe(stage);
 
             return () => {
                 cancelAnimationFrame(raf);
+                if (resizeRaf) cancelAnimationFrame(resizeRaf);
                 resizeObserver?.disconnect();
                 dragging = false;
                 World.clear(engine.world, false);
                 Engine.clear(engine);
                 spawnPillFn = null;
+                measurer?.remove();
+                measurer = null;
             };
         };
 
@@ -246,12 +385,16 @@
 <section class="interactive-wrap">
     <div class="physics-stage" bind:this={containerEl}>
         {#each competences as competence (competence.id)}
+            {@const size = pillSizes[competence.id]}
             <div
                 class="pill"
-                style={`--pill-color: ${competence.color ?? "#64748b"}`}
+                class:is-sized={size}
+                style={`--pill-color: ${competence.color ?? "#64748b"};${size ? `--pill-w: ${size.pill}px; --pill-inner-w: ${size.inner}px;` : ""}`}
                 use:trackItem={competence}
             >
-                <span class="pill-title">{competence.title}</span>
+                <div class="pill-inner">
+                    <span class="pill-title">{competence.title}</span>
+                </div>
             </div>
         {/each}
     </div>
@@ -282,13 +425,14 @@
         left: 0;
         top: 0;
         box-sizing: border-box;
-        display: inline-flex;
+        display: flex;
         align-items: center;
         justify-content: center;
-        width: max-content;
+        width: var(--pill-w, auto);
+        min-width: 0;
         max-width: 450px;
-        height: 120px;
-        padding: 0 1.5rem;
+        min-height: 120px;
+        padding: 0px 38px;
         border-radius: 9999px;
         box-shadow: inset 0 0 0 2px var(--color-black);
         background: var(--pill-color);
@@ -297,17 +441,28 @@
         cursor: grab;
         will-change: transform;
         pointer-events: auto;
+        visibility: hidden;
+    }
+
+    .pill.is-sized {
+        visibility: visible;
+    }
+
+    .pill-inner {
+        flex: 0 0 auto;
+        width: var(--pill-inner-w, auto);
+        min-width: 0;
+        max-width: calc(450px - 76px);
     }
 
     .pill-title {
-        min-width: 200px;
-        max-width: 100%;
+        display: block;
+        min-width: 0;
         font-size: var(--h2-size);
         line-height: var(--h2-line-height);
         font-weight: var(--h2-weight);
         letter-spacing: var(--h2-letter-spacing);
         text-align: center;
-        text-wrap: balance;
         overflow-wrap: break-word;
         hyphens: auto;
     }

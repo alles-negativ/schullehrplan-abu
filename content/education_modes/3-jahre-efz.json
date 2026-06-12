@@ -82,7 +82,8 @@
                     }
                   ]
                 }
-              ]
+              ],
+              "lessons": 27
             },
             {
               "title": "Ich lerne effektiv und setze meine Ressourcen effizient ein.",
@@ -128,7 +129,8 @@
                     }
                   ]
                 }
-              ]
+              ],
+              "lessons": 26
             }
           ]
         },
@@ -194,7 +196,8 @@
                     }
                   ]
                 }
-              ]
+              ],
+              "lessons": 30
             },
             {
               "title": "Ich erlebe Diskussionen über Ungleichbehandlung und Ausgrenzung und frage mich, was gesagt werden darf und wie ich mich dabei verhalte.",
@@ -264,7 +267,8 @@
                     }
                   ]
                 }
-              ]
+              ],
+              "lessons": 17
             },
             {
               "title": "Ich möchte mitreden, mitgestalten und ernst genommen werden bei Themen, die mich direkt oder indirekt betreffen.",
@@ -302,7 +306,8 @@
                     }
                   ]
                 }
-              ]
+              ],
+              "lessons": 8
             }
           ]
         },
@@ -379,7 +384,8 @@
                     }
                   ]
                 }
-              ]
+              ],
+              "lessons": 27
             },
             {
               "title": "Ich konsumiere täglich, was Folgen für Umwelt und Gesellschaft hat.",
@@ -421,7 +427,8 @@
                     }
                   ]
                 }
-              ]
+              ],
+              "lessons": 10
             },
             {
               "title": "Ich habe beim Einkaufen Pflichten, aber auch Rechte, die ich einfordern kann.",
@@ -463,11 +470,13 @@
                     }
                   ]
                 }
-              ]
+              ],
+              "lessons": 19
             }
           ]
         }
-      ]
+      ],
+      "additional_lessons": 21
     },
     {
       "year": 2,
@@ -529,7 +538,8 @@
                     }
                   ]
                 }
-              ]
+              ],
+              "lessons": 18
             },
             {
               "title": "Ich bin im Alltag gesundheitlichen und finanziellen Risiken ausgesetzt.",
@@ -575,7 +585,8 @@
                     }
                   ]
                 }
-              ]
+              ],
+              "lessons": 20
             },
             {
               "title": "Ich lebe in einer vielfältigen Gesellschaft und möchte respektiert werden.",
@@ -625,7 +636,8 @@
                     }
                   ]
                 }
-              ]
+              ],
+              "lessons": 13
             }
           ]
         },
@@ -682,7 +694,8 @@
                     }
                   ]
                 }
-              ]
+              ],
+              "lessons": 8
             },
             {
               "title": "Ich erlebe, dass Gesetze und politische Entscheidungen verändert werden können.",
@@ -720,7 +733,8 @@
                     }
                   ]
                 }
-              ]
+              ],
+              "lessons": 32
             },
             {
               "title": "Ich begegne globalen, gesellschaftlichen Herausforderungen, die auch den Staat beschäftigen.",
@@ -782,7 +796,8 @@
                     }
                   ]
                 }
-              ]
+              ],
+              "lessons": 20
             }
           ]
         },
@@ -844,7 +859,8 @@
                     }
                   ]
                 }
-              ]
+              ],
+              "lessons": 20
             },
             {
               "title": "Ich ziehe in meine eigene Wohnung und kläre Fragen zu Mietvertrag und Versicherungen.",
@@ -882,7 +898,8 @@
                     }
                   ]
                 }
-              ]
+              ],
+              "lessons": 31
             },
             {
               "title": "Ich setze mich mit verschiedenen Wohn- und Lebensformen auseinander.",
@@ -928,11 +945,13 @@
                     }
                   ]
                 }
-              ]
+              ],
+              "lessons": 23
             }
           ]
         }
-      ]
+      ],
+      "additional_lessons": 17
     },
     {
       "year": 3,
@@ -940,6 +959,7 @@
         {
           "number": 7,
           "title": "Schlussarbeit",
+          "lessons": 33,
           "description": "Ich bearbeite ein gesellschaftlich relevantes Thema, das ich aus mindestens zwei gesellschaftlichen Aspekten betrachte. Die Schlussarbeit besteht aus Prozess, Produkt und Präsentation, berücksichtigt mindestens vier Sprachmodi und deckt mindestens drei Schlüsselkompetenzen ab.",
           "additional_description": "In den 9 Lektionen Konzeptphase steht die Auswahl eines zu mir passenden und gesellschaftlich relevanten Themas im Zentrum. Auf dieser Grundlage erstelle ich eine Konzeptvereinbarung für meine Schlussarbeit. Dazu formuliere ich Fragestellungen zu meinem Thema und plane gezielt, wie ich Informationen beschaffe, verarbeite und in meinem Produkt darstelle.\n\nWährend der anschliessenden 21 Lektionen Unterrichtszeit beschaffe ich Informationen auf unterschiedliche Weise. Zum Beispiel recherchiere ich in verschiedenen Quellen, vergleiche diese miteinander und prüfe ihre Relevanz und Zuverlässigkeit. Ich kann auch eigenständig Daten erheben, indem ich beispielsweise Expertinnen oder Zeitzeugen befrage, eine anonyme Umfrage durchführe oder eigene Erfahrungen sammle.\n\nMeine Informationen verarbeite ich, indem ich sie strukturiere, zusammenfasse, vergleiche und bewerte. Die daraus gewonnenen Zusammenhänge und Schlussfolgerungen in Bezug auf meine Fragestellungen stelle ich verständlich und reflektiert dar.\n\nZum Schluss präsentiere ich die wichtigsten Erkenntnisse meiner Schlussarbeit und verteidige meine Arbeit in einem vertiefenden Gespräch. Für die Vorbereitung der Präsentation stehen mir 3 Lektionen Unterrichtszeit zur Verfügung.\n\nDie Bestimmungen zum Qualifikationsverfahren und die Wegleitung meiner Berufsschule bilden die Anforderungen an meine Schlussarbeit ab.",
           "essential_competences": [
@@ -1010,7 +1030,8 @@
                     }
                   ]
                 }
-              ]
+              ],
+              "lessons": 26
             },
             {
               "title": "Ich plane meine berufliche Zukunft.",
@@ -1072,7 +1093,8 @@
                     }
                   ]
                 }
-              ]
+              ],
+              "lessons": 13
             },
             {
               "title": "Ich trete meine erste Stelle nach der Ausbildung an.",
@@ -1110,7 +1132,8 @@
                     }
                   ]
                 }
-              ]
+              ],
+              "lessons": 27
             },
             {
               "title": "Ich plane meine Finanzen heute und in der Zukunft.",
@@ -1176,7 +1199,8 @@
                     }
                   ]
                 }
-              ]
+              ],
+              "lessons": 31
             },
             {
               "title": "Ich stehe am Ende meiner Lehrzeit und bereite mich auf meine Abschlussprüfung vor.",
@@ -1199,11 +1223,13 @@
                   "social_aspects": [],
                   "language_aspects": []
                 }
-              ]
+              ],
+              "lessons": 16
             }
           ]
         }
-      ]
+      ],
+      "additional_lessons": 6
     }
   ]
 }

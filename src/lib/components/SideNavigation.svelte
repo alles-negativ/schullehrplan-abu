@@ -71,10 +71,13 @@
             <p>Keine Lehrjahre definiert.</p>
         {:else}
             {#each getModeYears(mode) as year, yearIndex}
+                {@const yearLessons = getYearLessons(year)}
                 <section>
                     <h5 class="year-title">
                         <span>{getYearLabel(year)}. Lehrjahr</span>
-                        <span class="lesson-count">{getYearLessons(year)}</span>
+                        {#if yearLessons > 0}
+                            <span class="lesson-count">{yearLessons}</span>
+                        {/if}
                     </h5>
                     {#if (year.themenbereiche?.length ?? 0) === 0}
                         <p>Keine Themenbereiche definiert.</p>

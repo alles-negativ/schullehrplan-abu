@@ -38,6 +38,7 @@ export type Topic = {
 	kerninhalte?: string;
 	core_contents?: string;
 	number?: number;
+	lessons?: number;
 	essential_competences?: string[];
 	individual_reference?: IndividualReference[];
 };
@@ -154,8 +155,11 @@ export const getAdditionalTopicDescription = (topic: Topic): string | undefined 
 export const getTopicCoreContents = (topic: Topic): string | undefined =>
 	topic.kerninhalte ?? topic.core_contents;
 
-export const getTopicLessons = (topic: Topic): number =>
+const getIndividualReferenceLessons = (topic: Topic): number =>
 	(topic.individual_reference ?? []).reduce((sum, reference) => sum + (reference.lessons ?? 0), 0);
+
+export const getTopicLessons = (topic: Topic): number =>
+	topic.lessons != null ? topic.lessons : getIndividualReferenceLessons(topic);
 
 export const getYearLessons = (year: YearEntry): number => {
 	const topicLessons = (year.themenbereiche ?? []).reduce(

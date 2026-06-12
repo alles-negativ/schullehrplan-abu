@@ -52,6 +52,12 @@ collections:
                       - { label: Nummer, name: number, widget: number }
                       - { label: Titel, name: title, widget: string }
                       - {
+                            label: Lektionen,
+                            name: lessons,
+                            widget: number,
+                            required: false,
+                        }
+                      - {
                             label: Beschreibung,
                             name: description,
                             widget: markdown,
@@ -91,6 +97,7 @@ collections:
                                   label: Lektionen,
                                   name: lessons,
                                   widget: number,
+                                  required: false,
                               }
                             - label: Lerninhalte
                               name: learning_contents
@@ -159,6 +166,7 @@ collections:
                       label: Weiter Lektionen,
                       name: additional_lessons,
                       widget: number,
+                      required: false,
                   }
     - name: aspects
       label: Aspekte

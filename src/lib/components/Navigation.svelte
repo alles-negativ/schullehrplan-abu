@@ -155,7 +155,10 @@
         const query = params.toString();
         return `${page.url.pathname}${query ? `?${query}` : ""}`;
     };
-    const getModeSubmenuView = (): "lehrplan" | "zirkularitaet" | "overview" => {
+    const getModeSubmenuView = ():
+        | "lehrplan"
+        | "zirkularitaet"
+        | "overview" => {
         if (getSearchParam("view") === "zirkularitaet") return "zirkularitaet";
         if (
             !getSearchParam("view") &&
@@ -247,7 +250,8 @@
                                     class:is-active={submenuView ===
                                         "zirkularitaet"}
                                     href={getViewPath("zirkularitaet")}
-                                    aria-current={submenuView === "zirkularitaet"
+                                    aria-current={submenuView ===
+                                    "zirkularitaet"
                                         ? "page"
                                         : undefined}
                                 >
@@ -299,7 +303,7 @@
         list-style: none;
         position: relative;
         z-index: 2;
-        background: var(--color-background);
+        /* background: var(--color-background); */
     }
 
     .mode-list li {

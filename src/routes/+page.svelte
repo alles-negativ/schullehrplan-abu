@@ -94,6 +94,10 @@
     });
 </script>
 
+<svelte:head>
+    <title>Schullehrplan ABU</title>
+</svelte:head>
+
 <main class="start-page">
     <section class="intro-stage" aria-label="Willkommen">
         <div class="hero">

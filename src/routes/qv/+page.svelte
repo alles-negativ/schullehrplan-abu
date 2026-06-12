@@ -1,5 +1,5 @@
 <svelte:head>
-    <title>Qualifikationsverfahren</title>
+    <title>Schullehrplan ABU - Qualifikationsverfahren</title>
 </svelte:head>
 
 <main>

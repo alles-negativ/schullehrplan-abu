@@ -62,6 +62,10 @@
         `${page.url.pathname}?year=${yearIndex}&topic=${topicIndex}`;
 </script>
 
+<svelte:head>
+    <title>Schullehrplan ABU - {data.mode.title}</title>
+</svelte:head>
+
 {#if currentView === "overview"}
     <section class="mode-overview mode-grid">
         {#if data.mode.overview}

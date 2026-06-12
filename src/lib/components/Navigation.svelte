@@ -2,6 +2,9 @@
     import { browser } from "$app/environment";
     import { page } from "$app/state";
     import { getAllEducationModes } from "$lib/data/education-modes";
+    import { tick } from "svelte";
+
+    const SUBMENU_MOTION_MS = 220;
 
     const educationModes = getAllEducationModes();
     const getModePath = (slug: string) => `/modes/${encodeURIComponent(slug)}`;
@@ -16,8 +19,13 @@
     let modeButtonRefs = $state<(HTMLAnchorElement | null)[]>([]);
     let submenuTrackElement = $state<HTMLDivElement | null>(null);
     let submenuLeft = $state(0);
-    let submenuReady = $state(false);
+    let submenuMounted = $state(false);
+    let submenuVisible = $state(false);
     let suppressSlideTransition = $state(false);
+    let hideSubmenuTimeout: ReturnType<typeof setTimeout> | undefined;
+    let lastSubmenuView = $state<
+        "lehrplan" | "zirkularitaet" | "overview" | null
+    >(null);
 
     const updateModeButtonWidthVar = () => {
         if (typeof document === "undefined") return;
@@ -35,32 +43,54 @@
             !modeListElement ||
             !modeButtonRefs[activeModeIndex]
         ) {
-            submenuReady = false;
             return;
         }
 
         const containerRect = modeListElement.getBoundingClientRect();
         const buttonRect =
             modeButtonRefs[activeModeIndex].getBoundingClientRect();
-        const isBecomingVisible = !submenuReady;
-
-        if (isBecomingVisible) {
-            suppressSlideTransition = true;
-        }
         const buttonLeft = buttonRect.left - containerRect.left;
         const trackWidth =
             submenuTrackElement?.getBoundingClientRect().width ??
             buttonRect.width;
         submenuLeft = buttonLeft + (buttonRect.width - trackWidth) / 2;
-        submenuReady = true;
         updateModeButtonWidthVar();
+    };
 
-        if (isBecomingVisible && typeof window !== "undefined") {
+    const revealSubmenu = async () => {
+        if (hideSubmenuTimeout) {
+            clearTimeout(hideSubmenuTimeout);
+            hideSubmenuTimeout = undefined;
+        }
+
+        suppressSlideTransition = true;
+        submenuVisible = false;
+        submenuMounted = true;
+
+        await tick();
+        updateSubmenuPosition();
+
+        await new Promise<void>((resolve) => {
             requestAnimationFrame(() => {
                 updateSubmenuPosition();
-                suppressSlideTransition = false;
+                requestAnimationFrame(() => resolve());
             });
-        }
+        });
+
+        submenuVisible = true;
+        await tick();
+        updateSubmenuPosition();
+        setTimeout(() => {
+            suppressSlideTransition = false;
+        }, SUBMENU_MOTION_MS);
+    };
+
+    const hideSubmenu = () => {
+        submenuVisible = false;
+        hideSubmenuTimeout = setTimeout(() => {
+            submenuMounted = false;
+            hideSubmenuTimeout = undefined;
+        }, SUBMENU_MOTION_MS);
     };
 
     $effect(() => {
@@ -71,9 +101,21 @@
         submenuTrackElement;
 
         if (typeof window === "undefined") return;
+
+        if (activeModeIndex < 0) {
+            if (submenuMounted) {
+                hideSubmenu();
+            }
+            return;
+        }
+
+        if (!submenuMounted) {
+            revealSubmenu();
+            return;
+        }
+
         requestAnimationFrame(() => {
             updateSubmenuPosition();
-            updateModeButtonWidthVar();
         });
     });
 
@@ -84,7 +126,12 @@
             updateModeButtonWidthVar();
         };
         window.addEventListener("resize", onResize);
-        return () => window.removeEventListener("resize", onResize);
+        return () => {
+            window.removeEventListener("resize", onResize);
+            if (hideSubmenuTimeout) {
+                clearTimeout(hideSubmenuTimeout);
+            }
+        };
     });
 
     const getSearchParam = (key: string) =>
@@ -108,24 +155,33 @@
         const query = params.toString();
         return `${page.url.pathname}${query ? `?${query}` : ""}`;
     };
-    const isOverview = $derived(
-        activeModeIndex >= 0 &&
+    const getModeSubmenuView = (): "lehrplan" | "zirkularitaet" | "overview" => {
+        if (getSearchParam("view") === "zirkularitaet") return "zirkularitaet";
+        if (
             !getSearchParam("view") &&
             !getSearchParam("year") &&
-            !getSearchParam("topic"),
-    );
-    const currentView = $derived(
-        getSearchParam("view") === "zirkularitaet"
-            ? "zirkularitaet"
-            : isOverview
-              ? "overview"
-              : "lehrplan",
+            !getSearchParam("topic")
+        ) {
+            return "overview";
+        }
+        return "lehrplan";
+    };
+
+    $effect.pre(() => {
+        if (activeModeIndex >= 0) {
+            page.url.searchParams;
+            lastSubmenuView = getModeSubmenuView();
+        }
+    });
+
+    const submenuView = $derived(
+        activeModeIndex >= 0 ? getModeSubmenuView() : lastSubmenuView,
     );
 </script>
 
 <nav
     class="main-nav"
-    class:has-submenu={activeModeIndex >= 0}
+    class:has-submenu={submenuMounted}
     aria-label="Ausbildungsmodi"
 >
     <div class="nav-top">
@@ -161,40 +217,45 @@
                     </a>
                 </li>
             </ul>
-            {#if activeModeIndex >= 0}
+            {#if submenuMounted}
                 <div
                     class="mode-submenu-track"
                     class:no-slide={suppressSlideTransition}
                     bind:this={submenuTrackElement}
-                    style={`transform: translateX(${submenuLeft}px); opacity: ${submenuReady ? 1 : 0};`}
+                    style={`transform: translateX(${submenuLeft}px);`}
                 >
-                    <ul class="mode-list-sub">
-                        <li>
-                            <a
-                                class="mode-sub-button"
-                                class:is-active={currentView === "lehrplan"}
-                                href={getViewPath("lehrplan")}
-                                aria-current={currentView === "lehrplan"
-                                    ? "page"
-                                    : undefined}
-                            >
-                                Lehrplan
-                            </a>
-                        </li>
-                        <li>
-                            <a
-                                class="mode-sub-button"
-                                class:is-active={currentView ===
-                                    "zirkularitaet"}
-                                href={getViewPath("zirkularitaet")}
-                                aria-current={currentView === "zirkularitaet"
-                                    ? "page"
-                                    : undefined}
-                            >
-                                Zirkularität
-                            </a>
-                        </li>
-                    </ul>
+                    <div
+                        class="mode-submenu-panel"
+                        class:is-visible={submenuVisible}
+                    >
+                        <ul class="mode-list-sub">
+                            <li>
+                                <a
+                                    class="mode-sub-button"
+                                    class:is-active={submenuView === "lehrplan"}
+                                    href={getViewPath("lehrplan")}
+                                    aria-current={submenuView === "lehrplan"
+                                        ? "page"
+                                        : undefined}
+                                >
+                                    Lehrplan
+                                </a>
+                            </li>
+                            <li>
+                                <a
+                                    class="mode-sub-button"
+                                    class:is-active={submenuView ===
+                                        "zirkularitaet"}
+                                    href={getViewPath("zirkularitaet")}
+                                    aria-current={submenuView === "zirkularitaet"
+                                        ? "page"
+                                        : undefined}
+                                >
+                                    Zirkularität
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             {/if}
         </div>
@@ -225,6 +286,7 @@
     .mode-list-wrap {
         position: relative;
         flex-shrink: 0;
+        isolation: isolate;
     }
 
     .mode-list {
@@ -235,6 +297,9 @@
         padding: 0;
         margin: 0;
         list-style: none;
+        position: relative;
+        z-index: 2;
+        background: var(--color-background);
     }
 
     .mode-list li {
@@ -245,13 +310,27 @@
         position: absolute;
         left: 0;
         top: calc(100% + 10px);
-        transition:
-            transform 220ms ease,
-            opacity 140ms ease;
+        z-index: 1;
+        transition: transform 220ms ease-in-out;
     }
 
     .mode-submenu-track.no-slide {
-        transition: opacity 140ms ease;
+        transition: none;
+    }
+
+    .mode-submenu-panel {
+        opacity: 0;
+        transform: translateY(-20px);
+        pointer-events: none;
+        transition:
+            transform 220ms ease-in-out,
+            opacity 220ms ease-in-out;
+    }
+
+    .mode-submenu-panel.is-visible {
+        opacity: 1;
+        transform: translateY(0);
+        pointer-events: auto;
     }
 
     .mode-list-sub {
@@ -345,9 +424,15 @@
 
     @media (prefers-reduced-motion: reduce) {
         .mode-submenu-track,
+        .mode-submenu-panel,
         .mode-sub-button,
         .mode-button {
             transition: none;
+        }
+
+        .mode-submenu-panel.is-visible {
+            opacity: 1;
+            transform: none;
         }
     }
 </style>

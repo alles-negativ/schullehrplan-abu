@@ -31,8 +31,9 @@
 
 <style>
     .page-foreground {
-        margin: 30px;
+        padding: 30px;
         /* position: relative; */
         z-index: 1;
+        overflow: hidden;
     }
 </style>

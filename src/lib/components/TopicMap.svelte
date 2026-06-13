@@ -327,6 +327,7 @@
         position: relative;
         padding-bottom: 4rem;
         padding-top: 150px;
+        /* overflow: visible; */
     }
 
     .topicmap-title {
@@ -336,6 +337,7 @@
 
     .topicmap-stage {
         position: relative;
+        /* overflow: visible; */
     }
 
     .topicmap-spine {
@@ -492,6 +494,7 @@
     .topicmap-bubbles {
         position: absolute;
         inset: 0;
+        /* overflow: visible; */
         pointer-events: none;
     }
 
@@ -505,23 +508,30 @@
         border-radius: 35px;
         background: var(--bubble-color);
         color: var(--color-white);
-        opacity: 0;
-        transition: opacity 300ms ease;
+        transition: transform 280ms ease-in;
         pointer-events: none;
     }
 
     .topicmap-bubble.is-active {
-        opacity: 1;
         pointer-events: auto;
+        transition: transform 300ms cubic-bezier(0.33, 1.44, 0.23, 0.89);
     }
 
     .topicmap-bubble--left {
         left: calc(25% - 90px);
+        transform: translateY(-50%) translateX(calc(-50% - 50vw));
+    }
+
+    .topicmap-bubble--left.is-active {
         transform: translateY(-50%) translateX(-50%);
     }
 
     .topicmap-bubble--right {
         right: calc(25% - 90px);
+        transform: translateY(-50%) translateX(calc(50% + 50vw));
+    }
+
+    .topicmap-bubble--right.is-active {
         transform: translateY(-50%) translateX(50%);
     }
 

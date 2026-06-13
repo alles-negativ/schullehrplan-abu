@@ -1,6 +1,7 @@
 <script lang="ts">
     import { onMount } from "svelte";
     import InteractivePhysics from "$lib/components/InteractivePhysics.svelte";
+    import TopicMap from "$lib/components/TopicMap.svelte";
     import {
         getAllCompetences,
         getAspectByTitle,
@@ -12,29 +13,6 @@
         "Sprache und Kommunikation",
         "Schlüsselkompetenzen",
     ] as const;
-
-    const storytellingItems = [
-        {
-            title: "Themen und Leitidee",
-            text: "Acht Themen bilden den roten Faden durch die Ausbildung – von der Leitidee bis zum Qualifikationsverfahren.",
-        },
-        {
-            title: "Kompetenzen",
-            text: "Schlüsselkompetenzen, gesellschaftliche Inhalte und Sprache vernetzen sich in jedem Thema miteinander.",
-        },
-        {
-            title: "Sprache",
-            text: "Sprache und Kommunikation sind Handlungsformen, die in allen Themen gezielt eingeübt werden.",
-        },
-        {
-            title: "Individueller Lebensbezug",
-            text: "Persönliche Erfahrungen und Lebenswelten der Lernenden werden bewusst angebunden.",
-        },
-        {
-            title: "Zirkularität",
-            text: "Inhalte und Kompetenzen bauen aufeinander auf und werden im Verlauf der Ausbildung vertieft.",
-        },
-    ];
 
     type FallingCompetence = Competence & { id: string };
 
@@ -129,17 +107,7 @@
         />
     </section>
 
-    <section class="storytelling" aria-label="Aufbau des Themen-Schullehrplans">
-        <h2 class="storytelling-title">Aufbau des Themen-Schullehrplans</h2>
-        <div class="storytelling-grid">
-            {#each storytellingItems as item}
-                <article class="story-card">
-                    <h3>{item.title}</h3>
-                    <p>{item.text}</p>
-                </article>
-            {/each}
-        </div>
-    </section>
+    <TopicMap />
 </main>
 
 <style>
@@ -247,38 +215,4 @@
         cursor: default;
     }
 
-    .storytelling {
-        padding-bottom: 4rem;
-    }
-
-    .storytelling-title {
-        margin-bottom: 2rem;
-        text-align: center;
-    }
-
-    .storytelling-grid {
-        display: grid;
-        gap: 1.5rem;
-        grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
-    }
-
-    .story-card {
-        padding: 1.5rem 1.75rem;
-        border-radius: 1.25rem;
-        background: var(--color-darkblue);
-        color: var(--color-white);
-    }
-
-    .story-card h3 {
-        margin-bottom: 0.75rem;
-        font-size: var(--h3-size);
-        line-height: var(--h3-line-height);
-        font-weight: var(--h4-weight);
-    }
-
-    .story-card p {
-        font-size: var(--body-size);
-        line-height: var(--body-line-height);
-        color: color-mix(in srgb, var(--color-white) 88%, transparent);
-    }
 </style>

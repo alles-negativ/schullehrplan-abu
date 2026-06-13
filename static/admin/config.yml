@@ -168,6 +168,77 @@ collections:
                       widget: number,
                       required: false,
                   }
+    - name: topic_map
+      label: Themen-Schullehrplan Übersicht
+      files:
+          - label: Startseite Themenübersicht
+            name: start
+            file: content/topic_map/index.json
+            fields:
+                - { label: Titel, name: title, widget: string }
+                - {
+                      label: Scroll-Höhe (vh),
+                      name: scroll_height_vh,
+                      widget: number,
+                      default: 480,
+                      hint: "Höhe des Scroll-Bereichs in Viewport-Höhen (z. B. 480 = 4.8 Bildschirmhöhen).",
+                  }
+                - label: Themen
+                  name: topics
+                  label_singular: Thema
+                  widget: list
+                  min: 8
+                  max: 8
+                  summary: "{{fields.number}}. {{fields.label}}"
+                  fields:
+                      - { label: Nummer, name: number, widget: number }
+                      - { label: Label, name: label, widget: string }
+                      - {
+                            label: Hover-Farbe,
+                            name: hover_color,
+                            widget: color,
+                        }
+                - label: Qualifikationsverfahren
+                  name: qv
+                  widget: object
+                  fields:
+                      - { label: Label, name: label, widget: string }
+                      - label: Annotationen
+                        name: annotations
+                        label_singular: Annotation
+                        widget: list
+                        required: false
+                        fields:
+                            - { label: Text, name: text, widget: string }
+                - label: Erklärungs-Bubbles
+                  name: bubbles
+                  label_singular: Bubble
+                  widget: list
+                  required: false
+                  summary: "{{fields.order}}. {{fields.title}} ({{fields.side}})"
+                  fields:
+                      - { label: Titel, name: title, widget: string }
+                      - { label: Text, name: text, widget: text }
+                      - label: Seite
+                        name: side
+                        widget: select
+                        options:
+                            - { label: Links, value: left }
+                            - { label: Rechts, value: right }
+                      - {
+                            label: Reihenfolge (Scroll),
+                            name: order,
+                            widget: number,
+                            hint: "Bestimmt die Reihenfolge beim Einblenden beim Scrollen.",
+                        }
+                      - {
+                            label: Anker-Thema,
+                            name: anchor_topic,
+                            widget: number,
+                            min: 1,
+                            max: 9,
+                            hint: "Vertikale Position: 1–8 = Thema, 9 = QV.",
+                        }
     - name: aspects
       label: Aspekte
       label_singular: Aspekt

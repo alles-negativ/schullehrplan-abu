@@ -1,0 +1,60 @@
+{
+    "title": "Aufbau des Themen-Schullehrplans",
+    "scroll_height_vh": 400,
+    "topics": [
+        { "number": 1, "label": "1. Thema", "hover_color": "#B8D4FF" },
+        { "number": 2, "label": "2. Thema", "hover_color": "#FFD4B8" },
+        { "number": 3, "label": "3. Thema", "hover_color": "#B8FFD4" },
+        { "number": 4, "label": "4. Thema", "hover_color": "#F1EAF4" },
+        { "number": 5, "label": "5. Thema", "hover_color": "#FDE5F3" },
+        { "number": 6, "label": "6. Thema", "hover_color": "#D9E2EC" },
+        { "number": 7, "label": "7. Thema", "hover_color": "#D9EBEB" },
+        { "number": 8, "label": "8. Thema", "hover_color": "#E5F6F6" }
+    ],
+    "qv": {
+        "label": "QV",
+        "annotations": [
+            {
+                "text": "EFZ / Erfahrungsnoten / Schlussarbeit / Schlussprüfung"
+            },
+            { "text": "EBA / Erfahrungsnoten" }
+        ]
+    },
+    "bubbles": [
+        {
+            "title": "Themen und Leitidee",
+            "text": "Zu Beginn jedes Themas erläutert die Leitidee, weshalb das Thema für die Lernenden wichtig ist. Sie beschreibt die aktuelle und zukünftige subjektive Bedeutsamkeit unter Berücksichtigung von Wandel und Aktualität und zeigt Motivation sowie Sinnhaftigkeit zur Bearbeitung des Themas. Sie legt die Schlüsselkompetenzen sowie die Kompetenzen aus den Lernbereichen Sprache und Kommunikation und Gesellschaft fest.",
+            "side": "left",
+            "order": 1,
+            "anchor_topic": 2
+        },
+        {
+            "title": "Individueller Lebensbezug",
+            "text": "Die individuellen Lebensbezüge spiegeln die schulische, betriebliche und private Realität der Lernenden wider und ermöglichen eine handlungsnahe Kompetenzentwicklung. Es handelt sich dabei um gegenwarts- und zukunftsorientierte Situationen, die kompetent, d. h. effektiv, selbstständig, verantwortungsvoll und sozialverträglich mit Blick auf die Perspektive des Wandels bewältigt werden.",
+            "side": "right",
+            "order": 2,
+            "anchor_topic": 4
+        },
+        {
+            "title": "Kompetenzen",
+            "text": "Kompetenzen sind stets situativ gebunden. Sie werden zyklisch, mit zunehmender Komplexität und in unterschiedlichen Kontexten aufgebaut. Die praxisrelevante, lebensweltliche Situation bildet die Grundlage für Lehr- und Lernaktivitäten, Ressourcen und Hilfsmittel, Rahmenbedingungen für Lernergebnisse und Beurteilungsformen, d. h. für die Unterrichtsgestaltung zum jeweiligen Thema.",
+            "side": "left",
+            "order": 3,
+            "anchor_topic": 5
+        },
+        {
+            "title": "Zirkularität",
+            "text": "Die Kompetenzen werden in den Schullehrplanthemen in wiederkehrenden Lernzyklen über die gesamte Lehrdauer hinweg zunehmend vertieft und komplexer gestaltet sowie in einem anderen Kontext weiterentwickelt. Die Schullehrpläne EBA und EFZ zeigen den zirkulären Aufbau der Kompetenzen pro Thema sowie die in den Schlüsselkompetenzen und Sprachmodi festgelegten Förderschwerpunkte und die gewählten Aspekte.",
+            "side": "right",
+            "order": 4,
+            "anchor_topic": 7
+        },
+        {
+            "title": "Sprache",
+            "text": "Sprach- und Kommunikationskompetenzen sind grundlegende Voraussetzungen für Lernen, gesellschaftliche Teilhabe und berufliche Handlungsfähigkeit. Sie durchdringen alle gesellschaftlichen, privaten und beruflichen Lebensbereiche und stehen im Zentrum des ABU. Die beiden Lernbereiche «Sprache und Kommunikation» sowie «Gesellschaft» sind daher nicht isoliert voneinander zu betrachten, sondern als integrierte Einheit.",
+            "side": "left",
+            "order": 5,
+            "anchor_topic": 8
+        }
+    ]
+}

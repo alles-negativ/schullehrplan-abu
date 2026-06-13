@@ -175,3 +175,14 @@ export const getAllCompetences = (): Competence[] =>
 	Object.values(competenceBySlug).sort((a, b) => a.title.localeCompare(b.title, 'de-CH'));
 
 export const getAspectByTitle = (title: string): Aspect | undefined => aspectByTitle[title];
+
+const aspectDisplayOrder = [
+	'Gesellschaftliche Aspekte',
+	'Sprache und Kommunikation',
+	'Schlüsselkompetenzen'
+] as const;
+
+export const getAllAspects = (): Aspect[] =>
+	aspectDisplayOrder
+		.map((title) => aspectByTitle[title])
+		.filter((aspect): aspect is Aspect => Boolean(aspect));

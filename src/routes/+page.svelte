@@ -9,8 +9,8 @@
     } from "$lib/data/education-modes";
 
     const aspectOrder = [
-        "Gesellschaftliche Aspekte",
-        "Sprache und Kommunikation",
+        "Gesellschaftliche Inhalte",
+        "Sprachmodi",
         "Schlüsselkompetenzen",
     ] as const;
 

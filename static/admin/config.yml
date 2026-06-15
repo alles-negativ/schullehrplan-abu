@@ -114,7 +114,7 @@ collections:
                                         name: number,
                                         widget: number,
                                     }
-                                  - label: Gesellschaftliche Aspekte
+                                  - label: Gesellschaftliche Inhalte
                                     name: social_aspects
                                     widget: list
                                     required: false
@@ -132,13 +132,13 @@ collections:
                                               - field: aspect
                                                 values:
                                                     [
-                                                        "Gesellschaftliche Aspekte",
+                                                        "Gesellschaftliche Inhalte",
                                                     ]
                                         - label: Konkretisierung
                                           name: specification
                                           widget: text
                                           required: false
-                                  - label: Sprache und Kommunikation
+                                  - label: Sprachmodi
                                     name: language_aspects
                                     widget: list
                                     required: false
@@ -156,7 +156,7 @@ collections:
                                               - field: aspect
                                                 values:
                                                     [
-                                                        "Sprache und Kommunikation",
+                                                        "Sprachmodi",
                                                     ]
                                         - label: Konkretisierung
                                           name: specification

@@ -93,7 +93,7 @@
             {#if languageAspects.length > 0}
                 <div class="tag-group">
                     <span class="tag-group-label"
-                        >Sprache und Kommunikation</span
+                        >Sprachmodi</span
                     >
                     {#each languageAspects as item}
                         <div

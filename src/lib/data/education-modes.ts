@@ -177,8 +177,8 @@ export const getAllCompetences = (): Competence[] =>
 export const getAspectByTitle = (title: string): Aspect | undefined => aspectByTitle[title];
 
 const aspectDisplayOrder = [
-	'Gesellschaftliche Aspekte',
-	'Sprache und Kommunikation',
+	'Gesellschaftliche Inhalte',
+	'Sprachmodi',
 	'Schlüsselkompetenzen'
 ] as const;
 

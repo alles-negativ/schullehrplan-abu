@@ -23,7 +23,7 @@
     "bubbles": [
         {
             "title": "Themen und Leitidee",
-            "text": "Zu Beginn jedes Themas erläutert die Leitidee, weshalb das Thema für die Lernenden wichtig ist. Sie beschreibt die aktuelle und zukünftige subjektive Bedeutsamkeit unter Berücksichtigung von Wandel und Aktualität und zeigt Motivation sowie Sinnhaftigkeit zur Bearbeitung des Themas. Sie legt die Schlüsselkompetenzen sowie die Kompetenzen aus den Lernbereichen Sprache und Kommunikation und Gesellschaft fest.",
+            "text": "Zu Beginn jedes Themas erläutert die Leitidee, weshalb das Thema für die Lernenden wichtig ist. Sie beschreibt die aktuelle und zukünftige subjektive Bedeutsamkeit unter Berücksichtigung von Wandel und Aktualität und zeigt Motivation sowie Sinnhaftigkeit zur Bearbeitung des Themas. Sie legt die Schlüsselkompetenzen sowie die Kompetenzen aus den Lernbereichen Sprachmodi und Gesellschaft fest.",
             "side": "left",
             "order": 1,
             "anchor_topic": 2
@@ -51,7 +51,7 @@
         },
         {
             "title": "Sprache",
-            "text": "Sprach- und Kommunikationskompetenzen sind grundlegende Voraussetzungen für Lernen, gesellschaftliche Teilhabe und berufliche Handlungsfähigkeit. Sie durchdringen alle gesellschaftlichen, privaten und beruflichen Lebensbereiche und stehen im Zentrum des ABU. Die beiden Lernbereiche «Sprache und Kommunikation» sowie «Gesellschaft» sind daher nicht isoliert voneinander zu betrachten, sondern als integrierte Einheit.",
+            "text": "Sprach- und Kommunikationskompetenzen sind grundlegende Voraussetzungen für Lernen, gesellschaftliche Teilhabe und berufliche Handlungsfähigkeit. Sie durchdringen alle gesellschaftlichen, privaten und beruflichen Lebensbereiche und stehen im Zentrum des ABU. Die beiden Lernbereiche «Sprachmodi» sowie «Gesellschaft» sind daher nicht isoliert voneinander zu betrachten, sondern als integrierte Einheit.",
             "side": "left",
             "order": 5,
             "anchor_topic": 8

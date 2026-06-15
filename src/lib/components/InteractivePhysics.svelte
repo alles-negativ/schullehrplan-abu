@@ -37,11 +37,11 @@
         m.letterSpacing = cs.letterSpacing;
         m.lineHeight = cs.lineHeight;
         m.textTransform = cs.textTransform;
-        m.overflowWrap = "break-word";
-        m.wordBreak = cs.wordBreak;
-        m.hyphens = cs.hyphens;
-        (m as unknown as { webkitHyphens: string }).webkitHyphens = cs.hyphens;
-        m.textAlign = "left";
+        m.overflowWrap = "normal";
+        m.wordBreak = "normal";
+        m.hyphens = "none";
+        (m as unknown as { webkitHyphens: string }).webkitHyphens = "none";
+        m.textAlign = cs.textAlign;
         m.boxSizing = "content-box";
         measurer.textContent = title.textContent;
         return measurer;
@@ -49,7 +49,7 @@
 
     // Sizes the pill to its content: grows on a single line until it would
     // exceed maxContent, then shrinks to the narrowest width that keeps the
-    // same line count (a middle ground between max-content and min-content).
+    // same line count without breaking words mid-character.
     const fitPillWidth = (pill: HTMLDivElement, id: string) => {
         const title = pill.querySelector<HTMLElement>(".pill-title");
         if (!title) return;
@@ -60,9 +60,49 @@
             parseFloat(getComputedStyle(m).lineHeight) ||
             parseFloat(getComputedStyle(m).fontSize) * 1.2 ||
             1;
-        const linesAt = (w: number) => {
-            m.style.width = `${w}px`;
-            return Math.max(1, Math.round(m.scrollHeight / lineHeight));
+
+        const hasMidWordBreak = () => {
+            const text = m.textContent ?? "";
+            const textNode = m.firstChild;
+            if (!textNode || textNode.nodeType !== Node.TEXT_NODE || !text.length) {
+                return false;
+            }
+
+            const range = document.createRange();
+            let lastTop: number | null = null;
+
+            for (let i = 0; i < text.length; i++) {
+                range.setStart(textNode, i);
+                range.setEnd(textNode, i + 1);
+                const rect = range.getClientRects()[0];
+                if (!rect) continue;
+
+                if (lastTop !== null && Math.abs(rect.top - lastTop) > 1) {
+                    const before = text[i - 1];
+                    const after = text[i];
+                    if (before !== " " && after !== " ") return true;
+                }
+                lastTop = rect.top;
+            }
+
+            return false;
+        };
+
+        const measureAt = (width: number) => {
+            m.style.whiteSpace = "normal";
+            m.style.width = `${width}px`;
+            const lines = Math.max(1, Math.round(m.scrollHeight / lineHeight));
+            const overflows = m.scrollWidth > width + 1;
+            return {
+                lines,
+                overflows,
+                midWordBreak: hasMidWordBreak(),
+            };
+        };
+
+        const fits = (width: number, maxLines: number) => {
+            const { lines, overflows, midWordBreak } = measureAt(width);
+            return lines <= maxLines && !overflows && !midWordBreak;
         };
 
         m.style.whiteSpace = "nowrap";
@@ -75,7 +115,7 @@
         if (oneLine <= maxContent) {
             contentWidth = Math.max(oneLine, PILL_MIN_CONTENT);
         } else {
-            const targetLines = linesAt(maxContent);
+            const targetLines = measureAt(maxContent).lines;
 
             let lo = PILL_MIN_CONTENT;
             let hi = maxContent;
@@ -83,7 +123,7 @@
 
             while (lo <= hi) {
                 const mid = (lo + hi) >> 1;
-                if (linesAt(mid) <= targetLines) {
+                if (fits(mid, targetLines)) {
                     best = mid;
                     hi = mid - 1;
                 } else {
@@ -91,7 +131,7 @@
                 }
             }
 
-            contentWidth = Math.min(best + 1, maxContent);
+            contentWidth = best;
         }
 
         const size = {
@@ -393,7 +433,7 @@
                 use:trackItem={competence}
             >
                 <div class="pill-inner">
-                    <span class="pill-title">{competence.title}</span>
+                    <span class="pill-title" lang="de">{competence.title}</span>
                 </div>
             </div>
         {/each}
@@ -463,8 +503,9 @@
         font-weight: var(--h2-weight);
         letter-spacing: var(--h2-letter-spacing);
         text-align: center;
-        overflow-wrap: break-word;
-        hyphens: auto;
+        overflow-wrap: normal;
+        word-break: normal;
+        hyphens: none;
     }
 
     .pill:active {

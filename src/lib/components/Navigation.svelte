@@ -8,7 +8,8 @@
 
     const educationModes = getAllEducationModes();
     const getModePath = (slug: string) => `/modes/${encodeURIComponent(slug)}`;
-    const qvPath = "/qv";
+    const qvPath = "/qv?chapter=0";
+    const isQvRoute = $derived(page.url.pathname === "/qv");
     const activeModeIndex = $derived(
         educationModes.findIndex(
             (mode) => page.url.pathname === getModePath(mode.slug),
@@ -206,11 +207,9 @@
                 <li class="mode-qv-item">
                     <a
                         class="mode-button mode-button--qv"
-                        class:is-current={page.url.pathname === qvPath}
+                        class:is-current={isQvRoute}
                         href={qvPath}
-                        aria-current={page.url.pathname === qvPath
-                            ? "page"
-                            : undefined}
+                        aria-current={isQvRoute ? "page" : undefined}
                     >
                         QV
                     </a>

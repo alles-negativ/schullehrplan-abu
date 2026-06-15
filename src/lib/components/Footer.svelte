@@ -12,7 +12,7 @@
     </div>
     <div class="footer-bottom-navigation">
         <span class="footer-bottom-navigation-link">Datenschutz</span>
-        <span class="footer-bottom-navigation-link">Impressum</span>
+        <a class="footer-bottom-navigation-link" href="/impressum">Impressum</a>
     </div>
 </footer>
 

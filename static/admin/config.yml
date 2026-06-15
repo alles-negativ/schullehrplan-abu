@@ -239,6 +239,132 @@ collections:
                             max: 9,
                             hint: "Vertikale Position: 1–8 = Thema, 9 = QV.",
                         }
+    - name: qv
+      label: Qualifikationsverfahren
+      files:
+          - label: QV-Inhalt
+            name: index
+            file: content/qv/index.json
+            fields:
+                - { label: Titel, name: title, widget: string }
+                - label: Kapitel
+                  name: chapters
+                  label_singular: Kapitel
+                  widget: list
+                  min: 1
+                  summary: "{{fields.number}}. {{fields.title}}"
+                  fields:
+                      - { label: Nummer, name: number, widget: number }
+                      - { label: Titel, name: title, widget: string }
+                      - {
+                            label: Einleitung,
+                            name: intro,
+                            widget: markdown,
+                            required: false,
+                        }
+                      - label: Abschnitte
+                        name: sections
+                        label_singular: Abschnitt
+                        widget: list
+                        required: false
+                        summary: "{{fields.number}} {{fields.title}}"
+                        fields:
+                            - {
+                                  label: Nummer,
+                                  name: number,
+                                  widget: string,
+                                  required: false,
+                                  hint: "z. B. 1.1 oder 2.6.1",
+                              }
+                            - { label: Titel, name: title, widget: string }
+                            - {
+                                  label: Text,
+                                  name: body,
+                                  widget: markdown,
+                                  required: false,
+                              }
+                            - label: Unterabschnitte
+                              name: subsections
+                              label_singular: Unterabschnitt
+                              widget: list
+                              required: false
+                              summary: "{{fields.number}} {{fields.title}}"
+                              fields:
+                                  - {
+                                        label: Nummer,
+                                        name: number,
+                                        widget: string,
+                                        required: false,
+                                    }
+                                  - { label: Titel, name: title, widget: string }
+                                  - {
+                                        label: Text,
+                                        name: body,
+                                        widget: markdown,
+                                        required: false,
+                                    }
+                            - label: Tabellen
+                              name: tables
+                              label_singular: Tabelle
+                              widget: list
+                              required: false
+                              summary: "{{fields.caption}}"
+                              fields:
+                                  - {
+                                        label: Beschriftung,
+                                        name: caption,
+                                        widget: string,
+                                        required: false,
+                                    }
+                                  - {
+                                        label: Spalte 1 (Überschrift),
+                                        name: column_label,
+                                        widget: string,
+                                        default: "Teil",
+                                        required: false,
+                                    }
+                                  - {
+                                        label: Spalte 2 (Überschrift),
+                                        name: column_description,
+                                        widget: string,
+                                        default: "Inhalt / Beschreibung",
+                                        required: false,
+                                    }
+                                  - label: Zeilen
+                                    name: rows
+                                    label_singular: Zeile
+                                    widget: list
+                                    min: 1
+                                    summary: "{{fields.label}}"
+                                    fields:
+                                        - { label: Bezeichnung, name: label, widget: string }
+                                        - {
+                                              label: Beschreibung,
+                                              name: description,
+                                              widget: text,
+                                          }
+                            - label: Listen
+                              name: lists
+                              label_singular: Liste
+                              widget: list
+                              required: false
+                              summary: "{{fields.title}}"
+                              fields:
+                                  - {
+                                        label: Titel,
+                                        name: title,
+                                        widget: string,
+                                        required: false,
+                                    }
+                                  - label: Einträge
+                                    name: items
+                                    label_singular: Eintrag
+                                    widget: list
+                                    min: 1
+                                    field:
+                                        label: Text
+                                        name: text
+                                        widget: string
     - name: aspects
       label: Aspekte
       label_singular: Aspekt

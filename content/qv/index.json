@@ -1,0 +1,183 @@
+{
+  "title": "Qualifikationsverfahren",
+  "chapters": [
+    {
+      "number": 1,
+      "title": "Erfahrungsnote",
+      "intro": "Die Erfahrungsnote bildet einen wesentlichen Bestandteil der Gesamtnote im ABU. Sie reflektiert die kontinuierliche Lernleistung über die gesamte Ausbildungsdauer und wird auf Grundlage verschiedener Leistungsnachweise ermittelt.",
+      "sections": [
+        {
+          "number": "1.1",
+          "title": "Erfahrungsnote, Zeugnisnote und Semesternote",
+          "body": "Die Erfahrungsnote wird aus der Zeugnisnote des letzten Semesters und den Semesternoten der vorangehenden Semester berechnet. Die Semesternote setzt sich aus verschiedenen Leistungsnachweisen zusammen und wird am Ende jedes Semesters festgelegt.",
+          "subsections": [
+            {
+              "number": "1.1.1",
+              "title": "Wiedereinstieg und Quereinsteig",
+              "body": "Bei einem Wiedereinstieg oder Quereinstieg werden die bisher erbrachten Leistungen angerechnet. Die Berechnung der Erfahrungsnote erfolgt anteilig auf Basis der tatsächlich absolvierten Semester."
+            },
+            {
+              "number": "1.1.2",
+              "title": "Übertritt in eine andere Ausbildung",
+              "body": "Beim Übertritt in eine andere Ausbildung werden die im ABU erbrachten Leistungen nach den geltenden Regelungen der übernehmenden Schule angerechnet."
+            }
+          ]
+        },
+        {
+          "number": "1.2",
+          "title": "Letztes Lehrjahr und Abschlusssemester",
+          "body": "Im letzten Lehrjahr und insbesondere im Abschlusssemester gelten besondere Regelungen für die Ermittlung der Semesternote, da das Qualifikationsverfahren parallel stattfindet."
+        },
+        {
+          "number": "1.3",
+          "title": "Gewichtung der Lernbereiche",
+          "body": "Die einzelnen Lernbereiche werden bei der Berechnung der Semesternote unterschiedlich gewichtet. Die Gewichtung orientiert sich am Umfang und an der Bedeutung der jeweiligen Lernbereiche."
+        },
+        {
+          "number": "1.4",
+          "title": "Qualitätsanforderungen",
+          "body": "Für die Bewertung der Leistungen gelten einheitliche Qualitätsanforderungen, die sich an den Kompetenzzielen des Schullehrplans orientieren."
+        },
+        {
+          "number": "1.5",
+          "title": "Notenberechnung",
+          "body": "Die Notenberechnung erfolgt nach den im Kanton geltenden Vorschriften. Die Erfahrungsnote wird auf eine Dezimalstelle gerundet."
+        },
+        {
+          "number": "1.6",
+          "title": "Grösserer verbindlicher Kompetenznachweis",
+          "body": "Der grössere verbindliche Kompetenznachweis ist ein zentraler Bestandteil der Semesternote und wird separat bewertet."
+        }
+      ]
+    },
+    {
+      "number": 2,
+      "title": "Schlussarbeit",
+      "intro": "Die Schlussarbeit ist das zentrale Element des Qualifikationsverfahrens. Sie umfasst einen Prozess, ein Produkt und eine Präsentation, die jeweils zu einem Drittel in die Gesamtnote einfliessen.",
+      "sections": [
+        {
+          "number": "2.6",
+          "title": "Bewertung von Prozess, Produkt und Präsentation",
+          "body": "Die Gesamtnote der Schlussarbeit setzt sich zu je einem Drittel aus der Bewertung von Prozess, Präsentation und Produkt zusammen. In jedem Bereich werden Punkte vergeben, die anschliessend zu einer Note zusammengeführt und auf eine ganze oder halbe Note gerundet werden."
+        },
+        {
+          "number": "2.6.1",
+          "title": "Prozessbewertung",
+          "body": "Die Prozessbewertung erfolgt durch die ABU-Lehrperson auf Grundlage einer Dokumentation, die folgende Bestandteile umfasst:",
+          "tables": [
+            {
+              "column_label": "Teil",
+              "column_description": "Inhalt / Beschreibung",
+              "rows": [
+                {
+                  "label": "Konzeptvereinbarung",
+                  "description": "Inhalt siehe Kapitel 2.4.1 (wird nicht bewertet)"
+                },
+                {
+                  "label": "Zeitplanung",
+                  "description": "Grober Zeitplan mit Phasen (Recherche, Durchführung, Auswertung etc.)"
+                },
+                {
+                  "label": "Arbeitsjournal",
+                  "description": "Chronologische Einträge über Arbeitszeiten, Tätigkeiten, Reflexionen inkl. kritischer Selbstreflexion"
+                },
+                {
+                  "label": "Datenbeschaffung und -verwendung, Quellen",
+                  "description": "Datenerhebung, Datennutzung, Beurteilung der Aussagekraft, Quellenangabe"
+                },
+                {
+                  "label": "Reflexion des Prozesses",
+                  "description": "Persönliche Einschätzung: Was gelang gut? Wo lagen Schwierigkeiten? Was wurde gelernt?"
+                },
+                {
+                  "label": "Zwischengespräche",
+                  "description": "Kurzprotokolle oder Notizen zu Feedback und Absprachen mit der Lehrperson"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "number": "2.6.2",
+          "title": "Produktbewertung",
+          "body": "Das Produkt wird anhand des Eigenanteils der lernenden Person bewertet. Eigenanteil umfasst:",
+          "lists": [
+            {
+              "items": [
+                "Eigene Ideen, Überlegungen und konzeptionelle Entscheidungen",
+                "Selbstständig verfasste Texte, Formulierungen und Analysen",
+                "Selbst erstellte oder produzierte Inhalte wie Multimedia-Produkte (Videos, Audio, Animationen, Websites, Apps, Prototypen)",
+                "Eigene praktische Arbeiten, Werke, Experimente, Tests oder Erfahrungsprozesse",
+                "Selbstständig erhobene oder aufbereitete Daten, Recherchen und Auswertungen",
+                "Strukturierung, Gliederung und Begründung des Vorgehens",
+                "Reflexion über die eigene Arbeit und die Ergebnisse"
+              ]
+            },
+            {
+              "title": "Kein Eigenanteil",
+              "items": [
+                "Deklarierte fremde oder automatisch generierte Inhalte",
+                "Deklarierte Inhalts- oder Gestaltungsbeiträge Dritter"
+              ]
+            }
+          ],
+          "tables": [
+            {
+              "caption": "Unabhängig von der Produktform muss die Dokumentation folgende Abschnitte enthalten:",
+              "column_label": "Abschnitt",
+              "column_description": "Inhalt / Beschreibung",
+              "rows": [
+                {
+                  "label": "Deckblatt",
+                  "description": "Titel, Name(n), Klasse, Schule, Abgabedatum"
+                },
+                {
+                  "label": "Inhaltsverzeichnis",
+                  "description": "Übersicht über die Gliederung der Arbeit mit Seitenzahlen"
+                },
+                {
+                  "label": "Einleitung",
+                  "description": "Persönlicher Bezug, Motivation, Fragestellung und Zielsetzung(en), Produktform"
+                },
+                {
+                  "label": "Hauptteil",
+                  "description": "Theoretische Grundlagen, Analyse, Ergebnisse. Umfang abhängig von Produktform und Vorgaben."
+                },
+                {
+                  "label": "Schluss",
+                  "description": "Fazit mit Zusammenfassung der Ergebnisse"
+                },
+                {
+                  "label": "Quellenverzeichnis",
+                  "description": "Alle verwendeten Quellen nach den geltenden Zitierregeln"
+                },
+                {
+                  "label": "Anhang",
+                  "description": "Fragebögen, Interview-Transkripte, Bilder, Eigenständigkeitserklärung, Korrespondenz etc."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 3,
+      "title": "Schlussprüfung",
+      "intro": "Die Schlussprüfung ist eine mündliche Prüfung, die am Ende der Ausbildung stattfindet und die im ABU erworbenen Kompetenzen abfragt.",
+      "sections": []
+    },
+    {
+      "number": 4,
+      "title": "Exkurs: Umgang mit digitalen Hilfsmitteln",
+      "intro": "Dieser Exkurs regelt den verantwortungsvollen Umgang mit digitalen Hilfsmitteln im Qualifikationsverfahren.",
+      "sections": []
+    },
+    {
+      "number": 5,
+      "title": "Anhang",
+      "intro": "Ergänzende Materialien und Formulare zum Qualifikationsverfahren.",
+      "sections": []
+    }
+  ]
+}

@@ -406,7 +406,7 @@
     }
 
     .mode-button--qv {
-        padding-inline: 1.25rem;
+        padding-inline: 40px;
     }
 
     .mode-button:hover,

@@ -50,6 +50,11 @@
     const getAspectColor = (aspectTitle: string) =>
         getAspectByTitle(aspectTitle)?.color ?? "#64748b";
 
+    // Keep "Schlüsselkompetenzen" on two lines ("Schlüssel" / "kompetenzen") — see
+    // .aspect-title-button { white-space: pre-line }.
+    const formatAspectTitle = (title: string) =>
+        title === "Schlüsselkompetenzen" ? "Schlüssel\nkompetenzen" : title;
+
     const isAspectHighlighted = (aspectTitle: string) =>
         highlightedAspectTitle === aspectTitle;
 
@@ -189,7 +194,7 @@
                     style={`--aspect-color: ${getAspectColor(group.title)}`}
                     onclick={() => toggleAspectHighlight(group.title)}
                 >
-                    {group.title}
+                    {formatAspectTitle(group.title)}
                 </button>
                 <div class="pill-wrap">
                     {#each group.competences as competence}
@@ -336,6 +341,8 @@
         width: 100%;
         cursor: pointer;
         height: 120px;
+        /* Required for formatAspectTitle line break in Schlüsselkompetenzen */
+        white-space: pre-line;
         transition: all 120ms ease;
     }
 

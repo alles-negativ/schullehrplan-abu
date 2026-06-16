@@ -13,7 +13,7 @@
           "kerninhalte": "Lehrvertragsrecht, Nutzung IT-Infrastruktur, Kommunikationsregeln, Belastungsanzeichen",
           "essential_competences": [
             "ziele-setzen-und-anpassen",
-            "verständnis-fördern",
+            "verstandnis-fordern",
             "anpassung"
           ],
           "individual_reference": [
@@ -84,13 +84,13 @@
                   "number": 2,
                   "social_aspects": [
                     {
-                      "aspect": "identität-sozialisation",
+                      "aspect": "identitat-sozialisation",
                       "specification": "Grundwissen über Belastungsanzeichen und über einfache Gesundheits- und Verhaltensregeln"
                     }
                   ],
                   "language_aspects": [
                     {
-                      "aspect": "rezeption-mündlich",
+                      "aspect": "rezeption-mundlich",
                       "specification": "Zentrale Aussagen aus Gesprächen oder Audioquellen verstehen/erkennen; vorgegebene Sachverhalte nachfragen/erheben"
                     }
                   ]
@@ -108,7 +108,7 @@
           "kerninhalte": "Bedürfnisse, Budget, Marketing, Nachhaltigkeit",
           "essential_competences": [
             "quellen-unterscheiden",
-            "innovation-und-problemlösung",
+            "innovation-und-problemlosung",
             "nachhaltigkeit"
           ],
           "individual_reference": [
@@ -137,13 +137,13 @@
                   "number": 2,
                   "social_aspects": [
                     {
-                      "aspect": "ökologie",
+                      "aspect": "okologie",
                       "specification": "Grundlagen der Produktbewertung: Herkunft, Energieverbrauch, Materialien, Entsorgung"
                     }
                   ],
                   "language_aspects": [
                     {
-                      "aspect": "produktion-mündlich",
+                      "aspect": "produktion-mundlich",
                       "specification": "Meinung äussern, Gespräch führen, Argumente verwenden (z. B. mündlich erklären, wie ihr Konsum die Umwelt beeinflusst, und begründen, welche nachhaltigen Entscheidungen sie treffen wollen)"
                     }
                   ]
@@ -165,7 +165,7 @@
                   ],
                   "language_aspects": [
                     {
-                      "aspect": "produktion-mündlich",
+                      "aspect": "produktion-mundlich",
                       "specification": "Meinung äussern, Gespräch führen, Argumente verwenden (z. B. erklären, wie der Betrieb mit Kundinnen und Kunden umgeht und wie ein professioneller Auftritt zur Qualität der Dienstleistung oder des Produkts beitragen kann)"
                     }
                   ]
@@ -175,7 +175,7 @@
                   "number": 2,
                   "social_aspects": [
                     {
-                      "aspect": "ökologie",
+                      "aspect": "okologie",
                       "specification": "Transportwege, Abfallmengen, CO₂-Fussabdruck"
                     }
                   ],
@@ -218,7 +218,7 @@
                   ],
                   "language_aspects": [
                     {
-                      "aspect": "interaktion-kollaboration-mündlich",
+                      "aspect": "interaktion-kollaboration-mundlich",
                       "specification": "An Gesprächen, z. B. einem Austausch über Risiken im Alltag und im Betrieb, aktiv teilnehmen: aufmerksam zuhören, Aussagen korrekt wiedergeben, gezielte Rückfragen stellen, Rückmeldung geben, Argumente einordnen"
                     }
                   ]
@@ -250,13 +250,13 @@
                   "number": 1,
                   "social_aspects": [
                     {
-                      "aspect": "identität-sozialisation",
+                      "aspect": "identitat-sozialisation",
                       "specification": "Rollenbilder, Anerkennung und Zugehörigkeit zu sozialen Gruppen"
                     }
                   ],
                   "language_aspects": [
                     {
-                      "aspect": "interaktion-kollaboration-mündlich",
+                      "aspect": "interaktion-kollaboration-mundlich",
                       "specification": "Zuhören, an Gesprächen teilnehmen, Rückmeldung geben, Argumentstruktur erkennen, Problem wahrnehmen (z. B. in kleinen Gruppen Gespräche oder kurze Interviews hören und sich über gesellschaftliche Erwartungen austauschen)"
                     }
                   ]
@@ -266,7 +266,7 @@
                   "number": 2,
                   "social_aspects": [
                     {
-                      "aspect": "identität-sozialisation",
+                      "aspect": "identitat-sozialisation",
                       "specification": "Reflexion der eigenen Bedürfnisse, psychische und physische Gesundheit, Suchtproblematik und Hilfsangebote"
                     }
                   ],
@@ -363,7 +363,7 @@
                   ],
                   "language_aspects": [
                     {
-                      "aspect": "interaktion-kollaboration-mündlich",
+                      "aspect": "interaktion-kollaboration-mundlich",
                       "specification": "Gespräche führen, Rückmeldungen differenzieren, Rollen übernehmen, Gruppenentscheidungen mitentwickeln, argumentieren, Probleme lösen (z. B. Fallbeispiele aus Social Media sammeln/besprechen und dabei Sensibilität für unterschiedliche Rollen und Betroffenheiten fördern)"
                     }
                   ]
@@ -387,7 +387,7 @@
           "kerninhalte": "Politische Grundhaltungen, Entwicklung eigener Standpunkte, politische Rechte, politische Teilhabe",
           "essential_competences": [
             "werthaltungen-reflektieren",
-            "standpunkte-begründen",
+            "standpunkte-begrunden",
             "nachhaltigkeit"
           ],
           "individual_reference": [
@@ -400,13 +400,13 @@
                   "number": 1,
                   "social_aspects": [
                     {
-                      "aspect": "ökologie",
+                      "aspect": "okologie",
                       "specification": "Modelle zum Klimawandel, ökologischer Fussabdruck"
                     }
                   ],
                   "language_aspects": [
                     {
-                      "aspect": "rezeption-mündlich",
+                      "aspect": "rezeption-mundlich",
                       "specification": "Absichten erkennen, politische Aussagen verstehen, politischen Diskussionen folgen, Werte hinter Positionen erkennen"
                     }
                   ]
@@ -478,8 +478,8 @@
           "kerninhalte": "Vertragsinhalt, Rechte und Pflichten, Perspektivenübernahme, moralische Prinzipien",
           "essential_competences": [
             "teamarbeit",
-            "standpunkte-begründen",
-            "verständnis-fördern"
+            "standpunkte-begrunden",
+            "verstandnis-fordern"
           ],
           "individual_reference": [
             {
@@ -535,7 +535,7 @@
                   ],
                   "language_aspects": [
                     {
-                      "aspect": "produktion-mündlich",
+                      "aspect": "produktion-mundlich",
                       "specification": "Aussagen und Argumente strukturieren, Redemittel nutzen"
                     }
                   ]
@@ -551,7 +551,7 @@
                   ],
                   "language_aspects": [
                     {
-                      "aspect": "produktion-mündlich",
+                      "aspect": "produktion-mundlich",
                       "specification": "Aussagen und Argumente strukturieren, Redemittel nutzen"
                     }
                   ]
@@ -569,7 +569,7 @@
           "kerninhalte": "Weiterbildung, Bewerbung, Bürgerinnen- und Bürgerpflichten, Umgang mit amtlichen Formularen",
           "essential_competences": [
             "ziele-setzen-und-anpassen",
-            "innovation-und-problemlösung",
+            "innovation-und-problemlosung",
             "lebensphasen-planen"
           ],
           "individual_reference": [
@@ -582,7 +582,7 @@
                   "number": 1,
                   "social_aspects": [
                     {
-                      "aspect": "identität-sozialisation",
+                      "aspect": "identitat-sozialisation",
                       "specification": "Persönlichkeitsentwicklung, Weiterbildungsmöglichkeiten und Zukunftschancen"
                     }
                   ],
@@ -604,7 +604,7 @@
                   ],
                   "language_aspects": [
                     {
-                      "aspect": "interaktion-kollaboration-mündlich",
+                      "aspect": "interaktion-kollaboration-mundlich",
                       "specification": "An zielgerichteten Gesprächen aktiv teilnehmen (z. B. gemeinsam Lösungen entwickeln, Rückmeldungen geben, Gesprächsrollen übernehmen, Gesprächsverläufe strukturieren, bei Meinungsverschiedenheiten vermitteln, gemeinsam Entscheidungen vorbereiten, argumentieren, Probleme lösen, Diskussion steuern und moderieren, Positionen vertreten)"
                     }
                   ]
@@ -695,7 +695,7 @@
                   ],
                   "language_aspects": [
                     {
-                      "aspect": "rezeption-mündlich",
+                      "aspect": "rezeption-mundlich",
                       "specification": "Zentrale Aussagen aus Gesprächen entnehmen"
                     }
                   ]

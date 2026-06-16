@@ -14,7 +14,7 @@
           "essential_competences": [
             "ziele-setzen-und-anpassen",
             "teamarbeit",
-            "standpunkte-begründen",
+            "standpunkte-begrunden",
             "lebensphasen-planen"
           ],
           "individual_reference": [
@@ -35,7 +35,7 @@
                       "specification": "Perspektivenübernahme, Konfliktstrategien"
                     },
                     {
-                      "aspect": "identität-sozialisation",
+                      "aspect": "identitat-sozialisation",
                       "specification": "Soziale Rollen, Rollenkonflikte"
                     }
                   ],
@@ -45,7 +45,7 @@
                       "specification": "Zentrale Aussagen aus Texten entnehmen mithilfe von Markierhilfe und Lesestrategien"
                     },
                     {
-                      "aspect": "interaktion-kollaboration-mündlich",
+                      "aspect": "interaktion-kollaboration-mundlich",
                       "specification": "Aktiv zuhören und nach Rollen-Konventionen an Gesprächen teilnehmen"
                     }
                   ]
@@ -100,7 +100,7 @@
                   ],
                   "language_aspects": [
                     {
-                      "aspect": "interaktion-kollaboration-mündlich",
+                      "aspect": "interaktion-kollaboration-mundlich",
                       "specification": "An Gesprächen teilnehmen, Rückmeldung geben und annehmen"
                     }
                   ]
@@ -114,7 +114,7 @@
                       "specification": "Sinnvolle Anwendung von Tools der künstlichen Intelligenz, zielgerichtetes Prompten"
                     },
                     {
-                      "aspect": "identität-sozialisation",
+                      "aspect": "identitat-sozialisation",
                       "specification": "Lernstrategien, Selbstwirksamkeitsförderung"
                     }
                   ],
@@ -143,8 +143,8 @@
           "essential_competences": [
             "quellen-unterscheiden",
             "werthaltungen-reflektieren",
-            "standpunkte-begründen",
-            "verständnis-fördern",
+            "standpunkte-begrunden",
+            "verstandnis-fordern",
             "partizipation"
           ],
           "individual_reference": [
@@ -163,7 +163,7 @@
                   ],
                   "language_aspects": [
                     {
-                      "aspect": "rezeption-mündlich",
+                      "aspect": "rezeption-mundlich",
                       "specification": "Zentrale Aussagen aus Gesprächen oder Audioquellen mithilfe eines Hörleitfadens verstehen und erkennen"
                     },
                     {
@@ -218,7 +218,7 @@
                   ],
                   "language_aspects": [
                     {
-                      "aspect": "rezeption-mündlich",
+                      "aspect": "rezeption-mundlich",
                       "specification": "Zentrale Aussagen von mündlichen Beiträgen anhand von Hörhilfen erkennen"
                     },
                     {
@@ -242,7 +242,7 @@
                   ],
                   "language_aspects": [
                     {
-                      "aspect": "produktion-mündlich",
+                      "aspect": "produktion-mundlich",
                       "specification": "In Gesprächen mithilfe einer Argumentationsstruktur meinungsorientiert kommunizieren"
                     },
                     {
@@ -301,7 +301,7 @@
                   ],
                   "language_aspects": [
                     {
-                      "aspect": "interaktion-kollaboration-mündlich",
+                      "aspect": "interaktion-kollaboration-mundlich",
                       "specification": "In Gruppendiskussion politische Anliegen präsentieren, aushandeln und Gruppenentscheidungen mitentwickeln"
                     }
                   ]
@@ -319,7 +319,7 @@
           "kerninhalte": "Bedürfnisse, Budget, Schuldenprävention, Nachhaltigkeit, Preisbildung, Kaufvertrag, Konsumentenrechte",
           "essential_competences": [
             "quellen-unterscheiden",
-            "innovation-und-problemlösung",
+            "innovation-und-problemlosung",
             "werthaltungen-reflektieren",
             "nachhaltigkeit"
           ],
@@ -337,7 +337,7 @@
                       "specification": "Bedürfnisbefriedigung"
                     },
                     {
-                      "aspect": "identität-sozialisation",
+                      "aspect": "identitat-sozialisation",
                       "specification": "Einfluss von Herkunft und Umfeld"
                     }
                   ],
@@ -396,7 +396,7 @@
                   "number": 1,
                   "social_aspects": [
                     {
-                      "aspect": "ökologie",
+                      "aspect": "okologie",
                       "specification": "Energie- und Materialverbrauch, Emissionen, Klimawandel, drei Dimensionen der Nachhaltigkeit"
                     },
                     {
@@ -461,7 +461,7 @@
                   ],
                   "language_aspects": [
                     {
-                      "aspect": "interaktion-kollaboration-mündlich",
+                      "aspect": "interaktion-kollaboration-mundlich",
                       "specification": "An formalem Konfliktgespräch nach Konventionen teilnehmen"
                     },
                     {
@@ -489,7 +489,7 @@
           "kerninhalte": "Selbst- und Fremdbild, psychische und physische Gesundheit, Kranken- und Unfallversicherung, Haftpflichtversicherung, gesellschaftliche Vielfalt, Migration",
           "essential_competences": [
             "werthaltungen-reflektieren",
-            "verständnis-fördern",
+            "verstandnis-fordern",
             "anpassung",
             "mehrdeutigkeit"
           ],
@@ -503,13 +503,13 @@
                   "number": 1,
                   "social_aspects": [
                     {
-                      "aspect": "identität-sozialisation",
+                      "aspect": "identitat-sozialisation",
                       "specification": "Persönlichkeitsentwicklung, Einfluss von Herkunft und Umfeld, Selbstbestimmung, soziale Rollen, Medieneinfluss"
                     }
                   ],
                   "language_aspects": [
                     {
-                      "aspect": "interaktion-kollaboration-mündlich",
+                      "aspect": "interaktion-kollaboration-mundlich",
                       "specification": "Gespräche führen über Erwartungen und Erkenntnisse"
                     },
                     {
@@ -527,7 +527,7 @@
                       "specification": "Eigenverantwortung"
                     },
                     {
-                      "aspect": "identität-sozialisation",
+                      "aspect": "identitat-sozialisation",
                       "specification": "Psychische und physische Gesundheit, Work-Life-Balance, Sucht und Hilfsangebote, Prävention"
                     }
                   ],
@@ -597,13 +597,13 @@
                   "number": 1,
                   "social_aspects": [
                     {
-                      "aspect": "identität-sozialisation",
+                      "aspect": "identitat-sozialisation",
                       "specification": "Gesellschaftliche Rolle, kulturelle Vielfalt"
                     }
                   ],
                   "language_aspects": [
                     {
-                      "aspect": "interaktion-kollaboration-mündlich",
+                      "aspect": "interaktion-kollaboration-mundlich",
                       "specification": "Interview führen, Chancen und Risiken erfragen"
                     },
                     {
@@ -728,7 +728,7 @@
                   ],
                   "language_aspects": [
                     {
-                      "aspect": "produktion-mündlich",
+                      "aspect": "produktion-mundlich",
                       "specification": "Anliegen präsentieren"
                     }
                   ]
@@ -749,13 +749,13 @@
                       "specification": "Funktionen nationaler und supranationaler Organisationen in Europa und weltweit"
                     },
                     {
-                      "aspect": "ökologie",
+                      "aspect": "okologie",
                       "specification": "Lösungsansätze zu gesellschaftlich nachhaltigem Handeln, globale Herausforderungen wie Bevölkerungswachstum, soziale Ungleichheit oder steigender Ressourcenverbrauch"
                     }
                   ],
                   "language_aspects": [
                     {
-                      "aspect": "produktion-mündlich",
+                      "aspect": "produktion-mundlich",
                       "specification": "Handlungsmöglichkeiten zu einer aktuellen globalen Herausforderung in einem Gesprächsbeitrag wiedergeben"
                     }
                   ]
@@ -769,7 +769,7 @@
                       "specification": "Medienwirkung, Medien als vierte Gewalt"
                     },
                     {
-                      "aspect": "ökologie",
+                      "aspect": "okologie",
                       "specification": "Ressourcenverbrauch, gesellschaftliche Verhaltensmuster im Umgang mit Ressourcen"
                     }
                   ],
@@ -808,9 +808,9 @@
           "additional_description": "Ich befasse mich mit der Frage, wie ich eine passende Wohnung finde, die zu meinen sozialen Bedürfnissen, meinem Lebensstil und meinen finanziellen Möglichkeiten passt. Gleichzeitig lerne ich, den Einzug Schritt für Schritt zu planen und organisatorisch vorzubereiten. Darüber hinaus überlege ich, wie ich Wohnen und Mobilität im Alltag sinnvoll gestalten kann. Dazu berücksichtige ich sowohl Kosten, Nachhaltigkeit als auch gesetzliche Rahmenbedingungen.\n\nDamit ich mich im Mietalltag sicher bewegen kann, setze ich mich mit den zentralen Rechten und Pflichten von Mietenden sowie relevanten Versicherungen auseinander. In Korrespondenzen mit der Vermietung oder der Schlichtungsbehörde übe ich, sachlich und zielgerichtet zu kommunizieren.\n\nIch untersuche unterschiedliche Wohn- und Lebensformen und erkenne, wie der demografische Wandel Wohnmodelle und das Zusammenleben prägt. Gleichzeitig reflektiere ich, wie ein respektvoller Umgang in Beziehungen und Nachbarschaft möglich ist. In kurzen multimedialen Darstellungen zeige ich auf, wie Wohnen ökologisch nachhaltiger gestaltet und ein gesundes, respektvolles Miteinander unterstützt werden kann.\n\nSo entwickle ich Kompetenzen und Orientierung, um selbstständig, informiert und verantwortungsvoll mein Zuhause aktiv und bewusst zu gestalten.",
           "kerninhalte": "Wohnungssuche, Umzugsplanung, Mietrecht, Versicherungsschutz, verschiedene Wohn- und Lebensformen",
           "essential_competences": [
-            "innovation-und-problemlösung",
+            "innovation-und-problemlosung",
             "teamarbeit",
-            "verständnis-fördern",
+            "verstandnis-fordern",
             "lebensphasen-planen",
             "nachhaltigkeit"
           ],
@@ -824,11 +824,11 @@
                   "number": 1,
                   "social_aspects": [
                     {
-                      "aspect": "ökologie",
+                      "aspect": "okologie",
                       "specification": "Mobilität"
                     },
                     {
-                      "aspect": "identität-sozialisation",
+                      "aspect": "identitat-sozialisation",
                       "specification": "Lebensqualität"
                     },
                     {
@@ -838,7 +838,7 @@
                   ],
                   "language_aspects": [
                     {
-                      "aspect": "rezeption-mündlich",
+                      "aspect": "rezeption-mundlich",
                       "specification": "Hauptaussagen aus Gesprächs- und Hörmaterialien erkennen"
                     }
                   ]
@@ -893,7 +893,7 @@
                   ],
                   "language_aspects": [
                     {
-                      "aspect": "rezeption-mündlich",
+                      "aspect": "rezeption-mundlich",
                       "specification": "Hauptaussagen und Absichten aus Gesprächen und Hörmaterialien erkennen"
                     }
                   ]
@@ -914,7 +914,7 @@
                       "specification": "Bevölkerungswachstum, Alterung der Bevölkerung"
                     },
                     {
-                      "aspect": "ökologie",
+                      "aspect": "okologie",
                       "specification": "Nachhaltiger Umgang mit knappen Ressourcen, Reduktion der Umweltbelastung"
                     }
                   ],
@@ -930,7 +930,7 @@
                   "number": 2,
                   "social_aspects": [
                     {
-                      "aspect": "identität-sozialisation",
+                      "aspect": "identitat-sozialisation",
                       "specification": "Psychische und physische Gesundheit, Gewaltformen, Hilfsangebote, häusliche Gewalt"
                     },
                     {
@@ -965,11 +965,11 @@
           "essential_competences": [
             "quellen-unterscheiden",
             "ziele-setzen-und-anpassen",
-            "innovation-und-problemlösung",
+            "innovation-und-problemlosung",
             "teamarbeit",
             "werthaltungen-reflektieren",
-            "standpunkte-begründen",
-            "verständnis-fördern",
+            "standpunkte-begrunden",
+            "verstandnis-fordern",
             "lebensphasen-planen",
             "nachhaltigkeit",
             "anpassung",
@@ -984,7 +984,7 @@
           "additional_description": "Ich vertiefe mein Wissen über die Rechte und Pflichten in der Arbeitswelt und analysiere, wie technologische Entwicklungen, wie Robotik oder Künstliche Intelligenz, sowie flexible Arbeitsformen die Berufswelt verändern und welche Chancen und Herausforderungen sich daraus für mich ergeben.\n\nIch plane meine berufliche Zukunft, indem ich mich an den Anforderungen des Arbeitsmarkts orientiere, meine Stärken und Ziele reflektiere und passende Weiterbildungen recherchiere und bewerte.\n\nEin weiterer Schwerpunkt ist die finanzielle Absicherung. Ich verschaffe mir einen Überblick über meine beruflichen Rechte und über die wichtigsten Sozialversicherungen. Ich informiere mich über verschiedene Finanzierungsarten und plane meine Altersvorsorge bewusst. Dabei beschäftige ich mich auch mit Finanzplanung, um Entscheidungen für grössere Anschaffungen oder Projekte treffen zu können.\n\nSo baue ich eine solide finanzielle Basis auf, die meine beruflichen und persönlichen Ziele langfristig unterstützt.",
           "kerninhalte": "Einfluss aktueller Technologien aufs Berufsumfeld, Rolle in der Arbeitswelt, Laufbahnziele, Weiterbildung, Bewerbung, Arbeitsrecht, Lösung von Arbeitskonflikten, Sozialversicherungen, Finanzierungsarten, Finanzplanung, Vorbereitung Schlussprüfung",
           "essential_competences": [
-            "innovation-und-problemlösung",
+            "innovation-und-problemlosung",
             "teamarbeit",
             "lebensphasen-planen",
             "anpassung"
@@ -1019,7 +1019,7 @@
                       "specification": "Einfluss aktueller Technologien auf das persönliche berufliche Umfeld, digitale Transformation"
                     },
                     {
-                      "aspect": "identität-sozialisation",
+                      "aspect": "identitat-sozialisation",
                       "specification": "Persönliche Weiterbildung"
                     }
                   ],
@@ -1042,7 +1042,7 @@
                   "number": 1,
                   "social_aspects": [
                     {
-                      "aspect": "identität-sozialisation",
+                      "aspect": "identitat-sozialisation",
                       "specification": "Laufbahnplanungskompetenz, Zukunftsperspektiven, Selbst- und Fremdbild"
                     }
                   ],
@@ -1078,7 +1078,7 @@
                   "number": 3,
                   "social_aspects": [
                     {
-                      "aspect": "identität-sozialisation",
+                      "aspect": "identitat-sozialisation",
                       "specification": "Berufliche Rolle und Selbstpräsentation"
                     }
                   ],
@@ -1148,7 +1148,7 @@
                       "specification": "Sozialversicherungen, Abredeversicherung, Beitragslücken"
                     },
                     {
-                      "aspect": "identität-sozialisation",
+                      "aspect": "identitat-sozialisation",
                       "specification": "Lebensplanung"
                     }
                   ],
@@ -1188,7 +1188,7 @@
                       "specification": "Finanzplanung, Dreisäulenprinzip"
                     },
                     {
-                      "aspect": "identität-sozialisation",
+                      "aspect": "identitat-sozialisation",
                       "specification": "Eigenverantwortung"
                     }
                   ],
@@ -1211,7 +1211,7 @@
                   "number": 1,
                   "social_aspects": [
                     {
-                      "aspect": "identität-sozialisation",
+                      "aspect": "identitat-sozialisation",
                       "specification": "Lernstrategien, Strategien zur Bewältigung von Herausforderungen"
                     }
                   ],

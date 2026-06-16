@@ -235,9 +235,11 @@
                                 <div class="row-content">
                                     <h3 class="topic-card-title">
                                         {#if topic.number != null}
-                                            {topic.number}.
+                                            <span class="topic-number"
+                                                >{topic.number}.</span
+                                            >
                                         {/if}
-                                        {getTopicTitle(topic)}
+                                        <span>{getTopicTitle(topic)}</span>
                                     </h3>
                                 </div>
                                 <div class="row-tags">
@@ -315,14 +317,14 @@
     .circularity {
         display: flex;
         flex-direction: column;
-        gap: 2rem;
+        gap: 70px;
         margin-top: 120px;
     }
 
     .aspect-grid {
         display: grid;
         grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: 1rem;
+        gap: 10px;
         align-items: start;
     }
 
@@ -346,10 +348,37 @@
         transition: all 120ms ease;
     }
 
-    .aspect-title-button.is-active,
     .aspect-title-button:hover {
-        box-shadow: 0px 7px 0px var(--color-black);
-        transform: translateY(-7px);
+        /* box-shadow: 0px 7px 0px var(--color-black); */
+        /* transform: translateY(-7px); */
+        animation: shake 3s ease-in-out infinite;
+    }
+
+    .aspect-title-button.is-active {
+        box-shadow: 0 9px 15px rgba(0, 0, 0, 0.25);
+    }
+
+    @keyframes shake {
+        0%,
+        18%,
+        100% {
+            transform: rotate(0deg) translateX(0);
+        }
+        3% {
+            transform: rotate(-1deg) translateX(-5px);
+        }
+        6% {
+            transform: rotate(1deg) translateX(5px);
+        }
+        9% {
+            transform: rotate(-0.75deg) translateX(-5px);
+        }
+        12% {
+            transform: rotate(0.75deg) translateX(5px);
+        }
+        15% {
+            transform: rotate(0deg) translateX(0);
+        }
     }
 
     .pill-wrap {
@@ -386,7 +415,7 @@
     .years {
         display: flex;
         flex-direction: column;
-        gap: 2.5rem;
+        gap: 50px;
     }
 
     .year-header {
@@ -412,22 +441,29 @@
     .topic-list {
         display: flex;
         flex-direction: column;
-        gap: 1.25rem;
+        gap: 20px;
     }
 
     .topic-card {
         background: var(--color-white);
         border-radius: 25px;
-        padding: 35px 40px;
+        padding: 35px 40px 23px 40px;
     }
 
     .topic-card-title {
         margin: 0;
+        margin-left: -33px;
         font-size: var(--h2-size);
         line-height: var(--h2-line-height);
         font-weight: var(--h2-weight);
         letter-spacing: var(--h2-letter-spacing);
-        margin-left: -33px;
+        display: flex;
+        gap: 0.3em;
+        align-items: baseline;
+    }
+
+    .topic-number {
+        flex-shrink: 0;
     }
 
     .list-row {

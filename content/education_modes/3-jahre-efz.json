@@ -1,1235 +1,1230 @@
 {
-  "title": "3-jährige EFZ",
-  "overview": "Der Schullehrplan für die dreijährige Grundbildung umfasst acht Themen, die sich auf die drei Lehrjahre verteilen und inhaltlich sowie kompetenzorientiert aufeinander aufbauen. Im dritten Lehrjahr ist mit Thema 7 ein eigenes Gefäss für die Schlussarbeit vorgesehen.\n\nDie Themen verbinden zentrale Lebensbereiche der Lernenden mit gesellschaftlichen Inhalten, Sprachmodi und Schlüsselkompetenzen. Sie reichen vom Einstieg in Ausbildung und Berufsalltag über Meinungsbildung, Konsum, Gesundheit, Staat und Wohnen bis zur Schlussarbeit und zur Arbeitswelt der Zukunft. Die Themenübersicht macht sichtbar, wie gesellschaftliche Inhalte, Schlüsselkompetenzen und Sprachmodi über die gesamte Lehrzeit hinweg zirkulär aufgebaut und vertieft werden.\n\n**Alle Themen sind einheitlich aufgebaut:** Die Leitidee beschreibt die subjektive Bedeutsamkeit des Themas für die Lernenden und seine Relevanz für ihre gegenwärtige und zukünftige Lebenswelt. Die individuellen Lebensbezüge synthetisieren und konkretisieren diese Perspektive. Die Kerninhalte bündeln die fachlichen Schwerpunkte des Themas. Darauf aufbauend werden die relevanten Sprachmodi und Schlüsselkompetenzen ausgewiesen. Für die einzelnen Lebensbezüge werden anschliessend die zu erreichenden Kompetenzen formuliert. Die Kompetenzen sowie die zugeordneten gesellschaftlichen Inhalte und Sprachmodi für deren Aufbau und Bearbeitung sind verbindlich.",
-  "years": [
-    {
-      "year": 1,
-      "themenbereiche": [
+    "title": "3-jährige EFZ",
+    "implementation_examples_pdf": "/uploads/2_SLP_EFZ_3jährig_20260512.pdf",
+    "overview": "Der Schullehrplan für die dreijährige Grundbildung umfasst acht Themen, die sich auf die drei Lehrjahre verteilen und inhaltlich sowie kompetenzorientiert aufeinander aufbauen. Im dritten Lehrjahr ist mit Thema 7 ein eigenes Gefäss für die Schlussarbeit vorgesehen.\n\nDie Themen verbinden zentrale Lebensbereiche der Lernenden mit gesellschaftlichen Inhalten, Sprachmodi und Schlüsselkompetenzen. Sie reichen vom Einstieg in Ausbildung und Berufsalltag über Meinungsbildung, Konsum, Gesundheit, Staat und Wohnen bis zur Schlussarbeit und zur Arbeitswelt der Zukunft. Die Themenübersicht macht sichtbar, wie gesellschaftliche Inhalte, Schlüsselkompetenzen und Sprachmodi über die gesamte Lehrzeit hinweg zirkulär aufgebaut und vertieft werden.\n\n**Alle Themen sind einheitlich aufgebaut:** Die Leitidee beschreibt die subjektive Bedeutsamkeit des Themas für die Lernenden und seine Relevanz für ihre gegenwärtige und zukünftige Lebenswelt. Die individuellen Lebensbezüge synthetisieren und konkretisieren diese Perspektive. Die Kerninhalte bündeln die fachlichen Schwerpunkte des Themas. Darauf aufbauend werden die relevanten Sprachmodi und Schlüsselkompetenzen ausgewiesen. Für die einzelnen Lebensbezüge werden anschliessend die zu erreichenden Kompetenzen formuliert. Die Kompetenzen sowie die zugeordneten gesellschaftlichen Inhalte und Sprachmodi für deren Aufbau und Bearbeitung sind verbindlich.",
+    "years": [
         {
-          "number": 1,
-          "title": "Ins Berufsleben einsteigen",
-          "description": "Der Beginn meiner beruflichen Grundbildung bedeutet einen tiefgreifenden Wandel. Ich übernehme neu eine Rolle im Berufsbildungssystem als verantwortungsvolle, lernende Fachkraft im Betrieb, in der Schule und in den überbetrieblichen Kursen (ÜK). In meiner Ausbildungszeit entwickle ich Orientierung und Sicherheit und finde meinen Platz in der Berufs- und Lebenswelt.",
-          "additional_description": "Ich setze mich mit den Inhalten meines Lehrvertrags auseinander und erkenne meine Rechte und Pflichten im Berufsalltag. Dazu lese und verarbeite ich unterschiedliche Quellen, z. B. Verträge oder betriebliche Regelwerke und nutze Informationen gezielt für meine Situation.\n\nAusserdem mache ich erste Erfahrungen damit, wie in meiner neuen Rolle kommuniziert wird, wie Zusammenarbeit im Team gelingt und wie Konflikte fair gelöst werden. Dabei tausche ich mich mit anderen Lernenden und Mitarbeitenden über Erlebnisse und Herausforderungen aus und bringe meine Sichtweise ein.\n\nIch erweitere meine Lern- und Arbeitstechniken und gehe bei meinem Einstieg in die Arbeitswelt bewusst mit meinen Ressourcen um, indem ich meine eigene Arbeit gezielt organisiere.",
-          "kerninhalte": "Lehrvertragsrecht, Nutzung IT-Infrastruktur, Kommunikationsregeln, Lernplanung, Lernstrategien inkl. KI-Nutzung",
-          "essential_competences": [
-            "ziele-setzen-und-anpassen",
-            "teamarbeit",
-            "standpunkte-begrunden",
-            "lebensphasen-planen"
-          ],
-          "individual_reference": [
-            {
-              "title": "Ich finde mich in meiner Ausbildung zurecht und kommuniziere auf konstruktive Art und Weise.",
-              "number": 1,
-              "learning_contents": [
+            "year": 1,
+            "themenbereiche": [
                 {
-                  "titel": "Ich kann Informationen zu meiner Ausbildung aus analogen und digitalen Quellen entnehmen und gezielt nutzen, um in Konfliktsituationen angemessen zu kommunizieren.",
-                  "number": 1,
-                  "social_aspects": [
-                    {
-                      "aspect": "recht",
-                      "specification": "Lehrvertragsrecht, sozial akzeptable Lösungen"
-                    },
-                    {
-                      "aspect": "ethik",
-                      "specification": "Perspektivenübernahme, Konfliktstrategien"
-                    },
-                    {
-                      "aspect": "identitat-sozialisation",
-                      "specification": "Soziale Rollen, Rollenkonflikte"
-                    }
-                  ],
-                  "language_aspects": [
-                    {
-                      "aspect": "rezeption-schriftlich-bildlich",
-                      "specification": "Zentrale Aussagen aus Texten entnehmen mithilfe von Markierhilfe und Lesestrategien"
-                    },
-                    {
-                      "aspect": "interaktion-kollaboration-mundlich",
-                      "specification": "Aktiv zuhören und nach Rollen-Konventionen an Gesprächen teilnehmen"
-                    }
-                  ]
+                    "number": 1,
+                    "title": "Ins Berufsleben einsteigen",
+                    "lessons": 21,
+                    "description": "Der Beginn meiner beruflichen Grundbildung bedeutet einen tiefgreifenden Wandel. Ich übernehme neu eine Rolle im Berufsbildungssystem als verantwortungsvolle, lernende Fachkraft im Betrieb, in der Schule und in den überbetrieblichen Kursen (ÜK). In meiner Ausbildungszeit entwickle ich Orientierung und Sicherheit und finde meinen Platz in der Berufs- und Lebenswelt.",
+                    "additional_description": "Ich setze mich mit den Inhalten meines Lehrvertrags auseinander und erkenne meine Rechte und Pflichten im Berufsalltag. Dazu lese und verarbeite ich unterschiedliche Quellen, z. B. Verträge oder betriebliche Regelwerke und nutze Informationen gezielt für meine Situation.\n\nAusserdem mache ich erste Erfahrungen damit, wie in meiner neuen Rolle kommuniziert wird, wie Zusammenarbeit im Team gelingt und wie Konflikte fair gelöst werden. Dabei tausche ich mich mit anderen Lernenden und Mitarbeitenden über Erlebnisse und Herausforderungen aus und bringe meine Sichtweise ein.\n\nIch erweitere meine Lern- und Arbeitstechniken und gehe bei meinem Einstieg in die Arbeitswelt bewusst mit meinen Ressourcen um, indem ich meine eigene Arbeit gezielt organisiere.",
+                    "kerninhalte": "Lehrvertragsrecht, Nutzung IT-Infrastruktur, Kommunikationsregeln, Lernplanung, Lernstrategien inkl. KI-Nutzung",
+                    "essential_competences": [
+                        "ziele-setzen-und-anpassen",
+                        "teamarbeit",
+                        "standpunkte-begrunden",
+                        "lebensphasen-planen"
+                    ],
+                    "individual_reference": [
+                        {
+                            "title": "Ich finde mich in meiner Ausbildung zurecht und kommuniziere auf konstruktive Art und Weise.",
+                            "number": 1,
+                            "lessons": 15,
+                            "learning_contents": [
+                                {
+                                    "titel": "Ich kann Informationen zu meiner Ausbildung aus analogen und digitalen Quellen entnehmen und gezielt nutzen, um in Konfliktsituationen angemessen zu kommunizieren.",
+                                    "number": 1,
+                                    "social_aspects": [
+                                        {
+                                            "aspect": "recht",
+                                            "specification": "Lehrvertragsrecht, sozial akzeptable Lösungen"
+                                        },
+                                        {
+                                            "aspect": "ethik",
+                                            "specification": "Perspektivenübernahme, Konfliktstrategien"
+                                        },
+                                        {
+                                            "aspect": "identitat-sozialisation",
+                                            "specification": "Soziale Rollen, Rollenkonflikte"
+                                        }
+                                    ],
+                                    "language_aspects": [
+                                        {
+                                            "aspect": "rezeption-schriftlich-bildlich",
+                                            "specification": "Zentrale Aussagen aus Texten entnehmen mithilfe von Markierhilfe und Lesestrategien"
+                                        },
+                                        {
+                                            "aspect": "interaktion-kollaboration-mundlich",
+                                            "specification": "Aktiv zuhören und nach Rollen-Konventionen an Gesprächen teilnehmen"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "titel": "Ich kann die ausbildungsrelevanten IT-Infrastrukturen und digitalen Werkzeuge einrichten und sicher nutzen.",
+                                    "number": 2,
+                                    "social_aspects": [
+                                        {
+                                            "aspect": "technologie-transformation",
+                                            "specification": "Schutz- und Sicherheitsaspekte, arbeitserleichternde Nutzung"
+                                        }
+                                    ],
+                                    "language_aspects": [
+                                        {
+                                            "aspect": "rezeption-schriftlich-bildlich",
+                                            "specification": "Zentrale Aussagen aus Texten entnehmen mithilfe von Markierhilfe und Lesestrategien sowie Orientierungs- und Suchmöglichkeiten auf Webseiten"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "titel": "Ich kann Kommunikationstechnologien verantwortungsvoll und zielgruppengerecht einsetzen.",
+                                    "number": 3,
+                                    "social_aspects": [
+                                        {
+                                            "aspect": "technologie-transformation",
+                                            "specification": "Situative und zweckmässige Nutzung digitaler Kommunikationsregeln der verschiedenen Tools"
+                                        }
+                                    ],
+                                    "language_aspects": [
+                                        {
+                                            "aspect": "interaktion-kollaboration-digital",
+                                            "specification": "Nach Konventionen kommunizieren"
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "title": "Ich lerne effektiv und setze meine Ressourcen effizient ein.",
+                            "number": 2,
+                            "lessons": 6,
+                            "learning_contents": [
+                                {
+                                    "titel": "Ich kann meine Lern- und Arbeitszeit in Hinblick auf meine neue Lebenssituation strukturiert planen und meine Planung bei Bedarf anpassen.",
+                                    "number": 1,
+                                    "social_aspects": [
+                                        {
+                                            "aspect": "technologie-transformation",
+                                            "specification": "Arbeitserleichternde Nutzung"
+                                        }
+                                    ],
+                                    "language_aspects": [
+                                        {
+                                            "aspect": "interaktion-kollaboration-mundlich",
+                                            "specification": "An Gesprächen teilnehmen, Rückmeldung geben und annehmen"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "titel": "Ich kann mich auf den nächsten Kompetenznachweis zielgerichtet und effektiv vorbereiten.",
+                                    "number": 2,
+                                    "social_aspects": [
+                                        {
+                                            "aspect": "technologie-transformation",
+                                            "specification": "Sinnvolle Anwendung von Tools der künstlichen Intelligenz, zielgerichtetes Prompten"
+                                        },
+                                        {
+                                            "aspect": "identitat-sozialisation",
+                                            "specification": "Lernstrategien, Selbstwirksamkeitsförderung"
+                                        }
+                                    ],
+                                    "language_aspects": [
+                                        {
+                                            "aspect": "rezeption-schriftlich-bildlich",
+                                            "specification": "Zentrale Aussagen aus Texten entnehmen mithilfe von Markierhilfe und Lesestrategien"
+                                        },
+                                        {
+                                            "aspect": "interaktion-kollaboration-digital",
+                                            "specification": "Mit Tools der künstlichen Intelligenz interagieren"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
                 },
                 {
-                  "titel": "Ich kann die ausbildungsrelevanten IT-Infrastrukturen und digitalen Werkzeuge einrichten und sicher nutzen.",
-                  "number": 2,
-                  "social_aspects": [
-                    {
-                      "aspect": "technologie-transformation",
-                      "specification": "Schutz- und Sicherheitsaspekte, arbeitserleichternde Nutzung"
-                    }
-                  ],
-                  "language_aspects": [
-                    {
-                      "aspect": "rezeption-schriftlich-bildlich",
-                      "specification": "Zentrale Aussagen aus Texten entnehmen mithilfe von Markierhilfe und Lesestrategien sowie Orientierungs- und Suchmöglichkeiten auf Webseiten"
-                    }
-                  ]
+                    "number": 2,
+                    "title": "Meinungen bilden und mitgestalten",
+                    "lessons": 33,
+                    "description": "In einer Welt, in der täglich unzählige Informationen und Meinungen auf mich einwirken, wird es für mich immer wichtiger, mir eine eigene, fundierte Haltung zu erarbeiten. Zu diesem Zweck lerne ich, verschiedene Informationen systematisch zu beurteilen, meine Meinung bewusst zu bilden, sie respektvoll zu vertreten und mich aktiv in gesellschaftliche Prozesse einzubringen.",
+                    "additional_description": "Ich lerne, Informationen kritisch zu prüfen. Ich erkenne den Einfluss von Algorithmen, Filterblasen und Desinformationen auf meine Meinungsbildung. Ich bin sensibilisiert für den Unterschied zwischen Fake News und verlässlichen Quellen. Ich entwickle Strategien, um mich sicher und selbstbestimmt in digitalen Räumen zu bewegen. Dazu höre ich politische Debatten, Interviews und Social-Media-Beiträge, analysiere die Absichten hinter Aussagen und vergleiche Positionen.\n\nAuf dieser Basis setze ich mich mit ethischen Fragen zum Umgang mit Diskriminierung, Meinungsfreiheit und Verantwortung in Gesprächen und Medienbeiträgen auseinander. Ich reflektiere Menschenrechte und Grundwerte und überlege, wie sie auf aktuelle Themen angewandt werden können. Auch in der Kunst geht es oft um Standpunkte, Meinungen und Haltungen. Indem ich mich mit Kunst auseinandersetze, versuche ich herauszufinden, was Menschen bewegt. Dabei bringe ich unterschiedliche Sichtweisen in Diskussionen ein und lerne, meine Meinung begründet und respektvoll zu vertreten.\n\nIch kenne politische Mitwirkungsmöglichkeiten von Jugendlichen und nicht stimm- und wahlberechtigten Personen und weiss, wie und wo ich meine persönlichen politischen Anliegen vertreten kann. Ich entwickle eigene Standpunkte, bereite sie sprachlich sorgfältig auf und präsentiere sie zielgruppengerecht, beispielsweise in Form eines Kampagnenbeitrags, in einem Debattenbeitrag oder als Videostatement für Social Media. So erlebe ich, dass meine Stimme zählt und ich durch aktives Mitgestalten Veränderungen anstossen kann.",
+                    "kerninhalte": "Politische Grundhaltungen, Manipulation & Desinformation, Meinungsfreiheit, moralische Überzeugung, künstlerische Ausdrucksformen, Durchsetzungsstrategien eigener Interessen, Entwicklung eigener Standpunkte",
+                    "essential_competences": [
+                        "quellen-unterscheiden",
+                        "werthaltungen-reflektieren",
+                        "standpunkte-begrunden",
+                        "verstandnis-fordern",
+                        "partizipation"
+                    ],
+                    "individual_reference": [
+                        {
+                            "title": "Ich hinterfrage Informationen aus verschiedenen Quellen und erkenne, warum mir bestimmte Inhalte angezeigt werden.",
+                            "number": 1,
+                            "lessons": 9,
+                            "learning_contents": [
+                                {
+                                    "titel": "Ich kann mündliche Beiträge zu aktuellen politischen Themen verstehen und die Interessen und Werte der betroffenen Personen identifizieren.",
+                                    "number": 1,
+                                    "social_aspects": [
+                                        {
+                                            "aspect": "politik",
+                                            "specification": "Aktuelle politische Themen, Interessengruppen, politische Grundhaltungen"
+                                        }
+                                    ],
+                                    "language_aspects": [
+                                        {
+                                            "aspect": "rezeption-mundlich",
+                                            "specification": "Zentrale Aussagen aus Gesprächen oder Audioquellen mithilfe eines Hörleitfadens verstehen und erkennen"
+                                        },
+                                        {
+                                            "aspect": "rezeption-audiovisuell",
+                                            "specification": "Zentrale Aussagen aus audiovisuellen Medien entnehmen"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "titel": "Ich kann grundlegende Merkmale von Manipulation und Desinformation anhand von Medienbeiträgen erkennen und meinen Umgang mit digitalen Kommunikationsräumen reflektieren.",
+                                    "number": 2,
+                                    "social_aspects": [
+                                        {
+                                            "aspect": "technologie-transformation",
+                                            "specification": "Chancen und Risiken aktueller Technologien, algorithmische Steuerung, Filterblasen, Desinformation (Fake News)"
+                                        },
+                                        {
+                                            "aspect": "politik",
+                                            "specification": "Beeinflussung und Manipulationsmöglichkeiten, Informations- und Meinungsfreiheit"
+                                        }
+                                    ],
+                                    "language_aspects": [
+                                        {
+                                            "aspect": "rezeption-schriftlich-bildlich",
+                                            "specification": "Grafiken mithilfe einer Lesestruktur lesen und verstehen"
+                                        },
+                                        {
+                                            "aspect": "produktion-schriftlich-bildlich",
+                                            "specification": "Eigene Mediennutzung dokumentieren und zwischen fakten- und meinungsbasierten Inhalten unterscheiden"
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "title": "Ich erlebe Diskussionen über Ungleichbehandlung und Ausgrenzung und frage mich, was gesagt werden darf und wie ich mich dabei verhalte.",
+                            "number": 2,
+                            "lessons": 12,
+                            "learning_contents": [
+                                {
+                                    "titel": "Ich kann Beispiele von Ausgrenzung und Diskriminierung in Gesprächen und Medienbeiträgen analysieren und dabei die Bedeutung von Meinungsfreiheit reflektieren.",
+                                    "number": 1,
+                                    "social_aspects": [
+                                        {
+                                            "aspect": "ethik",
+                                            "specification": "Würde des Menschen, moralische Prinzipien"
+                                        },
+                                        {
+                                            "aspect": "politik",
+                                            "specification": "Menschenrechte, demokratische Werte, Meinungsfreiheit"
+                                        }
+                                    ],
+                                    "language_aspects": [
+                                        {
+                                            "aspect": "rezeption-mundlich",
+                                            "specification": "Zentrale Aussagen von mündlichen Beiträgen anhand von Hörhilfen erkennen"
+                                        },
+                                        {
+                                            "aspect": "rezeption-audiovisuell",
+                                            "specification": "Digitale Medieninhalte zu menschenrechtlichen Themen recherchieren und kritisch prüfen"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "titel": "Ich kann aus Gesprächen und Medienbeiträgen unterschiedliche (politische) Perspektiven nachvollziehen, daraus eigene Standpunkte entwickeln und diese sprachlich klar und nachvollziehbar ausdrücken.",
+                                    "number": 2,
+                                    "social_aspects": [
+                                        {
+                                            "aspect": "ethik",
+                                            "specification": "Ethische Prinzipien, Wertekonflikte"
+                                        },
+                                        {
+                                            "aspect": "politik",
+                                            "specification": "Eigene und fremde Interessen"
+                                        }
+                                    ],
+                                    "language_aspects": [
+                                        {
+                                            "aspect": "produktion-mundlich",
+                                            "specification": "In Gesprächen mithilfe einer Argumentationsstruktur meinungsorientiert kommunizieren"
+                                        },
+                                        {
+                                            "aspect": "produktion-schriftlich-bildlich",
+                                            "specification": "Meinungsorientierten Text verfassen (Kommentar)"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "titel": "Ich kann Meinungen und Haltungen in künstlerischen Beiträgen erkennen und beschreiben und deren Wirkung auf mich reflektieren.",
+                                    "number": 3,
+                                    "social_aspects": [
+                                        {
+                                            "aspect": "kultur",
+                                            "specification": "Künstlerische Ausdrucksformen und deren Wirkung, zeitliche Prägung"
+                                        }
+                                    ],
+                                    "language_aspects": [
+                                        {
+                                            "aspect": "produktion-schriftlich-bildlich",
+                                            "specification": "Künstlerische Ausdrucksformen beschreiben und kommentieren"
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "title": "Ich möchte mitreden, mitgestalten und ernst genommen werden bei Themen, die mich direkt oder indirekt betreffen.",
+                            "number": 3,
+                            "lessons": 12,
+                            "learning_contents": [
+                                {
+                                    "titel": "Ich kann persönliche politische Anliegen formulieren und Möglichkeiten zur Mitwirkung aufzeigen.",
+                                    "number": 1,
+                                    "social_aspects": [
+                                        {
+                                            "aspect": "politik",
+                                            "specification": "Durchsetzungsstrategien eigener Interessen"
+                                        }
+                                    ],
+                                    "language_aspects": [
+                                        {
+                                            "aspect": "produktion-schriftlich-bildlich",
+                                            "specification": "Eigene Anliegen in einem digitalen Produkt (Flyer, Factsheet, Flugblatt) begründet festhalten"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "titel": "Ich kann eine begründete Meinung zu einem aktuellen gesellschaftlichen Thema entwickeln und diese in Diskussionen nachvollziehbar und respektvoll vertreten.",
+                                    "number": 2,
+                                    "social_aspects": [
+                                        {
+                                            "aspect": "ethik",
+                                            "specification": "Ethische Prinzipien, Perspektivenübernahme"
+                                        }
+                                    ],
+                                    "language_aspects": [
+                                        {
+                                            "aspect": "interaktion-kollaboration-mundlich",
+                                            "specification": "In Gruppendiskussion politische Anliegen präsentieren, aushandeln und Gruppenentscheidungen mitentwickeln"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
                 },
                 {
-                  "titel": "Ich kann Kommunikationstechnologien verantwortungsvoll und zielgruppengerecht einsetzen.",
-                  "number": 3,
-                  "social_aspects": [
-                    {
-                      "aspect": "technologie-transformation",
-                      "specification": "Situative und zweckmässige Nutzung digitaler Kommunikationsregeln der verschiedenen Tools"
-                    }
-                  ],
-                  "language_aspects": [
-                    {
-                      "aspect": "interaktion-kollaboration-digital",
-                      "specification": "Nach Konventionen kommunizieren"
-                    }
-                  ]
+                    "number": 3,
+                    "title": "Bewusst konsumieren und handeln",
+                    "lessons": 36,
+                    "description": "Meine Konsumentscheidungen, sei es beim Einkaufen, Essen oder Reisen, beeinflussen andere Personen, Unternehmen und auch die Umwelt. Beim Thema «Bewusst konsumieren und handeln» gehe ich verantwortungsvoll mit meinem Lohn um. Ich reflektiere mein eigenes Konsumverhalten, erkenne wirtschaftliche Zusammenhänge, lerne meine Rechte als Konsument/in kennen und setze mich mit den ökologischen Auswirkungen meiner alltäglichen Entscheidungen auseinander.",
+                    "additional_description": "Ich lerne, verantwortungsbewusst mit meinem Einkommen umzugehen und finde heraus, welche finanziellen Spielräume und Verpflichtungen damit verbunden sind. Dazu erstelle ich ein eigenes Budget und tausche mich über meine Bedürfnisse und Möglichkeiten mit anderen aus.\n\nIch setze mich mit grundlegenden wirtschaftlichen Mechanismen auseinander: Was beeinflusst meine Konsumbedürfnisse? Dabei analysiere ich audiovisuelle Beiträge wie Werbeclips, Erklärvideos oder Dokumentationen, um ökonomische Zusammenhänge zu erkennen und kritisch zu reflektieren.\n\nIch reflektiere die sozialen, wirtschaftlichen und ökologischen Auswirkungen unserer Konsumgesellschaft. Ich vergleiche konventionelle und nachhaltige Konsumformen, befasse mich mit Produktionsbedingungen und Umweltauswirkungen und formuliere meine Erkenntnisse in multimedial gestalteten Beiträgen.\n\nZudem lerne ich, welche Rechte und Pflichten sich aus Kaufverträgen ergeben, sei es im Laden, online oder bei digitalen Vertragsabschlüssen. Dadurch kann ich Rückgaberecht, Garantie, Reklamation oder Schutz vor Betrug in meinem Alltag anwenden und meine Rechte in Austauschformaten einfordern. So stärke ich meine Fähigkeit, wirtschaftlich informiert, rechtlich orientiert und ökologisch bewusst als verantwortungsvolle Konsumentin bzw. verantwortungsvoller Konsument zu handeln.",
+                    "kerninhalte": "Bedürfnisse, Budget, Schuldenprävention, Nachhaltigkeit, Preisbildung, Kaufvertrag, Konsumentenrechte",
+                    "essential_competences": [
+                        "quellen-unterscheiden",
+                        "innovation-und-problemlosung",
+                        "werthaltungen-reflektieren",
+                        "nachhaltigkeit"
+                    ],
+                    "individual_reference": [
+                        {
+                            "title": "Ich treffe überlegte Konsumentscheidungen, die zu mir und meiner Lebenssituation passen.",
+                            "number": 1,
+                            "lessons": 9,
+                            "learning_contents": [
+                                {
+                                    "titel": "Ich kann verschiedene Arten von Bedürfnissen unterscheiden, meine eigenen Bedürfnisse erkennen und beurteilen.",
+                                    "number": 1,
+                                    "social_aspects": [
+                                        {
+                                            "aspect": "wirtschaft",
+                                            "specification": "Bedürfnisbefriedigung"
+                                        },
+                                        {
+                                            "aspect": "identitat-sozialisation",
+                                            "specification": "Einfluss von Herkunft und Umfeld"
+                                        }
+                                    ],
+                                    "language_aspects": [
+                                        {
+                                            "aspect": "rezeption-audiovisuell",
+                                            "specification": "Zentrale Aussagen aus audiovisuellen Werbebeiträgen entnehmen"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "titel": "Ich kann mein Budget realistisch planen, Abweichungen und Risiken identifizieren und entsprechende Anpassungen vornehmen.",
+                                    "number": 2,
+                                    "social_aspects": [
+                                        {
+                                            "aspect": "wirtschaft",
+                                            "specification": "Geeignete Instrumente für den Umgang mit eigenen Mitteln, Einschätzung der eigenen wirtschaftlichen Lage"
+                                        }
+                                    ],
+                                    "language_aspects": [
+                                        {
+                                            "aspect": "rezeption-audiovisuell",
+                                            "specification": "Zentrale Aussagen aus audiovisuellen Medien entnehmen"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "titel": "Ich kann Risiken der Verschuldung erkennen, mein eigenes Konsumverhalten kritisch reflektieren und Wege finden, Schulden zu vermeiden.",
+                                    "number": 3,
+                                    "social_aspects": [
+                                        {
+                                            "aspect": "wirtschaft",
+                                            "specification": "Schuldenprävention"
+                                        },
+                                        {
+                                            "aspect": "ethik",
+                                            "specification": "Eigenverantwortung"
+                                        }
+                                    ],
+                                    "language_aspects": [
+                                        {
+                                            "aspect": "rezeption-audiovisuell",
+                                            "specification": "Zentrale Aussagen aus audiovisuellen Medien entnehmen"
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "title": "Ich konsumiere täglich, was Folgen für Umwelt und Gesellschaft hat.",
+                            "number": 2,
+                            "lessons": 18,
+                            "learning_contents": [
+                                {
+                                    "titel": "Ich kann die Konsumgewohnheiten in unserer Gesellschaft reflektieren und Möglichkeiten der nachhaltigen Konsumation beschreiben.",
+                                    "number": 1,
+                                    "social_aspects": [
+                                        {
+                                            "aspect": "okologie",
+                                            "specification": "Energie- und Materialverbrauch, Emissionen, Klimawandel, drei Dimensionen der Nachhaltigkeit"
+                                        },
+                                        {
+                                            "aspect": "wirtschaft",
+                                            "specification": "Ökonomisches Grundproblem knapper Ressourcen"
+                                        }
+                                    ],
+                                    "language_aspects": [
+                                        {
+                                            "aspect": "produktion-multimedial",
+                                            "specification": "Fakten- oder meinungsorientierte Multimedia-Präsentation"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "titel": "Ich kann den Preis und die Wirtschaftlichkeit eines Produkts oder einer Dienstleistung anhand von Herstellung, Transport sowie Angebot und Nachfrage beurteilen.",
+                                    "number": 2,
+                                    "social_aspects": [
+                                        {
+                                            "aspect": "wirtschaft",
+                                            "specification": "Auswirkungen von Preisbildung, Marktmechanismen, unternehmerisches Denken und Handeln, Zielkonflikte von Anspruchsgruppen"
+                                        }
+                                    ],
+                                    "language_aspects": [
+                                        {
+                                            "aspect": "interaktion-kollaboration-schriftlich",
+                                            "specification": "Texte kooperativ erarbeiten, schriftliche Rückmeldung verfassen"
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "title": "Ich habe beim Einkaufen Pflichten, aber auch Rechte, die ich einfordern kann.",
+                            "number": 3,
+                            "lessons": 9,
+                            "learning_contents": [
+                                {
+                                    "titel": "Ich kann die rechtlichen Folgen von Kaufverträgen beurteilen und auf eine konkrete Einkaufssituation anwenden.",
+                                    "number": 1,
+                                    "social_aspects": [
+                                        {
+                                            "aspect": "recht",
+                                            "specification": "Kaufvertrag"
+                                        }
+                                    ],
+                                    "language_aspects": [
+                                        {
+                                            "aspect": "rezeption-schriftlich-bildlich",
+                                            "specification": "Zentrale Aussagen aus Texten, Grafiken, Umfragen entnehmen"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "titel": "Ich kann bei Problemen mit einem gekauften Produkt meine Forderung begründen und mein Anliegen zielgruppengerecht formulieren.",
+                                    "number": 2,
+                                    "social_aspects": [
+                                        {
+                                            "aspect": "recht",
+                                            "specification": "Kaufvertrag, Nutzung von Rechtsquellen"
+                                        }
+                                    ],
+                                    "language_aspects": [
+                                        {
+                                            "aspect": "interaktion-kollaboration-mundlich",
+                                            "specification": "An formalem Konfliktgespräch nach Konventionen teilnehmen"
+                                        },
+                                        {
+                                            "aspect": "interaktion-kollaboration-schriftlich",
+                                            "specification": "Formal korrespondieren"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
                 }
-              ],
-              "lessons": 27
-            },
-            {
-              "title": "Ich lerne effektiv und setze meine Ressourcen effizient ein.",
-              "number": 2,
-              "learning_contents": [
-                {
-                  "titel": "Ich kann meine Lern- und Arbeitszeit in Hinblick auf meine neue Lebenssituation strukturiert planen und meine Planung bei Bedarf anpassen.",
-                  "number": 1,
-                  "social_aspects": [
-                    {
-                      "aspect": "technologie-transformation",
-                      "specification": "Arbeitserleichternde Nutzung"
-                    }
-                  ],
-                  "language_aspects": [
-                    {
-                      "aspect": "interaktion-kollaboration-mundlich",
-                      "specification": "An Gesprächen teilnehmen, Rückmeldung geben und annehmen"
-                    }
-                  ]
-                },
-                {
-                  "titel": "Ich kann mich auf den nächsten Kompetenznachweis zielgerichtet und effektiv vorbereiten.",
-                  "number": 2,
-                  "social_aspects": [
-                    {
-                      "aspect": "technologie-transformation",
-                      "specification": "Sinnvolle Anwendung von Tools der künstlichen Intelligenz, zielgerichtetes Prompten"
-                    },
-                    {
-                      "aspect": "identitat-sozialisation",
-                      "specification": "Lernstrategien, Selbstwirksamkeitsförderung"
-                    }
-                  ],
-                  "language_aspects": [
-                    {
-                      "aspect": "rezeption-schriftlich-bildlich",
-                      "specification": "Zentrale Aussagen aus Texten entnehmen mithilfe von Markierhilfe und Lesestrategien"
-                    },
-                    {
-                      "aspect": "interaktion-kollaboration-digital",
-                      "specification": "Mit Tools der künstlichen Intelligenz interagieren"
-                    }
-                  ]
-                }
-              ],
-              "lessons": 26
-            }
-          ]
+            ]
         },
         {
-          "number": 2,
-          "title": "Meinungen bilden und mitgestalten",
-          "description": "In einer Welt, in der täglich unzählige Informationen und Meinungen auf mich einwirken, wird es für mich immer wichtiger, mir eine eigene, fundierte Haltung zu erarbeiten. Zu diesem Zweck lerne ich, verschiedene Informationen systematisch zu beurteilen, meine Meinung bewusst zu bilden, sie respektvoll zu vertreten und mich aktiv in gesellschaftliche Prozesse einzubringen.",
-          "additional_description": "Ich lerne, Informationen kritisch zu prüfen. Ich erkenne den Einfluss von Algorithmen, Filterblasen und Desinformationen auf meine Meinungsbildung. Ich bin sensibilisiert für den Unterschied zwischen Fake News und verlässlichen Quellen. Ich entwickle Strategien, um mich sicher und selbstbestimmt in digitalen Räumen zu bewegen. Dazu höre ich politische Debatten, Interviews und Social-Media-Beiträge, analysiere die Absichten hinter Aussagen und vergleiche Positionen.\n\nAuf dieser Basis setze ich mich mit ethischen Fragen zum Umgang mit Diskriminierung, Meinungsfreiheit und Verantwortung in Gesprächen und Medienbeiträgen auseinander. Ich reflektiere Menschenrechte und Grundwerte und überlege, wie sie auf aktuelle Themen angewandt werden können. Auch in der Kunst geht es oft um Standpunkte, Meinungen und Haltungen. Indem ich mich mit Kunst auseinandersetze, versuche ich herauszufinden, was Menschen bewegt. Dabei bringe ich unterschiedliche Sichtweisen in Diskussionen ein und lerne, meine Meinung begründet und respektvoll zu vertreten.\n\nIch kenne politische Mitwirkungsmöglichkeiten von Jugendlichen und nicht stimm- und wahlberechtigten Personen und weiss, wie und wo ich meine persönlichen politischen Anliegen vertreten kann. Ich entwickle eigene Standpunkte, bereite sie sprachlich sorgfältig auf und präsentiere sie zielgruppengerecht, beispielsweise in Form eines Kampagnenbeitrags, in einem Debattenbeitrag oder als Videostatement für Social Media. So erlebe ich, dass meine Stimme zählt und ich durch aktives Mitgestalten Veränderungen anstossen kann.",
-          "kerninhalte": "Politische Grundhaltungen, Manipulation & Desinformation, Meinungsfreiheit, moralische Überzeugung, künstlerische Ausdrucksformen, Durchsetzungsstrategien eigener Interessen, Entwicklung eigener Standpunkte",
-          "essential_competences": [
-            "quellen-unterscheiden",
-            "werthaltungen-reflektieren",
-            "standpunkte-begrunden",
-            "verstandnis-fordern",
-            "partizipation"
-          ],
-          "individual_reference": [
-            {
-              "title": "Ich hinterfrage Informationen aus verschiedenen Quellen und erkenne, warum mir bestimmte Inhalte angezeigt werden.",
-              "number": 1,
-              "learning_contents": [
+            "year": 2,
+            "themenbereiche": [
                 {
-                  "titel": "Ich kann mündliche Beiträge zu aktuellen politischen Themen verstehen und die Interessen und Werte der betroffenen Personen identifizieren.",
-                  "number": 1,
-                  "social_aspects": [
-                    {
-                      "aspect": "politik",
-                      "specification": "Aktuelle politische Themen, Interessengruppen, politische Grundhaltungen"
-                    }
-                  ],
-                  "language_aspects": [
-                    {
-                      "aspect": "rezeption-mundlich",
-                      "specification": "Zentrale Aussagen aus Gesprächen oder Audioquellen mithilfe eines Hörleitfadens verstehen und erkennen"
-                    },
-                    {
-                      "aspect": "rezeption-audiovisuell",
-                      "specification": "Zentrale Aussagen aus audiovisuellen Medien entnehmen"
-                    }
-                  ]
+                    "number": 4,
+                    "title": "Verantwortung für mich und andere übernehmen",
+                    "lessons": 30,
+                    "description": "Ich setze mich mit meiner Gesundheit und meinem Selbstbild auseinander, tausche mich mit anderen aus und halte meine Erkenntnisse fest. Ich informiere mich über Risiken im Alltag und finde heraus, wie ich mich absichern kann. Ich lerne Menschen mit unterschiedlichen Hintergründen kennen, spreche mit ihnen und setze mich für ein respektvolles Miteinander ein.",
+                    "additional_description": "Ich setze mich mit meinem körperlichen und psychischen Wohlbefinden auseinander. Dabei erkenne ich, wie gesellschaftliche Normen und Ideale mein Selbstbild beeinflussen. Im Austausch mit anderen und durch persönliche Texte und Darstellungen finde ich heraus, was mir guttut, und entwickle Strategien für einen gesunden Lebensstil.\n\nIch lerne, wie ich mit gesundheitlichen und finanziellen Risiken umgehen kann. Ich werte Informationen aus verschiedenen Quellen aus, erkenne mögliche Folgen und finde heraus, wie ich mich gezielt absichern kann – etwa durch passende Versicherungen. So übernehme ich Verantwortung für mich selbst und für andere.\n\nIch lebe in einer vielfältigen Gesellschaft. Ich lese Berichte, höre Erzählungen aus unterschiedlichen Lebensrealitäten und spreche mit anderen über ihre Erfahrungen. Dabei erkenne ich, welche Chancen und Herausforderungen Vielfalt mit sich bringt. Ich setze mich im Alltag, in der Schule und im Beruf für Respekt, Toleranz und ein gelingendes Zusammenleben ein.",
+                    "kerninhalte": "Selbst- und Fremdbild, psychische und physische Gesundheit, Kranken- und Unfallversicherung, Haftpflichtversicherung, gesellschaftliche Vielfalt, Migration",
+                    "essential_competences": [
+                        "werthaltungen-reflektieren",
+                        "verstandnis-fordern",
+                        "anpassung",
+                        "mehrdeutigkeit"
+                    ],
+                    "individual_reference": [
+                        {
+                            "title": "Ich sorge für mein körperliches und psychisches Wohlbefinden.",
+                            "number": 1,
+                            "lessons": 12,
+                            "learning_contents": [
+                                {
+                                    "titel": "Ich kann den Einfluss von gesellschaftlichen Erwartungen und Normen auf mein Selbstbild analysieren und meine Erkenntnisse daraus festhalten.",
+                                    "number": 1,
+                                    "social_aspects": [
+                                        {
+                                            "aspect": "identitat-sozialisation",
+                                            "specification": "Persönlichkeitsentwicklung, Einfluss von Herkunft und Umfeld, Selbstbestimmung, soziale Rollen, Medieneinfluss"
+                                        }
+                                    ],
+                                    "language_aspects": [
+                                        {
+                                            "aspect": "interaktion-kollaboration-mundlich",
+                                            "specification": "Gespräche führen über Erwartungen und Erkenntnisse"
+                                        },
+                                        {
+                                            "aspect": "produktion-schriftlich-bildlich",
+                                            "specification": "Strukturierte Notiz verfassen"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "titel": "Ich kann Merkmale eines gesunden Lebensstils in Erfahrung bringen, auswerten und daraus gesundheitsfördernde Massnahmen für mich ableiten.",
+                                    "number": 2,
+                                    "social_aspects": [
+                                        {
+                                            "aspect": "ethik",
+                                            "specification": "Eigenverantwortung"
+                                        },
+                                        {
+                                            "aspect": "identitat-sozialisation",
+                                            "specification": "Psychische und physische Gesundheit, Work-Life-Balance, Sucht und Hilfsangebote, Prävention"
+                                        }
+                                    ],
+                                    "language_aspects": [
+                                        {
+                                            "aspect": "produktion-schriftlich-bildlich",
+                                            "specification": "Umfrage auswerten"
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "title": "Ich bin im Alltag gesundheitlichen und finanziellen Risiken ausgesetzt.",
+                            "number": 2,
+                            "lessons": 9,
+                            "learning_contents": [
+                                {
+                                    "titel": "Ich kann mögliche gesundheitliche Risiken erkennen, beurteilen und eine geeignete finanzielle Absicherung ableiten.",
+                                    "number": 1,
+                                    "social_aspects": [
+                                        {
+                                            "aspect": "ethik",
+                                            "specification": "Eigenverantwortung, soziale Verantwortung, Solidaritätsprinzip"
+                                        },
+                                        {
+                                            "aspect": "recht",
+                                            "specification": "Krankenversicherung, Unfallversicherung"
+                                        }
+                                    ],
+                                    "language_aspects": [
+                                        {
+                                            "aspect": "rezeption-schriftlich-bildlich",
+                                            "specification": "Grafiken interpretieren und Absicht von Texten erkennen"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "titel": "Ich kann Situationen erkennen, in denen ich haftbar bin und Massnahmen ergreifen, um mich vor Schäden an Dritten finanziell abzusichern.",
+                                    "number": 2,
+                                    "social_aspects": [
+                                        {
+                                            "aspect": "ethik",
+                                            "specification": "Eigenverantwortung, soziale Verantwortung"
+                                        },
+                                        {
+                                            "aspect": "recht",
+                                            "specification": "Haftpflichtversicherung, Regress"
+                                        }
+                                    ],
+                                    "language_aspects": [
+                                        {
+                                            "aspect": "rezeption-schriftlich-bildlich",
+                                            "specification": "Grafiken interpretieren und Absicht von Texten erkennen"
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "title": "Ich lebe in einer vielfältigen Gesellschaft und möchte respektiert werden.",
+                            "number": 3,
+                            "lessons": 9,
+                            "learning_contents": [
+                                {
+                                    "titel": "Ich kann gesellschaftliche Vielfalt beschreiben und die Chancen und Herausforderungen dieser Vielfalt für das Zusammenleben untersuchen.",
+                                    "number": 1,
+                                    "social_aspects": [
+                                        {
+                                            "aspect": "identitat-sozialisation",
+                                            "specification": "Gesellschaftliche Rolle, kulturelle Vielfalt"
+                                        }
+                                    ],
+                                    "language_aspects": [
+                                        {
+                                            "aspect": "interaktion-kollaboration-mundlich",
+                                            "specification": "Interview führen, Chancen und Risiken erfragen"
+                                        },
+                                        {
+                                            "aspect": "rezeption-schriftlich-bildlich",
+                                            "specification": "Erfahrungsberichte, Reportagen oder Kampagnen zu Vielfalt analysieren"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "titel": "Ich kann Ursachen und Auswirkungen von Migration anhand konkreter Beispiele analysieren und erklären, wie das Leben von Betroffenen und die Gesellschaft beeinflusst werden.",
+                                    "number": 2,
+                                    "social_aspects": [
+                                        {
+                                            "aspect": "recht",
+                                            "specification": "Migrationsrecht"
+                                        },
+                                        {
+                                            "aspect": "ethik",
+                                            "specification": "Migrationsgründe (Demografie, Klimawandel, politische Konflikte, wirtschaftliche Abhängigkeit)"
+                                        }
+                                    ],
+                                    "language_aspects": [
+                                        {
+                                            "aspect": "rezeption-schriftlich-bildlich",
+                                            "specification": "Grafiken interpretieren, Absicht von Texten erkennen"
+                                        },
+                                        {
+                                            "aspect": "produktion-schriftlich-bildlich",
+                                            "specification": "Meinungsorientierten Text verfassen"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
                 },
                 {
-                  "titel": "Ich kann grundlegende Merkmale von Manipulation und Desinformation anhand von Medienbeiträgen erkennen und meinen Umgang mit digitalen Kommunikationsräumen reflektieren.",
-                  "number": 2,
-                  "social_aspects": [
-                    {
-                      "aspect": "technologie-transformation",
-                      "specification": "Chancen und Risiken aktueller Technologien, algorithmische Steuerung, Filterblasen, Desinformation (Fake News)"
-                    },
-                    {
-                      "aspect": "politik",
-                      "specification": "Beeinflussung und Manipulationsmöglichkeiten, Informations- und Meinungsfreiheit"
-                    }
-                  ],
-                  "language_aspects": [
-                    {
-                      "aspect": "rezeption-schriftlich-bildlich",
-                      "specification": "Grafiken mithilfe einer Lesestruktur lesen und verstehen"
-                    },
-                    {
-                      "aspect": "produktion-schriftlich-bildlich",
-                      "specification": "Eigene Mediennutzung dokumentieren und zwischen fakten- und meinungsbasierten Inhalten unterscheiden"
-                    }
-                  ]
+                    "number": 5,
+                    "title": "Mich im Staat orientieren",
+                    "lessons": 36,
+                    "description": "Der Staat prägt meinen Alltag durch Gesetze, politische Entscheidungen und gesellschaftliche Prozesse. Ich lerne, wie das Schweizer Rechtssystem funktioniert und erkunde den Zweck von Steuern. Ich setze mich mit rechtsstaatlichen Prinzipien, Gesetzes- und Abstimmungsprozessen auseinander und präsentiere ein eigenes politisches Anliegen. Abschliessend analysiere ich staatliche Handlungsmöglichkeiten bei globalen Herausforderungen, untersuche die Wirkung medialer Beiträge und gestalte ein eigenes multimediales Werk, das zum Nachdenken oder Dialog anregen soll.",
+                    "additional_description": "Der Staat prägt meinen Alltag durch Gesetze, politische Entscheidungen und gesellschaftliche Prozesse. In diesem Thema lerne ich, wie das Schweizer Rechtssystem aufgebaut ist: welche Institutionen es gibt, welche Rechtsnormen gelten und was das öffentliche Recht sowie das Strafrecht für meinen Alltag bedeuten. Diese Inhalte mache ich sichtbar, indem ich Rechtssituationen visuell darstelle und digitale Tools für die Zusammenarbeit nutze. Ich erkunde ausserdem, welchen Zweck Steuern erfüllen und fülle meine eigene Steuererklärung korrekt aus.\n\nIch setze mich damit auseinander, wie rechtsstaatliche Prinzipien wie Gewaltenteilung, Föderalismus und demokratische Werte in der Schweiz umgesetzt werden und worin sich ein Rechtsstaat von einem Unrechtsstaat unterscheidet. Ich erarbeite, wie Gesetze und Abstimmungsprozesse funktionieren, arbeite mit digitalen Tools, formuliere ein eigenes politisches Anliegen und präsentiere es in einem mündlichen Beitrag.\n\nIch setze mich kritisch mit den Aufgaben des Staates auf nationaler und internationaler Ebene auseinander und frage, welche Handlungsmöglichkeiten angesichts globaler Herausforderungen (z. B. Klimawandel) bestehen. Ich untersuche mediale Beiträge zu Umweltthemen und erkenne, wie Sprache, Bild und Ton öffentliche Meinungen beeinflussen. Abschliessend gestalte ich ein eigenes künstlerisches, multimediales Werk zu einer globalen Herausforderung und kommentiere, wie es zum Nachdenken oder zum Dialog anregen soll.",
+                    "kerninhalte": "Rechte und Pflichten ab Volljährigkeit, Steuern, Rechtsstaat, politische Teilhabe, Funktionen nationaler und supranationaler Organisationen, Medienwirkung, Gestaltungs- und Ausdrucksfähigkeit",
+                    "essential_competences": [
+                        "ziele-setzen-und-anpassen",
+                        "nachhaltigkeit",
+                        "mehrdeutigkeit",
+                        "partizipation"
+                    ],
+                    "individual_reference": [
+                        {
+                            "title": "Ich bin Teil der Schweizer Gesellschaft und habe Rechte und Pflichten.",
+                            "number": 1,
+                            "lessons": 12,
+                            "learning_contents": [
+                                {
+                                    "titel": "Ich kann grundlegende Rechte und Pflichten in der Gemeinschaft verstehen und sie anhand von Alltagsbeispielen visualisieren.",
+                                    "number": 1,
+                                    "social_aspects": [
+                                        {
+                                            "aspect": "recht",
+                                            "specification": "Rechtsnormen, Bedeutung für das gesellschaftliche Zusammenleben, öffentliches Recht (inkl. Strafrecht), Personenrecht"
+                                        }
+                                    ],
+                                    "language_aspects": [
+                                        {
+                                            "aspect": "produktion-schriftlich-bildlich",
+                                            "specification": "Rechtssituationen visualisieren inklusive Bildlegenden"
+                                        },
+                                        {
+                                            "aspect": "interaktion-kollaboration-digital",
+                                            "specification": "Digitale Tools der Zusammenarbeit nutzen"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "titel": "Ich kann den Zweck von Steuern beschreiben und meine Steuererklärung selbständig und korrekt ausfüllen.",
+                                    "number": 2,
+                                    "social_aspects": [
+                                        {
+                                            "aspect": "wirtschaft",
+                                            "specification": "Staatshaushalt, Staatsbudget, Steuerpflicht, Steuerprogression"
+                                        }
+                                    ],
+                                    "language_aspects": [
+                                        {
+                                            "aspect": "produktion-schriftlich-bildlich",
+                                            "specification": "Steuerformular online ausfüllen"
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "title": "Ich erlebe, dass Gesetze und politische Entscheidungen verändert werden können.",
+                            "number": 2,
+                            "lessons": 12,
+                            "learning_contents": [
+                                {
+                                    "titel": "Ich kann anhand alltäglicher Beispiele und aktueller Ereignisse aufzeigen, wie rechtsstaatliche Prinzipien in der Schweiz umgesetzt werden und begründet erläutern, was einen Rechtsstaat von einem Unrechtsstaat unterscheidet.",
+                                    "number": 1,
+                                    "social_aspects": [
+                                        {
+                                            "aspect": "politik",
+                                            "specification": "Demokratische Werte, Gewaltenteilung, Gemeinwohl, Funktionsweise der drei Ebenen der nationalen Politik (Föderalismus), Bundesverfassung"
+                                        }
+                                    ],
+                                    "language_aspects": [
+                                        {
+                                            "aspect": "interaktion-kollaboration-digital",
+                                            "specification": "Digitale Tools der Zusammenarbeit nutzen"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "titel": "Ich kann ein eigenes politisches Anliegen auf Basis eines konkreten Problems aus meinem Alltag oder meiner Lebenswelt ausarbeiten und die einzelnen Schritte des Gesetzgebungs- bzw. Abstimmungsprozesses erläutern.",
+                                    "number": 2,
+                                    "social_aspects": [
+                                        {
+                                            "aspect": "politik",
+                                            "specification": "Interessengruppen, politische Grundhaltungen, Meinungen und Werte zu politischen Themen, Möglichkeiten zur Teilnahme am politischen Leben"
+                                        }
+                                    ],
+                                    "language_aspects": [
+                                        {
+                                            "aspect": "produktion-mundlich",
+                                            "specification": "Anliegen präsentieren"
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "title": "Ich begegne globalen, gesellschaftlichen Herausforderungen, die auch den Staat beschäftigen.",
+                            "number": 3,
+                            "lessons": 12,
+                            "learning_contents": [
+                                {
+                                    "titel": "Ich kann anhand einer aktuellen globalen Herausforderung die Rolle des Staats und dessen Handlungsmöglichkeiten analysieren.",
+                                    "number": 1,
+                                    "social_aspects": [
+                                        {
+                                            "aspect": "politik",
+                                            "specification": "Funktionen nationaler und supranationaler Organisationen in Europa und weltweit"
+                                        },
+                                        {
+                                            "aspect": "okologie",
+                                            "specification": "Lösungsansätze zu gesellschaftlich nachhaltigem Handeln, globale Herausforderungen wie Bevölkerungswachstum, soziale Ungleichheit oder steigender Ressourcenverbrauch"
+                                        }
+                                    ],
+                                    "language_aspects": [
+                                        {
+                                            "aspect": "produktion-mundlich",
+                                            "specification": "Handlungsmöglichkeiten zu einer aktuellen globalen Herausforderung in einem Gesprächsbeitrag wiedergeben"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "titel": "Ich kann mediale Beiträge zum Klimawandel analysieren und die Wirkung von Sprache, Bild und Ton anhand konkreter Beispiele belegen.",
+                                    "number": 2,
+                                    "social_aspects": [
+                                        {
+                                            "aspect": "politik",
+                                            "specification": "Medienwirkung, Medien als vierte Gewalt"
+                                        },
+                                        {
+                                            "aspect": "okologie",
+                                            "specification": "Ressourcenverbrauch, gesellschaftliche Verhaltensmuster im Umgang mit Ressourcen"
+                                        }
+                                    ],
+                                    "language_aspects": [
+                                        {
+                                            "aspect": "rezeption-audiovisuell",
+                                            "specification": "Bildsprache und Tonalität von medialen Beiträgen deuten, Medienbeiträge zu aktuellen Umweltfragen hinsichtlich politischer Ebenen und politischer Gewalten analysieren"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "titel": "Ich kann ein eigenes künstlerisches Werk zu einer globalen Herausforderung gestalten und kommentieren, wie mein Werk zum Nachdenken oder zum Dialog anregen soll.",
+                                    "number": 3,
+                                    "social_aspects": [
+                                        {
+                                            "aspect": "kultur",
+                                            "specification": "Kulturelle Ausdrucksmittel und -formen, eigene Gestaltungs- und Ausdrucksfähigkeiten"
+                                        }
+                                    ],
+                                    "language_aspects": [
+                                        {
+                                            "aspect": "produktion-multimedial",
+                                            "specification": "Künstlerische Produkte erstellen und diese kommentieren"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "number": 6,
+                    "title": "Mein eigenes Zuhause",
+                    "lessons": 27,
+                    "description": "In meinem eigenen Zuhause zu leben, bedeutet für mich viel Organisation und Selbstständigkeit. Im Rahmen des Themas «Mein eigenes Zuhause» setze ich mich mit den Herausforderungen des eigenständigen Wohnens auseinander. Dabei betrachte ich das Thema aus rechtlicher, wirtschaftlicher, ökologischer und persönlicher Perspektive. So lerne ich, welche Verantwortung mit dem selbstständigen Wohnen verbunden ist.",
+                    "additional_description": "Ich befasse mich mit der Frage, wie ich eine passende Wohnung finde, die zu meinen sozialen Bedürfnissen, meinem Lebensstil und meinen finanziellen Möglichkeiten passt. Gleichzeitig lerne ich, den Einzug Schritt für Schritt zu planen und organisatorisch vorzubereiten. Darüber hinaus überlege ich, wie ich Wohnen und Mobilität im Alltag sinnvoll gestalten kann. Dazu berücksichtige ich sowohl Kosten, Nachhaltigkeit als auch gesetzliche Rahmenbedingungen.\n\nDamit ich mich im Mietalltag sicher bewegen kann, setze ich mich mit den zentralen Rechten und Pflichten von Mietenden sowie relevanten Versicherungen auseinander. In Korrespondenzen mit der Vermietung oder der Schlichtungsbehörde übe ich, sachlich und zielgerichtet zu kommunizieren.\n\nIch untersuche unterschiedliche Wohn- und Lebensformen und erkenne, wie der demografische Wandel Wohnmodelle und das Zusammenleben prägt. Gleichzeitig reflektiere ich, wie ein respektvoller Umgang in Beziehungen und Nachbarschaft möglich ist. In kurzen multimedialen Darstellungen zeige ich auf, wie Wohnen ökologisch nachhaltiger gestaltet und ein gesundes, respektvolles Miteinander unterstützt werden kann.\n\nSo entwickle ich Kompetenzen und Orientierung, um selbstständig, informiert und verantwortungsvoll mein Zuhause aktiv und bewusst zu gestalten.",
+                    "kerninhalte": "Wohnungssuche, Umzugsplanung, Mietrecht, Versicherungsschutz, verschiedene Wohn- und Lebensformen",
+                    "essential_competences": [
+                        "innovation-und-problemlosung",
+                        "teamarbeit",
+                        "verstandnis-fordern",
+                        "lebensphasen-planen",
+                        "nachhaltigkeit"
+                    ],
+                    "individual_reference": [
+                        {
+                            "title": "Ich finde eine passende Wohnung und plane meinen Umzug.",
+                            "number": 1,
+                            "lessons": 6,
+                            "learning_contents": [
+                                {
+                                    "titel": "Ich kann eine Wohnung finden, die zu meinen sozialen und finanziellen Bedürfnissen passt.",
+                                    "number": 1,
+                                    "social_aspects": [
+                                        {
+                                            "aspect": "okologie",
+                                            "specification": "Mobilität"
+                                        },
+                                        {
+                                            "aspect": "identitat-sozialisation",
+                                            "specification": "Lebensqualität"
+                                        },
+                                        {
+                                            "aspect": "wirtschaft",
+                                            "specification": "Finanzielle Standortbestimmung, Suchstrategien auf Wohnungsmarkt"
+                                        }
+                                    ],
+                                    "language_aspects": [
+                                        {
+                                            "aspect": "rezeption-mundlich",
+                                            "specification": "Hauptaussagen aus Gesprächs- und Hörmaterialien erkennen"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "titel": "Ich kann eine strukturierte Umzugsplanung mit Zeitplan und Budget erstellen.",
+                                    "number": 2,
+                                    "social_aspects": [
+                                        {
+                                            "aspect": "wirtschaft",
+                                            "specification": "Nachhaltiger Umgang mit eigenen Mitteln, Ablauf eines Umzugs"
+                                        }
+                                    ],
+                                    "language_aspects": [
+                                        {
+                                            "aspect": "interaktion-kollaboration-schriftlich",
+                                            "specification": "Umzugsplanung kooperativ erarbeiten"
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "title": "Ich ziehe in meine eigene Wohnung und kläre Fragen zu Mietvertrag und Versicherungen.",
+                            "number": 2,
+                            "lessons": 9,
+                            "learning_contents": [
+                                {
+                                    "titel": "Ich kann rechtliche Grundlagen zum Mietverhältnis recherchieren und auf typische Herausforderungen anwenden.",
+                                    "number": 1,
+                                    "social_aspects": [
+                                        {
+                                            "aspect": "recht",
+                                            "specification": "Mietrecht, Konfliktstrategien"
+                                        }
+                                    ],
+                                    "language_aspects": [
+                                        {
+                                            "aspect": "interaktion-kollaboration-schriftlich",
+                                            "specification": "Formal und informal korrespondieren, rechtlichen Bezug erläutern"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "titel": "Ich kann Angebote der Versicherungen zum Thema Wohnen vergleichen und eine begründete Auswahl treffen.",
+                                    "number": 2,
+                                    "social_aspects": [
+                                        {
+                                            "aspect": "recht",
+                                            "specification": "Haftpflichtversicherung, Hausratsversicherung"
+                                        }
+                                    ],
+                                    "language_aspects": [
+                                        {
+                                            "aspect": "rezeption-mundlich",
+                                            "specification": "Hauptaussagen und Absichten aus Gesprächen und Hörmaterialien erkennen"
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "title": "Ich setze mich mit verschiedenen Wohn- und Lebensformen auseinander.",
+                            "number": 3,
+                            "lessons": 12,
+                            "learning_contents": [
+                                {
+                                    "titel": "Ich kann verschiedene Wohnformen nach ökonomischen, ökologischen und sozialen Kriterien beurteilen und die Auswirkung auf Gesellschaft und Umwelt einordnen.",
+                                    "number": 1,
+                                    "social_aspects": [
+                                        {
+                                            "aspect": "wirtschaft",
+                                            "specification": "Bevölkerungswachstum, Alterung der Bevölkerung"
+                                        },
+                                        {
+                                            "aspect": "okologie",
+                                            "specification": "Nachhaltiger Umgang mit knappen Ressourcen, Reduktion der Umweltbelastung"
+                                        }
+                                    ],
+                                    "language_aspects": [
+                                        {
+                                            "aspect": "produktion-multimedial",
+                                            "specification": "Multimediale Reportage erstellen"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "titel": "Ich kann für konkrete Formen des Zusammenlebens Chancen und Herausforderungen analysieren und konstruktive Vorschläge für einen respektvollen Umgang entwickeln.",
+                                    "number": 2,
+                                    "social_aspects": [
+                                        {
+                                            "aspect": "identitat-sozialisation",
+                                            "specification": "Psychische und physische Gesundheit, Gewaltformen, Hilfsangebote, häusliche Gewalt"
+                                        },
+                                        {
+                                            "aspect": "ethik",
+                                            "specification": "Eigenverantwortung, soziale Verantwortung, Schutz von Würde und Integrität, Gleichstellung"
+                                        }
+                                    ],
+                                    "language_aspects": [
+                                        {
+                                            "aspect": "produktion-multimedial",
+                                            "specification": "Multimediale Reportage erstellen"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
                 }
-              ],
-              "lessons": 30
-            },
-            {
-              "title": "Ich erlebe Diskussionen über Ungleichbehandlung und Ausgrenzung und frage mich, was gesagt werden darf und wie ich mich dabei verhalte.",
-              "number": 2,
-              "learning_contents": [
-                {
-                  "titel": "Ich kann Beispiele von Ausgrenzung und Diskriminierung in Gesprächen und Medienbeiträgen analysieren und dabei die Bedeutung von Meinungsfreiheit reflektieren.",
-                  "number": 1,
-                  "social_aspects": [
-                    {
-                      "aspect": "ethik",
-                      "specification": "Würde des Menschen, moralische Prinzipien"
-                    },
-                    {
-                      "aspect": "politik",
-                      "specification": "Menschenrechte, demokratische Werte, Meinungsfreiheit"
-                    }
-                  ],
-                  "language_aspects": [
-                    {
-                      "aspect": "rezeption-mundlich",
-                      "specification": "Zentrale Aussagen von mündlichen Beiträgen anhand von Hörhilfen erkennen"
-                    },
-                    {
-                      "aspect": "rezeption-audiovisuell",
-                      "specification": "Digitale Medieninhalte zu menschenrechtlichen Themen recherchieren und kritisch prüfen"
-                    }
-                  ]
-                },
-                {
-                  "titel": "Ich kann aus Gesprächen und Medienbeiträgen unterschiedliche (politische) Perspektiven nachvollziehen, daraus eigene Standpunkte entwickeln und diese sprachlich klar und nachvollziehbar ausdrücken.",
-                  "number": 2,
-                  "social_aspects": [
-                    {
-                      "aspect": "ethik",
-                      "specification": "Ethische Prinzipien, Wertekonflikte"
-                    },
-                    {
-                      "aspect": "politik",
-                      "specification": "Eigene und fremde Interessen"
-                    }
-                  ],
-                  "language_aspects": [
-                    {
-                      "aspect": "produktion-mundlich",
-                      "specification": "In Gesprächen mithilfe einer Argumentationsstruktur meinungsorientiert kommunizieren"
-                    },
-                    {
-                      "aspect": "produktion-schriftlich-bildlich",
-                      "specification": "Meinungsorientierten Text verfassen (Kommentar)"
-                    }
-                  ]
-                },
-                {
-                  "titel": "Ich kann Meinungen und Haltungen in künstlerischen Beiträgen erkennen und beschreiben und deren Wirkung auf mich reflektieren.",
-                  "number": 3,
-                  "social_aspects": [
-                    {
-                      "aspect": "kultur",
-                      "specification": "Künstlerische Ausdrucksformen und deren Wirkung, zeitliche Prägung"
-                    }
-                  ],
-                  "language_aspects": [
-                    {
-                      "aspect": "produktion-schriftlich-bildlich",
-                      "specification": "Künstlerische Ausdrucksformen beschreiben und kommentieren"
-                    }
-                  ]
-                }
-              ],
-              "lessons": 17
-            },
-            {
-              "title": "Ich möchte mitreden, mitgestalten und ernst genommen werden bei Themen, die mich direkt oder indirekt betreffen.",
-              "number": 3,
-              "learning_contents": [
-                {
-                  "titel": "Ich kann persönliche politische Anliegen formulieren und Möglichkeiten zur Mitwirkung aufzeigen.",
-                  "number": 1,
-                  "social_aspects": [
-                    {
-                      "aspect": "politik",
-                      "specification": "Durchsetzungsstrategien eigener Interessen"
-                    }
-                  ],
-                  "language_aspects": [
-                    {
-                      "aspect": "produktion-schriftlich-bildlich",
-                      "specification": "Eigene Anliegen in einem digitalen Produkt (Flyer, Factsheet, Flugblatt) begründet festhalten"
-                    }
-                  ]
-                },
-                {
-                  "titel": "Ich kann eine begründete Meinung zu einem aktuellen gesellschaftlichen Thema entwickeln und diese in Diskussionen nachvollziehbar und respektvoll vertreten.",
-                  "number": 2,
-                  "social_aspects": [
-                    {
-                      "aspect": "ethik",
-                      "specification": "Ethische Prinzipien, Perspektivenübernahme"
-                    }
-                  ],
-                  "language_aspects": [
-                    {
-                      "aspect": "interaktion-kollaboration-mundlich",
-                      "specification": "In Gruppendiskussion politische Anliegen präsentieren, aushandeln und Gruppenentscheidungen mitentwickeln"
-                    }
-                  ]
-                }
-              ],
-              "lessons": 8
-            }
-          ]
+            ]
         },
         {
-          "number": 3,
-          "title": "Bewusst konsumieren und handeln",
-          "description": "Meine Konsumentscheidungen, sei es beim Einkaufen, Essen oder Reisen, beeinflussen andere Personen, Unternehmen und auch die Umwelt. Beim Thema «Bewusst konsumieren und handeln» gehe ich verantwortungsvoll mit meinem Lohn um. Ich reflektiere mein eigenes Konsumverhalten, erkenne wirtschaftliche Zusammenhänge, lerne meine Rechte als Konsument/in kennen und setze mich mit den ökologischen Auswirkungen meiner alltäglichen Entscheidungen auseinander.",
-          "additional_description": "Ich lerne, verantwortungsbewusst mit meinem Einkommen umzugehen und finde heraus, welche finanziellen Spielräume und Verpflichtungen damit verbunden sind. Dazu erstelle ich ein eigenes Budget und tausche mich über meine Bedürfnisse und Möglichkeiten mit anderen aus.\n\nIch setze mich mit grundlegenden wirtschaftlichen Mechanismen auseinander: Was beeinflusst meine Konsumbedürfnisse? Dabei analysiere ich audiovisuelle Beiträge wie Werbeclips, Erklärvideos oder Dokumentationen, um ökonomische Zusammenhänge zu erkennen und kritisch zu reflektieren.\n\nIch reflektiere die sozialen, wirtschaftlichen und ökologischen Auswirkungen unserer Konsumgesellschaft. Ich vergleiche konventionelle und nachhaltige Konsumformen, befasse mich mit Produktionsbedingungen und Umweltauswirkungen und formuliere meine Erkenntnisse in multimedial gestalteten Beiträgen.\n\nZudem lerne ich, welche Rechte und Pflichten sich aus Kaufverträgen ergeben, sei es im Laden, online oder bei digitalen Vertragsabschlüssen. Dadurch kann ich Rückgaberecht, Garantie, Reklamation oder Schutz vor Betrug in meinem Alltag anwenden und meine Rechte in Austauschformaten einfordern. So stärke ich meine Fähigkeit, wirtschaftlich informiert, rechtlich orientiert und ökologisch bewusst als verantwortungsvolle Konsumentin bzw. verantwortungsvoller Konsument zu handeln.",
-          "kerninhalte": "Bedürfnisse, Budget, Schuldenprävention, Nachhaltigkeit, Preisbildung, Kaufvertrag, Konsumentenrechte",
-          "essential_competences": [
-            "quellen-unterscheiden",
-            "innovation-und-problemlosung",
-            "werthaltungen-reflektieren",
-            "nachhaltigkeit"
-          ],
-          "individual_reference": [
-            {
-              "title": "Ich treffe überlegte Konsumentscheidungen, die zu mir und meiner Lebenssituation passen.",
-              "number": 1,
-              "learning_contents": [
+            "year": 3,
+            "themenbereiche": [
                 {
-                  "titel": "Ich kann verschiedene Arten von Bedürfnissen unterscheiden, meine eigenen Bedürfnisse erkennen und beurteilen.",
-                  "number": 1,
-                  "social_aspects": [
-                    {
-                      "aspect": "wirtschaft",
-                      "specification": "Bedürfnisbefriedigung"
-                    },
-                    {
-                      "aspect": "identitat-sozialisation",
-                      "specification": "Einfluss von Herkunft und Umfeld"
-                    }
-                  ],
-                  "language_aspects": [
-                    {
-                      "aspect": "rezeption-audiovisuell",
-                      "specification": "Zentrale Aussagen aus audiovisuellen Werbebeiträgen entnehmen"
-                    }
-                  ]
+                    "number": 7,
+                    "title": "Schlussarbeit",
+                    "lessons": 33,
+                    "description": "Ich bearbeite ein gesellschaftlich relevantes Thema, das ich aus mindestens zwei gesellschaftlichen Aspekten betrachte. Die Schlussarbeit besteht aus Prozess, Produkt und Präsentation, berücksichtigt mindestens vier Sprachmodi und deckt mindestens drei Schlüsselkompetenzen ab.",
+                    "additional_description": "In den 9 Lektionen Konzeptphase steht die Auswahl eines zu mir passenden und gesellschaftlich relevanten Themas im Zentrum. Auf dieser Grundlage erstelle ich eine Konzeptvereinbarung für meine Schlussarbeit. Dazu formuliere ich Fragestellungen zu meinem Thema und plane gezielt, wie ich Informationen beschaffe, verarbeite und in meinem Produkt darstelle.\n\nWährend der anschliessenden 21 Lektionen Unterrichtszeit beschaffe ich Informationen auf unterschiedliche Weise. Zum Beispiel recherchiere ich in verschiedenen Quellen, vergleiche diese miteinander und prüfe ihre Relevanz und Zuverlässigkeit. Ich kann auch eigenständig Daten erheben, indem ich beispielsweise Expertinnen oder Zeitzeugen befrage, eine anonyme Umfrage durchführe oder eigene Erfahrungen sammle.\n\nMeine Informationen verarbeite ich, indem ich sie strukturiere, zusammenfasse, vergleiche und bewerte. Die daraus gewonnenen Zusammenhänge und Schlussfolgerungen in Bezug auf meine Fragestellungen stelle ich verständlich und reflektiert dar.\n\nZum Schluss präsentiere ich die wichtigsten Erkenntnisse meiner Schlussarbeit und verteidige meine Arbeit in einem vertiefenden Gespräch. Für die Vorbereitung der Präsentation stehen mir 3 Lektionen Unterrichtszeit zur Verfügung.\n\nDie Bestimmungen zum Qualifikationsverfahren und die Wegleitung meiner Berufsschule bilden die Anforderungen an meine Schlussarbeit ab.",
+                    "min_social_aspects": 2,
+                    "min_language_modes": 4,
+                    "min_key_competences": 3,
+                    "individual_reference": []
                 },
                 {
-                  "titel": "Ich kann mein Budget realistisch planen, Abweichungen und Risiken identifizieren und entsprechende Anpassungen vornehmen.",
-                  "number": 2,
-                  "social_aspects": [
-                    {
-                      "aspect": "wirtschaft",
-                      "specification": "Geeignete Instrumente für den Umgang mit eigenen Mitteln, Einschätzung der eigenen wirtschaftlichen Lage"
-                    }
-                  ],
-                  "language_aspects": [
-                    {
-                      "aspect": "rezeption-audiovisuell",
-                      "specification": "Zentrale Aussagen aus audiovisuellen Medien entnehmen"
-                    }
-                  ]
-                },
-                {
-                  "titel": "Ich kann Risiken der Verschuldung erkennen, mein eigenes Konsumverhalten kritisch reflektieren und Wege finden, Schulden zu vermeiden.",
-                  "number": 3,
-                  "social_aspects": [
-                    {
-                      "aspect": "wirtschaft",
-                      "specification": "Schuldenprävention"
-                    },
-                    {
-                      "aspect": "ethik",
-                      "specification": "Eigenverantwortung"
-                    }
-                  ],
-                  "language_aspects": [
-                    {
-                      "aspect": "rezeption-audiovisuell",
-                      "specification": "Zentrale Aussagen aus audiovisuellen Medien entnehmen"
-                    }
-                  ]
+                    "number": 8,
+                    "title": "Arbeiten in der Zukunft",
+                    "lessons": 57,
+                    "description": "Die Arbeitswelt verändert sich durch neue Technologien, gesellschaftliche Entwicklungen und persönliche Lebensentwürfe.\n\nIm Thema «Arbeiten in der Zukunft» setze ich mich damit auseinander, wie ich meine berufliche Zukunft in einer sich wandelnden Arbeitswelt gestalten kann mit Wissen über technologische Entwicklungen, berufliche Laufbahnplanung, grundlegende arbeitsrechtliche Rahmenbedingungen sowie finanzielle Planung und Vorsorge.\n\nDabei entwickle ich digitale Kompetenzen, reflektiere meine Stärken und Ziele und lerne, mich in einer sich wandelnden Arbeitswelt selbstständig zu orientieren und fundierte Entscheidungen zu treffen.",
+                    "additional_description": "Ich vertiefe mein Wissen über die Rechte und Pflichten in der Arbeitswelt und analysiere, wie technologische Entwicklungen, wie Robotik oder Künstliche Intelligenz, sowie flexible Arbeitsformen die Berufswelt verändern und welche Chancen und Herausforderungen sich daraus für mich ergeben.\n\nIch plane meine berufliche Zukunft, indem ich mich an den Anforderungen des Arbeitsmarkts orientiere, meine Stärken und Ziele reflektiere und passende Weiterbildungen recherchiere und bewerte.\n\nEin weiterer Schwerpunkt ist die finanzielle Absicherung. Ich verschaffe mir einen Überblick über meine beruflichen Rechte und über die wichtigsten Sozialversicherungen. Ich informiere mich über verschiedene Finanzierungsarten und plane meine Altersvorsorge bewusst. Dabei beschäftige ich mich auch mit Finanzplanung, um Entscheidungen für grössere Anschaffungen oder Projekte treffen zu können.\n\nSo baue ich eine solide finanzielle Basis auf, die meine beruflichen und persönlichen Ziele langfristig unterstützt.",
+                    "kerninhalte": "Einfluss aktueller Technologien aufs Berufsumfeld, Rolle in der Arbeitswelt, Laufbahnziele, Weiterbildung, Bewerbung, Arbeitsrecht, Lösung von Arbeitskonflikten, Sozialversicherungen, Finanzierungsarten, Finanzplanung, Vorbereitung Schlussprüfung",
+                    "essential_competences": [
+                        "innovation-und-problemlosung",
+                        "teamarbeit",
+                        "lebensphasen-planen",
+                        "anpassung"
+                    ],
+                    "individual_reference": [
+                        {
+                            "title": "Ich lebe und arbeite in einer Welt, die sich durch technologische Entwicklungen verändert.",
+                            "number": 1,
+                            "lessons": 9,
+                            "learning_contents": [
+                                {
+                                    "titel": "Ich kann Informationen zu technologischen Entwicklungen aus verlässlichen Quellen auswerten.",
+                                    "number": 1,
+                                    "social_aspects": [
+                                        {
+                                            "aspect": "technologie-transformation",
+                                            "specification": "Einfluss aktueller Technologien auf das persönliche berufliche Umfeld, Chancen und Risiken von KI"
+                                        }
+                                    ],
+                                    "language_aspects": [
+                                        {
+                                            "aspect": "rezeption-schriftlich-bildlich",
+                                            "specification": "Quellen kritisch prüfen, Beiträge vergleichen, Fachbegriffe verstehen"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "titel": "Ich kann die Chancen und Herausforderungen von technologischen Entwicklungen auf meine Berufsbranche einordnen und eine begründete Einschätzung formulieren.",
+                                    "number": 2,
+                                    "social_aspects": [
+                                        {
+                                            "aspect": "technologie-transformation",
+                                            "specification": "Einfluss aktueller Technologien auf das persönliche berufliche Umfeld, digitale Transformation"
+                                        },
+                                        {
+                                            "aspect": "identitat-sozialisation",
+                                            "specification": "Persönliche Weiterbildung"
+                                        }
+                                    ],
+                                    "language_aspects": [
+                                        {
+                                            "aspect": "produktion-multimedial",
+                                            "specification": "Kreative, adressatengerechte multimediale Produktion"
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "title": "Ich plane meine berufliche Zukunft.",
+                            "number": 2,
+                            "lessons": 12,
+                            "learning_contents": [
+                                {
+                                    "titel": "Ich kann basierend auf meinen persönlichen Eigenschaften und Einstellungen übergeordnete Laufbahnziele entwickeln.",
+                                    "number": 1,
+                                    "social_aspects": [
+                                        {
+                                            "aspect": "identitat-sozialisation",
+                                            "specification": "Laufbahnplanungskompetenz, Zukunftsperspektiven, Selbst- und Fremdbild"
+                                        }
+                                    ],
+                                    "language_aspects": [
+                                        {
+                                            "aspect": "interaktion-kollaboration-schriftlich",
+                                            "specification": "Differenzierte Reflexion verfassen, Selbst- und Fremdeinschätzung vergleichen"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "titel": "Ich kann mich über passende Weiterbildungen informieren und einen realistischen Plan für die nächsten Karriereschritte erstellen.",
+                                    "number": 2,
+                                    "social_aspects": [
+                                        {
+                                            "aspect": "wirtschaft",
+                                            "specification": "Weiterbildungskosten und Berufschancen"
+                                        }
+                                    ],
+                                    "language_aspects": [
+                                        {
+                                            "aspect": "rezeption-schriftlich-bildlich",
+                                            "specification": "Beiträge vergleichen"
+                                        },
+                                        {
+                                            "aspect": "produktion-multimedial",
+                                            "specification": "Kreative, adressatengerechte multimediale Produktion erstellen"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "titel": "Ich kann eine multimediale Bewerbung zusammenstellen, in der ich meine Kompetenzen überzeugend darstelle und auf eine konkrete Stelle beziehe.",
+                                    "number": 3,
+                                    "social_aspects": [
+                                        {
+                                            "aspect": "identitat-sozialisation",
+                                            "specification": "Berufliche Rolle und Selbstpräsentation"
+                                        }
+                                    ],
+                                    "language_aspects": [
+                                        {
+                                            "aspect": "rezeption-schriftlich-bildlich",
+                                            "specification": "Stellenanzeigen vergleichen"
+                                        },
+                                        {
+                                            "aspect": "produktion-multimedial",
+                                            "specification": "Kreative, multimediale Bewerbung mit Argumentation erstellen"
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "title": "Ich trete meine erste Stelle nach der Ausbildung an.",
+                            "number": 3,
+                            "lessons": 12,
+                            "learning_contents": [
+                                {
+                                    "titel": "Ich kann Informationen zu arbeitsrechtlichen Grundlagen recherchieren und auf rechtliche Fälle anwenden.",
+                                    "number": 1,
+                                    "social_aspects": [
+                                        {
+                                            "aspect": "recht",
+                                            "specification": "Arbeitsrecht"
+                                        }
+                                    ],
+                                    "language_aspects": [
+                                        {
+                                            "aspect": "rezeption-schriftlich-bildlich",
+                                            "specification": "Fachtexte und Fachbegriffe verstehen"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "titel": "Ich kann für Konflikte in der Arbeitswelt mögliche Handlungsoptionen aufzeigen und für konkrete Fälle einen begründeten Lösungsplan ausarbeiten.",
+                                    "number": 2,
+                                    "social_aspects": [
+                                        {
+                                            "aspect": "recht",
+                                            "specification": "Konfliktstrategien, Arbeitsrecht"
+                                        }
+                                    ],
+                                    "language_aspects": [
+                                        {
+                                            "aspect": "produktion-multimedial",
+                                            "specification": "Konfliktlösungsvorschlag multimedial darstellen"
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "title": "Ich plane meine Finanzen heute und in der Zukunft.",
+                            "number": 4,
+                            "lessons": 12,
+                            "learning_contents": [
+                                {
+                                    "titel": "Ich kann bei einem Erwerbsausfall meine finanzielle Situation analysieren und geeignete Massnahmen zur Absicherung ableiten.",
+                                    "number": 1,
+                                    "social_aspects": [
+                                        {
+                                            "aspect": "recht",
+                                            "specification": "Sozialversicherungen, Abredeversicherung, Beitragslücken"
+                                        },
+                                        {
+                                            "aspect": "identitat-sozialisation",
+                                            "specification": "Lebensplanung"
+                                        }
+                                    ],
+                                    "language_aspects": [
+                                        {
+                                            "aspect": "rezeption-schriftlich-bildlich",
+                                            "specification": "Fachtexte und Fachbegriffe verstehen"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "titel": "Ich kann Finanzierungsarten unterscheiden, deren Chancen und Risiken abschätzen und eine für mich passende Option begründet auswählen.",
+                                    "number": 2,
+                                    "social_aspects": [
+                                        {
+                                            "aspect": "wirtschaft",
+                                            "specification": "Geeignete Instrumente zur Finanzierung, selbstverantwortlicher und ökonomisch nachhaltiger Umgang mit Geld, Anlagestrategie"
+                                        }
+                                    ],
+                                    "language_aspects": [
+                                        {
+                                            "aspect": "rezeption-schriftlich-bildlich",
+                                            "specification": "Hauptaussagen vergleichen"
+                                        },
+                                        {
+                                            "aspect": "produktion-multimedial",
+                                            "specification": "Lernvideo erstellen"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "titel": "Ich kann eine fundierte Finanzplanung in Verbindung mit meinen persönlichen Zielen erstellen.",
+                                    "number": 3,
+                                    "social_aspects": [
+                                        {
+                                            "aspect": "wirtschaft",
+                                            "specification": "Finanzplanung, Dreisäulenprinzip"
+                                        },
+                                        {
+                                            "aspect": "identitat-sozialisation",
+                                            "specification": "Eigenverantwortung"
+                                        }
+                                    ],
+                                    "language_aspects": [
+                                        {
+                                            "aspect": "interaktion-kollaboration-schriftlich",
+                                            "specification": "Differenzierte Reflexion verfassen, Selbst- und Fremdeinschätzung vergleichen"
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "title": "Ich stehe am Ende meiner Lehrzeit und bereite mich auf meine Abschlussprüfung vor.",
+                            "number": 5,
+                            "lessons": 12,
+                            "learning_contents": [
+                                {
+                                    "titel": "Ich kann meine Kompetenzen in den Schlussprüfungsthemen reflektieren und einen strukturierten Lernplan entwickeln.",
+                                    "number": 1,
+                                    "social_aspects": [
+                                        {
+                                            "aspect": "identitat-sozialisation",
+                                            "specification": "Lernstrategien, Strategien zur Bewältigung von Herausforderungen"
+                                        }
+                                    ],
+                                    "language_aspects": []
+                                },
+                                {
+                                    "titel": "Ich kann Zusammenhänge in den zentralen Schlussprüfungsthemen in einer strukturierten Lernübersicht nachweisen.",
+                                    "number": 2,
+                                    "social_aspects": [],
+                                    "language_aspects": []
+                                }
+                            ]
+                        }
+                    ]
                 }
-              ],
-              "lessons": 27
-            },
-            {
-              "title": "Ich konsumiere täglich, was Folgen für Umwelt und Gesellschaft hat.",
-              "number": 2,
-              "learning_contents": [
-                {
-                  "titel": "Ich kann die Konsumgewohnheiten in unserer Gesellschaft reflektieren und Möglichkeiten der nachhaltigen Konsumation beschreiben.",
-                  "number": 1,
-                  "social_aspects": [
-                    {
-                      "aspect": "okologie",
-                      "specification": "Energie- und Materialverbrauch, Emissionen, Klimawandel, drei Dimensionen der Nachhaltigkeit"
-                    },
-                    {
-                      "aspect": "wirtschaft",
-                      "specification": "Ökonomisches Grundproblem knapper Ressourcen"
-                    }
-                  ],
-                  "language_aspects": [
-                    {
-                      "aspect": "produktion-multimedial",
-                      "specification": "Fakten- oder meinungsorientierte Multimedia-Präsentation"
-                    }
-                  ]
-                },
-                {
-                  "titel": "Ich kann den Preis und die Wirtschaftlichkeit eines Produkts oder einer Dienstleistung anhand von Herstellung, Transport sowie Angebot und Nachfrage beurteilen.",
-                  "number": 2,
-                  "social_aspects": [
-                    {
-                      "aspect": "wirtschaft",
-                      "specification": "Auswirkungen von Preisbildung, Marktmechanismen, unternehmerisches Denken und Handeln, Zielkonflikte von Anspruchsgruppen"
-                    }
-                  ],
-                  "language_aspects": [
-                    {
-                      "aspect": "interaktion-kollaboration-schriftlich",
-                      "specification": "Texte kooperativ erarbeiten, schriftliche Rückmeldung verfassen"
-                    }
-                  ]
-                }
-              ],
-              "lessons": 10
-            },
-            {
-              "title": "Ich habe beim Einkaufen Pflichten, aber auch Rechte, die ich einfordern kann.",
-              "number": 3,
-              "learning_contents": [
-                {
-                  "titel": "Ich kann die rechtlichen Folgen von Kaufverträgen beurteilen und auf eine konkrete Einkaufssituation anwenden.",
-                  "number": 1,
-                  "social_aspects": [
-                    {
-                      "aspect": "recht",
-                      "specification": "Kaufvertrag"
-                    }
-                  ],
-                  "language_aspects": [
-                    {
-                      "aspect": "rezeption-schriftlich-bildlich",
-                      "specification": "Zentrale Aussagen aus Texten, Grafiken, Umfragen entnehmen"
-                    }
-                  ]
-                },
-                {
-                  "titel": "Ich kann bei Problemen mit einem gekauften Produkt meine Forderung begründen und mein Anliegen zielgruppengerecht formulieren.",
-                  "number": 2,
-                  "social_aspects": [
-                    {
-                      "aspect": "recht",
-                      "specification": "Kaufvertrag, Nutzung von Rechtsquellen"
-                    }
-                  ],
-                  "language_aspects": [
-                    {
-                      "aspect": "interaktion-kollaboration-mundlich",
-                      "specification": "An formalem Konfliktgespräch nach Konventionen teilnehmen"
-                    },
-                    {
-                      "aspect": "interaktion-kollaboration-schriftlich",
-                      "specification": "Formal korrespondieren"
-                    }
-                  ]
-                }
-              ],
-              "lessons": 19
-            }
-          ]
+            ]
         }
-      ],
-      "additional_lessons": 21
-    },
-    {
-      "year": 2,
-      "themenbereiche": [
-        {
-          "number": 4,
-          "title": "Verantwortung für mich und andere übernehmen",
-          "description": "Ich setze mich mit meiner Gesundheit und meinem Selbstbild auseinander, tausche mich mit anderen aus und halte meine Erkenntnisse fest. Ich informiere mich über Risiken im Alltag und finde heraus, wie ich mich absichern kann. Ich lerne Menschen mit unterschiedlichen Hintergründen kennen, spreche mit ihnen und setze mich für ein respektvolles Miteinander ein.",
-          "additional_description": "Ich setze mich mit meinem körperlichen und psychischen Wohlbefinden auseinander. Dabei erkenne ich, wie gesellschaftliche Normen und Ideale mein Selbstbild beeinflussen. Im Austausch mit anderen und durch persönliche Texte und Darstellungen finde ich heraus, was mir guttut, und entwickle Strategien für einen gesunden Lebensstil.\n\nIch lerne, wie ich mit gesundheitlichen und finanziellen Risiken umgehen kann. Ich werte Informationen aus verschiedenen Quellen aus, erkenne mögliche Folgen und finde heraus, wie ich mich gezielt absichern kann – etwa durch passende Versicherungen. So übernehme ich Verantwortung für mich selbst und für andere.\n\nIch lebe in einer vielfältigen Gesellschaft. Ich lese Berichte, höre Erzählungen aus unterschiedlichen Lebensrealitäten und spreche mit anderen über ihre Erfahrungen. Dabei erkenne ich, welche Chancen und Herausforderungen Vielfalt mit sich bringt. Ich setze mich im Alltag, in der Schule und im Beruf für Respekt, Toleranz und ein gelingendes Zusammenleben ein.",
-          "kerninhalte": "Selbst- und Fremdbild, psychische und physische Gesundheit, Kranken- und Unfallversicherung, Haftpflichtversicherung, gesellschaftliche Vielfalt, Migration",
-          "essential_competences": [
-            "werthaltungen-reflektieren",
-            "verstandnis-fordern",
-            "anpassung",
-            "mehrdeutigkeit"
-          ],
-          "individual_reference": [
-            {
-              "title": "Ich sorge für mein körperliches und psychisches Wohlbefinden.",
-              "number": 1,
-              "learning_contents": [
-                {
-                  "titel": "Ich kann den Einfluss von gesellschaftlichen Erwartungen und Normen auf mein Selbstbild analysieren und meine Erkenntnisse daraus festhalten.",
-                  "number": 1,
-                  "social_aspects": [
-                    {
-                      "aspect": "identitat-sozialisation",
-                      "specification": "Persönlichkeitsentwicklung, Einfluss von Herkunft und Umfeld, Selbstbestimmung, soziale Rollen, Medieneinfluss"
-                    }
-                  ],
-                  "language_aspects": [
-                    {
-                      "aspect": "interaktion-kollaboration-mundlich",
-                      "specification": "Gespräche führen über Erwartungen und Erkenntnisse"
-                    },
-                    {
-                      "aspect": "produktion-schriftlich-bildlich",
-                      "specification": "Strukturierte Notiz verfassen"
-                    }
-                  ]
-                },
-                {
-                  "titel": "Ich kann Merkmale eines gesunden Lebensstils in Erfahrung bringen, auswerten und daraus gesundheitsfördernde Massnahmen für mich ableiten.",
-                  "number": 2,
-                  "social_aspects": [
-                    {
-                      "aspect": "ethik",
-                      "specification": "Eigenverantwortung"
-                    },
-                    {
-                      "aspect": "identitat-sozialisation",
-                      "specification": "Psychische und physische Gesundheit, Work-Life-Balance, Sucht und Hilfsangebote, Prävention"
-                    }
-                  ],
-                  "language_aspects": [
-                    {
-                      "aspect": "produktion-schriftlich-bildlich",
-                      "specification": "Umfrage auswerten"
-                    }
-                  ]
-                }
-              ],
-              "lessons": 18
-            },
-            {
-              "title": "Ich bin im Alltag gesundheitlichen und finanziellen Risiken ausgesetzt.",
-              "number": 2,
-              "learning_contents": [
-                {
-                  "titel": "Ich kann mögliche gesundheitliche Risiken erkennen, beurteilen und eine geeignete finanzielle Absicherung ableiten.",
-                  "number": 1,
-                  "social_aspects": [
-                    {
-                      "aspect": "ethik",
-                      "specification": "Eigenverantwortung, soziale Verantwortung, Solidaritätsprinzip"
-                    },
-                    {
-                      "aspect": "recht",
-                      "specification": "Krankenversicherung, Unfallversicherung"
-                    }
-                  ],
-                  "language_aspects": [
-                    {
-                      "aspect": "rezeption-schriftlich-bildlich",
-                      "specification": "Grafiken interpretieren und Absicht von Texten erkennen"
-                    }
-                  ]
-                },
-                {
-                  "titel": "Ich kann Situationen erkennen, in denen ich haftbar bin und Massnahmen ergreifen, um mich vor Schäden an Dritten finanziell abzusichern.",
-                  "number": 2,
-                  "social_aspects": [
-                    {
-                      "aspect": "ethik",
-                      "specification": "Eigenverantwortung, soziale Verantwortung"
-                    },
-                    {
-                      "aspect": "recht",
-                      "specification": "Haftpflichtversicherung, Regress"
-                    }
-                  ],
-                  "language_aspects": [
-                    {
-                      "aspect": "rezeption-schriftlich-bildlich",
-                      "specification": "Grafiken interpretieren und Absicht von Texten erkennen"
-                    }
-                  ]
-                }
-              ],
-              "lessons": 20
-            },
-            {
-              "title": "Ich lebe in einer vielfältigen Gesellschaft und möchte respektiert werden.",
-              "number": 3,
-              "learning_contents": [
-                {
-                  "titel": "Ich kann gesellschaftliche Vielfalt beschreiben und die Chancen und Herausforderungen dieser Vielfalt für das Zusammenleben untersuchen.",
-                  "number": 1,
-                  "social_aspects": [
-                    {
-                      "aspect": "identitat-sozialisation",
-                      "specification": "Gesellschaftliche Rolle, kulturelle Vielfalt"
-                    }
-                  ],
-                  "language_aspects": [
-                    {
-                      "aspect": "interaktion-kollaboration-mundlich",
-                      "specification": "Interview führen, Chancen und Risiken erfragen"
-                    },
-                    {
-                      "aspect": "rezeption-schriftlich-bildlich",
-                      "specification": "Erfahrungsberichte, Reportagen oder Kampagnen zu Vielfalt analysieren"
-                    }
-                  ]
-                },
-                {
-                  "titel": "Ich kann Ursachen und Auswirkungen von Migration anhand konkreter Beispiele analysieren und erklären, wie das Leben von Betroffenen und die Gesellschaft beeinflusst werden.",
-                  "number": 2,
-                  "social_aspects": [
-                    {
-                      "aspect": "recht",
-                      "specification": "Migrationsrecht"
-                    },
-                    {
-                      "aspect": "ethik",
-                      "specification": "Migrationsgründe (Demografie, Klimawandel, politische Konflikte, wirtschaftliche Abhängigkeit)"
-                    }
-                  ],
-                  "language_aspects": [
-                    {
-                      "aspect": "rezeption-schriftlich-bildlich",
-                      "specification": "Grafiken interpretieren, Absicht von Texten erkennen"
-                    },
-                    {
-                      "aspect": "produktion-schriftlich-bildlich",
-                      "specification": "Meinungsorientierten Text verfassen"
-                    }
-                  ]
-                }
-              ],
-              "lessons": 13
-            }
-          ]
-        },
-        {
-          "number": 5,
-          "title": "Mich im Staat orientieren",
-          "description": "Der Staat prägt meinen Alltag durch Gesetze, politische Entscheidungen und gesellschaftliche Prozesse. Ich lerne, wie das Schweizer Rechtssystem funktioniert und erkunde den Zweck von Steuern. Ich setze mich mit rechtsstaatlichen Prinzipien, Gesetzes- und Abstimmungsprozessen auseinander und präsentiere ein eigenes politisches Anliegen. Abschliessend analysiere ich staatliche Handlungsmöglichkeiten bei globalen Herausforderungen, untersuche die Wirkung medialer Beiträge und gestalte ein eigenes multimediales Werk, das zum Nachdenken oder Dialog anregen soll.",
-          "additional_description": "Der Staat prägt meinen Alltag durch Gesetze, politische Entscheidungen und gesellschaftliche Prozesse. In diesem Thema lerne ich, wie das Schweizer Rechtssystem aufgebaut ist: welche Institutionen es gibt, welche Rechtsnormen gelten und was das öffentliche Recht sowie das Strafrecht für meinen Alltag bedeuten. Diese Inhalte mache ich sichtbar, indem ich Rechtssituationen visuell darstelle und digitale Tools für die Zusammenarbeit nutze. Ich erkunde ausserdem, welchen Zweck Steuern erfüllen und fülle meine eigene Steuererklärung korrekt aus.\n\nIch setze mich damit auseinander, wie rechtsstaatliche Prinzipien wie Gewaltenteilung, Föderalismus und demokratische Werte in der Schweiz umgesetzt werden und worin sich ein Rechtsstaat von einem Unrechtsstaat unterscheidet. Ich erarbeite, wie Gesetze und Abstimmungsprozesse funktionieren, arbeite mit digitalen Tools, formuliere ein eigenes politisches Anliegen und präsentiere es in einem mündlichen Beitrag.\n\nIch setze mich kritisch mit den Aufgaben des Staates auf nationaler und internationaler Ebene auseinander und frage, welche Handlungsmöglichkeiten angesichts globaler Herausforderungen (z. B. Klimawandel) bestehen. Ich untersuche mediale Beiträge zu Umweltthemen und erkenne, wie Sprache, Bild und Ton öffentliche Meinungen beeinflussen. Abschliessend gestalte ich ein eigenes künstlerisches, multimediales Werk zu einer globalen Herausforderung und kommentiere, wie es zum Nachdenken oder zum Dialog anregen soll.",
-          "kerninhalte": "Rechte und Pflichten ab Volljährigkeit, Steuern, Rechtsstaat, politische Teilhabe, Funktionen nationaler und supranationaler Organisationen, Medienwirkung, Gestaltungs- und Ausdrucksfähigkeit",
-          "essential_competences": [
-            "ziele-setzen-und-anpassen",
-            "nachhaltigkeit",
-            "mehrdeutigkeit",
-            "partizipation"
-          ],
-          "individual_reference": [
-            {
-              "title": "Ich bin Teil der Schweizer Gesellschaft und habe Rechte und Pflichten.",
-              "number": 1,
-              "learning_contents": [
-                {
-                  "titel": "Ich kann grundlegende Rechte und Pflichten in der Gemeinschaft verstehen und sie anhand von Alltagsbeispielen visualisieren.",
-                  "number": 1,
-                  "social_aspects": [
-                    {
-                      "aspect": "recht",
-                      "specification": "Rechtsnormen, Bedeutung für das gesellschaftliche Zusammenleben, öffentliches Recht (inkl. Strafrecht), Personenrecht"
-                    }
-                  ],
-                  "language_aspects": [
-                    {
-                      "aspect": "produktion-schriftlich-bildlich",
-                      "specification": "Rechtssituationen visualisieren inklusive Bildlegenden"
-                    },
-                    {
-                      "aspect": "interaktion-kollaboration-digital",
-                      "specification": "Digitale Tools der Zusammenarbeit nutzen"
-                    }
-                  ]
-                },
-                {
-                  "titel": "Ich kann den Zweck von Steuern beschreiben und meine Steuererklärung selbständig und korrekt ausfüllen.",
-                  "number": 2,
-                  "social_aspects": [
-                    {
-                      "aspect": "wirtschaft",
-                      "specification": "Staatshaushalt, Staatsbudget, Steuerpflicht, Steuerprogression"
-                    }
-                  ],
-                  "language_aspects": [
-                    {
-                      "aspect": "produktion-schriftlich-bildlich",
-                      "specification": "Steuerformular online ausfüllen"
-                    }
-                  ]
-                }
-              ],
-              "lessons": 8
-            },
-            {
-              "title": "Ich erlebe, dass Gesetze und politische Entscheidungen verändert werden können.",
-              "number": 2,
-              "learning_contents": [
-                {
-                  "titel": "Ich kann anhand alltäglicher Beispiele und aktueller Ereignisse aufzeigen, wie rechtsstaatliche Prinzipien in der Schweiz umgesetzt werden und begründet erläutern, was einen Rechtsstaat von einem Unrechtsstaat unterscheidet.",
-                  "number": 1,
-                  "social_aspects": [
-                    {
-                      "aspect": "politik",
-                      "specification": "Demokratische Werte, Gewaltenteilung, Gemeinwohl, Funktionsweise der drei Ebenen der nationalen Politik (Föderalismus), Bundesverfassung"
-                    }
-                  ],
-                  "language_aspects": [
-                    {
-                      "aspect": "interaktion-kollaboration-digital",
-                      "specification": "Digitale Tools der Zusammenarbeit nutzen"
-                    }
-                  ]
-                },
-                {
-                  "titel": "Ich kann ein eigenes politisches Anliegen auf Basis eines konkreten Problems aus meinem Alltag oder meiner Lebenswelt ausarbeiten und die einzelnen Schritte des Gesetzgebungs- bzw. Abstimmungsprozesses erläutern.",
-                  "number": 2,
-                  "social_aspects": [
-                    {
-                      "aspect": "politik",
-                      "specification": "Interessengruppen, politische Grundhaltungen, Meinungen und Werte zu politischen Themen, Möglichkeiten zur Teilnahme am politischen Leben"
-                    }
-                  ],
-                  "language_aspects": [
-                    {
-                      "aspect": "produktion-mundlich",
-                      "specification": "Anliegen präsentieren"
-                    }
-                  ]
-                }
-              ],
-              "lessons": 32
-            },
-            {
-              "title": "Ich begegne globalen, gesellschaftlichen Herausforderungen, die auch den Staat beschäftigen.",
-              "number": 3,
-              "learning_contents": [
-                {
-                  "titel": "Ich kann anhand einer aktuellen globalen Herausforderung die Rolle des Staats und dessen Handlungsmöglichkeiten analysieren.",
-                  "number": 1,
-                  "social_aspects": [
-                    {
-                      "aspect": "politik",
-                      "specification": "Funktionen nationaler und supranationaler Organisationen in Europa und weltweit"
-                    },
-                    {
-                      "aspect": "okologie",
-                      "specification": "Lösungsansätze zu gesellschaftlich nachhaltigem Handeln, globale Herausforderungen wie Bevölkerungswachstum, soziale Ungleichheit oder steigender Ressourcenverbrauch"
-                    }
-                  ],
-                  "language_aspects": [
-                    {
-                      "aspect": "produktion-mundlich",
-                      "specification": "Handlungsmöglichkeiten zu einer aktuellen globalen Herausforderung in einem Gesprächsbeitrag wiedergeben"
-                    }
-                  ]
-                },
-                {
-                  "titel": "Ich kann mediale Beiträge zum Klimawandel analysieren und die Wirkung von Sprache, Bild und Ton anhand konkreter Beispiele belegen.",
-                  "number": 2,
-                  "social_aspects": [
-                    {
-                      "aspect": "politik",
-                      "specification": "Medienwirkung, Medien als vierte Gewalt"
-                    },
-                    {
-                      "aspect": "okologie",
-                      "specification": "Ressourcenverbrauch, gesellschaftliche Verhaltensmuster im Umgang mit Ressourcen"
-                    }
-                  ],
-                  "language_aspects": [
-                    {
-                      "aspect": "rezeption-audiovisuell",
-                      "specification": "Bildsprache und Tonalität von medialen Beiträgen deuten, Medienbeiträge zu aktuellen Umweltfragen hinsichtlich politischer Ebenen und politischer Gewalten analysieren"
-                    }
-                  ]
-                },
-                {
-                  "titel": "Ich kann ein eigenes künstlerisches Werk zu einer globalen Herausforderung gestalten und kommentieren, wie mein Werk zum Nachdenken oder zum Dialog anregen soll.",
-                  "number": 3,
-                  "social_aspects": [
-                    {
-                      "aspect": "kultur",
-                      "specification": "Kulturelle Ausdrucksmittel und -formen, eigene Gestaltungs- und Ausdrucksfähigkeiten"
-                    }
-                  ],
-                  "language_aspects": [
-                    {
-                      "aspect": "produktion-multimedial",
-                      "specification": "Künstlerische Produkte erstellen und diese kommentieren"
-                    }
-                  ]
-                }
-              ],
-              "lessons": 20
-            }
-          ]
-        },
-        {
-          "number": 6,
-          "title": "Mein eigenes Zuhause",
-          "description": "In meinem eigenen Zuhause zu leben, bedeutet für mich viel Organisation und Selbstständigkeit. Im Rahmen des Themas «Mein eigenes Zuhause» setze ich mich mit den Herausforderungen des eigenständigen Wohnens auseinander. Dabei betrachte ich das Thema aus rechtlicher, wirtschaftlicher, ökologischer und persönlicher Perspektive. So lerne ich, welche Verantwortung mit dem selbstständigen Wohnen verbunden ist.",
-          "additional_description": "Ich befasse mich mit der Frage, wie ich eine passende Wohnung finde, die zu meinen sozialen Bedürfnissen, meinem Lebensstil und meinen finanziellen Möglichkeiten passt. Gleichzeitig lerne ich, den Einzug Schritt für Schritt zu planen und organisatorisch vorzubereiten. Darüber hinaus überlege ich, wie ich Wohnen und Mobilität im Alltag sinnvoll gestalten kann. Dazu berücksichtige ich sowohl Kosten, Nachhaltigkeit als auch gesetzliche Rahmenbedingungen.\n\nDamit ich mich im Mietalltag sicher bewegen kann, setze ich mich mit den zentralen Rechten und Pflichten von Mietenden sowie relevanten Versicherungen auseinander. In Korrespondenzen mit der Vermietung oder der Schlichtungsbehörde übe ich, sachlich und zielgerichtet zu kommunizieren.\n\nIch untersuche unterschiedliche Wohn- und Lebensformen und erkenne, wie der demografische Wandel Wohnmodelle und das Zusammenleben prägt. Gleichzeitig reflektiere ich, wie ein respektvoller Umgang in Beziehungen und Nachbarschaft möglich ist. In kurzen multimedialen Darstellungen zeige ich auf, wie Wohnen ökologisch nachhaltiger gestaltet und ein gesundes, respektvolles Miteinander unterstützt werden kann.\n\nSo entwickle ich Kompetenzen und Orientierung, um selbstständig, informiert und verantwortungsvoll mein Zuhause aktiv und bewusst zu gestalten.",
-          "kerninhalte": "Wohnungssuche, Umzugsplanung, Mietrecht, Versicherungsschutz, verschiedene Wohn- und Lebensformen",
-          "essential_competences": [
-            "innovation-und-problemlosung",
-            "teamarbeit",
-            "verstandnis-fordern",
-            "lebensphasen-planen",
-            "nachhaltigkeit"
-          ],
-          "individual_reference": [
-            {
-              "title": "Ich finde eine passende Wohnung und plane meinen Umzug.",
-              "number": 1,
-              "learning_contents": [
-                {
-                  "titel": "Ich kann eine Wohnung finden, die zu meinen sozialen und finanziellen Bedürfnissen passt.",
-                  "number": 1,
-                  "social_aspects": [
-                    {
-                      "aspect": "okologie",
-                      "specification": "Mobilität"
-                    },
-                    {
-                      "aspect": "identitat-sozialisation",
-                      "specification": "Lebensqualität"
-                    },
-                    {
-                      "aspect": "wirtschaft",
-                      "specification": "Finanzielle Standortbestimmung, Suchstrategien auf Wohnungsmarkt"
-                    }
-                  ],
-                  "language_aspects": [
-                    {
-                      "aspect": "rezeption-mundlich",
-                      "specification": "Hauptaussagen aus Gesprächs- und Hörmaterialien erkennen"
-                    }
-                  ]
-                },
-                {
-                  "titel": "Ich kann eine strukturierte Umzugsplanung mit Zeitplan und Budget erstellen.",
-                  "number": 2,
-                  "social_aspects": [
-                    {
-                      "aspect": "wirtschaft",
-                      "specification": "Nachhaltiger Umgang mit eigenen Mitteln, Ablauf eines Umzugs"
-                    }
-                  ],
-                  "language_aspects": [
-                    {
-                      "aspect": "interaktion-kollaboration-schriftlich",
-                      "specification": "Umzugsplanung kooperativ erarbeiten"
-                    }
-                  ]
-                }
-              ],
-              "lessons": 20
-            },
-            {
-              "title": "Ich ziehe in meine eigene Wohnung und kläre Fragen zu Mietvertrag und Versicherungen.",
-              "number": 2,
-              "learning_contents": [
-                {
-                  "titel": "Ich kann rechtliche Grundlagen zum Mietverhältnis recherchieren und auf typische Herausforderungen anwenden.",
-                  "number": 1,
-                  "social_aspects": [
-                    {
-                      "aspect": "recht",
-                      "specification": "Mietrecht, Konfliktstrategien"
-                    }
-                  ],
-                  "language_aspects": [
-                    {
-                      "aspect": "interaktion-kollaboration-schriftlich",
-                      "specification": "Formal und informal korrespondieren, rechtlichen Bezug erläutern"
-                    }
-                  ]
-                },
-                {
-                  "titel": "Ich kann Angebote der Versicherungen zum Thema Wohnen vergleichen und eine begründete Auswahl treffen.",
-                  "number": 2,
-                  "social_aspects": [
-                    {
-                      "aspect": "recht",
-                      "specification": "Haftpflichtversicherung, Hausratsversicherung"
-                    }
-                  ],
-                  "language_aspects": [
-                    {
-                      "aspect": "rezeption-mundlich",
-                      "specification": "Hauptaussagen und Absichten aus Gesprächen und Hörmaterialien erkennen"
-                    }
-                  ]
-                }
-              ],
-              "lessons": 31
-            },
-            {
-              "title": "Ich setze mich mit verschiedenen Wohn- und Lebensformen auseinander.",
-              "number": 3,
-              "learning_contents": [
-                {
-                  "titel": "Ich kann verschiedene Wohnformen nach ökonomischen, ökologischen und sozialen Kriterien beurteilen und die Auswirkung auf Gesellschaft und Umwelt einordnen.",
-                  "number": 1,
-                  "social_aspects": [
-                    {
-                      "aspect": "wirtschaft",
-                      "specification": "Bevölkerungswachstum, Alterung der Bevölkerung"
-                    },
-                    {
-                      "aspect": "okologie",
-                      "specification": "Nachhaltiger Umgang mit knappen Ressourcen, Reduktion der Umweltbelastung"
-                    }
-                  ],
-                  "language_aspects": [
-                    {
-                      "aspect": "produktion-multimedial",
-                      "specification": "Multimediale Reportage erstellen"
-                    }
-                  ]
-                },
-                {
-                  "titel": "Ich kann für konkrete Formen des Zusammenlebens Chancen und Herausforderungen analysieren und konstruktive Vorschläge für einen respektvollen Umgang entwickeln.",
-                  "number": 2,
-                  "social_aspects": [
-                    {
-                      "aspect": "identitat-sozialisation",
-                      "specification": "Psychische und physische Gesundheit, Gewaltformen, Hilfsangebote, häusliche Gewalt"
-                    },
-                    {
-                      "aspect": "ethik",
-                      "specification": "Eigenverantwortung, soziale Verantwortung, Schutz von Würde und Integrität, Gleichstellung"
-                    }
-                  ],
-                  "language_aspects": [
-                    {
-                      "aspect": "produktion-multimedial",
-                      "specification": "Multimediale Reportage erstellen"
-                    }
-                  ]
-                }
-              ],
-              "lessons": 23
-            }
-          ]
-        }
-      ],
-      "additional_lessons": 17
-    },
-    {
-      "year": 3,
-      "themenbereiche": [
-        {
-          "number": 7,
-          "title": "Schlussarbeit",
-          "lessons": 33,
-          "description": "Ich bearbeite ein gesellschaftlich relevantes Thema, das ich aus mindestens zwei gesellschaftlichen Inhalten betrachte. Die Schlussarbeit besteht aus Prozess, Produkt und Präsentation, berücksichtigt mindestens vier Sprachmodi und deckt mindestens drei Schlüsselkompetenzen ab.",
-          "additional_description": "In den 9 Lektionen Konzeptphase steht die Auswahl eines zu mir passenden und gesellschaftlich relevanten Themas im Zentrum. Auf dieser Grundlage erstelle ich eine Konzeptvereinbarung für meine Schlussarbeit. Dazu formuliere ich Fragestellungen zu meinem Thema und plane gezielt, wie ich Informationen beschaffe, verarbeite und in meinem Produkt darstelle.\n\nWährend der anschliessenden 21 Lektionen Unterrichtszeit beschaffe ich Informationen auf unterschiedliche Weise. Zum Beispiel recherchiere ich in verschiedenen Quellen, vergleiche diese miteinander und prüfe ihre Relevanz und Zuverlässigkeit. Ich kann auch eigenständig Daten erheben, indem ich beispielsweise Expertinnen oder Zeitzeugen befrage, eine anonyme Umfrage durchführe oder eigene Erfahrungen sammle.\n\nMeine Informationen verarbeite ich, indem ich sie strukturiere, zusammenfasse, vergleiche und bewerte. Die daraus gewonnenen Zusammenhänge und Schlussfolgerungen in Bezug auf meine Fragestellungen stelle ich verständlich und reflektiert dar.\n\nZum Schluss präsentiere ich die wichtigsten Erkenntnisse meiner Schlussarbeit und verteidige meine Arbeit in einem vertiefenden Gespräch. Für die Vorbereitung der Präsentation stehen mir 3 Lektionen Unterrichtszeit zur Verfügung.\n\nDie Bestimmungen zum Qualifikationsverfahren und die Wegleitung meiner Berufsschule bilden die Anforderungen an meine Schlussarbeit ab.",
-          "essential_competences": [
-            "quellen-unterscheiden",
-            "ziele-setzen-und-anpassen",
-            "innovation-und-problemlosung",
-            "teamarbeit",
-            "werthaltungen-reflektieren",
-            "standpunkte-begrunden",
-            "verstandnis-fordern",
-            "lebensphasen-planen",
-            "nachhaltigkeit",
-            "anpassung",
-            "mehrdeutigkeit",
-            "partizipation"
-          ]
-        },
-        {
-          "number": 8,
-          "title": "Arbeiten in der Zukunft",
-          "description": "Die Arbeitswelt verändert sich durch neue Technologien, gesellschaftliche Entwicklungen und persönliche Lebensentwürfe.\n\nIm Thema «Arbeiten in der Zukunft» setze ich mich damit auseinander, wie ich meine berufliche Zukunft in einer sich wandelnden Arbeitswelt gestalten kann mit Wissen über technologische Entwicklungen, berufliche Laufbahnplanung, grundlegende arbeitsrechtliche Rahmenbedingungen sowie finanzielle Planung und Vorsorge.\n\nDabei entwickle ich digitale Kompetenzen, reflektiere meine Stärken und Ziele und lerne, mich in einer sich wandelnden Arbeitswelt selbstständig zu orientieren und fundierte Entscheidungen zu treffen.",
-          "additional_description": "Ich vertiefe mein Wissen über die Rechte und Pflichten in der Arbeitswelt und analysiere, wie technologische Entwicklungen, wie Robotik oder Künstliche Intelligenz, sowie flexible Arbeitsformen die Berufswelt verändern und welche Chancen und Herausforderungen sich daraus für mich ergeben.\n\nIch plane meine berufliche Zukunft, indem ich mich an den Anforderungen des Arbeitsmarkts orientiere, meine Stärken und Ziele reflektiere und passende Weiterbildungen recherchiere und bewerte.\n\nEin weiterer Schwerpunkt ist die finanzielle Absicherung. Ich verschaffe mir einen Überblick über meine beruflichen Rechte und über die wichtigsten Sozialversicherungen. Ich informiere mich über verschiedene Finanzierungsarten und plane meine Altersvorsorge bewusst. Dabei beschäftige ich mich auch mit Finanzplanung, um Entscheidungen für grössere Anschaffungen oder Projekte treffen zu können.\n\nSo baue ich eine solide finanzielle Basis auf, die meine beruflichen und persönlichen Ziele langfristig unterstützt.",
-          "kerninhalte": "Einfluss aktueller Technologien aufs Berufsumfeld, Rolle in der Arbeitswelt, Laufbahnziele, Weiterbildung, Bewerbung, Arbeitsrecht, Lösung von Arbeitskonflikten, Sozialversicherungen, Finanzierungsarten, Finanzplanung, Vorbereitung Schlussprüfung",
-          "essential_competences": [
-            "innovation-und-problemlosung",
-            "teamarbeit",
-            "lebensphasen-planen",
-            "anpassung"
-          ],
-          "individual_reference": [
-            {
-              "title": "Ich lebe und arbeite in einer Welt, die sich durch technologische Entwicklungen verändert.",
-              "number": 1,
-              "learning_contents": [
-                {
-                  "titel": "Ich kann Informationen zu technologischen Entwicklungen aus verlässlichen Quellen auswerten.",
-                  "number": 1,
-                  "social_aspects": [
-                    {
-                      "aspect": "technologie-transformation",
-                      "specification": "Einfluss aktueller Technologien auf das persönliche berufliche Umfeld, Chancen und Risiken von KI"
-                    }
-                  ],
-                  "language_aspects": [
-                    {
-                      "aspect": "rezeption-schriftlich-bildlich",
-                      "specification": "Quellen kritisch prüfen, Beiträge vergleichen, Fachbegriffe verstehen"
-                    }
-                  ]
-                },
-                {
-                  "titel": "Ich kann die Chancen und Herausforderungen von technologischen Entwicklungen auf meine Berufsbranche einordnen und eine begründete Einschätzung formulieren.",
-                  "number": 2,
-                  "social_aspects": [
-                    {
-                      "aspect": "technologie-transformation",
-                      "specification": "Einfluss aktueller Technologien auf das persönliche berufliche Umfeld, digitale Transformation"
-                    },
-                    {
-                      "aspect": "identitat-sozialisation",
-                      "specification": "Persönliche Weiterbildung"
-                    }
-                  ],
-                  "language_aspects": [
-                    {
-                      "aspect": "produktion-multimedial",
-                      "specification": "Kreative, adressatengerechte multimediale Produktion"
-                    }
-                  ]
-                }
-              ],
-              "lessons": 26
-            },
-            {
-              "title": "Ich plane meine berufliche Zukunft.",
-              "number": 2,
-              "learning_contents": [
-                {
-                  "titel": "Ich kann basierend auf meinen persönlichen Eigenschaften und Einstellungen übergeordnete Laufbahnziele entwickeln.",
-                  "number": 1,
-                  "social_aspects": [
-                    {
-                      "aspect": "identitat-sozialisation",
-                      "specification": "Laufbahnplanungskompetenz, Zukunftsperspektiven, Selbst- und Fremdbild"
-                    }
-                  ],
-                  "language_aspects": [
-                    {
-                      "aspect": "interaktion-kollaboration-schriftlich",
-                      "specification": "Differenzierte Reflexion verfassen, Selbst- und Fremdeinschätzung vergleichen"
-                    }
-                  ]
-                },
-                {
-                  "titel": "Ich kann mich über passende Weiterbildungen informieren und einen realistischen Plan für die nächsten Karriereschritte erstellen.",
-                  "number": 2,
-                  "social_aspects": [
-                    {
-                      "aspect": "wirtschaft",
-                      "specification": "Weiterbildungskosten und Berufschancen"
-                    }
-                  ],
-                  "language_aspects": [
-                    {
-                      "aspect": "rezeption-schriftlich-bildlich",
-                      "specification": "Beiträge vergleichen"
-                    },
-                    {
-                      "aspect": "produktion-multimedial",
-                      "specification": "Kreative, adressatengerechte multimediale Produktion erstellen"
-                    }
-                  ]
-                },
-                {
-                  "titel": "Ich kann eine multimediale Bewerbung zusammenstellen, in der ich meine Kompetenzen überzeugend darstelle und auf eine konkrete Stelle beziehe.",
-                  "number": 3,
-                  "social_aspects": [
-                    {
-                      "aspect": "identitat-sozialisation",
-                      "specification": "Berufliche Rolle und Selbstpräsentation"
-                    }
-                  ],
-                  "language_aspects": [
-                    {
-                      "aspect": "rezeption-schriftlich-bildlich",
-                      "specification": "Stellenanzeigen vergleichen"
-                    },
-                    {
-                      "aspect": "produktion-multimedial",
-                      "specification": "Kreative, multimediale Bewerbung mit Argumentation erstellen"
-                    }
-                  ]
-                }
-              ],
-              "lessons": 13
-            },
-            {
-              "title": "Ich trete meine erste Stelle nach der Ausbildung an.",
-              "number": 3,
-              "learning_contents": [
-                {
-                  "titel": "Ich kann Informationen zu arbeitsrechtlichen Grundlagen recherchieren und auf rechtliche Fälle anwenden.",
-                  "number": 1,
-                  "social_aspects": [
-                    {
-                      "aspect": "recht",
-                      "specification": "Arbeitsrecht"
-                    }
-                  ],
-                  "language_aspects": [
-                    {
-                      "aspect": "rezeption-schriftlich-bildlich",
-                      "specification": "Fachtexte und Fachbegriffe verstehen"
-                    }
-                  ]
-                },
-                {
-                  "titel": "Ich kann für Konflikte in der Arbeitswelt mögliche Handlungsoptionen aufzeigen und für konkrete Fälle einen begründeten Lösungsplan ausarbeiten.",
-                  "number": 2,
-                  "social_aspects": [
-                    {
-                      "aspect": "recht",
-                      "specification": "Konfliktstrategien, Arbeitsrecht"
-                    }
-                  ],
-                  "language_aspects": [
-                    {
-                      "aspect": "produktion-multimedial",
-                      "specification": "Konfliktlösungsvorschlag multimedial darstellen"
-                    }
-                  ]
-                }
-              ],
-              "lessons": 27
-            },
-            {
-              "title": "Ich plane meine Finanzen heute und in der Zukunft.",
-              "number": 4,
-              "learning_contents": [
-                {
-                  "titel": "Ich kann bei einem Erwerbsausfall meine finanzielle Situation analysieren und geeignete Massnahmen zur Absicherung ableiten.",
-                  "number": 1,
-                  "social_aspects": [
-                    {
-                      "aspect": "recht",
-                      "specification": "Sozialversicherungen, Abredeversicherung, Beitragslücken"
-                    },
-                    {
-                      "aspect": "identitat-sozialisation",
-                      "specification": "Lebensplanung"
-                    }
-                  ],
-                  "language_aspects": [
-                    {
-                      "aspect": "rezeption-schriftlich-bildlich",
-                      "specification": "Fachtexte und Fachbegriffe verstehen"
-                    }
-                  ]
-                },
-                {
-                  "titel": "Ich kann Finanzierungsarten unterscheiden, deren Chancen und Risiken abschätzen und eine für mich passende Option begründet auswählen.",
-                  "number": 2,
-                  "social_aspects": [
-                    {
-                      "aspect": "wirtschaft",
-                      "specification": "Geeignete Instrumente zur Finanzierung, selbstverantwortlicher und ökonomisch nachhaltiger Umgang mit Geld, Anlagestrategie"
-                    }
-                  ],
-                  "language_aspects": [
-                    {
-                      "aspect": "rezeption-schriftlich-bildlich",
-                      "specification": "Hauptaussagen vergleichen"
-                    },
-                    {
-                      "aspect": "produktion-multimedial",
-                      "specification": "Lernvideo erstellen"
-                    }
-                  ]
-                },
-                {
-                  "titel": "Ich kann eine fundierte Finanzplanung in Verbindung mit meinen persönlichen Zielen erstellen.",
-                  "number": 3,
-                  "social_aspects": [
-                    {
-                      "aspect": "wirtschaft",
-                      "specification": "Finanzplanung, Dreisäulenprinzip"
-                    },
-                    {
-                      "aspect": "identitat-sozialisation",
-                      "specification": "Eigenverantwortung"
-                    }
-                  ],
-                  "language_aspects": [
-                    {
-                      "aspect": "interaktion-kollaboration-schriftlich",
-                      "specification": "Differenzierte Reflexion verfassen, Selbst- und Fremdeinschätzung vergleichen"
-                    }
-                  ]
-                }
-              ],
-              "lessons": 31
-            },
-            {
-              "title": "Ich stehe am Ende meiner Lehrzeit und bereite mich auf meine Abschlussprüfung vor.",
-              "number": 5,
-              "learning_contents": [
-                {
-                  "titel": "Ich kann meine Kompetenzen in den Schlussprüfungsthemen reflektieren und einen strukturierten Lernplan entwickeln.",
-                  "number": 1,
-                  "social_aspects": [
-                    {
-                      "aspect": "identitat-sozialisation",
-                      "specification": "Lernstrategien, Strategien zur Bewältigung von Herausforderungen"
-                    }
-                  ],
-                  "language_aspects": []
-                },
-                {
-                  "titel": "Ich kann Zusammenhänge in den zentralen Schlussprüfungsthemen in einer strukturierten Lernübersicht nachweisen.",
-                  "number": 2,
-                  "social_aspects": [],
-                  "language_aspects": []
-                }
-              ],
-              "lessons": 16
-            }
-          ]
-        }
-      ],
-      "additional_lessons": 6
-    }
-  ]
+    ]
 }

@@ -429,23 +429,23 @@
             font-weight 350ms cubic-bezier(0.4, 0, 0.2, 1);
     }
 
-    .side-navigation.is-expanded .pdf-link {
+    /* .side-navigation.is-expanded .pdf-link {
         font-size: var(--h1-size);
         line-height: var(--h1-line-height);
         font-weight: var(--h1-weight);
         letter-spacing: var(--h1-letter-spacing);
         padding: 10px 30px 10px 24px;
         gap: 16px;
-    }
+    } */
 
     .pdf-icon {
         flex-shrink: 0;
     }
 
-    .side-navigation.is-expanded .pdf-icon {
+    /* .side-navigation.is-expanded .pdf-icon {
         width: 32px;
         height: 32px;
-    }
+    } */
 
     .pdf-link:hover {
         background: var(--color-darkblue);

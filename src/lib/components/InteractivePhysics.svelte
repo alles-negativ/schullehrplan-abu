@@ -14,7 +14,7 @@
     let spawnPillFn: ((pill: PhysicsPill) => void) | null = null;
     let pillSizes = $state<Record<string, { pill: number; inner: number }>>({});
 
-    const PILL_MAX_WIDTH = 450;
+    const PILL_MAX_WIDTH = 550;
     const PILL_H_PADDING = 76;
     const PILL_MIN_CONTENT = 200;
 
@@ -64,7 +64,11 @@
         const hasMidWordBreak = () => {
             const text = m.textContent ?? "";
             const textNode = m.firstChild;
-            if (!textNode || textNode.nodeType !== Node.TEXT_NODE || !text.length) {
+            if (
+                !textNode ||
+                textNode.nodeType !== Node.TEXT_NODE ||
+                !text.length
+            ) {
                 return false;
             }
 
@@ -115,7 +119,7 @@
         if (oneLine <= maxContent) {
             contentWidth = Math.max(oneLine, PILL_MIN_CONTENT);
         } else {
-            const targetLines = measureAt(maxContent).lines;
+            const targetLines = Math.min(2, measureAt(maxContent).lines);
 
             let lo = PILL_MIN_CONTENT;
             let hi = maxContent;
@@ -470,7 +474,7 @@
         justify-content: center;
         width: var(--pill-w, auto);
         min-width: 0;
-        max-width: 450px;
+        max-width: 550px;
         min-height: 120px;
         padding: 0px 38px;
         border-radius: 9999px;
@@ -492,7 +496,7 @@
         flex: 0 0 auto;
         width: var(--pill-inner-w, auto);
         min-width: 0;
-        max-width: calc(450px - 76px);
+        max-width: calc(550px - 76px);
     }
 
     .pill-title {

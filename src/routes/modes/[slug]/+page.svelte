@@ -131,10 +131,6 @@
         min-width: 0;
     }
 
-    .circularity-content {
-        margin-top: 1rem;
-    }
-
     .mode-overview {
         margin: 0 33px;
         margin-top: 180px;
@@ -142,6 +138,10 @@
 
     .overview-content :global(p) {
         margin: 0 0 2rem;
+        font-size: var(--h2-size);
+        line-height: var(--h2-line-height);
+        font-weight: var(--h2-weight);
+        letter-spacing: var(--h2-letter-spacing);
     }
 
     .overview-content :global(p:last-child) {

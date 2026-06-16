@@ -67,7 +67,7 @@
 
         const timeout = setTimeout(() => {
             pickFromAspect(aspect, 5 + Math.floor(Math.random() * 4));
-        }, 700);
+        }, 1400);
         return () => clearTimeout(timeout);
     });
 </script>
@@ -175,6 +175,7 @@
         width: 600px;
         height: 240px;
         white-space: pre-line;
+        animation: hero-shake 3s ease-in-out 0.5s;
     }
 
     .hero-button:hover:not(:disabled) {
@@ -184,7 +185,6 @@
 
     .hero-button:active:not(:disabled) {
         animation: none;
-        transform: scale(0.98);
     }
 
     @keyframes hero-shake {
@@ -194,16 +194,16 @@
             transform: rotate(0deg) translateX(0);
         }
         3% {
-            transform: rotate(-0.5deg) translateX(-1px);
+            transform: rotate(-1deg) translateX(-10px);
         }
         6% {
-            transform: rotate(0.5deg) translateX(1px);
+            transform: rotate(1deg) translateX(10px);
         }
         9% {
-            transform: rotate(-0.35deg) translateX(-1px);
+            transform: rotate(-0.75deg) translateX(-10px);
         }
         12% {
-            transform: rotate(0.35deg) translateX(1px);
+            transform: rotate(0.75deg) translateX(10px);
         }
         15% {
             transform: rotate(0deg) translateX(0);
@@ -214,5 +214,4 @@
         pointer-events: none;
         cursor: default;
     }
-
 </style>

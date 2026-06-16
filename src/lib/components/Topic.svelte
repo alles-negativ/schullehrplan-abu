@@ -4,8 +4,11 @@
     import arrowIconSmall from "$lib/assets/arrowIconSmall.png";
     import CompetenceModal from "$lib/components/CompetenceModal.svelte";
     import Referenze from "$lib/components/Referenze.svelte";
+    import diceCube from "$lib/assets/dice-cube-outline.png";
     import {
         getAdditionalTopicDescription,
+        getAllAspects,
+        getAllCompetences,
         getCompetenceBySlug,
         getTopicCoreContents,
         getTopicDescription,
@@ -31,6 +34,57 @@
     );
 
     let selectedCompetence = $state<Competence | null>(null);
+
+    const hasAspectMinimums = $derived(
+        topic.min_social_aspects != null ||
+            topic.min_language_modes != null ||
+            topic.min_key_competences != null,
+    );
+
+    const aspectMinimumsByTitle: Record<string, number | undefined> = $derived({
+        "Gesellschaftliche Inhalte": topic.min_social_aspects,
+        Sprachmodi: topic.min_language_modes,
+        Schlüsselkompetenzen: topic.min_key_competences,
+    });
+
+    const aspectCompetences = $derived(
+        getAllAspects().map((aspect) => ({
+            aspect,
+            minimum: aspectMinimumsByTitle[aspect.title],
+            competences: getAllCompetences()
+                .filter((c) => c.aspect === aspect.title)
+                .sort((a, b) => a.title.localeCompare(b.title, "de-CH")),
+        })),
+    );
+
+    let rolledAspects = $state(new Map<string, Set<string>>());
+
+    const rollAspect = (
+        aspectTitle: string,
+        competences: Competence[],
+        minimum: number | undefined,
+    ) => {
+        const next = new Map(rolledAspects);
+        if (next.has(aspectTitle)) {
+            next.delete(aspectTitle);
+        } else {
+            const count = minimum ?? 0;
+            if (count <= 0) return;
+            const slugs = new Set(
+                [...competences]
+                    .sort(() => Math.random() - 0.5)
+                    .slice(0, count)
+                    .map((c) => c.slug),
+            );
+            next.set(aspectTitle, slugs);
+        }
+        rolledAspects = next;
+    };
+
+    const isAspectDimmed = (aspectTitle: string, slug: string) => {
+        const selection = rolledAspects.get(aspectTitle);
+        return selection !== undefined && !selection.has(slug);
+    };
 </script>
 
 <article class="topic">
@@ -56,9 +110,9 @@
                             easing: (t) => t * (2 - t),
                         }}
                     >
-                        <h3 class="additional-description-title">
+                        <h4 class="additional-description-title">
                             Detaillierte Erweiterung
-                        </h3>
+                        </h4>
                         {@html marked.parse(
                             getAdditionalTopicDescription(topic) ?? "",
                         ) as string}
@@ -109,6 +163,63 @@
                         >
                     {/each}
                 </div>
+            </div>
+        {/if}
+        {#if hasAspectMinimums}
+            <div class="aspect-minimums">
+                {#each aspectCompetences as group}
+                    <div class="aspect-section">
+                        <div class="aspect-section-header">
+                            <h2 class="section-label">
+                                Mögliche {group.aspect.title}{group.minimum !=
+                                null
+                                    ? ` (Mindestens ${group.minimum})`
+                                    : ""}
+                            </h2>
+                            {#if group.minimum != null}
+                                <button
+                                    type="button"
+                                    class="dice-button"
+                                    class:is-active={rolledAspects.has(
+                                        group.aspect.title,
+                                    )}
+                                    aria-pressed={rolledAspects.has(
+                                        group.aspect.title,
+                                    )}
+                                    aria-label="Zufällige Auswahl würfeln"
+                                    onclick={() =>
+                                        rollAspect(
+                                            group.aspect.title,
+                                            group.competences,
+                                            group.minimum,
+                                        )}
+                                >
+                                    <img
+                                        src={diceCube}
+                                        alt=""
+                                        class="dice-icon"
+                                    />
+                                </button>
+                            {/if}
+                        </div>
+                        <div class="tag-list">
+                            {#each group.competences as competence}
+                                <button
+                                    type="button"
+                                    class="tag"
+                                    class:dimmed={isAspectDimmed(
+                                        group.aspect.title,
+                                        competence.slug,
+                                    )}
+                                    style={`--tag-color: ${competence.color ?? "#64748b"}`}
+                                    onclick={() =>
+                                        (selectedCompetence = competence)}
+                                    >{competence.title}</button
+                                >
+                            {/each}
+                        </div>
+                    </div>
+                {/each}
             </div>
         {/if}
     </div>
@@ -204,7 +315,6 @@
         line-height: var(--h4-line-height);
         font-weight: var(--h4-weight);
         letter-spacing: var(--h4-letter-spacing);
-        color: #2f2f33;
     }
 
     .kerninhalte-text {
@@ -222,23 +332,85 @@
         gap: 0.45rem;
     }
 
-    /* .tag {
-        display: block;
-        padding: 0.2rem 0.65rem;
-        border-radius: 999px;
-        font-size: var(--h5-size);
-        line-height: var(--h5-line-height);
-        font-weight: var(--h5-weight);
-        letter-spacing: var(--h5-letter-spacing);
-        background: color-mix(in srgb, var(--tag-color) 18%, white);
-        border: 1px solid color-mix(in srgb, var(--tag-color) 45%, #94a3b8);
-        color: #0f172a;
-        width: fit-content;
-        max-width: 100%;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        cursor: pointer;
-    } */
+    .aspect-minimums {
+        margin-top: 100px;
+        display: flex;
+        flex-direction: column;
+        gap: 40px;
+    }
 
+    .aspect-section-header {
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+        margin-bottom: 0.35rem;
+    }
+
+    .aspect-section-header .section-label {
+        margin-bottom: 0;
+    }
+
+    .dice-button {
+        flex-shrink: 0;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 30px;
+        height: 30px;
+        border-radius: 9999px;
+        border: none;
+        background: transparent;
+        padding: 0;
+        cursor: pointer;
+        transition: background-color 120ms ease;
+    }
+
+    .dice-button:hover {
+        animation: shake 3s ease-in-out infinite;
+    }
+
+    .dice-button.is-active {
+        /* background: var(--color-black); */
+        /* box-shadow: 0 9px 15px rgba(0, 0, 0, 0.25); */
+    }
+
+    .dice-icon {
+        width: 20px;
+        height: 20px;
+        display: block;
+    }
+
+    @keyframes shake {
+        0%,
+        18%,
+        100% {
+            transform: rotate(0deg) translateX(0);
+        }
+        3% {
+            transform: rotate(-1deg) translateX(-5px);
+        }
+        6% {
+            transform: rotate(1deg) translateX(5px);
+        }
+        9% {
+            transform: rotate(-0.75deg) translateX(-5px);
+        }
+        12% {
+            transform: rotate(0.75deg) translateX(5px);
+        }
+        15% {
+            transform: rotate(0deg) translateX(0);
+        }
+    }
+
+    .aspect-section {
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+    }
+
+    :global(.tag).dimmed {
+        opacity: 0.2;
+        pointer-events: none;
+    }
 </style>

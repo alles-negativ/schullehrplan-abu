@@ -41,6 +41,9 @@ export type Topic = {
 	lessons?: number;
 	essential_competences?: string[];
 	individual_reference?: IndividualReference[];
+	min_social_aspects?: number;
+	min_language_modes?: number;
+	min_key_competences?: number;
 };
 
 export type YearEntry = {
@@ -186,3 +189,24 @@ export const getAllAspects = (): Aspect[] =>
 	aspectDisplayOrder
 		.map((title) => aspectByTitle[title])
 		.filter((aspect): aspect is Aspect => Boolean(aspect));
+
+export const getModeCompetenceCounts = (mode: EducationMode): Map<string, number> => {
+	const counts = new Map<string, number>();
+	const addSlug = (slug: string) => counts.set(slug, (counts.get(slug) ?? 0) + 1);
+
+	for (const year of getModeYears(mode)) {
+		for (const topic of year.themenbereiche ?? []) {
+			for (const slug of topic.essential_competences ?? []) addSlug(slug);
+			for (const ref of topic.individual_reference ?? []) {
+				for (const slug of ref.essential_competences ?? []) addSlug(slug);
+				for (const content of ref.learning_contents ?? []) {
+					for (const entry of content.social_aspects ?? []) addSlug(getAspectSlug(entry));
+					for (const entry of content.language_aspects ?? []) addSlug(getAspectSlug(entry));
+					for (const slug of content.essential_competences ?? []) addSlug(slug);
+				}
+			}
+		}
+	}
+
+	return counts;
+};

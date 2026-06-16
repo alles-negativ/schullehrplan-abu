@@ -32,11 +32,24 @@
     <section class="referenze">
         <h4 class="section-label">Lebensbezüge und Kompetenzen</h4>
         {#each references as ref, index}
-            <article
+            <div
                 class="reference-item"
                 class:is-expanded={!(collapsedByIndex[index] ?? true)}
             >
-                <div class="reference-header">
+                <div
+                    class="reference-header"
+                    role="button"
+                    tabindex="0"
+                    onclick={() => toggleReferenceContents(index)}
+                    onkeydown={(e) => {
+                        if (e.key === "Enter" || e.key === " ")
+                            toggleReferenceContents(index);
+                    }}
+                    aria-expanded={!(collapsedByIndex[index] ?? true)}
+                    aria-label={(collapsedByIndex[index] ?? true)
+                        ? "Inhalte anzeigen"
+                        : "Inhalte ausblenden"}
+                >
                     <div class="reference-meta">
                         {#if ref.title || ref.titel}
                             <div class="reference-title">
@@ -69,7 +82,6 @@
                             aria-label={(collapsedByIndex[index] ?? true)
                                 ? "Inhalte anzeigen"
                                 : "Inhalte ausblenden"}
-                            onclick={() => toggleReferenceContents(index)}
                         >
                             <img
                                 src={arrowIcon}
@@ -100,7 +112,7 @@
                         {/each}
                     </ul>
                 {/if}
-            </article>
+            </div>
         {/each}
     </section>
 {/if}
@@ -121,6 +133,7 @@
 
     .reference-header {
         position: relative;
+        cursor: pointer;
     }
 
     .reference-meta {

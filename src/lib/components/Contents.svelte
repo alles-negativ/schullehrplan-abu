@@ -92,9 +92,7 @@
             {/if}
             {#if languageAspects.length > 0}
                 <div class="tag-group">
-                    <span class="tag-group-label"
-                        >Sprachmodi</span
-                    >
+                    <span class="tag-group-label">Sprachmodi</span>
                     {#each languageAspects as item}
                         <div
                             class="aspect-item"
@@ -215,10 +213,10 @@
         margin: 0;
         margin-left: 7px;
         color: var(--color-black);
-        font-size: var(--h6-size);
-        line-height: var(--h6-line-height);
-        font-weight: 400;
-        letter-spacing: var(--h6-letter-spacing);
+        font-size: var(--h5-size);
+        line-height: var(--h5-line-height);
+        font-weight: var(--h5-weight);
+        letter-spacing: var(--h5-letter-spacing);
     }
 
     .tag-specification-text {
@@ -233,6 +231,7 @@
         line-height: inherit;
         font-weight: inherit;
         letter-spacing: inherit;
+        z-index: 5;
     }
 
     .tag-specification-glow {
@@ -242,11 +241,12 @@
         user-select: none;
         pointer-events: none;
         font-weight: 900;
-        letter-spacing: -1.6px;
+        letter-spacing: -2%;
     }
 
     .tag-specification-label {
         color: var(--color-black);
+        z-index: 10;
     }
 
     .line {

@@ -1,183 +1,536 @@
 {
-  "title": "Qualifikationsverfahren",
-  "chapters": [
-    {
-      "number": 1,
-      "title": "Erfahrungsnote",
-      "intro": "Die Erfahrungsnote bildet einen wesentlichen Bestandteil der Gesamtnote im ABU. Sie reflektiert die kontinuierliche Lernleistung über die gesamte Ausbildungsdauer und wird auf Grundlage verschiedener Leistungsnachweise ermittelt.",
-      "sections": [
+    "title": "Qualifikationsverfahren",
+    "chapters": [
         {
-          "number": "1.1",
-          "title": "Erfahrungsnote, Zeugnisnote und Semesternote",
-          "body": "Die Erfahrungsnote wird aus der Zeugnisnote des letzten Semesters und den Semesternoten der vorangehenden Semester berechnet. Die Semesternote setzt sich aus verschiedenen Leistungsnachweisen zusammen und wird am Ende jedes Semesters festgelegt.",
-          "subsections": [
-            {
-              "number": "1.1.1",
-              "title": "Wiedereinstieg und Quereinsteig",
-              "body": "Bei einem Wiedereinstieg oder Quereinstieg werden die bisher erbrachten Leistungen angerechnet. Die Berechnung der Erfahrungsnote erfolgt anteilig auf Basis der tatsächlich absolvierten Semester."
-            },
-            {
-              "number": "1.1.2",
-              "title": "Übertritt in eine andere Ausbildung",
-              "body": "Beim Übertritt in eine andere Ausbildung werden die im ABU erbrachten Leistungen nach den geltenden Regelungen der übernehmenden Schule angerechnet."
-            }
-          ]
-        },
-        {
-          "number": "1.2",
-          "title": "Letztes Lehrjahr und Abschlusssemester",
-          "body": "Im letzten Lehrjahr und insbesondere im Abschlusssemester gelten besondere Regelungen für die Ermittlung der Semesternote, da das Qualifikationsverfahren parallel stattfindet."
-        },
-        {
-          "number": "1.3",
-          "title": "Gewichtung der Lernbereiche",
-          "body": "Die einzelnen Lernbereiche werden bei der Berechnung der Semesternote unterschiedlich gewichtet. Die Gewichtung orientiert sich am Umfang und an der Bedeutung der jeweiligen Lernbereiche."
-        },
-        {
-          "number": "1.4",
-          "title": "Qualitätsanforderungen",
-          "body": "Für die Bewertung der Leistungen gelten einheitliche Qualitätsanforderungen, die sich an den Kompetenzzielen des Schullehrplans orientieren."
-        },
-        {
-          "number": "1.5",
-          "title": "Notenberechnung",
-          "body": "Die Notenberechnung erfolgt nach den im Kanton geltenden Vorschriften. Die Erfahrungsnote wird auf eine Dezimalstelle gerundet."
-        },
-        {
-          "number": "1.6",
-          "title": "Grösserer verbindlicher Kompetenznachweis",
-          "body": "Der grössere verbindliche Kompetenznachweis ist ein zentraler Bestandteil der Semesternote und wird separat bewertet."
-        }
-      ]
-    },
-    {
-      "number": 2,
-      "title": "Schlussarbeit",
-      "intro": "Die Schlussarbeit ist das zentrale Element des Qualifikationsverfahrens. Sie umfasst einen Prozess, ein Produkt und eine Präsentation, die jeweils zu einem Drittel in die Gesamtnote einfliessen.",
-      "sections": [
-        {
-          "number": "2.6",
-          "title": "Bewertung von Prozess, Produkt und Präsentation",
-          "body": "Die Gesamtnote der Schlussarbeit setzt sich zu je einem Drittel aus der Bewertung von Prozess, Präsentation und Produkt zusammen. In jedem Bereich werden Punkte vergeben, die anschliessend zu einer Note zusammengeführt und auf eine ganze oder halbe Note gerundet werden."
-        },
-        {
-          "number": "2.6.1",
-          "title": "Prozessbewertung",
-          "body": "Die Prozessbewertung erfolgt durch die ABU-Lehrperson auf Grundlage einer Dokumentation, die folgende Bestandteile umfasst:",
-          "tables": [
-            {
-              "column_label": "Teil",
-              "column_description": "Inhalt / Beschreibung",
-              "rows": [
+            "title": "Einführung",
+            "intro": "Das Qualifikationsverfahren (QV) im allgemeinbildenden Unterricht (ABU) setzt sich bei den 3- und 4-jährigen beruflichen Grundbildungen aus diesen drei Benotungen zusammen:\n\n- Erfahrungsnote\n- Schlussarbeit\n- Schlussprüfung\n\nBei den 2-jährigen beruflichen Grundbildungen besteht die Abschlussnote ausschliesslich aus den Erfahrungsnoten aus vier Semestern (Verzicht auf Schlussarbeit und Schlussprüfung).",
+            "tables": [
                 {
-                  "label": "Konzeptvereinbarung",
-                  "description": "Inhalt siehe Kapitel 2.4.1 (wird nicht bewertet)"
-                },
-                {
-                  "label": "Zeitplanung",
-                  "description": "Grober Zeitplan mit Phasen (Recherche, Durchführung, Auswertung etc.)"
-                },
-                {
-                  "label": "Arbeitsjournal",
-                  "description": "Chronologische Einträge über Arbeitszeiten, Tätigkeiten, Reflexionen inkl. kritischer Selbstreflexion"
-                },
-                {
-                  "label": "Datenbeschaffung und -verwendung, Quellen",
-                  "description": "Datenerhebung, Datennutzung, Beurteilung der Aussagekraft, Quellenangabe"
-                },
-                {
-                  "label": "Reflexion des Prozesses",
-                  "description": "Persönliche Einschätzung: Was gelang gut? Wo lagen Schwierigkeiten? Was wurde gelernt?"
-                },
-                {
-                  "label": "Zwischengespräche",
-                  "description": "Kurzprotokolle oder Notizen zu Feedback und Absprachen mit der Lehrperson"
+                    "columns": [
+                        "Berufliche Grundbildungen",
+                        "Gewichtung Erfahrungsnote",
+                        "Gewichtung Schlussarbeit",
+                        "Gewichtung Schlussprüfung"
+                    ],
+                    "rows": [
+                        ["3-jährige", "⅓", "⅓", "⅓"],
+                        ["4-jährige", "⅓", "⅓", "⅓"],
+                        ["2-jährige", "100 %", "—", "—"]
+                    ]
                 }
-              ]
-            }
-          ]
+            ],
+            "additional_content": "Für Personen, die nach einem bestimmten Zeitpunkt aus dem Berufsmaturitätsunterricht in den ABU übertreten oder ausserhalb eines geregelten Bildungsgangs zum QV zugelassen wurden, gelten teils ebenfalls abweichende Bestimmungen.\n\nIm Folgenden wird das QV im ABU genauer ausgeführt.",
+            "sections": []
         },
         {
-          "number": "2.6.2",
-          "title": "Produktbewertung",
-          "body": "Das Produkt wird anhand des Eigenanteils der lernenden Person bewertet. Eigenanteil umfasst:",
-          "lists": [
-            {
-              "items": [
-                "Eigene Ideen, Überlegungen und konzeptionelle Entscheidungen",
-                "Selbstständig verfasste Texte, Formulierungen und Analysen",
-                "Selbst erstellte oder produzierte Inhalte wie Multimedia-Produkte (Videos, Audio, Animationen, Websites, Apps, Prototypen)",
-                "Eigene praktische Arbeiten, Werke, Experimente, Tests oder Erfahrungsprozesse",
-                "Selbstständig erhobene oder aufbereitete Daten, Recherchen und Auswertungen",
-                "Strukturierung, Gliederung und Begründung des Vorgehens",
-                "Reflexion über die eigene Arbeit und die Ergebnisse"
-              ]
-            },
-            {
-              "title": "Kein Eigenanteil",
-              "items": [
-                "Deklarierte fremde oder automatisch generierte Inhalte",
-                "Deklarierte Inhalts- oder Gestaltungsbeiträge Dritter"
-              ]
-            }
-          ],
-          "tables": [
-            {
-              "caption": "Unabhängig von der Produktform muss die Dokumentation folgende Abschnitte enthalten:",
-              "column_label": "Abschnitt",
-              "column_description": "Inhalt / Beschreibung",
-              "rows": [
+            "number": 1,
+            "title": "Erfahrungsnote",
+            "intro": "Die Erfahrungsnote spiegelt die kontinuierliche Lernleistung der Lernenden über die gesamte Ausbildungsdauer. Sie ergibt sich aus dem arithmetischen Mittel aller Zeugnisnoten im allgemeinbildenden Unterricht und fliesst als einer von drei gleichgewichteten Teilen in die Abschlussnote der 3- und 4-jährigen beruflichen Grundbildungen ein.",
+            "sections": [
                 {
-                  "label": "Deckblatt",
-                  "description": "Titel, Name(n), Klasse, Schule, Abgabedatum"
+                    "number": "1",
+                    "title": "Erfahrungsnote, Zeugnisnote und Semesternote",
+                    "body": "**Erfahrungsnote ABU:** Die Erfahrungsnote ABU ergibt sich aus dem arithmetischen Mittel aller Zeugnisnoten für den ABU. Sie wird auf eine ganze oder halbe Note gerundet.\n\n**Zeugnisnote ABU:** Pro Semester wird für die Allgemeinbildung eine Zeugnisnote ABU aus den Semesternoten der beiden Lernbereiche Sprache und Kommunikation (SuK) sowie Gesellschaft (Ges) gebildet. Die Zeugnisnote ABU wird aus dem arithmetischen Mittel der Semesternoten der beiden Lernbereiche SuK und Ges gebildet und wird auf eine halbe oder ganze Note gerundet.\n\n**Semesternoten Lernbereiche:** Die Semesternoten der beiden Lernbereiche werden im Zeugnis ausgewiesen. Jede Semesternote der beiden Lernbereiche SuK und Ges beruht auf mindestens drei Einzelnoten, die grundsätzlich aus kombinierten Kompetenznachweisen der beiden Lernbereiche hervorgehen. Die Semesternoten SuK und Ges sind auf eine halbe oder ganze Note gerundet.",
+                    "subsections": [
+                        {
+                            "number": "1",
+                            "title": "Wiedereinstieg und verspäteter Eintritt",
+                            "body": "Tritt ein/e Lernende/r verspätet oder nach Unterbruch in den ABU ein (z. B. bei Wiederholung oder Unterbrechung der Ausbildung), so wird die Erfahrungsnote ausschliesslich auf Grundlage der tatsächlich erbrachten Semesterzeugnisnoten berechnet. Nicht absolvierte Semester werden weder ersetzt noch geschätzt."
+                        },
+                        {
+                            "number": "2",
+                            "title": "Übertritt aus dem Berufsmaturitätsunterricht",
+                            "body": "Wechselt ein/e Lernende/r während des vorletzten Schulsemesters von der Berufsmaturität (BM) in den ABU, entfällt die Erfahrungsnote. Die Dispensation ist im Notenausweis zu vermerken. In diesem Fall setzt sich die Note im Qualifikationsbereich Allgemeinbildung aus dem arithmetischen Mittel der Note der Schlussarbeit und der Note der Schlussprüfung zusammen."
+                        }
+                    ]
                 },
                 {
-                  "label": "Inhaltsverzeichnis",
-                  "description": "Übersicht über die Gliederung der Arbeit mit Seitenzahlen"
+                    "number": "2",
+                    "title": "Letztes Lehrjahr bei den 3- und 4-jährigen Grundbildungen",
+                    "body": "Bei den 3- und 4-jährigen beruflichen Grundbildungen wird im zweitletzten Semester schwerpunktmässig die Schlussarbeit durchgeführt. Deshalb entfallen in diesem Semester die Zeugnisnoten in der Allgemeinbildung."
                 },
                 {
-                  "label": "Einleitung",
-                  "description": "Persönlicher Bezug, Motivation, Fragestellung und Zielsetzung(en), Produktform"
+                    "number": "3",
+                    "title": "Gewichtung der Lernbereiche und Prüfungsformen",
+                    "body": "Während eines Semesters werden benotete Kompetenznachweise durchgeführt, welche die beiden Lernbereiche gleichgewichtet abbilden. Die Semesternoten werden auf der Grundlage von kompetenzorientierten, mehrheitlich lernbereichsübergreifenden Prüfungsformen generiert. Die Prüfungsformen orientieren sich nebst dem SLP an praxisrelevanten, lebensweltlichen Problemstellungen, zu deren Erfüllung Kompetenzen aus den beiden Lernbereichen Sprache und Kommunikation sowie Gesellschaft und aus den Schlüsselkompetenzen benötigt werden.\n\nDort, wo im SLP «Produktion mündlich» als verbindlich definiert ist, soll mündlich geprüft werden.\n\nSchlüsselkompetenzen sind in den verbindlichen Kompetenzen enthalten und werden angemessen berücksichtigt (sie werden nicht separat ausgewiesen)."
                 },
                 {
-                  "label": "Hauptteil",
-                  "description": "Theoretische Grundlagen, Analyse, Ergebnisse. Umfang abhängig von Produktform und Vorgaben."
+                    "number": "4",
+                    "title": "Qualitätsanforderungen",
+                    "body": "Die prüfenden Lehrpersonen orientieren sich bei der Auswahl der Prüfungsform an den Gütekriterien der Validität, Reliabilität und Objektivität. Weitere Gütekriterien sind die Ökonomie in der Vorbereitung, Durchführung und Auswertung der Prüfungen sowie die Chancengerechtigkeit. Die Verantwortung für methodische Angemessenheit und inhaltliche Korrektheit von Prüfungsformen, Prüfungsaufgaben, Bewertung und Notengebung liegt bei der Lehrperson, mit Ausnahme der grösseren verbindlichen Kompetenznachweise der Fachschaft (siehe 1.6)."
                 },
                 {
-                  "label": "Schluss",
-                  "description": "Fazit mit Zusammenfassung der Ergebnisse"
+                    "number": "5",
+                    "title": "Notenberechnung",
+                    "body": "Die Noten für die Prüfungen und Kompetenznachweise innerhalb eines Semesters werden auf eine Dezimalstelle gerundet. Die Berechnungsart der Noten muss transparent gemacht werden."
                 },
                 {
-                  "label": "Quellenverzeichnis",
-                  "description": "Alle verwendeten Quellen nach den geltenden Zitierregeln"
-                },
-                {
-                  "label": "Anhang",
-                  "description": "Fragebögen, Interview-Transkripte, Bilder, Eigenständigkeitserklärung, Korrespondenz etc."
+                    "number": "6",
+                    "title": "Grösserer verbindlicher Kompetenznachweis der Fachschaft",
+                    "body": "Einmal pro Jahr (mit Ausnahme des Abschlussjahrs bei den 3- und 4-jährigen beruflichen Grundbildungen) wird durch die Fachschaft ein grösserer verbindlicher Kompetenznachweis (gvK) für die 2-, 3- und 4-jährigen beruflichen Grundbildungen erstellt, durchgeführt und evaluiert.\n\nDarin können Lerninhalte aus der bisherigen Lehrzeit berücksichtigt und geprüft werden. Diese gvK fliessen als eine von drei Einzelnoten in die Semesternoten der beiden Lernbereiche SuK und Ges ein und können unterschiedliche Formen aufweisen: beispielsweise schriftlich mit kompetenzorientierten Prüfungsaufgaben, mündlich auf Basis eines Lernportfolios oder durch ein Fachgespräch.\n\nMit kompetenzorientierten Aufgaben werden die Transferfähigkeiten der Lernenden getestet und dem spiralförmig angelegten Kompetenzaufbau Rechnung getragen. Die Erarbeitung, Durchführung und Evaluation durch die Fachschaft soll allgemeine Qualitätsstandards für benotete Kompetenznachweise fördern. Die gvK beabsichtigen, die Lernenden auf die Schlussarbeit oder auf die Schlussprüfung vorzubereiten.\n\nBei der Einführung des gvK werden die Rahmenbedingungen (erwartete Lernergebnisse, Regelungen inhaltlicher Hilfestellungen oder zeitliche Vorgaben) sowie die Beurteilungskriterien den Lernenden durch die Lehrpersonen bekannt gegeben."
                 }
-              ]
-            }
-          ]
+            ]
+        },
+        {
+            "number": 2,
+            "title": "Schlussarbeit",
+            "intro": "Die Schlussarbeit ist ein eigenständiges Projekt, in dem Lernende ein selbstgewähltes Thema mit gesellschaftlichem Bezug bearbeiten. Sie umfasst ein Produkt, eine Prozessdokumentation und eine abschliessende Präsentation. Als obligatorischer Bestandteil des QV ist sie für alle Lernenden der 3- und 4-jährigen beruflichen Grundbildungen verbindlich.",
+            "sections": [
+                {
+                    "number": "1",
+                    "title": "Einleitung",
+                    "body": "Die Schlussarbeit ist ein obligatorischer Bestandteil des QV Allgemeinbildung für alle 3- und 4-jährigen beruflichen Grundbildungen sowie für alle Personen ausserhalb eines geregelten Bildungsgangs (vgl. Art. 9 der Verordnung des SBFI über «Mindestvorschriften für die Allgemeinbildung in der beruflichen Grundbildung»).\n\nSie ermöglicht es den Lernenden, ein selbstgewähltes Thema mit gesellschaftlichem Bezug eigenständig zu bearbeiten und dabei ihre methodischen, sozialen und fachlichen Kompetenzen zu vertiefen.\n\nDie Schlussarbeit kann in verschiedenen Formen, z. B. auch multimedial, umgesetzt werden. Die Form des Produkts wird im Zusammenhang mit der Themenwahl und der Vereinbarung der Schlussarbeit definiert."
+                },
+                {
+                    "number": "2",
+                    "title": "Zielsetzung der Schlussarbeit",
+                    "body": "Die Schlussarbeit verfolgt folgende Ziele:\n\n- Eigenständige Bearbeitung eines Themas mit gesellschaftlicher Relevanz\n- Anwendung und Vertiefung der im ABU erworbenen Kompetenzen\n- Stärkung von überfachlichen Kompetenzen – insbesondere den strukturierten Umgang mit digitalen Tools zur Gestaltung von Dokumenten\n- Reflexion des eigenen Lernprozesses und der eigenen Arbeitsweise\n- Präsentation von Erkenntnissen und Ergebnissen\n- Differenzierung und kritische Diskussion der Erkenntnisse und Ergebnisse im vertiefenden Gespräch"
+                },
+                {
+                    "number": "3",
+                    "title": "Rollen und Zuständigkeiten",
+                    "subsections": [
+                        {
+                            "number": "1",
+                            "title": "Die ABU-Lehrperson (erste/r Prüfungsexperte/-in)",
+                            "body": "Die ABU-Lehrperson begleitet und unterstützt die Lernenden von der Themenfindung bis zur Präsentation mit vertiefendem Gespräch. Die Betreuung ist ein wichtiger Bestandteil des Lernprozesses und sollte aktiv genutzt werden. Die Zwischengespräche dienen der Besprechung und Reflexion des Arbeitsstands und der Weiterentwicklung des Produkts und Prozesses. Die ABU-Lehrperson ist die/der erste Prüfungsexperte/-in.\n\nDie ABU-Lehrperson…\n\n- informiert die Lernenden zu Beginn der Schlussarbeit über die Rahmenbedingungen, die für den ordnungsgemässen Ablauf der Schlussarbeit einzuhalten sind. Sie orientiert insbesondere über die Folgen bei Nichtbeachtung dieser Vorgaben.\n- berät die Lernenden beim Einhalten der formalen und inhaltlichen Anforderungen.\n- protokolliert die Einhaltung von Fristen, Abgabeterminen, Zwischengesprächen und den Arbeitsfortschritt.\n- teilt den Lernenden in geeigneter Form den Abgabetermin sowie den Zeitpunkt und die Dauer der Präsentation mit.\n- bewertet den Prozess.\n- bewertet das Produkt und meldet ungenügende Arbeiten zeitnah dem/der zweiten Prüfungsexperten/-in.\n- bewertet die Präsentation gemeinsam mit dem/der zweiten Prüfungsexperten/-in.\n- dokumentiert den Ablauf sowie die wesentlichen Inhalte des vertiefenden Gesprächs.\n- legt mit den Lernenden die Art und die Methode des Arbeitens fest.\n- steht den Lernenden bei formalen, inhaltlichen und methodischen Fragen zur Verfügung.\n- genehmigt Arbeiten, die während der Unterrichtszeit ausserhalb der Schule geleistet werden.\n- holt mindestens zweimal in Zwischengesprächen Informationen über den Stand der Arbeit ein.\n- unterstützt die Lernenden bei der Themenwahl, Konzepterstellung und Arbeitsplanung durch strukturelles und fachliches Feedback.\n- prüft, ob die Themenwahl/Konzepte gesellschaftsrelevant und schullehrplankonform sind und gibt sie frei oder lehnt sie ab.\n- gewährt dem/der zweiten Prüfungsexperten/-in Einsicht in Dokumentationen und Bewertungen mindestens zwei Wochen vor dem Präsentationstermin.\n- bestätigt mit ihrer Unterschrift, dass die Bewertung des Prozesses, des Produkts, der Präsentation und des vertiefenden Gesprächs die Anforderungen erfüllt."
+                        },
+                        {
+                            "number": "2",
+                            "title": "Der/die zweite Prüfungsexperte/-in",
+                            "body": "Die/der zweite Prüfungsexperte/-in (PEX) überprüft die Einhaltung der formalen Kriterien aus dem Rahmenlehrplan (RLP) zur Themenwahl / zum Konzept der Schlussarbeit, führt das vertiefende Gespräch und bewertet die Präsentation. Die Schule benennt geeignete interne oder externe Fachpersonen gemäss Berufsbildungsverordnung (BBV) Art. 46 Abs. 3. (Lehrpersonen, die ausschliesslich über eine Lehrbefähigung für den berufskundlichen Unterricht verfügen, sind nicht zugelassen.)\n\nDer/die zweite Prüfungsexperte/-in…\n\n- überprüft die Einhaltung der formalen Kriterien aus dem RLP zur Themenwahl / zum Konzept der Schlussarbeit.\n- ist bei der Präsentation anwesend.\n- erstellt für das vertiefende Gespräch einen schriftlichen Fragekatalog mit Antworten.\n- führt und bewertet das vertiefende Gespräch.\n- bewertet die Präsentation gemeinsam mit der ABU-Lehrperson.\n- nimmt bei ungenügend bewerteten Produkten durch die ABU-Lehrperson eine Zweitkorrektur des Produkts vor und einigt sich gemeinsam mit der ABU-Lehrperson auf die Produktbewertung.\n- bestätigt mit ihrer Unterschrift, dass die Bewertung des Prozesses, des Produkts, der Präsentation und des vertiefenden Gesprächs die Anforderungen erfüllt."
+                        },
+                        {
+                            "number": "3",
+                            "title": "Die Prüfungsleitung",
+                            "body": "Die Prüfungsleitung an den einzelnen Schulen oder Abteilungen überwacht die Vorbereitung und Durchführung des QV im Fach Allgemeinbildung.\n\nDie Prüfungsleitung…\n\n- sorgt für die Einhaltung der eidgenössischen und kantonalen Richtlinien und Beschlüsse.\n- stellt sicher, dass die schulinternen Richtlinien den kantonalen Vorgaben entsprechen.\n- teilt die PEX sowie die ABU-Lehrpersonen ein und bietet diese zur Beurteilung/Bewertung der Schlussarbeit bzw. Präsentation auf.\n- koordiniert die Durchführung der Schlussarbeit und sorgt für einen reibungslosen Ablauf.\n- entscheidet über die notwendigen Massnahmen bei Abmeldungen, Krankheitsfällen, Disziplinarfällen, Plagiatsverdacht sowie weiteren Unregelmässigkeiten."
+                        },
+                        {
+                            "number": "4",
+                            "title": "Die Fachschaften Allgemeinbildung",
+                            "body": "Die Fachschaften Allgemeinbildung definieren die Bewertungskriterien der Schlussarbeit.\n\nDie Fachschaften…\n\n- erstellen für alle ABU-Lehrpersonen und PEX verbindliche Bewertungsinstrumente für Prozess, Produkt und Präsentation.\n- überprüfen die Bewertungsinstrumente zur Qualitätssicherung periodisch."
+                        },
+                        {
+                            "number": "5",
+                            "title": "Die Schulleitung",
+                            "body": "Die Schulleitung entscheidet über den Zeitpunkt der Durchführung der Schlussarbeit und der Präsentationen."
+                        },
+                        {
+                            "number": "6",
+                            "title": "Die Prüfungskommission",
+                            "body": "Die Prüfungskommission evaluiert zur Qualitätssicherung periodisch die Umsetzung der Schlussarbeit."
+                        }
+                    ]
+                },
+                {
+                    "number": "4",
+                    "title": "Phasen der Schlussarbeit",
+                    "body": "Die Schlussarbeit wird im letzten Ausbildungsjahr erstellt. Die Notenbekanntgabe der Schlussarbeit hat spätestens in der 1. Schulwoche nach den Frühlingsferien zu erfolgen. Die genauen Termine werden von der jeweiligen Schule festgelegt und sind für alle dort unterrichtenden Lehrpersonen verbindlich.",
+                    "subsections": [
+                        {
+                            "number": "1",
+                            "title": "Konzeptphase",
+                            "body": "Die Konzeptphase ist eine entscheidende Phase in der Erstellung der Schlussarbeit. Sie startet mit der Orientierung der ABU-Lehrperson über die Schlussarbeit im letzten Ausbildungsjahr und endet mit der unterzeichneten Konzeptvereinbarung durch die ABU-Lehrperson und die/den Lernende/n. Für die vorbereitenden Arbeiten (Themenfindung, Zielformulierung, Vereinbarung) stehen im Unterricht neun Lektionen zur Verfügung.\n\nDie Konzeptvereinbarung soll…\n\n- eine gesellschaftlich relevante Fragestellung nennen.\n- einen persönlichen Bezug zur/zum Lernenden haben.\n- einen klaren Bezug aufweisen zu mindestens: bei 4-jährigen Grundbildungen: 3 Schlüsselkompetenzen, 3 Aspekten und 4 Sprachmodi; bei 3-jährigen Grundbildungen: 3 Schlüsselkompetenzen, 2 Aspekten und 4 Sprachmodi.\n- die Form des Produkts beschreiben.\n- die Termine der zwei Zwischengespräche und den Abgabetermin festhalten.\n\nDie Lernenden und die ABU-Lehrperson unterschreiben die Konzeptvereinbarung und bestätigen damit, dass…\n\n- die Richtlinien zur Durchführung und Bewertung offengelegt und allfällige Fragen durch die verantwortliche ABU-Lehrperson geklärt wurden.\n- die Zwischengespräche, das Start- sowie das Abgabedatum verbindlich festgelegt wurden.\n- die Anforderungen gemäss dem Rahmenlehrplan Allgemeinbildung erfüllt sind.\n- die Arbeit massgeblich aus dem Eigenanteil der lernenden Person (siehe 2.6.2) bestehen wird.\n- jede Form der Unterstützung durch externe Personen oder Informationsquellen sowie die Verwendung von Hilfsmitteln nachvollziehbar und wahrheitsgetreu deklariert werden müssen.\n\nDie Konzeptvereinbarungen werden von der/dem PEX nach der Erstellung auf Einhaltung der formalen Kriterien überprüft. Benötigt ein/e Lernende/r für die Konzeptvereinbarung mehr als die vorgegebene Zeit, erfolgt keine Verlängerung der Erstellungsphase der Schlussarbeit. Eine Verlängerung kann nur bei entschuldbaren Gründen gewährt werden."
+                        },
+                        {
+                            "number": "2",
+                            "title": "Erstellungsphase",
+                            "body": "In der Erstellungsphase werden…\n\n- das Produkt und die Dokumentation des Produkts erarbeitet,\n- der Prozess dokumentiert\n- und mindestens zwei Zwischengespräche geführt.\n\nDie Erstellungsphase findet während 21 Lektionen im Unterricht statt (entspricht ca. 16 Arbeitsstunden). Zusätzlich arbeiten die Lernenden eigenverantwortlich mindestens 9 und maximal 19 Stunden ausserhalb des Unterrichts daran. Ziel ist ein Gesamtarbeitsaufwand von 25 bis maximal 35 Arbeitsstunden.\n\nDie Erstellungsphase der Schlussarbeit findet an aufeinanderfolgenden Schultagen statt und darf durch höchstens eine Ferienperiode unterbrochen werden. Bei Blockunterricht wird die Zeit für das Erarbeiten der Schlussarbeit schulintern geregelt."
+                        },
+                        {
+                            "number": "3",
+                            "title": "Präsentationsphase",
+                            "body": "Die Präsentationen mit vertiefendem Gespräch sind in allen Klassen bis vor den Frühlingsferien durchzuführen. Die Präsentationen mit vertiefendem Gespräch finden entweder im regulären Unterricht oder im Rahmen von Präsentationswochen statt.\n\nZur Erstellung der Präsentation stehen den Lernenden im Unterricht nach Abgabe des Produkts drei Lektionen zur Verfügung.\n\nDie erreichten Punkte von Prozess und Produkt sind den Lernenden mindestens eine Woche vor dem Präsentationstermin bekanntzugeben."
+                        },
+                        {
+                            "number": "4",
+                            "title": "Möglicher zeitlicher Ablauf",
+                            "flex_table": {
+                                "caption": "Herbstferien: Wochen 8–9",
+                                "columns": [
+                                    "Dauer in Wochen",
+                                    "1",
+                                    "2",
+                                    "3",
+                                    "4",
+                                    "5",
+                                    "6",
+                                    "7",
+                                    "8",
+                                    "9",
+                                    "10",
+                                    "11",
+                                    "12",
+                                    "13"
+                                ],
+                                "rows": [
+                                    [
+                                        "Themenfindung / Konzeptvereinbarung",
+                                        "×",
+                                        "×",
+                                        "×",
+                                        "",
+                                        "",
+                                        "",
+                                        "",
+                                        "",
+                                        "",
+                                        "",
+                                        "",
+                                        "",
+                                        ""
+                                    ],
+                                    [
+                                        "Überprüfung der Konzeptvereinbarungen durch PEX",
+                                        "",
+                                        "",
+                                        "×",
+                                        "",
+                                        "",
+                                        "",
+                                        "",
+                                        "",
+                                        "",
+                                        "",
+                                        "",
+                                        "",
+                                        ""
+                                    ],
+                                    [
+                                        "Erstellungsphase",
+                                        "",
+                                        "",
+                                        "",
+                                        "×",
+                                        "×",
+                                        "×",
+                                        "×",
+                                        "",
+                                        "",
+                                        "×",
+                                        "×",
+                                        "×",
+                                        ""
+                                    ],
+                                    [
+                                        "Abgabe zu Unterrichtsbeginn",
+                                        "",
+                                        "",
+                                        "",
+                                        "",
+                                        "",
+                                        "",
+                                        "",
+                                        "",
+                                        "",
+                                        "",
+                                        "",
+                                        "",
+                                        "×"
+                                    ]
+                                ]
+                            }
+                        }
+                    ]
+                },
+                {
+                    "number": "5",
+                    "title": "Sozialform und Zusammenarbeit",
+                    "body": "Die Schlussarbeit kann als Einzel-, Partner- oder Gruppenarbeit geschrieben werden. Bei Gruppenarbeiten erfolgt die Gruppenzusammensetzung in Absprache mit der ABU-Lehrperson. Es besteht grundsätzlich kein Anspruch auf eine/n Wunschpartner/-in."
+                },
+                {
+                    "number": "6",
+                    "title": "Bewertung von Prozess, Produkt und Präsentation",
+                    "body": "Die Gewichtung von Prozess, Produkt und Präsentation ist kantonal verbindlich: Prozess ⅓, Präsentation ⅓, Produkt ⅓. Die Bereiche Prozess, Produkt und Präsentation werden anhand von Punkten bewertet. Die Summe dieser Punkte bildet die Grundlage für die Notenbildung. Die Note für die Schlussarbeit wird auf ganze oder halbe Noten gerundet.",
+                    "subsections": [
+                        {
+                            "number": "1",
+                            "title": "Prozessbewertung",
+                            "body": "Der Prozess wird durch die ABU-Lehrperson bewertet. Sie beobachtet und dokumentiert den Prozess fortlaufend. Der Prozess benötigt eine Dokumentation. Diese muss mindestens folgende Teile beinhalten:",
+                            "table": {
+                                "column_label": "Teil",
+                                "column_description": "Inhalt / Beschreibung",
+                                "rows": [
+                                    {
+                                        "label": "Konzeptvereinbarung",
+                                        "description": "Inhalt siehe Kapitel 2.4.1 (wird nicht bewertet)"
+                                    },
+                                    {
+                                        "label": "Zeitplanung",
+                                        "description": "Grober Zeitplan mit Phasen (Recherche, Durchführung, Auswertung etc.)"
+                                    },
+                                    {
+                                        "label": "Arbeitsjournal",
+                                        "description": "Chronologische Einträge über Arbeitszeiten, Tätigkeiten, Reflexionen inkl. kritischer Selbstreflexion"
+                                    },
+                                    {
+                                        "label": "Datenbeschaffung und -verwendung, Quellen",
+                                        "description": "Datenerhebung, Datennutzung, Beurteilung der Aussagekraft, Quellenangabe"
+                                    },
+                                    {
+                                        "label": "Reflexion des Prozesses",
+                                        "description": "Persönliche Einschätzung: Was gelang gut? Wo lagen Schwierigkeiten? Was wurde gelernt?"
+                                    },
+                                    {
+                                        "label": "Zwischengespräche",
+                                        "description": "Kurzprotokolle oder Notizen zu Feedback und Absprachen mit der Lehrperson"
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "number": "2",
+                            "title": "Produktbewertung",
+                            "body": "Das Produkt wird von der ABU-Lehrperson bewertet.\n\nDer Eigenanteil bezeichnet jenen Teil der Schlussarbeit, der von der/dem Lernenden selbstständig, eigenverantwortlich und ohne unzulässige Unterstützung erbracht wurde. Zum Eigenanteil gehören insbesondere:\n\n- eigene Ideen, Überlegungen und konzeptionelle Entscheidungen,\n- selbstständig verfasste Texte, Formulierungen und Analysen,\n- selbst erstellte oder produzierte Inhalte wie multimediale Produkte (z. B. Videos, Audioaufnahmen, Animationen, Visualisierungen, Websites, Anwendungen, Gestaltungen oder Prototypen),\n- eigene praktische Arbeiten, Werke, Experimente, Tests oder Erfahrungsprozesse,\n- eigenständig erhobene oder verarbeitete Daten, Recherchen und Auswertungen,\n- die Strukturierung, Gliederung und Begründung des Vorgehens,\n- die Reflexion der eigenen Arbeit und Ergebnisse.\n\nNicht zum Eigenanteil zählen z.B.:\n\n- deklarierte fremde oder automatisiert erzeugte Inhalte,\n- deklarierte inhaltliche oder gestalterische Beiträge Dritter.",
+                            "table": {
+                                "caption": "Unabhängig von der Produktform besteht die Dokumentation zum Produkt aus den folgenden Teilen:",
+                                "column_label": "Teil",
+                                "column_description": "Inhalt / Beschreibung",
+                                "rows": [
+                                    {
+                                        "label": "Deckblatt",
+                                        "description": "Titel, Name(n), Klasse, Schule, Abgabedatum"
+                                    },
+                                    {
+                                        "label": "Inhaltsverzeichnis",
+                                        "description": "Übersicht über die Gliederung der Arbeit mit Seitenzahlen"
+                                    },
+                                    {
+                                        "label": "Einleitung",
+                                        "description": "Persönlicher Bezug, Motivation, Fragestellung und Zielsetzung(en), Produktform"
+                                    },
+                                    {
+                                        "label": "Hauptteil",
+                                        "description": "Theoretische Grundlagen, Analyse, Ergebnisse. Der Umfang ist abhängig von der Produktform und den Vorgaben der Lehrperson."
+                                    },
+                                    {
+                                        "label": "Schluss",
+                                        "description": "Fazit mit Zusammenfassung der Ergebnisse"
+                                    },
+                                    {
+                                        "label": "Quellenverzeichnis",
+                                        "description": "Alle verwendeten Quellen nach den geltenden Zitierregeln"
+                                    },
+                                    {
+                                        "label": "Anhang",
+                                        "description": "Fragebögen, Interview-Transkripte, Bilder, Eigenständigkeitserklärung, Korrespondenz etc."
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "number": "3",
+                            "title": "Bewertung Präsentation mit vertiefendem Gespräch",
+                            "body": "Die Präsentation wird von der/dem zweiten PEX und der ABU-Lehrperson gemeinsam beurteilt. Das vertiefende Gespräch wird von der/dem zweiten PEX beurteilt.\n\nDie Präsentation umfasst ausgewählte Inhalte und den Erarbeitungsprozess des Produkts. Sie dauert bei Einzelpräsentationen 10 Minuten. Für jede zusätzliche präsentierende Person kommen 5 Minuten Präsentationszeit hinzu. Bei mehreren Präsentierenden müssen die Präsentationszeiten gleichmässig aufgeteilt werden.\n\nIm Anschluss an die Präsentation erfolgt ein vertiefendes Gespräch. Es dauert mindestens 5 Minuten pro Lernende/-n. Die/der zweite PEX führt und bewertet das vertiefende Gespräch. Die ABU-Lehrperson dokumentiert den Ablauf sowie die wesentlichen Inhalte des vertiefenden Gesprächs.\n\nJede/r Lernende wird bei der Präsentation und dem vertiefenden Gespräch einzeln bewertet."
+                        }
+                    ]
+                },
+                {
+                    "number": "7",
+                    "title": "Abgabe",
+                    "body": "Das Produkt ist fristgerecht abzugeben. Zur digitalen Archivierung und Plagiatskontrolle ist zeitgleich zusätzlich eine digitale Version des Produkts bzw. der Dokumentation des Produkts ohne persönliche Angaben und Bilder erforderlich.\n\nProdukte, die nicht fristgerecht eingereicht werden, unterliegen einem Notenabzug von einem ganzen Notenpunkt. Die betroffenen Lernenden werden unverzüglich über die Konsequenzen der verspäteten Abgabe informiert, und es wird ein neuer Abgabetermin schriftlich festgelegt. Dieser verschiebt sich in der Regel um sieben Kalendertage. Abweichende Regelungen bedürfen der ausdrücklichen Zustimmung der Prüfungsleitung.\n\nDie Prüfungsleitung wird grundsätzlich über jede Fristüberschreitung informiert. Ebenso wird die Lehrfirma über die Verspätung in Kenntnis gesetzt.\n\nWird die schriftliche Arbeit auch zum neuen Abgabetermin unentschuldigt nicht eingereicht, werden für die gesamte Schlussarbeit 0 Punkte vergeben (entspricht Note 1)."
+                },
+                {
+                    "number": "8",
+                    "title": "Krankheitsbedingte Abwesenheiten",
+                    "subsections": [
+                        {
+                            "number": "1",
+                            "title": "Abwesenheit während der Erarbeitungszeit",
+                            "body": "Eine krankheitsbedingte Abwesenheit während der Erarbeitungszeit der Schlussarbeit führt zu einer möglichen Fristverlängerung. Die Prüfungsleitung legt in diesem Fall ein neues verbindliches Abgabedatum fest. Ein entsprechendes ärztliches Zeugnis ist vorzulegen."
+                        },
+                        {
+                            "number": "2",
+                            "title": "Abwesenheit an Zwischengesprächen",
+                            "body": "Bei krankheitsbedingter Abwesenheit an einem verbindlich angesetzten Zwischengesprächstermin ist ein ärztliches Zeugnis einzureichen. Erfolgt dies nicht, gilt der Termin als nicht wahrgenommen und kann entsprechend beurteilt werden."
+                        },
+                        {
+                            "number": "3",
+                            "title": "Abwesenheit rund um den Abgabetermin",
+                            "body": "Fehlt eine/ein Lernende/r krankheitsbedingt in der Woche vor dem Abgabetermin oder am Abgabetag, wird die Abgabefrist um die Anzahl der durch ein Arztzeugnis bestätigten Krankheitstage plus einen zusätzlichen Tag verlängert. In diesem Fall ist die Arbeit fristgerecht in digitaler Form einzureichen. Die physische Arbeit oder ergänzende Unterlagen können bei der nächsten Anwesenheit in der Schule nachgereicht werden, ohne Notenabzug. Das Arztzeugnis ist einzureichen."
+                        }
+                    ]
+                },
+                {
+                    "number": "9",
+                    "title": "Notenbekanntgabe",
+                    "body": "Nach Abschluss der Präsentationen mit vertiefendem Gespräch wird die Note der Schlussarbeit grundsätzlich am nächsten ABU-Unterrichtstag bekannt gegeben."
+                },
+                {
+                    "number": "10",
+                    "title": "Plagiate und Quellenangaben",
+                    "body": "Als Plagiat gilt insbesondere:\n\n- die Übernahme von Texten, Bildern, Grafiken, Tabellen oder Daten aus fremden Quellen ohne korrekte Quellenangabe,\n- die sinngemässe Wiedergabe fremder Gedanken, Argumentationen oder Forschungsergebnisse ohne Verweis auf die Originalquelle,\n- die Nutzung von KI-generierten Inhalten oder Übersetzungen, wenn diese nicht als solche deklariert werden,\n- die Übernahme oder Nachahmung fremder Gestaltung, Struktur oder Aufbauprinzipien ohne Kennzeichnung,\n- die Einreichung einer Arbeit, die ganz oder teilweise von Dritten erstellt wurde (z. B. durch Mitlernende, Eltern, Coaches, KI-Systeme oder externe Dienstleister).\n\nEin Plagiat gilt als vorsätzliche Täuschung und führt zum anteilsmässigen Notenabzug. Liegt der nachgewiesene Plagiatsanteil über 50%, werden für die gesamte Schlussarbeit 0 Punkte vergeben (entspricht Note 1).\n\nDie ABU-Lehrperson ist verpflichtet, bei einem begründeten Verdacht auf ein Plagiat oder auf einen ungenügenden Eigenanteil die Prüfungsleitung unverzüglich zu informieren. Die Entscheidung über das weitere Vorgehen sowie die formale Beurteilung liegt bei der Prüfungsleitung, die auch sicherstellt, dass der lernenden Person rechtliches Gehör gewährt wird.\n\nIn der Reflexion ist offenzulegen, wie und wozu KI-gestützte Werkzeuge verwendet wurden. Dabei sollen auch die erkannten Grenzen des Einsatzes benannt und der eigene Umgang damit kritisch reflektiert werden. Die Mithilfe Dritter ist in der Arbeit zu vermerken."
+                },
+                {
+                    "number": "11",
+                    "title": "Aufbewahrungspflicht",
+                    "body": "Prüfungen und Akten, die im Zusammenhang mit dem QV stehen, müssen an den Schulen ein Jahr lang aufbewahrt werden."
+                },
+                {
+                    "number": "12",
+                    "title": "Wiederholung des QV",
+                    "body": "Wird der ABU während zwei Semestern wiederholt, müssen EFZ-Lernende eine neue Schlussarbeit erarbeiten.\n\nBei Wiederholung ohne erneuten Besuch des ABU-Unterrichts während mindestens zwei Semestern müssen auch EBA-Lernende eine Schlussarbeit erstellen und EFZ-Lernende zwingend eine neue Schlussarbeit erarbeiten (vgl. Art. 13 der Verordnung des SBFI über «Mindestvorschriften für die Allgemeinbildung in der beruflichen Grundbildung»)."
+                },
+                {
+                    "number": "13",
+                    "title": "Wechsel aus der BMS",
+                    "body": "Lernende, die vor dem letzten Schuljahr oder im vorletzten Semester aus der Berufsmaturität in den EFZ-Bildungsgang wechseln, müssen eine Schlussarbeit erstellen."
+                }
+            ]
+        },
+        {
+            "number": 3,
+            "title": "Schlussprüfung",
+            "intro": "Die Schlussprüfung ist der dritte Bestandteil des QV und wird kantonal organisiert und ausgewertet. In einer standardisierten, schriftlichen Prüfung wird überprüft, inwieweit Lernende Wissen und Verständnis über die im ABU behandelten Lehrinhalte erworben haben. Die Prüfung findet unter kantonal einheitlichen Bedingungen statt.",
+            "sections": [
+                {
+                    "number": "1",
+                    "title": "Zweck",
+                    "body": "Die Schlussprüfung (SP) stellt fest, ob die Kompetenzen des Zürcher Schullehrplans Allgemeinbildung erreicht wurden."
+                },
+                {
+                    "number": "2",
+                    "title": "Zeitpunkt",
+                    "body": "Die SP (inkl. Nachprüfung) wird zentral für alle Berufsfachschulen im Kanton Zürich erstellt und im letzten Schulsemester der beruflichen Grundbildung dezentral und zu den gleichen Zeitpunkten an den Berufsfachschulen durchgeführt."
+                },
+                {
+                    "number": "3",
+                    "title": "Zuständigkeiten",
+                    "body": "Die Prüfungskommission 99 Allgemeinbildung (PK 99) legt den Zeitpunkt der SP fest und koordiniert die Erstellung sowie Distribution der SP. Die Erstellung erfolgt durch ABU-Lehrpersonen verschiedener Schulen. Die PK 99 ist für die Qualitätssicherung der Schlussprüfung zuständig."
+                },
+                {
+                    "number": "4",
+                    "title": "Prüfungsform",
+                    "body": "Die schriftliche SP ist eine Einzelarbeit. Die Prüfungszeit umfasst 150 Minuten und ist unterbrochen durch eine Pause von mindestens 30 Minuten. Die Prüfung besteht aus mindestens zwei Teilen.\n\nMindestens ein Teil findet im Open-Book-Format statt."
+                },
+                {
+                    "number": "5",
+                    "title": "Inhalt",
+                    "body": "Die Schlussprüfung besteht aus lernbereichsübergreifenden, handlungskompetenzorientierten Aufgaben unterschiedlicher Taxonomiestufen. Sie überprüft die Fähigkeit, Zusammenhänge zu erkennen und komplexe, private, gesellschaftliche oder berufliche Herausforderungen zu analysieren und zu beurteilen."
+                },
+                {
+                    "number": "6",
+                    "title": "Prüfungsstandards",
+                    "body": "Für die 3-jährigen und die 4-jährigen beruflichen Grundbildungen werden zwei unterschiedliche Schlussprüfungen erstellt.\n\nBei den **3-jährigen** beruflichen Grundbildungen ist von den Lernenden Folgendes nachzuweisen:\n\n- Lerninhalte aus mindestens 3 Themen des Schullehrplans (SLP)\n- mindestens 2 Schlüsselkompetenzen\n- Kompetenzen aus mindestens 2 Aspekten des Lernbereichs Gesellschaft\n- Kompetenzen aus mindestens 2 Sprachmodi\n\nBei den **4-jährigen** beruflichen Grundbildungen ist von den Lernenden Folgendes nachzuweisen:\n\n- Lerninhalte aus mindestens 4 Themen des Schullehrplans\n- mindestens 2 Schlüsselkompetenzen\n- Kompetenzen aus mindestens 3 Aspekten des Lernbereichs Gesellschaft\n- Kompetenzen aus mindestens 2 Sprachmodi\n\nDie Themen des Schullehrplans, die geprüft werden, sind aus Gründen der Transparenz den Lernenden bis Ende Januar des letzten Schuljahrs bekanntzugeben."
+                },
+                {
+                    "number": "7",
+                    "title": "Bewertung",
+                    "body": "Die Schlussprüfung ist von mindestens zwei PEX zu beurteilen, die jeweils mindestens einen Prüfungsteil korrigieren. Als PEX können ABU-Lehrkräfte gemäss Art. 46 BBV eingesetzt werden.\n\nErreicht ein/e Lernende/r in der Erstbeurteilung die Note 4 nicht, ist eine Zweitkorrektur erforderlich.\n\nDie Note der Schlussprüfung ist auf eine ganze oder halbe Note zu runden."
+                },
+                {
+                    "number": "8",
+                    "title": "Rolle der ABU-Lehrpersonen",
+                    "body": "Die beaufsichtigende Person darf allein keine eigenen Lernenden beaufsichtigen und darf während der Schlussprüfung keine Hilfeleistungen anbieten. Es gilt, dass Lernende der eigenen Klassen nicht korrigiert werden dürfen."
+                },
+                {
+                    "number": "9",
+                    "title": "Rolle der Prüfungsleitung",
+                    "body": "Die von der Berufsfachschule festgelegte Prüfungsleitung ist für die Durchführung und Organisation der Korrektur der Schlussprüfung verantwortlich. Die Prüfungsleitung organisiert den Prüfungsablauf und sorgt für die Aufbewahrung der Prüfungen für mindestens ein Jahr."
+                },
+                {
+                    "number": "10",
+                    "title": "Übergangsbestimmung",
+                    "body": "Anfangs Februar 2027 und 2028 werden den Schulen Nullserien zur Verfügung gestellt. Die Definition zum Open-Book-Format gemäss Kapitel 3.4 für die erste Schlussprüfung wird mit der ersten Nullserie im Februar 2027 kommuniziert."
+                },
+                {
+                    "number": "11",
+                    "title": "Chancengerechtigkeit und Barrierefreiheit",
+                    "body": "Nachteilsausgleichsmassnahmen werden von der entsprechenden kantonalen Behörde gewährt. Die technische und organisatorische Durchführung sowie der Support müssen vor Prüfungsbeginn gesichert sein."
+                }
+            ]
+        },
+        {
+            "number": 4,
+            "title": "Exkurs: Umgang mit digitalen Hilfsmitteln",
+            "intro": "Die zunehmende Verfügbarkeit von Künstlicher Intelligenz und anderen digitalen Werkzeugen stellt Lehrpersonen und Lernende vor neue Fragen rund um Selbstständigkeit, Transparenz und Integrität. Dieser Exkurs legt verbindliche Grundsätze für den Einsatz digitaler Hilfsmittel im Rahmen des ABU-QV fest — von allgemeinen Prinzipien über Deklarationspflichten bis hin zu ethischen Überlegungen.",
+            "sections": [
+                {
+                    "number": "1",
+                    "title": "Grundsätze",
+                    "body": "Digitale Werkzeuge – einschliesslich KI-basierter Anwendungen – sind fester Bestandteil des modernen Lern- und Arbeitsalltags. Lernende wenden verantwortungsvoll und kompetent digitale Hilfsmittel an, dokumentieren deren Einsatz und reflektieren ihn kritisch.\n\nDer Einsatz digitaler Hilfsmittel soll dem Ziel des kompetenzorientierten, handlungsnahen Lernens dienen und nicht die Eigenleistung ersetzen, sondern diese unterstützen."
+                },
+                {
+                    "number": "2",
+                    "title": "Geltungsbereich",
+                    "body": "Diese Regelungen gelten für alle Formen von Leistungsnachweisen und im QV, namentlich:\n\n- Kompetenznachweise zur Erzielung der Erfahrungsnote\n- Schlussarbeit (inkl. Prozess, Produkt, Präsentation mit vertiefendem Gespräch)\n- schriftliche Schlussprüfung"
+                },
+                {
+                    "number": "3",
+                    "title": "Zulässiger und unzulässiger Einsatz von KI",
+                    "body": "Zulässig ist der Einsatz von KI-basierten Werkzeugen, wenn sie zur Unterstützung dienen. Beispiele:\n\n- Ideenfindung, Strukturierung oder Planung einer Arbeit\n- Auffinden von Quellen\n- Erstellen von Visualisierungen\n- grafische Aufbereitung von Daten\n- Gestaltung bzw. Layout\n- formale Korrektur von Sprache (Rechtschreibung, Grammatik und Zeichensetzung)\n\nUnzulässig ist der Einsatz von KI, wenn er die Eigenleistung ersetzt, z. B. durch:\n\n- vollständige oder teilweise Erstellung von Texten\n- Zusammenfassungen ohne Quellenangabe\n- Übersetzungen ohne transparente Offenlegung\n- Erstellung von Inhalten, Daten oder Analysen ohne Nachvollziehbarkeit\n\nWird eine unzulässige Nutzung festgestellt, gilt dies als Täuschungsversuch und führt zu Notenabzug."
+                },
+                {
+                    "number": "4",
+                    "title": "Deklaration",
+                    "body": "Der Einsatz digitaler und KI-basierter Hilfsmittel ist transparent anzugeben. Für alle Formen gilt:\n\n- Lehrpersonen legen den zulässigen Einsatz digitaler Hilfsmittel vorab fest und machen diese Vorgaben transparent.\n- Lernende sind verpflichtet, ihren Einsatz digitaler oder KI-basierter Tools offenzulegen und zu begründen."
+                },
+                {
+                    "number": "5",
+                    "title": "Datenschutz und Urheberrecht",
+                    "body": "Die Lernenden sind verantwortlich für das Einhalten von Datenschutz und Urheberrecht. Es dürfen keine personenbezogenen und/oder sensiblen Daten in KI-Systeme eingegeben werden."
+                },
+                {
+                    "number": "6",
+                    "title": "Ethik",
+                    "body": "Der Umgang mit digitalen Hilfsmitteln und KI ist nicht primär eine technische, sondern auch eine ethische Thematik.\n\nZiel ist, dass Lernende…\n\n- KI und digitale Werkzeuge verstehen, bewerten und gezielt einsetzen können;\n- eigene Urteile bilden und Verantwortung für ihr Handeln übernehmen;\n- zwischen Unterstützung und Täuschung unterscheiden und die Grenze respektieren."
+                }
+            ]
+        },
+        {
+            "number": 5,
+            "title": "Anhang",
+            "intro": "Die folgende Matrix gibt einen vergleichenden Überblick über die drei Bestandteile des QV im allgemeinbildenden Unterricht – Semesternoten, Schlussarbeit und schriftliche Schlussprüfung – anhand zentraler Aspekte.",
+            "tables": [
+                {
+                    "caption": "Matrix QV",
+                    "columns": [
+                        "Aspekt",
+                        "Semesternoten",
+                        "Schlussarbeit",
+                        "Schriftliche Schlussprüfung"
+                    ],
+                    "rows": [
+                        [
+                            "Charakter",
+                            "Abbild kontinuierlicher Lernleistung",
+                            "prozessorientiert, begleitet",
+                            "standardisiert, zeigt eine momentane Einzelleistung unter kantonal gleichen Bedingungen"
+                        ],
+                        [
+                            "Zielsetzung",
+                            "Abbild und Rückmeldung zu kontinuierlicher Lernleistung der Lernenden",
+                            "Förderung der Selbstorganisation, Problemlösungsfähigkeit, Reflexion, Kommunikation",
+                            "Überprüfung des Wissens und Verständnisses über den Lehrstoff"
+                        ],
+                        [
+                            "Kompetenz-Fokus",
+                            "fachliche und überfachliche Kompetenzen gemäss dem SLP-Thema",
+                            "Selbstorganisation, Problemlösung, Reflexion, kritisches Denken, Kommunikation",
+                            "Sprachverständnis, Analyse und Urteilsbildung"
+                        ],
+                        [
+                            "Formate",
+                            "multimediale Produkte, praktische Umsetzungen mit Dokumentation, schriftlich und mündlich",
+                            "multimediale Produkte, praktische Umsetzungen mit Dokumentation",
+                            "schriftlich, teils Open Book"
+                        ],
+                        [
+                            "Aspekte",
+                            "fokussiert auf Aspekte des behandelten SLP-Themas",
+                            "geht vertieft auf wenige Aspekte ein",
+                            "geht auf viele unterschiedliche Aspekte ein"
+                        ],
+                        [
+                            "Zuständigkeiten",
+                            "Lehrperson und Fachschaft Allgemeinbildung (Semestertests)",
+                            "ABU-Lehrperson und PEX",
+                            "Kanton"
+                        ]
+                    ]
+                }
+            ],
+            "sections": []
         }
-      ]
-    },
-    {
-      "number": 3,
-      "title": "Schlussprüfung",
-      "intro": "Die Schlussprüfung ist eine mündliche Prüfung, die am Ende der Ausbildung stattfindet und die im ABU erworbenen Kompetenzen abfragt.",
-      "sections": []
-    },
-    {
-      "number": 4,
-      "title": "Exkurs: Umgang mit digitalen Hilfsmitteln",
-      "intro": "Dieser Exkurs regelt den verantwortungsvollen Umgang mit digitalen Hilfsmitteln im Qualifikationsverfahren.",
-      "sections": []
-    },
-    {
-      "number": 5,
-      "title": "Anhang",
-      "intro": "Ergänzende Materialien und Formulare zum Qualifikationsverfahren.",
-      "sections": []
-    }
-  ]
+    ]
 }

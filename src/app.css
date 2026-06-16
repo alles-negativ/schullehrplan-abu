@@ -31,7 +31,7 @@
 
     --h5-size: 18px;
     --h5-line-height: 24px;
-    --h5-weight: 400;
+    --h5-weight: 500;
     --h5-letter-spacing: 0.01em;
 
     --h6-size: 18px;
@@ -152,8 +152,35 @@ strong {
     width: fit-content;
     max-width: 100%;
     cursor: pointer;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .tag:hover {
     filter: brightness(1.1);
+}
+
+@keyframes global-shake {
+    0%,
+    18%,
+    100% {
+        transform: rotate(0deg) translateX(0);
+    }
+    3% {
+        transform: rotate(-1deg) translateX(-5px);
+    }
+    6% {
+        transform: rotate(1deg) translateX(5px);
+    }
+    9% {
+        transform: rotate(-0.75deg) translateX(-5px);
+    }
+    12% {
+        transform: rotate(0.75deg) translateX(5px);
+    }
+    15% {
+        transform: rotate(0deg) translateX(0);
+    }
 }

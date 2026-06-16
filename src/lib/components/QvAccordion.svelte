@@ -6,9 +6,25 @@
 
     let {
         sections,
+        chapterNumber,
     }: {
         sections: QvSection[];
+        chapterNumber?: number;
     } = $props();
+
+    const sectionLabel = (section: QvSection) =>
+        section.number == null
+            ? undefined
+            : chapterNumber != null
+              ? `${chapterNumber}.${section.number}`
+              : section.number;
+
+    const subsectionLabel = (section: QvSection, sub: { number?: string }) =>
+        sub.number == null
+            ? undefined
+            : chapterNumber != null && section.number != null
+              ? `${chapterNumber}.${section.number}.${sub.number}`
+              : sub.number;
 
     let collapsedByIndex = $state<Record<number, boolean>>({});
 
@@ -33,34 +49,34 @@
     <section class="qv-sections">
         {#each sections as section, index}
             <article class="section-item" class:is-expanded={isExpanded(index)}>
-                <div class="section-header">
+                <button
+                    type="button"
+                    class="section-header"
+                    class:is-expanded={isExpanded(index)}
+                    aria-expanded={isExpanded(index)}
+                    onclick={() => toggleSection(index)}
+                >
                     <div class="section-meta">
                         <div class="section-title">
-                            {#if section.number}
+                            {#if sectionLabel(section)}
                                 <span class="section-heading"
-                                    >{section.number}</span
+                                    >{sectionLabel(section)}</span
                                 >
                             {/if}
                             <span class="section-summary">{section.title}</span>
                         </div>
                     </div>
-                    <button
-                        type="button"
-                        class="section-toggle"
+                    <span
+                        class="section-toggle-icon-wrap"
                         class:is-expanded={isExpanded(index)}
-                        aria-expanded={isExpanded(index)}
-                        aria-label={isExpanded(index)
-                            ? "Abschnitt ausblenden"
-                            : "Abschnitt anzeigen"}
-                        onclick={() => toggleSection(index)}
                     >
                         <img
                             src={arrowIcon}
                             alt=""
                             class="section-toggle-icon"
                         />
-                    </button>
-                </div>
+                    </span>
+                </button>
 
                 {#if isExpanded(index)}
                     <div
@@ -76,20 +92,8 @@
                             </div>
                         {/if}
 
-                        {#each section.lists ?? [] as list}
-                            <div class="section-list-block">
-                                {#if list.title}
-                                    <h4 class="list-label">{list.title}</h4>
-                                {/if}
-                                <ul class="section-list">
-                                    {#each list.items as item}
-                                        <li>{item}</li>
-                                    {/each}
-                                </ul>
-                            </div>
-                        {/each}
-
-                        {#each section.tables ?? [] as table}
+                        {#if section.table}
+                            {@const table = section.table}
                             <div class="section-table-block">
                                 {#if table.caption}
                                     <p class="table-caption">{table.caption}</p>
@@ -97,13 +101,8 @@
                                 <table class="section-table">
                                     <thead>
                                         <tr>
-                                            <th scope="col">
-                                                {table.column_label ?? "Teil"}
-                                            </th>
-                                            <th scope="col">
-                                                {table.column_description ??
-                                                    "Inhalt / Beschreibung"}
-                                            </th>
+                                            <th scope="col">{table.column_label ?? "Teil"}</th>
+                                            <th scope="col">{table.column_description ?? "Inhalt / Beschreibung"}</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -116,25 +115,106 @@
                                     </tbody>
                                 </table>
                             </div>
-                        {/each}
+                        {/if}
+
+                        {#if section.flex_table}
+                            {@const ft = section.flex_table}
+                            <div class="section-table-block">
+                                {#if ft.caption}
+                                    <p class="table-caption">{ft.caption}</p>
+                                {/if}
+                                <table class="section-table flex-table">
+                                    <thead>
+                                        <tr>
+                                            {#each ft.columns as col}
+                                                <th scope="col">{col}</th>
+                                            {/each}
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {#each ft.rows as row}
+                                            <tr>
+                                                {#each row as cell, i}
+                                                    {#if i === 0}
+                                                        <th scope="row">{cell}</th>
+                                                    {:else}
+                                                        <td>{cell}</td>
+                                                    {/if}
+                                                {/each}
+                                            </tr>
+                                        {/each}
+                                    </tbody>
+                                </table>
+                            </div>
+                        {/if}
 
                         {#each section.subsections ?? [] as subsection}
                             <div class="subsection">
                                 <h4 class="subsection-title">
-                                    {#if subsection.number}
+                                    {#if subsectionLabel(section, subsection)}
                                         <span class="subsection-heading"
-                                            >{subsection.number}</span
+                                            >{subsectionLabel(section, subsection)}</span
                                         >
                                     {/if}
-                                    <span class="subsection-summary"
-                                        >{subsection.title}</span
-                                    >
+                                    <span class="subsection-summary">{subsection.title}</span>
                                 </h4>
                                 {#if subsection.body}
                                     <div class="subsection-text">
-                                        {@html marked.parse(
-                                            subsection.body,
-                                        ) as string}
+                                        {@html marked.parse(subsection.body) as string}
+                                    </div>
+                                {/if}
+                                {#if subsection.table}
+                                    {@const table = subsection.table}
+                                    <div class="section-table-block">
+                                        {#if table.caption}
+                                            <p class="table-caption">{table.caption}</p>
+                                        {/if}
+                                        <table class="section-table">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col">{table.column_label ?? "Teil"}</th>
+                                                    <th scope="col">{table.column_description ?? "Inhalt / Beschreibung"}</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {#each table.rows as row}
+                                                    <tr>
+                                                        <th scope="row">{row.label}</th>
+                                                        <td>{row.description}</td>
+                                                    </tr>
+                                                {/each}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                {/if}
+                                {#if subsection.flex_table}
+                                    {@const ft = subsection.flex_table}
+                                    <div class="section-table-block">
+                                        {#if ft.caption}
+                                            <p class="table-caption">{ft.caption}</p>
+                                        {/if}
+                                        <table class="section-table flex-table">
+                                            <thead>
+                                                <tr>
+                                                    {#each ft.columns as col}
+                                                        <th scope="col">{col}</th>
+                                                    {/each}
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {#each ft.rows as row}
+                                                    <tr>
+                                                        {#each row as cell, i}
+                                                            {#if i === 0}
+                                                                <th scope="row">{cell}</th>
+                                                            {:else}
+                                                                <td>{cell}</td>
+                                                            {/if}
+                                                        {/each}
+                                                    </tr>
+                                                {/each}
+                                            </tbody>
+                                        </table>
                                     </div>
                                 {/if}
                             </div>
@@ -165,20 +245,29 @@
     }
 
     .section-header {
-        position: relative;
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 1rem;
+        width: 100%;
+        text-align: left;
+        background: none;
+        border: none;
+        padding: 0;
+        cursor: pointer;
     }
 
     .section-meta {
         min-width: 0;
-        padding-right: 3.1rem;
+        flex: 1 1 auto;
     }
 
     .section-heading {
         display: block;
-        font-size: var(--h5-size);
-        line-height: var(--h5-line-height);
-        font-weight: var(--h5-weight);
-        letter-spacing: var(--h5-letter-spacing);
+        font-size: var(--h4-size);
+        line-height: var(--h4-line-height);
+        font-weight: var(--h4-weight);
+        /* letter-spacing: var(--h4-letter-spacing); */
         color: var(--color-black);
     }
 
@@ -192,10 +281,8 @@
         color: var(--color-black);
     }
 
-    .section-toggle {
-        position: absolute;
-        top: -2px;
-        right: 0;
+    .section-toggle-icon-wrap {
+        flex-shrink: 0;
         border: 1.5px solid var(--color-black);
         border-radius: 9999px;
         width: 52px;
@@ -203,14 +290,12 @@
         display: inline-grid;
         place-items: center;
         background: var(--color-darkblue);
-        padding: 0;
-        cursor: pointer;
         transition:
             background-color 120ms ease,
             filter 60ms ease;
     }
 
-    .section-toggle:hover {
+    .section-header:hover .section-toggle-icon-wrap {
         filter: brightness(1.2);
     }
 
@@ -221,7 +306,7 @@
         transition: transform 120ms ease;
     }
 
-    .section-toggle.is-expanded .section-toggle-icon {
+    .section-toggle-icon-wrap.is-expanded .section-toggle-icon {
         transform: rotate(0deg);
     }
 
@@ -230,7 +315,11 @@
     }
 
     .section-text :global(p),
-    .subsection-text :global(p) {
+    .subsection-text :global(p),
+    .section-text :global(ul),
+    .subsection-text :global(ul),
+    .section-text :global(ol),
+    .subsection-text :global(ol) {
         margin: 0 0 1rem;
         font-size: var(--p-size);
         line-height: var(--p-line-height);
@@ -238,31 +327,19 @@
         letter-spacing: var(--p-letter-spacing);
     }
 
+    .section-text :global(ul),
+    .subsection-text :global(ul) {
+        /* margin: 0 0 1rem; */
+        padding-left: 25px;
+    }
+
     .section-text :global(p:last-child),
-    .subsection-text :global(p:last-child) {
+    .subsection-text :global(p:last-child),
+    .section-text :global(ul:last-child),
+    .subsection-text :global(ul:last-child),
+    .section-text :global(ol:last-child),
+    .subsection-text :global(ol:last-child) {
         margin-bottom: 0;
-    }
-
-    .section-list-block {
-        margin-top: 1.5rem;
-    }
-
-    .list-label {
-        margin: 0 0 0.35rem;
-        font-size: var(--h4-size);
-        line-height: var(--h4-line-height);
-        font-weight: var(--h4-weight);
-        letter-spacing: var(--h4-letter-spacing);
-        color: #2f2f33;
-    }
-
-    .section-list {
-        margin: 0;
-        padding-left: 1.5rem;
-    }
-
-    .section-list li + li {
-        margin-top: 0.35rem;
     }
 
     .section-table-block {
@@ -289,6 +366,13 @@
         vertical-align: top;
     }
 
+    .flex-table th:not([scope="row"]),
+    .flex-table td {
+        text-align: center;
+        white-space: nowrap;
+        padding: 0.6rem 0.5rem;
+    }
+
     .section-table thead th {
         background: var(--color-darkblue);
         color: var(--color-white);
@@ -301,9 +385,9 @@
     }
 
     .subsection {
-        margin-top: 2rem;
-        padding-top: 1.5rem;
-        border-top: 1.5px solid var(--color-black);
+        margin-top: 40px;
+        padding-top: 30px;
+        border-top: 8px solid var(--color-background);
     }
 
     .subsection-heading {
@@ -317,11 +401,11 @@
 
     .subsection-summary {
         display: block;
-        margin-top: 5px;
-        font-size: var(--h3-size);
-        line-height: var(--h3-line-height);
-        font-weight: var(--h3-weight);
-        letter-spacing: var(--h3-letter-spacing);
+        margin-top: 0px;
+        font-size: var(--h4-size);
+        line-height: var(--h4-line-height);
+        font-weight: var(--h4-weight);
+        letter-spacing: var(--h4 -letter-spacing);
         color: var(--color-black);
     }
 

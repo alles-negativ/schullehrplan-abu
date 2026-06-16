@@ -10,43 +10,12 @@ export type QvTable = {
 	rows: QvTableRow[];
 };
 
-export type QvList = {
-	title?: string;
-	items: string[];
-};
-
-const normalizeListItems = (items: unknown): string[] => {
-	if (!Array.isArray(items)) return [];
-
-	return items
-		.map((item) => {
-			if (typeof item === 'string') return item;
-			if (item && typeof item === 'object' && 'text' in item) {
-				return String((item as { text: unknown }).text ?? '');
-			}
-			return '';
-		})
-		.filter(Boolean);
-};
-
-const normalizeLists = (lists: unknown): QvList[] => {
-	if (!Array.isArray(lists)) return [];
-
-	return lists.map((list) => {
-		if (!list || typeof list !== 'object') return { items: [] };
-
-		const entry = list as { title?: string; items?: unknown };
-		return {
-			title: entry.title,
-			items: normalizeListItems(entry.items)
-		};
-	});
-};
-
 export type QvSubsection = {
 	number?: string;
 	title: string;
 	body?: string;
+	table?: QvTable;
+	flex_table?: QvChapterTable;
 };
 
 export type QvSection = {
@@ -54,14 +23,22 @@ export type QvSection = {
 	title: string;
 	body?: string;
 	subsections?: QvSubsection[];
-	tables?: QvTable[];
-	lists?: QvList[];
+	table?: QvTable;
+	flex_table?: QvChapterTable;
+};
+
+export type QvChapterTable = {
+	caption?: string;
+	columns: string[];
+	rows: string[][];
 };
 
 export type QvChapter = {
-	number: number;
+	number?: number;
 	title: string;
 	intro?: string;
+	tables?: QvChapterTable[];
+	additional_content?: string;
 	sections: QvSection[];
 };
 
@@ -77,19 +54,43 @@ const defaultContent: QvContent = {
 	chapters: []
 };
 
+const normalizeSubsection = (sub: Partial<QvSubsection>): QvSubsection => ({
+	number: sub.number,
+	title: sub.title ?? '',
+	body: sub.body,
+	table: sub.table,
+	flex_table: sub.flex_table ? (normalizeChapterTable(sub.flex_table) ?? undefined) : undefined
+});
+
 const normalizeSection = (section: Partial<QvSection>): QvSection => ({
 	number: section.number,
 	title: section.title ?? '',
 	body: section.body,
-	subsections: section.subsections,
-	tables: section.tables,
-	lists: normalizeLists(section.lists)
+	subsections: Array.isArray(section.subsections)
+		? section.subsections.map((s) => normalizeSubsection(s))
+		: undefined,
+	table: section.table,
+	flex_table: section.flex_table ? (normalizeChapterTable(section.flex_table) ?? undefined) : undefined
 });
 
+const normalizeChapterTable = (table: unknown): QvChapterTable | null => {
+	if (!table || typeof table !== 'object') return null;
+	const t = table as { caption?: string; columns?: unknown; rows?: unknown };
+	const columns = Array.isArray(t.columns) ? t.columns.map(String) : [];
+	const rows = Array.isArray(t.rows)
+		? t.rows.map((row) => (Array.isArray(row) ? row.map(String) : []))
+		: [];
+	return { caption: t.caption, columns, rows };
+};
+
 const normalizeChapter = (chapter: Partial<QvChapter>): QvChapter => ({
-	number: chapter.number ?? 0,
+	number: chapter.number,
 	title: chapter.title ?? '',
-	intro: chapter.intro,
+	intro: typeof chapter.intro === 'string' ? chapter.intro : undefined,
+	tables: Array.isArray(chapter.tables)
+		? chapter.tables.map(normalizeChapterTable).filter((t): t is QvChapterTable => t !== null)
+		: undefined,
+	additional_content: typeof chapter.additional_content === 'string' ? chapter.additional_content : undefined,
 	sections: (chapter.sections ?? []).map((section) => normalizeSection(section))
 });
 
@@ -108,7 +109,7 @@ const loadQvContent = (): QvContent => {
 export const getQvContent = (): QvContent => loadQvContent();
 
 export const getQvChapterLabel = (chapter: QvChapter): string =>
-	`${chapter.number}. ${chapter.title}`;
+	chapter.number != null ? `${chapter.number}. ${chapter.title}` : chapter.title;
 
 export const getQvSectionLabel = (section: QvSection): string =>
 	section.number ? `${section.number} ${section.title}` : section.title;

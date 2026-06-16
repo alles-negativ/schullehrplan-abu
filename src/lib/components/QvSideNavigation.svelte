@@ -27,7 +27,9 @@
                             : undefined}
                     >
                         <span class="topic-label">
-                            <span>{chapter.number}. </span>
+                            {#if chapter.number != null}
+                                <span>{chapter.number}. </span>
+                            {/if}
                             <span>{chapter.title}</span>
                         </span>
                     </a>

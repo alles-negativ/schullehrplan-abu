@@ -185,7 +185,17 @@
 
 <nav class="main-nav" aria-label="Ausbildungsmodi">
     <div class="nav-top">
-        <a class="mode-button nav-home" href="/">Schullehrplan ABU</a>
+        <a
+            class="mode-button nav-home"
+            href="/"
+            onclick={(e) => {
+                if (page.url.pathname === "/") {
+                    e.preventDefault();
+                    location.reload();
+                }
+            }}
+        >Schullehrplan ABU</a
+        >
         <div class="mode-list-wrap">
             <ul class="mode-list" bind:this={modeListElement}>
                 {#each educationModes as mode, index}

@@ -23,8 +23,8 @@
                     <p>
                         <strong>Kerngruppe:</strong>
                         Koller Markus, ABZ; Rusch Pascal, BBW; Walther Corinna, BFSU;
-                        Andeer Nadine, BFSW; Lindegger Fabian, GBW; Reith Patric, PLAU;
-                        Glaus Christof, DLH; Atzenweiler Andreas, LKB.
+                        Andeer Nadine, BFSW; Lindegger Fabian, GBW; Reith Patric,
+                        PLAU; Glaus Christof, DLH; Atzenweiler Andreas, LKB.
                     </p>
                     <p>
                         <strong>Teilprojektmitglieder:</strong>
@@ -41,8 +41,8 @@
                 <section class="impressum-section">
                     <h2 class="section-label">Projektausschuss</h2>
                     <p>
-                        Prof. Dr. Markus Zwyssig, MBA; John Coviello, PK ABU; Heinz
-                        Schlegel, KRB; Daniel Degen, PHZH
+                        Prof. Dr. Markus Zwyssig, MBA; John Coviello, PK ABU;
+                        Heinz Schlegel, KRB; Daniel Degen, PHZH
                     </p>
                 </section>
 
@@ -101,7 +101,6 @@
         line-height: var(--h4-line-height);
         font-weight: var(--h4-weight);
         letter-spacing: var(--h4-letter-spacing);
-        color: #2f2f33;
     }
 
     p + p {

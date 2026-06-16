@@ -101,8 +101,14 @@
                                 <table class="section-table">
                                     <thead>
                                         <tr>
-                                            <th scope="col">{table.column_label ?? "Teil"}</th>
-                                            <th scope="col">{table.column_description ?? "Inhalt / Beschreibung"}</th>
+                                            <th scope="col"
+                                                >{table.column_label ??
+                                                    "Teil"}</th
+                                            >
+                                            <th scope="col"
+                                                >{table.column_description ??
+                                                    "Inhalt / Beschreibung"}</th
+                                            >
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -136,7 +142,9 @@
                                             <tr>
                                                 {#each row as cell, i}
                                                     {#if i === 0}
-                                                        <th scope="row">{cell}</th>
+                                                        <th scope="row"
+                                                            >{cell}</th
+                                                        >
                                                     {:else}
                                                         <td>{cell}</td>
                                                     {/if}
@@ -153,34 +161,53 @@
                                 <h4 class="subsection-title">
                                     {#if subsectionLabel(section, subsection)}
                                         <span class="subsection-heading"
-                                            >{subsectionLabel(section, subsection)}</span
+                                            >{subsectionLabel(
+                                                section,
+                                                subsection,
+                                            )}</span
                                         >
                                     {/if}
-                                    <span class="subsection-summary">{subsection.title}</span>
+                                    <span class="subsection-summary"
+                                        >{subsection.title}</span
+                                    >
                                 </h4>
                                 {#if subsection.body}
                                     <div class="subsection-text">
-                                        {@html marked.parse(subsection.body) as string}
+                                        {@html marked.parse(
+                                            subsection.body,
+                                        ) as string}
                                     </div>
                                 {/if}
                                 {#if subsection.table}
                                     {@const table = subsection.table}
                                     <div class="section-table-block">
                                         {#if table.caption}
-                                            <p class="table-caption">{table.caption}</p>
+                                            <p class="table-caption">
+                                                {table.caption}
+                                            </p>
                                         {/if}
                                         <table class="section-table">
                                             <thead>
                                                 <tr>
-                                                    <th scope="col">{table.column_label ?? "Teil"}</th>
-                                                    <th scope="col">{table.column_description ?? "Inhalt / Beschreibung"}</th>
+                                                    <th scope="col"
+                                                        >{table.column_label ??
+                                                            "Teil"}</th
+                                                    >
+                                                    <th scope="col"
+                                                        >{table.column_description ??
+                                                            "Inhalt / Beschreibung"}</th
+                                                    >
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 {#each table.rows as row}
                                                     <tr>
-                                                        <th scope="row">{row.label}</th>
-                                                        <td>{row.description}</td>
+                                                        <th scope="row"
+                                                            >{row.label}</th
+                                                        >
+                                                        <td
+                                                            >{row.description}</td
+                                                        >
                                                     </tr>
                                                 {/each}
                                             </tbody>
@@ -191,13 +218,17 @@
                                     {@const ft = subsection.flex_table}
                                     <div class="section-table-block">
                                         {#if ft.caption}
-                                            <p class="table-caption">{ft.caption}</p>
+                                            <p class="table-caption">
+                                                {ft.caption}
+                                            </p>
                                         {/if}
                                         <table class="section-table flex-table">
                                             <thead>
                                                 <tr>
                                                     {#each ft.columns as col}
-                                                        <th scope="col">{col}</th>
+                                                        <th scope="col"
+                                                            >{col}</th
+                                                        >
                                                     {/each}
                                                 </tr>
                                             </thead>
@@ -206,7 +237,9 @@
                                                     <tr>
                                                         {#each row as cell, i}
                                                             {#if i === 0}
-                                                                <th scope="row">{cell}</th>
+                                                                <th scope="row"
+                                                                    >{cell}</th
+                                                                >
                                                             {:else}
                                                                 <td>{cell}</td>
                                                             {/if}
@@ -405,7 +438,7 @@
         font-size: var(--h4-size);
         line-height: var(--h4-line-height);
         font-weight: var(--h4-weight);
-        letter-spacing: var(--h4 -letter-spacing);
+        letter-spacing: var(--h4-letter-spacing);
         color: var(--color-black);
     }
 

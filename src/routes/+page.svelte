@@ -175,16 +175,36 @@
         width: 600px;
         height: 240px;
         white-space: pre-line;
-        animation: hero-shake 3s ease-in-out 0.5s;
+        animation: hero-shake-loop 1.2s 0.5s;
     }
 
     .hero-button:hover:not(:disabled) {
         filter: brightness(1.1);
-        animation: hero-shake 3s ease-in-out infinite;
+        animation: hero-shake-loop 1.2s 0s infinite;
     }
 
     .hero-button:active:not(:disabled) {
         animation: none;
+    }
+
+    @keyframes hero-shake-loop {
+        0%,
+        50%,
+        100% {
+            transform: rotate(0deg) translateX(0);
+        }
+        10% {
+            transform: rotate(-1deg) translateX(-10px);
+        }
+        20% {
+            transform: rotate(1deg) translateX(10px);
+        }
+        30% {
+            transform: rotate(-0.75deg) translateX(-10px);
+        }
+        40% {
+            transform: rotate(0.75deg) translateX(10px);
+        }
     }
 
     @keyframes hero-shake {

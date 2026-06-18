@@ -6,7 +6,7 @@
     import type { Competence } from "$lib/data/education-modes";
 
     const FADE_MS = 280;
-    const SHAKE_DELAY_MS = 300;
+    const SHAKE_DELAY_MS = 100;
 
     let {
         competence = $bindable<Competence | null>(null),
@@ -107,7 +107,7 @@
     }
 
     .modal-card.modal-enter-shake {
-        animation: modal-shake-hack 1.2s var(--modal-shake-delay) ease-in-out;
+        animation: modal-shake-hack 0.8s var(--modal-shake-delay) ease-in-out;
     }
 
     @keyframes modal-shake-hack {

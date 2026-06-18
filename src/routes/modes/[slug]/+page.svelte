@@ -148,6 +148,26 @@
         margin-bottom: 0;
     }
 
+    @media (max-width: 1100px) {
+        .mode-route.is-expanded {
+            grid-template-columns: minmax(0, 1fr);
+        }
+
+        .mode-route:not(.is-expanded) {
+            grid-template-columns: minmax(0, 1fr);
+            row-gap: 80px;
+            margin-top: 10px;
+        }
+
+        .mode-route > :global(.side-navigation.is-dropdown) {
+            grid-column: 1;
+        }
+
+        .topics-content {
+            grid-column: 1;
+        }
+    }
+
     @media (prefers-reduced-motion: reduce) {
         .mode-route {
             transition: none;

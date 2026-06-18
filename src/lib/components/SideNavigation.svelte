@@ -1,5 +1,9 @@
 <script lang="ts">
     import { browser } from "$app/environment";
+    import { afterNavigate } from "$app/navigation";
+    import { onMount, tick } from "svelte";
+    import { fade, slide } from "svelte/transition";
+    import arrowIcon from "$lib/assets/arrow.svg";
     import pdfIcon from "$lib/assets/pdf-icon.svg";
     import {
         getModeYears,
@@ -11,6 +15,9 @@
     } from "$lib/data/education-modes";
 
     const LESSONS_STORAGE_KEY = "abu-show-lessons";
+    const DROPDOWN_MEDIA = "(max-width: 1100px)";
+    const DROPDOWN_FADE_MS = 280;
+    const DROPDOWN_SLIDE_MS = 220;
 
     let {
         mode,
@@ -26,6 +33,16 @@
 
     let showLessons = $state(true);
     let lessonsReady = $state(false);
+    let isNarrowViewport = $state(
+        browser ? window.matchMedia(DROPDOWN_MEDIA).matches : false,
+    );
+    let dropdownOpen = $state(false);
+    let dropdownExpanded = $state(false);
+    let dropdownRootElement = $state<HTMLDivElement | null>(null);
+    let pendingTopicScroll = false;
+    let reducedMotion = $state(false);
+
+    const useDropdown = $derived(isNarrowViewport && !expanded);
 
     if (browser) {
         const stored = localStorage.getItem(LESSONS_STORAGE_KEY);
@@ -33,111 +50,262 @@
         lessonsReady = true;
     }
 
+    const openDropdown = () => {
+        dropdownOpen = true;
+        dropdownExpanded = true;
+    };
+
+    const closeDropdown = () => {
+        if (!dropdownOpen) return;
+        dropdownOpen = false;
+    };
+
+    const onPanelOutroEnd = () => {
+        dropdownExpanded = false;
+    };
+
+    const toggleDropdown = () => {
+        if (dropdownOpen) closeDropdown();
+        else openDropdown();
+    };
+
+    const scrollToPageTop = () => {
+        if (!browser) return;
+
+        const prefersReducedMotion = window.matchMedia(
+            "(prefers-reduced-motion: reduce)",
+        ).matches;
+        const behavior = prefersReducedMotion ? "auto" : "smooth";
+
+        window.scrollTo({ top: 0, left: 0, behavior });
+        document.documentElement.scrollTo({ top: 0, left: 0, behavior });
+        document.body.scrollTo?.({ top: 0, left: 0, behavior });
+    };
+
+    const onTopicNavigate = () => {
+        if (useDropdown) closeDropdown();
+        pendingTopicScroll = true;
+    };
+
+    afterNavigate(async () => {
+        if (!pendingTopicScroll) return;
+        pendingTopicScroll = false;
+        await tick();
+        scrollToPageTop();
+    });
+
     const toggleLessons = () => {
         showLessons = !showLessons;
         if (browser) {
             localStorage.setItem(LESSONS_STORAGE_KEY, String(showLessons));
         }
     };
+
+    onMount(() => {
+        const mq = window.matchMedia(DROPDOWN_MEDIA);
+        const motionQuery = window.matchMedia(
+            "(prefers-reduced-motion: reduce)",
+        );
+        reducedMotion = motionQuery.matches;
+
+        const syncViewport = () => {
+            isNarrowViewport = mq.matches;
+            if (mq.matches) dropdownOpen = false;
+        };
+
+        const onMotionChange = (event: MediaQueryListEvent) => {
+            reducedMotion = event.matches;
+        };
+
+        syncViewport();
+        mq.addEventListener("change", syncViewport);
+        motionQuery.addEventListener("change", onMotionChange);
+        return () => {
+            mq.removeEventListener("change", syncViewport);
+            motionQuery.removeEventListener("change", onMotionChange);
+        };
+    });
+
+    $effect(() => {
+        if (expanded) {
+            dropdownOpen = false;
+            dropdownExpanded = false;
+        }
+    });
+
+    $effect(() => {
+        if (!useDropdown) {
+            dropdownOpen = false;
+            dropdownExpanded = false;
+        }
+    });
+
+    $effect(() => {
+        if (!browser || !useDropdown || !dropdownOpen) return;
+
+        const onKeydown = (event: KeyboardEvent) => {
+            if (event.key === "Escape") closeDropdown();
+        };
+
+        const onPointerDown = (event: PointerEvent) => {
+            const target = event.target;
+            if (!(target instanceof Node)) return;
+            if (dropdownRootElement?.contains(target)) return;
+            closeDropdown();
+        };
+
+        document.addEventListener("keydown", onKeydown);
+        document.addEventListener("pointerdown", onPointerDown);
+        return () => {
+            document.removeEventListener("keydown", onKeydown);
+            document.removeEventListener("pointerdown", onPointerDown);
+        };
+    });
 </script>
 
-{#if lessonsReady}
-    <aside
-        class="side-navigation"
-        class:is-expanded={expanded}
-        class:show-lessons={showLessons}
-    >
-        <div class="lessons-toggle">
-            <span class="lessons-toggle-label">
-                <!-- {showLessons ? "Lektionen ausblenden" : "Lektionen einblenden"} -->
-                Lektionen einblenden
-            </span>
-            <button
-                type="button"
-                role="switch"
-                aria-checked={showLessons}
-                aria-label={showLessons
-                    ? "Lektionen ausblenden"
-                    : "Lektionen einblenden"}
-                class="toggle-switch"
-                class:is-on={showLessons}
-                onclick={toggleLessons}
-            >
-                <span class="toggle-thumb"></span>
-            </button>
-        </div>
+{#snippet navigationContent()}
+    <div class="lessons-toggle">
+        <span class="lessons-toggle-label">Lektionen einblenden</span>
+        <button
+            type="button"
+            role="switch"
+            aria-checked={showLessons}
+            aria-label={showLessons
+                ? "Lektionen ausblenden"
+                : "Lektionen einblenden"}
+            class="toggle-switch"
+            class:is-on={showLessons}
+            onclick={toggleLessons}
+        >
+            <span class="toggle-thumb"></span>
+        </button>
+    </div>
 
-        {#if getModeYears(mode).length === 0}
-            <p>Keine Lehrjahre definiert.</p>
-        {:else}
-            {#each getModeYears(mode) as year, yearIndex}
-                {@const yearLessons = getYearLessons(year)}
-                <section>
-                    <h5 class="year-title">
-                        <span>{getYearLabel(year)}. Lehrjahr</span>
-                        {#if yearLessons > 0}
-                            <span class="lesson-count">{yearLessons}</span>
-                        {/if}
-                    </h5>
-                    {#if (year.themenbereiche?.length ?? 0) === 0}
-                        <p>Keine Themenbereiche definiert.</p>
-                    {:else}
-                        <ul class="topic-list">
-                            {#each year.themenbereiche ?? [] as topic, topicIndex}
-                                {@const topicLessons = getTopicLessons(topic)}
-                                <li>
-                                    <a
-                                        class="topic-button"
-                                        class:is-active={selectedTopicKey ===
-                                            `${yearIndex}-${topicIndex}`}
-                                        href={getTopicHref(
-                                            yearIndex,
-                                            topicIndex,
-                                        )}
-                                        data-sveltekit-noscroll
-                                        aria-current={selectedTopicKey ===
-                                        `${yearIndex}-${topicIndex}`
-                                            ? "true"
-                                            : undefined}
-                                    >
-                                        <span class="topic-label">
-                                            {#if topic.number != null}
-                                                <span>{topic.number}. </span>
-                                            {/if}
-                                            <span>{getTopicTitle(topic)}</span>
-                                        </span>
-                                        {#if topicLessons > 0}
-                                            <span class="topic-lessons"
-                                                >{topicLessons}</span
-                                            >
-                                        {/if}
-                                    </a>
-                                </li>
-                            {/each}
-                            {#if year.additional_lessons != null}
-                                <li class="year-meta">
-                                    <span>Weitere Lektionen</span>
-                                    <span>{year.additional_lessons}</span>
-                                </li>
-                            {/if}
-                        </ul>
+    {#if getModeYears(mode).length === 0}
+        <p>Keine Lehrjahre definiert.</p>
+    {:else}
+        {#each getModeYears(mode) as year, yearIndex}
+            {@const yearLessons = getYearLessons(year)}
+            <section>
+                <h5 class="year-title">
+                    <span>{getYearLabel(year)}. Lehrjahr</span>
+                    {#if yearLessons > 0}
+                        <span class="lesson-count">{yearLessons}</span>
                     {/if}
-                </section>
-            {/each}
-        {/if}
+                </h5>
+                {#if (year.themenbereiche?.length ?? 0) === 0}
+                    <p>Keine Themenbereiche definiert.</p>
+                {:else}
+                    <ul class="topic-list">
+                        {#each year.themenbereiche ?? [] as topic, topicIndex}
+                            {@const topicLessons = getTopicLessons(topic)}
+                            <li>
+                                <a
+                                    class="topic-button"
+                                    class:is-active={selectedTopicKey ===
+                                        `${yearIndex}-${topicIndex}`}
+                                    href={getTopicHref(yearIndex, topicIndex)}
+                                    data-sveltekit-noscroll
+                                    onclick={onTopicNavigate}
+                                    aria-current={selectedTopicKey ===
+                                    `${yearIndex}-${topicIndex}`
+                                        ? "true"
+                                        : undefined}
+                                >
+                                    <span class="topic-label">
+                                        {#if topic.number != null}
+                                            <span>{topic.number}. </span>
+                                        {/if}
+                                        <span>{getTopicTitle(topic)}</span>
+                                    </span>
+                                    {#if topicLessons > 0}
+                                        <span class="topic-lessons"
+                                            >{topicLessons}</span
+                                        >
+                                    {/if}
+                                </a>
+                            </li>
+                        {/each}
+                        {#if year.additional_lessons != null}
+                            <li class="year-meta">
+                                <span>Weitere Lektionen</span>
+                                <span>{year.additional_lessons}</span>
+                            </li>
+                        {/if}
+                    </ul>
+                {/if}
+            </section>
+        {/each}
+    {/if}
 
-        {#if mode.implementation_examples_pdf}
-            <a
-                class="pdf-link"
-                href={mode.implementation_examples_pdf}
-                target="_blank"
-                rel="noopener noreferrer"
+    {#if mode.implementation_examples_pdf}
+        <a
+            class="pdf-link"
+            href={mode.implementation_examples_pdf}
+            target="_blank"
+            rel="noopener noreferrer"
+        >
+            <img src={pdfIcon} alt="" class="pdf-icon" aria-hidden="true" />
+            <span>Umsetzungsbeispiele</span>
+        </a>
+    {/if}
+{/snippet}
+
+{#if lessonsReady}
+    {#if useDropdown}
+        <div
+            class="side-navigation is-dropdown"
+            class:show-lessons={showLessons}
+            bind:this={dropdownRootElement}
+        >
+            <div
+                class="topic-dropdown"
+                class:is-open={dropdownExpanded}
+                in:fade={{
+                    duration: reducedMotion ? 0 : DROPDOWN_FADE_MS,
+                }}
             >
-                <img src={pdfIcon} alt="" class="pdf-icon" aria-hidden="true" />
-                <span>Umsetzungsbeispiele</span>
-            </a>
-        {/if}
-    </aside>
+                <button
+                    type="button"
+                    class="topic-dropdown-trigger"
+                    aria-expanded={dropdownOpen}
+                    aria-controls="side-navigation-panel"
+                    onclick={toggleDropdown}
+                >
+                    <span class="topic-label">Themenübersicht</span>
+                    <img
+                        src={arrowIcon}
+                        alt=""
+                        class="topic-dropdown-icon"
+                        aria-hidden="true"
+                    />
+                </button>
+
+                {#if dropdownOpen}
+                    <div
+                        id="side-navigation-panel"
+                        class="topic-dropdown-panel"
+                        transition:slide={{
+                            duration: reducedMotion ? 0 : DROPDOWN_SLIDE_MS,
+                            easing: (t) => t * (2 - t),
+                        }}
+                        onoutroend={onPanelOutroEnd}
+                    >
+                        {@render navigationContent()}
+                    </div>
+                {/if}
+            </div>
+        </div>
+    {:else}
+        <aside
+            id="side-navigation-panel"
+            class="side-navigation"
+            class:is-expanded={expanded}
+            class:show-lessons={showLessons}
+        >
+            {@render navigationContent()}
+        </aside>
+    {/if}
 {/if}
 
 <style>
@@ -149,10 +317,199 @@
         position: relative;
     }
 
-    .lessons-toggle {
+    .side-navigation.is-dropdown {
+        gap: 0;
+        width: 100%;
+    }
+
+    .topic-dropdown {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        min-width: 0;
+        box-sizing: border-box;
+        border: 1.5px solid var(--color-black);
+        border-radius: 27.5px;
+        background: var(--color-white);
+        overflow: hidden;
+        transition: background-color 120ms ease;
+    }
+
+    .topic-dropdown:not(.is-open) {
+        height: 55px;
+    }
+
+    .topic-dropdown.is-open {
+        background: var(--color-darkblue);
+        border-color: var(--color-black);
+        color: var(--color-white);
+    }
+
+    .topic-dropdown:not(.is-open):hover {
+        background: var(--color-darkblue);
+    }
+
+    .topic-dropdown:not(.is-open):hover .topic-dropdown-trigger {
+        color: var(--color-white);
+        background: transparent;
+    }
+
+    .topic-dropdown:not(.is-open):hover .topic-dropdown-icon {
+        filter: brightness(0) invert(1);
+    }
+
+    .topic-dropdown-trigger {
         display: flex;
         align-items: center;
         justify-content: space-between;
+        gap: 10px;
+        width: 100%;
+        max-width: none;
+        height: 100%;
+        min-height: 0;
+        flex-shrink: 0;
+        box-sizing: border-box;
+        padding: 7px 14px 7px 25px;
+        border: none;
+        border-radius: 0;
+        background: transparent;
+        color: var(--color-black);
+        cursor: pointer;
+        text-align: left;
+        font-family: var(--font-sans);
+        font-size: 32px;
+        line-height: 40px;
+        font-weight: 300;
+        letter-spacing: 0.01em;
+        transition:
+            background-color 120ms ease,
+            color 120ms ease,
+            filter 60ms ease;
+    }
+
+    .topic-dropdown-trigger .topic-label {
+        flex: 1 1 auto;
+        min-width: 0;
+    }
+
+    .topic-dropdown.is-open .topic-dropdown-trigger {
+        height: 52px;
+        min-height: 52px;
+        background: var(--color-darkblue);
+        color: var(--color-white);
+        border-radius: 9999px;
+    }
+
+    .topic-dropdown.is-open .topic-dropdown-trigger .topic-dropdown-icon {
+        filter: brightness(0) invert(1);
+    }
+
+    /* .topic-dropdown.is-open .topic-dropdown-trigger:hover {
+        filter: brightness(1.2);
+    } */
+
+    .topic-dropdown.is-open .lessons-toggle-label,
+    .topic-dropdown.is-open .year-meta {
+        color: var(--color-white);
+    }
+
+    .topic-dropdown.is-open .toggle-switch {
+        border-color: var(--color-white);
+        background: transparent;
+    }
+
+    .topic-dropdown.is-open .toggle-switch.is-on {
+        background: var(--color-white);
+    }
+
+    .topic-dropdown.is-open .toggle-thumb {
+        background: var(--color-white);
+    }
+
+    .topic-dropdown.is-open .toggle-switch.is-on .toggle-thumb {
+        background: var(--color-darkblue);
+    }
+
+    .topic-dropdown.is-open .year-title {
+        color: var(--color-white);
+        border-color: var(--color-white);
+    }
+
+    .topic-dropdown.is-open .topic-button {
+        color: var(--color-white);
+        border-color: var(--color-white);
+        background: transparent;
+    }
+
+    .topic-dropdown.is-open .topic-button:hover,
+    .topic-dropdown.is-open .topic-button.is-active {
+        background: var(--color-white);
+        color: var(--color-darkblue);
+    }
+
+    /* .topic-dropdown.is-open .topic-button.is-active:hover {
+        filter: brightness(1.2);
+    } */
+
+    .topic-dropdown.is-open .pdf-link {
+        color: var(--color-white);
+        border-color: var(--color-white);
+        background: transparent;
+    }
+
+    .topic-dropdown.is-open .pdf-link:hover {
+        background: var(--color-white);
+        color: var(--color-darkblue);
+    }
+
+    .topic-dropdown.is-open .pdf-icon {
+        filter: invert(1);
+    }
+
+    .topic-dropdown.is-open .pdf-link:hover .pdf-icon {
+        filter: none;
+    }
+
+    .topic-dropdown-icon {
+        flex-shrink: 0;
+        align-self: center;
+        height: 30px;
+        width: auto;
+        display: block;
+        transform: rotate(180deg);
+        filter: brightness(0);
+        transition:
+            transform 120ms ease,
+            filter 120ms ease;
+    }
+
+    .topic-dropdown.is-open .topic-dropdown-icon {
+        transform: rotate(0deg);
+    }
+
+    .topic-dropdown:not(.is-open)
+        .topic-dropdown-trigger:hover
+        .topic-dropdown-icon {
+        filter: brightness(0) invert(1);
+    }
+
+    .topic-dropdown-panel {
+        display: flex;
+        flex-direction: column;
+        gap: 50px;
+        padding: 30px 15px 15px;
+    }
+
+    .side-navigation.is-dropdown .lessons-toggle {
+        position: static;
+        margin-left: 0;
+        width: fit-content;
+    }
+
+    .lessons-toggle {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
         gap: 15px;
         width: fit-content;
         max-width: 100%;
@@ -239,9 +596,6 @@
 
     .side-navigation.show-lessons .year-title {
         gap: 25px;
-    }
-
-    .side-navigation.is-expanded .year-title {
     }
 
     .lesson-count {
@@ -429,24 +783,6 @@
             font-weight 350ms cubic-bezier(0.4, 0, 0.2, 1);
     }
 
-    /* .side-navigation.is-expanded .pdf-link {
-        font-size: var(--h1-size);
-        line-height: var(--h1-line-height);
-        font-weight: var(--h1-weight);
-        letter-spacing: var(--h1-letter-spacing);
-        padding: 10px 30px 10px 24px;
-        gap: 16px;
-    } */
-
-    .pdf-icon {
-        flex-shrink: 0;
-    }
-
-    /* .side-navigation.is-expanded .pdf-icon {
-        width: 32px;
-        height: 32px;
-    } */
-
     .pdf-link:hover {
         background: var(--color-darkblue);
         color: var(--color-white);
@@ -456,7 +792,13 @@
         filter: invert(1);
     }
 
+    .pdf-icon {
+        flex-shrink: 0;
+    }
+
     @media (prefers-reduced-motion: reduce) {
+        .topic-dropdown,
+        .topic-dropdown-icon,
         .toggle-switch,
         .toggle-thumb,
         .topic-button,

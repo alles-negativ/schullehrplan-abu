@@ -156,7 +156,7 @@
         .mode-route:not(.is-expanded) {
             grid-template-columns: minmax(0, 1fr);
             row-gap: 80px;
-            margin-top: 10px;
+            margin-top: 8.5px;
         }
 
         .mode-route > :global(.side-navigation.is-dropdown) {

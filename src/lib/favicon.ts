@@ -1,12 +1,4 @@
-import { getAllCompetences } from "$lib/data/education-modes";
-
-const pickRandomCompetenceColor = (): string => {
-    const colors = getAllCompetences()
-        .map((competence) => competence.color)
-        .filter((color): color is string => Boolean(color));
-
-    return colors[Math.floor(Math.random() * colors.length)] ?? "#87E8F7";
-};
+import { pickRandomCompetenceColor } from "$lib/competence-colors";
 
 export const colorToFaviconId = (color: string): string =>
     color.replace("#", "").toUpperCase();

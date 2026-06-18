@@ -1,8 +1,15 @@
+@property --color-selection {
+    syntax: "<color>";
+    inherits: true;
+    initial-value: #87e8f7;
+}
+
 :root {
     --color-black: #000000;
     --color-white: #ffffff;
     --color-background: #f0f4f6;
     --color-darkblue: #001e2e;
+    --color-selection: #87e8f7;
 
     --font-sans:
         "Inter", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", system-ui,
@@ -55,10 +62,17 @@
 }
 
 html {
+    transition: --color-selection 900ms ease;
     font-family: var(--font-sans);
     font-size: var(--body-size);
     line-height: var(--body-line-height);
     color: var(--color-black);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html {
+        transition: none;
+    }
 }
 
 body {
@@ -68,6 +82,16 @@ body {
     letter-spacing: var(--body-letter-spacing);
     color: var(--color-black);
     background: var(--color-background);
+}
+
+::selection {
+    background-color: var(--color-selection);
+    color: var(--color-black);
+}
+
+::-moz-selection {
+    background-color: var(--color-selection);
+    color: var(--color-black);
 }
 
 h1,

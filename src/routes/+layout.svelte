@@ -4,6 +4,7 @@
     import { onMount } from "svelte";
     import "../reset.css";
     import "../app.css";
+    import { pickRandomCompetenceColor } from "$lib/competence-colors";
     import { getRandomCompetenceFaviconHrefs } from "$lib/favicon";
     import Navigation from "$lib/components/Navigation.svelte";
     import Footer from "$lib/components/Footer.svelte";
@@ -11,6 +12,8 @@
         isMobileViewport,
         watchMobileViewport,
     } from "$lib/mobile-view";
+
+    const SELECTION_ROTATE_MS = 5000;
 
     let { children } = $props();
     let favicon = $state("/favicon.png");
@@ -26,9 +29,28 @@
         favicon = randomFavicon.icon;
         appleTouchIcon = randomFavicon.appleTouchIcon;
 
-        return watchMobileViewport((mobile) => {
+        let currentSelection = pickRandomCompetenceColor();
+        document.documentElement.style.setProperty(
+            "--color-selection",
+            currentSelection,
+        );
+
+        const selectionInterval = window.setInterval(() => {
+            currentSelection = pickRandomCompetenceColor(currentSelection);
+            document.documentElement.style.setProperty(
+                "--color-selection",
+                currentSelection,
+            );
+        }, SELECTION_ROTATE_MS);
+
+        const stopViewportWatch = watchMobileViewport((mobile) => {
             isMobile = mobile;
         });
+
+        return () => {
+            clearInterval(selectionInterval);
+            stopViewportWatch();
+        };
     });
 
     $effect(() => {

@@ -210,9 +210,8 @@
                         >
                             <span class="pill-label">{competence.title}</span>
                             <span class="pill-count"
-                                >({competenceCountBySlug.get(
-                                    competence.slug,
-                                ) ?? 0})</span
+                                >({competenceCountBySlug.get(competence.slug) ??
+                                    0})</span
                             >
                         </button>
                     {/each}
@@ -588,15 +587,6 @@
 
         .pill-wrap {
             align-content: start;
-        }
-
-        .year-header {
-            grid-template-columns: 1fr;
-        }
-
-        .year-column-label {
-            justify-self: start;
-            text-align: left;
         }
 
         .topic-card {

@@ -41,10 +41,14 @@
     <title>Schullehrplan ABU - Qualifikationsverfahren</title>
 </svelte:head>
 
-<div class="qv-route mode-grid">
+<div
+    class="qv-route mode-grid"
+    class:is-expanded={selectedChapterIndex === -1}
+>
     <QvSideNavigation
         chapters={data.qv.chapters}
         {selectedChapterIndex}
+        expanded={selectedChapterIndex === -1}
         {getChapterHref}
     />
 
@@ -235,4 +239,23 @@
         font-weight: 600;
     }
 
+    @media (max-width: 1100px) {
+        .qv-route.is-expanded {
+            grid-template-columns: minmax(0, 1fr);
+        }
+
+        .qv-route:not(.is-expanded) {
+            grid-template-columns: minmax(0, 1fr);
+            row-gap: 80px;
+            margin-top: 8.5px;
+        }
+
+        .qv-route > :global(.side-navigation.is-dropdown) {
+            grid-column: 1;
+        }
+
+        .topics-content {
+            grid-column: 1;
+        }
+    }
 </style>

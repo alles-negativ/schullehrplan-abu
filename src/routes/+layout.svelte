@@ -1,11 +1,10 @@
 <script lang="ts">
-    import { browser } from "$app/environment";
     import { goto } from "$app/navigation";
     import { page } from "$app/state";
     import { onMount } from "svelte";
     import "../reset.css";
     import "../app.css";
-    import { getRandomCompetenceFavicon } from "$lib/favicon";
+    import { getRandomCompetenceFaviconHrefs } from "$lib/favicon";
     import Navigation from "$lib/components/Navigation.svelte";
     import Footer from "$lib/components/Footer.svelte";
     import {
@@ -14,15 +13,18 @@
     } from "$lib/mobile-view";
 
     let { children } = $props();
-    let favicon = $state<string | undefined>(
-        browser ? getRandomCompetenceFavicon() : undefined,
-    );
+    let favicon = $state("/favicon.png");
+    let appleTouchIcon = $state("/apple-touch-icon.png");
     let viewportReady = $state(false);
     let isMobile = $state(false);
 
     onMount(() => {
         isMobile = isMobileViewport();
         viewportReady = true;
+
+        const randomFavicon = getRandomCompetenceFaviconHrefs();
+        favicon = randomFavicon.icon;
+        appleTouchIcon = randomFavicon.appleTouchIcon;
 
         return watchMobileViewport((mobile) => {
             isMobile = mobile;
@@ -38,10 +40,8 @@
 </script>
 
 <svelte:head>
-    {#if favicon}
-        <link rel="icon" type="image/png" href={favicon} />
-        <link rel="apple-touch-icon" href={favicon} />
-    {/if}
+    <link rel="icon" type="image/png" sizes="32x32" href={favicon} />
+    <link rel="apple-touch-icon" sizes="180x180" href={appleTouchIcon} />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link
         rel="preconnect"

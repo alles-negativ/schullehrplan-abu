@@ -3,6 +3,10 @@
     import { onMount, tick } from "svelte";
     import { needsMotionPermission } from "$lib/device-motion";
     import type { Competence } from "$lib/data/education-modes";
+    import {
+        createMatterTimestepState,
+        stepMatterPhysics,
+    } from "$lib/matter-timestep";
 
     type PhysicsPill = Competence & { id: string };
 
@@ -529,8 +533,14 @@
                 }
             };
 
-            const frame = () => {
-                Engine.update(engine, 1000 / 60);
+            const timestep = createMatterTimestepState();
+
+            const frame = (time: number) => {
+                stepMatterPhysics(
+                    (delta) => Engine.update(engine, delta),
+                    time,
+                    timestep,
+                );
                 for (const slug of activeSlugs) {
                     const body = worldBodies.get(slug);
                     const el = itemElements.get(slug);
@@ -542,7 +552,7 @@
                 raf = requestAnimationFrame(frame);
             };
 
-            frame();
+            raf = requestAnimationFrame(frame);
 
             let resizeRaf = 0;
             resizeObserver = new ResizeObserver(() => {

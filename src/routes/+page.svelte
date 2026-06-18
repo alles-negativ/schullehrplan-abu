@@ -190,7 +190,7 @@
         width: 600px;
         height: 240px;
         white-space: pre-line;
-        animation: hero-shake-loop 1.2s 0.5s;
+        animation: hero-shake-hack 1.2s 0.5s;
     }
 
     .hero-button:hover:not(:disabled) {
@@ -203,6 +203,26 @@
     }
 
     @keyframes hero-shake-loop {
+        0%,
+        50%,
+        100% {
+            transform: rotate(0deg) translateX(0);
+        }
+        10% {
+            transform: rotate(-1deg) translateX(-10px);
+        }
+        20% {
+            transform: rotate(1deg) translateX(10px);
+        }
+        30% {
+            transform: rotate(-0.75deg) translateX(-10px);
+        }
+        40% {
+            transform: rotate(0.75deg) translateX(10px);
+        }
+    }
+
+    @keyframes hero-shake-hack {
         0%,
         50%,
         100% {

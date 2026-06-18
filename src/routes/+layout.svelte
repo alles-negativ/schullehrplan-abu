@@ -1,22 +1,46 @@
 <script lang="ts">
+    import { browser } from "$app/environment";
+    import { goto } from "$app/navigation";
+    import { page } from "$app/state";
     import { onMount } from "svelte";
     import "../reset.css";
     import "../app.css";
     import { getRandomCompetenceFavicon } from "$lib/favicon";
     import Navigation from "$lib/components/Navigation.svelte";
     import Footer from "$lib/components/Footer.svelte";
+    import {
+        isMobileViewport,
+        watchMobileViewport,
+    } from "$lib/mobile-view";
 
     let { children } = $props();
-    let favicon = $state<string | undefined>(undefined);
+    let favicon = $state<string | undefined>(
+        browser ? getRandomCompetenceFavicon() : undefined,
+    );
+    let viewportReady = $state(false);
+    let isMobile = $state(false);
 
     onMount(() => {
-        favicon = getRandomCompetenceFavicon();
+        isMobile = isMobileViewport();
+        viewportReady = true;
+
+        return watchMobileViewport((mobile) => {
+            isMobile = mobile;
+        });
+    });
+
+    $effect(() => {
+        if (!viewportReady || !isMobile) return;
+        if (page.url.pathname !== "/") {
+            void goto("/", { replaceState: true });
+        }
     });
 </script>
 
 <svelte:head>
     {#if favicon}
-        <link rel="icon" href={favicon} />
+        <link rel="icon" type="image/png" href={favicon} />
+        <link rel="apple-touch-icon" href={favicon} />
     {/if}
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link
@@ -30,18 +54,30 @@
     />
 </svelte:head>
 
-<div class="page-foreground">
-    <Navigation />
+{#if viewportReady}
+    <div class="page-foreground" class:is-mobile={isMobile}>
+        {#if !isMobile}
+            <Navigation />
+        {/if}
 
-    {@render children()}
-</div>
-<Footer />
+        {#if !isMobile || page.url.pathname === "/"}
+            {@render children()}
+        {/if}
+    </div>
+    {#if !isMobile}
+        <Footer />
+    {/if}
+{/if}
 
 <style>
     .page-foreground {
         padding: 30px;
-        /* position: relative; */
         z-index: 1;
         overflow: hidden;
+    }
+
+    .page-foreground.is-mobile {
+        padding: 0;
+        overflow: visible;
     }
 </style>

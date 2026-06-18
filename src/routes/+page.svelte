@@ -1,12 +1,14 @@
 <script lang="ts">
     import { onMount } from "svelte";
     import InteractivePhysics from "$lib/components/InteractivePhysics.svelte";
+    import MobileExperience from "$lib/components/MobileExperience.svelte";
     import TopicMap from "$lib/components/TopicMap.svelte";
     import {
         getAllCompetences,
         getAspectByTitle,
         type Competence,
     } from "$lib/data/education-modes";
+    import { isMobileViewport } from "$lib/mobile-view";
 
     const aspectOrder = [
         "Gesellschaftliche Inhalte",
@@ -19,6 +21,8 @@
     let fallingCompetences = $state<FallingCompetence[]>([]);
     let selectedAspect = $state<(typeof aspectOrder)[number] | null>(null);
     let pillDragging = $state(false);
+    let isMobile = $state(false);
+    let viewportReady = $state(false);
     let nextPillId = 0;
 
     const pickFromAspect = (
@@ -62,11 +66,16 @@
     );
 
     onMount(() => {
+        isMobile = isMobileViewport();
+        viewportReady = true;
+
+        if (isMobile) return;
+
         const aspect = pickRandomAspect();
         selectedAspect = aspect;
 
         const timeout = setTimeout(() => {
-            pickFromAspect(aspect, 5 + Math.floor(Math.random() * 4));
+            pickFromAspect(aspect, 4 + Math.floor(Math.random() * 3));
         }, 1400);
         return () => clearTimeout(timeout);
     });
@@ -76,39 +85,45 @@
     <title>Schullehrplan ABU</title>
 </svelte:head>
 
-<main class="start-page">
-    <section class="intro-stage" aria-label="Willkommen">
-        <div class="hero">
-            <p class="hero-text">
-                Ich bin der neue Schullehrplan Allgemeinbildung.
-                <br />
-                Lernen ist bei mir kompetenzorientiert, vernetzt und aufbauend.
-            </p>
-            {#if selectedAspect}
-                <button
-                    type="button"
-                    class="hero-button"
-                    style={`--button-color: ${aspectColor}`}
-                    disabled={pillDragging}
-                    onclick={addMoreCompetences}
-                >
-                    {#if selectedAspect === "Schlüsselkompetenzen"}
-                        Schlüssel-kompetenzen
-                    {:else}
-                        {selectedAspect}
+{#if viewportReady}
+    {#if isMobile}
+        <MobileExperience />
+    {:else}
+        <main class="start-page">
+            <section class="intro-stage" aria-label="Willkommen">
+                <div class="hero">
+                    <p class="hero-text">
+                        Ich bin der neue Schullehrplan Allgemeinbildung.
+                        <br />
+                        Lernen ist bei mir kompetenzorientiert, vernetzt und aufbauend.
+                    </p>
+                    {#if selectedAspect}
+                        <button
+                            type="button"
+                            class="hero-button"
+                            style={`--button-color: ${aspectColor}`}
+                            disabled={pillDragging}
+                            onclick={addMoreCompetences}
+                        >
+                            {#if selectedAspect === "Schlüsselkompetenzen"}
+                                Schlüssel-kompetenzen
+                            {:else}
+                                {selectedAspect}
+                            {/if}
+                        </button>
                     {/if}
-                </button>
-            {/if}
-        </div>
+                </div>
 
-        <InteractivePhysics
-            competences={fallingCompetences}
-            bind:dragging={pillDragging}
-        />
-    </section>
+                <InteractivePhysics
+                    competences={fallingCompetences}
+                    bind:dragging={pillDragging}
+                />
+            </section>
 
-    <TopicMap />
-</main>
+            <TopicMap />
+        </main>
+    {/if}
+{/if}
 
 <style>
     .start-page {

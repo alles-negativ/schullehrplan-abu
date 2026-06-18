@@ -1,23 +1,56 @@
 <script lang="ts">
+    import { browser } from "$app/environment";
     import { onMount, tick } from "svelte";
+    import { needsMotionPermission } from "$lib/device-motion";
     import type { Competence } from "$lib/data/education-modes";
 
     type PhysicsPill = Competence & { id: string };
 
+    type MotionEventConstructor = typeof DeviceMotionEvent & {
+        requestPermission?: () => Promise<PermissionState>;
+    };
+
+    type OrientationEventConstructor = typeof DeviceOrientationEvent & {
+        requestPermission?: () => Promise<PermissionState>;
+    };
+
+    const getMotionEventCtor = (): MotionEventConstructor | undefined =>
+        browser ? window.DeviceMotionEvent : undefined;
+
+    const getOrientationEventCtor = ():
+        | OrientationEventConstructor
+        | undefined => (browser ? window.DeviceOrientationEvent : undefined);
+
+    const motionSensorsSupported = (): boolean =>
+        Boolean(getMotionEventCtor() && getOrientationEventCtor());
+
     let {
         competences = [],
-        dragging = $bindable(false),
-    }: { competences?: PhysicsPill[]; dragging?: boolean } = $props();
+    }: { competences?: PhysicsPill[] } = $props();
 
     let containerEl = $state<HTMLDivElement | null>(null);
     let itemElements = new Map<string, HTMLDivElement>();
     let spawnPillFn: ((pill: PhysicsPill) => void) | null = null;
     let pillSizes = $state<Record<string, { pill: number; inner: number }>>({});
-    let spawnedPills = $state<Record<string, boolean>>({});
+    let motionEnabled = $state(false);
+    let needsPermission = $state(false);
+    let permissionPending = $state(false);
+    let sensorsReady = $state(false);
+    let sensorsUnavailable = $state(false);
+    let permissionDenied = $state(false);
 
-    const PILL_MAX_WIDTH = 550;
-    const PILL_H_PADDING = 76;
-    const PILL_MIN_CONTENT = 200;
+    let sensorHandlers: {
+        onOrientation: ((event: DeviceOrientationEvent) => void) | null;
+        onMotion: ((event: DeviceMotionEvent) => void) | null;
+    } = {
+        onOrientation: null,
+        onMotion: null,
+    };
+    let sensorsAttached = false;
+
+    const PILL_MAX_WIDTH = 300;
+    const PILL_H_PADDING = 48;
+    const PILL_MIN_CONTENT = 120;
 
     let measurer: HTMLDivElement | null = null;
 
@@ -48,9 +81,6 @@
         return measurer;
     };
 
-    // Sizes the pill to its content: grows on a single line until it would
-    // exceed maxContent, then shrinks to the narrowest width that keeps the
-    // same line count without breaking words mid-character.
     const fitPillWidth = (pill: HTMLDivElement, id: string) => {
         const title = pill.querySelector<HTMLElement>(".pill-title");
         if (!title) return;
@@ -171,15 +201,100 @@
         return {
             destroy() {
                 itemElements.delete(pill.id);
-                const { [pill.id]: _size, ...restSizes } = pillSizes;
-                pillSizes = restSizes;
-                const { [pill.id]: _spawned, ...restSpawned } = spawnedPills;
-                spawnedPills = restSpawned;
+                const { [pill.id]: _, ...rest } = pillSizes;
+                pillSizes = rest;
             },
         };
     };
 
+    const requestMotionAccess = async () => {
+        if (!motionSensorsSupported()) return false;
+
+        permissionPending = true;
+        try {
+            const motionEvent = getMotionEventCtor();
+            const orientationEvent = getOrientationEventCtor();
+            if (!motionEvent || !orientationEvent) return false;
+
+            if (typeof motionEvent.requestPermission === "function") {
+                const motionResult = await motionEvent.requestPermission();
+                if (motionResult !== "granted") return false;
+            }
+
+            if (typeof orientationEvent.requestPermission === "function") {
+                const orientationResult =
+                    await orientationEvent.requestPermission();
+                if (orientationResult !== "granted") return false;
+            }
+
+            return true;
+        } finally {
+            permissionPending = false;
+        }
+    };
+
+    const enableMotion = async () => {
+        const granted = await requestMotionAccess();
+        if (granted) {
+            motionEnabled = true;
+            needsPermission = false;
+        }
+    };
+
+    const attachSensors = () => {
+        if (
+            sensorsAttached ||
+            !motionEnabled ||
+            !sensorsReady ||
+            !motionSensorsSupported()
+        ) {
+            return;
+        }
+        if (sensorHandlers.onOrientation) {
+            window.addEventListener(
+                "deviceorientation",
+                sensorHandlers.onOrientation,
+            );
+        }
+        if (sensorHandlers.onMotion) {
+            window.addEventListener("devicemotion", sensorHandlers.onMotion);
+        }
+        sensorsAttached = true;
+    };
+
+    const detachSensors = () => {
+        if (!sensorsAttached) return;
+        if (sensorHandlers.onOrientation) {
+            window.removeEventListener(
+                "deviceorientation",
+                sensorHandlers.onOrientation,
+            );
+        }
+        if (sensorHandlers.onMotion) {
+            window.removeEventListener("devicemotion", sensorHandlers.onMotion);
+        }
+        sensorsAttached = false;
+    };
+
+    $effect(() => {
+        if (motionEnabled && sensorsReady) {
+            attachSensors();
+        } else {
+            detachSensors();
+        }
+
+        return () => {
+            detachSensors();
+        };
+    });
+
     onMount(() => {
+        sensorsUnavailable = !motionSensorsSupported();
+        needsPermission = needsMotionPermission();
+        if (!needsPermission && motionSensorsSupported()) {
+            motionEnabled = true;
+        }
+
         if (!containerEl) return;
         const stage = containerEl;
 
@@ -190,6 +305,8 @@
         let bodySizes = new Map<string, { width: number; height: number }>();
         let boundaries: import("matter-js").Body[] = [];
         let activeSlugs = new Set<string>();
+        let engineRef: import("matter-js").Engine | null = null;
+        let BodyRef: typeof import("matter-js").Body | null = null;
 
         const setup = async () => {
             const Matter = await import("matter-js");
@@ -198,30 +315,16 @@
                 World,
                 Bodies,
                 Body,
-                Mouse,
-                MouseConstraint,
-                Events,
                 Sleeping,
             } = Matter;
             const engine = Engine.create();
-            engine.gravity.y = 0.9;
+            engineRef = engine;
+            BodyRef = Body;
+            engine.gravity.y = 1;
             engine.enableSleeping = true;
-            const wallThickness = 320;
+            const wallThickness = 200;
             const stagePadding = 2;
             const sideWallTopExtension = 400;
-            let mouseConstraint: import("matter-js").MouseConstraint | null =
-                null;
-
-            const syncElementToBody = (
-                el: HTMLDivElement,
-                body: import("matter-js").Body,
-            ) => {
-                const w = el.offsetWidth || 120;
-                const h = el.offsetHeight || 32;
-                const x = body.position.x - w / 2;
-                const y = body.position.y - h / 2;
-                el.style.transform = `translate(${x}px, ${y}px) rotate(${body.angle}rad)`;
-            };
 
             const clampBodyToStage = (
                 body: import("matter-js").Body,
@@ -258,54 +361,43 @@
                 if (!measured) return;
 
                 void tick().then(() => {
-                    requestAnimationFrame(() => {
-                        if (activeSlugs.has(pill.id)) return;
+                    if (activeSlugs.has(pill.id)) return;
 
-                        const width = containerEl?.clientWidth ?? 0;
-                        const height = containerEl?.clientHeight ?? 0;
-                        if (!width || !height) return;
+                    const width = containerEl?.clientWidth ?? 0;
+                    const height = containerEl?.clientHeight ?? 0;
+                    if (!width || !height) return;
 
-                        const itemWidth = el.offsetWidth || measured.pill;
-                        const itemHeight = el.offsetHeight;
-                        if (!itemWidth || !itemHeight) {
-                            requestAnimationFrame(() => spawnPill(pill));
-                            return;
-                        }
-                        const chamferRadius =
-                            Math.min(itemWidth, itemHeight) / 2;
-                        const halfH = itemHeight / 2;
-                        const halfDiag = Math.hypot(itemWidth / 2, halfH);
-                        const x =
-                            halfDiag +
-                            Math.random() * Math.max(width - halfDiag * 2, 1);
-                        const y = -(halfH + 80 + Math.random() * 200);
-                        const body = Bodies.rectangle(
-                            x,
-                            y,
-                            itemWidth,
-                            itemHeight,
-                            {
-                                restitution: 0.55,
-                                friction: 0.08,
-                                frictionStatic: 0.12,
-                                frictionAir: 0.02,
-                                chamfer: { radius: chamferRadius, quality: 8 },
-                                sleepThreshold: 40,
-                            },
-                        );
-                        Body.setAngle(body, (Math.random() - 0.5) * Math.PI);
-                        Body.setVelocity(body, { x: 0, y: 0 });
-                        Body.setAngularVelocity(body, 0);
-                        syncElementToBody(el, body);
-                        worldBodies.set(pill.id, body);
-                        bodySizes.set(pill.id, {
-                            width: itemWidth,
-                            height: itemHeight,
-                        });
-                        activeSlugs.add(pill.id);
-                        World.add(engine.world, body);
-                        spawnedPills = { ...spawnedPills, [pill.id]: true };
+                    const itemWidth = el.offsetWidth || measured.pill;
+                    const itemHeight = el.offsetHeight;
+                    if (!itemWidth || !itemHeight) {
+                        requestAnimationFrame(() => spawnPill(pill));
+                        return;
+                    }
+                    const chamferRadius = Math.min(itemWidth, itemHeight) / 2;
+                    const halfH = itemHeight / 2;
+                    const halfDiag = Math.hypot(itemWidth / 2, halfH);
+                    const x =
+                        halfDiag +
+                        Math.random() * Math.max(width - halfDiag * 2, 1);
+                    const y = -(halfH + 40 + Math.random() * 120);
+                    const body = Bodies.rectangle(x, y, itemWidth, itemHeight, {
+                        restitution: 0.62,
+                        friction: 0.06,
+                        frictionStatic: 0.1,
+                        frictionAir: 0.015,
+                        chamfer: { radius: chamferRadius, quality: 8 },
+                        sleepThreshold: 30,
                     });
+                    Body.setAngle(body, (Math.random() - 0.5) * Math.PI);
+                    Body.setVelocity(body, { x: 0, y: 0 });
+                    Body.setAngularVelocity(body, 0);
+                    worldBodies.set(pill.id, body);
+                    bodySizes.set(pill.id, {
+                        width: itemWidth,
+                        height: itemHeight,
+                    });
+                    activeSlugs.add(pill.id);
+                    World.add(engine.world, body);
                 });
             };
 
@@ -357,24 +449,15 @@
                     if (!body) continue;
 
                     if (stageWidth && stageHeight) {
-                        const widthChanged =
-                            Math.abs(width - stageWidth) >
-                            Math.max(8, stageWidth * 0.02);
-                        const heightChanged =
-                            Math.abs(height - stageHeight) >
-                            Math.max(8, stageHeight * 0.02);
-
-                        if (widthChanged || heightChanged) {
-                            Body.setPosition(body, {
-                                x: body.position.x * scaleX,
-                                y: body.position.y * scaleY,
-                            });
-                            Body.setVelocity(body, {
-                                x: body.velocity.x * scaleX,
-                                y: body.velocity.y * scaleY,
-                            });
-                            Sleeping.set(body, false);
-                        }
+                        Body.setPosition(body, {
+                            x: body.position.x * scaleX,
+                            y: body.position.y * scaleY,
+                        });
+                        Body.setVelocity(body, {
+                            x: body.velocity.x * scaleX,
+                            y: body.velocity.y * scaleY,
+                        });
+                        Sleeping.set(body, false);
                     }
 
                     clampBodyToStage(body, width, height);
@@ -384,35 +467,67 @@
                 stageHeight = height;
             };
 
-            const setupMouse = () => {
-                const mouse = Mouse.create(stage);
-                stage.removeEventListener(
-                    "wheel",
-                    (
-                        mouse as unknown as {
-                            mousewheel: (event: WheelEvent) => void;
-                        }
-                    ).mousewheel,
-                );
-                mouseConstraint = MouseConstraint.create(engine, {
-                    mouse,
-                    constraint: {
-                        stiffness: 0.2,
-                    },
-                });
-                Events.on(mouseConstraint, "startdrag", () => {
-                    dragging = true;
-                });
-                Events.on(mouseConstraint, "enddrag", () => {
-                    dragging = false;
-                });
-                World.add(engine.world, mouseConstraint);
+            spawnPillFn = spawnPill;
+            updateBoundaries();
+
+            let lastAccel = { x: 0, y: 0, z: 0 };
+            let lastShakeAt = 0;
+            let smoothedGamma = 0;
+            let smoothedBeta = 0;
+
+            sensorHandlers.onOrientation = (event: DeviceOrientationEvent) => {
+                if (!motionEnabled || !engineRef) return;
+
+                const gamma = event.gamma ?? 0;
+                const beta = Math.max(-45, Math.min(45, event.beta ?? 0));
+
+                smoothedGamma += (gamma - smoothedGamma) * 0.15;
+                smoothedBeta += (beta - smoothedBeta) * 0.15;
+
+                const gravityScale = 1.4;
+                engineRef.gravity.x = (smoothedGamma / 45) * gravityScale;
+                engineRef.gravity.y =
+                    Math.max(0.35, (smoothedBeta / 45 + 1) * 0.55 * gravityScale);
             };
 
-            spawnPillFn = spawnPill;
+            sensorHandlers.onMotion = (event: DeviceMotionEvent) => {
+                if (!motionEnabled || !engineRef || !BodyRef) return;
 
-            updateBoundaries();
-            setupMouse();
+                const acc = event.acceleration;
+                if (
+                    !acc ||
+                    acc.x === null ||
+                    acc.y === null ||
+                    acc.z === null
+                ) {
+                    return;
+                }
+
+                const dx = acc.x - lastAccel.x;
+                const dy = acc.y - lastAccel.y;
+                const dz = acc.z - lastAccel.z;
+                lastAccel = { x: acc.x, y: acc.y, z: acc.z };
+
+                const intensity = Math.hypot(dx, dy, dz);
+                const now = performance.now();
+                if (intensity < 1.8 || now - lastShakeAt < 70) return;
+
+                lastShakeAt = now;
+                const forceScale = Math.min(intensity * 0.0009, 0.012);
+
+                for (const body of worldBodies.values()) {
+                    BodyRef.applyForce(body, body.position, {
+                        x: dx * forceScale * body.mass,
+                        y: dy * forceScale * body.mass,
+                    });
+                    Sleeping.set(body, false);
+                    BodyRef.setAngularVelocity(
+                        body,
+                        body.angularVelocity +
+                            (Math.random() - 0.5) * intensity * 0.04,
+                    );
+                }
+            };
 
             const frame = () => {
                 Engine.update(engine, 1000 / 60);
@@ -420,7 +535,9 @@
                     const body = worldBodies.get(slug);
                     const el = itemElements.get(slug);
                     if (!body || !el) continue;
-                    syncElementToBody(el, body);
+                    const x = body.position.x - (el.offsetWidth || 100) / 2;
+                    const y = body.position.y - (el.offsetHeight || 28) / 2;
+                    el.style.transform = `translate(${x}px, ${y}px) rotate(${body.angle}rad)`;
                 }
                 raf = requestAnimationFrame(frame);
             };
@@ -428,29 +545,29 @@
             frame();
 
             let resizeRaf = 0;
-            let resizeObserverActive = false;
-            requestAnimationFrame(() => {
-                requestAnimationFrame(() => {
-                    resizeObserverActive = true;
-                });
-            });
             resizeObserver = new ResizeObserver(() => {
-                if (!resizeObserverActive || resizeRaf) return;
+                if (resizeRaf) return;
                 resizeRaf = requestAnimationFrame(() => {
                     resizeRaf = 0;
                     updateBoundaries();
                 });
             });
             resizeObserver.observe(stage);
+            sensorsReady = true;
 
             return () => {
                 cancelAnimationFrame(raf);
                 if (resizeRaf) cancelAnimationFrame(resizeRaf);
                 resizeObserver?.disconnect();
-                dragging = false;
+                detachSensors();
+                sensorHandlers.onOrientation = null;
+                sensorHandlers.onMotion = null;
+                sensorsReady = false;
                 World.clear(engine.world, false);
                 Engine.clear(engine);
                 spawnPillFn = null;
+                engineRef = null;
+                BodyRef = null;
                 measurer?.remove();
                 measurer = null;
             };
@@ -467,14 +584,36 @@
     });
 </script>
 
-<section class="interactive-wrap">
+<section class="shake-wrap" aria-label="Interaktive Kompetenzen">
+    {#if needsPermission && !motionEnabled}
+        <div class="permission-overlay">
+            <p class="permission-text">
+                Schüttle dein Gerät, um die Kompetenzen in Bewegung zu setzen.
+            </p>
+            <button
+                type="button"
+                class="permission-button"
+                disabled={permissionPending}
+                onclick={enableMotion}
+            >
+                {permissionPending ? "Wird aktiviert…" : "Bewegung aktivieren"}
+            </button>
+        </div>
+    {:else if sensorsUnavailable}
+        <div class="permission-overlay permission-overlay--info">
+            <p class="permission-text">
+                Bewegungssteuerung ist auf diesem Gerät nicht verfügbar. Die
+                Kompetenzen fallen dennoch herunter.
+            </p>
+        </div>
+    {/if}
+
     <div class="physics-stage" bind:this={containerEl}>
         {#each competences as competence (competence.id)}
             {@const size = pillSizes[competence.id]}
             <div
                 class="pill"
                 class:is-sized={size}
-                class:is-spawned={spawnedPills[competence.id]}
                 style={`--pill-color: ${competence.color ?? "#64748b"};${size ? `--pill-w: ${size.pill}px; --pill-inner-w: ${size.inner}px;` : ""}`}
                 use:trackItem={competence}
             >
@@ -487,15 +626,76 @@
 </section>
 
 <style>
-    .interactive-wrap {
+    .shake-wrap {
         position: absolute;
         inset: 0;
-        z-index: 2;
-        width: 100vw;
-        height: 100vh;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+    }
+
+    .permission-overlay {
+        position: absolute;
+        inset: 0;
+        z-index: 5;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 1.5rem;
+        padding: 2rem;
+        background: rgba(240, 244, 246, 0.92);
+        text-align: center;
         pointer-events: none;
-        top: -85px;
-        left: -30px;
+    }
+
+    .permission-overlay:not(.permission-overlay--info) {
+        pointer-events: auto;
+    }
+
+    .permission-overlay--info {
+        align-items: flex-end;
+        justify-content: flex-start;
+        background: transparent;
+        padding: 1rem 1.25rem;
+    }
+
+    .permission-overlay--info .permission-text {
+        max-width: none;
+        font-size: 0.95rem;
+        opacity: 0.75;
+    }
+
+    .permission-text {
+        margin: 0;
+        max-width: 18rem;
+        font-size: 1.125rem;
+        line-height: 1.4;
+        font-weight: 400;
+    }
+
+    .permission-hint {
+        margin: 0;
+        max-width: 18rem;
+        font-size: 0.95rem;
+        line-height: 1.35;
+        color: #8a1f1f;
+    }
+
+    .permission-button {
+        padding: 0.85rem 1.5rem;
+        border: 2px solid var(--color-black);
+        border-radius: 9999px;
+        background: var(--color-white);
+        color: var(--color-black);
+        font: inherit;
+        font-size: 1rem;
+        cursor: pointer;
+    }
+
+    .permission-button:disabled {
+        opacity: 0.6;
+        cursor: wait;
     }
 
     .physics-stage {
@@ -503,7 +703,6 @@
         width: 100%;
         height: 100%;
         overflow: hidden;
-        pointer-events: auto;
     }
 
     .pill {
@@ -516,21 +715,19 @@
         justify-content: center;
         width: var(--pill-w, auto);
         min-width: 0;
-        max-width: 550px;
-        min-height: 120px;
-        padding: 0px 38px;
+        max-width: 300px;
+        min-height: 72px;
+        padding: 0 24px;
         border-radius: 9999px;
         box-shadow: inset 0 0 0 2px var(--color-black);
         background: var(--pill-color);
         color: var(--color-black);
         user-select: none;
-        cursor: grab;
         will-change: transform;
-        pointer-events: auto;
         visibility: hidden;
     }
 
-    .pill.is-sized.is-spawned {
+    .pill.is-sized {
         visibility: visible;
     }
 
@@ -538,23 +735,19 @@
         flex: 0 0 auto;
         width: var(--pill-inner-w, auto);
         min-width: 0;
-        max-width: calc(550px - 76px);
+        max-width: calc(300px - 48px);
     }
 
     .pill-title {
         display: block;
         min-width: 0;
-        font-size: var(--h2-size);
-        line-height: var(--h2-line-height);
-        font-weight: var(--h2-weight);
-        letter-spacing: var(--h2-letter-spacing);
+        font-size: 1.125rem;
+        line-height: 1.25;
+        font-weight: 300;
+        letter-spacing: 0.01em;
         text-align: center;
         overflow-wrap: normal;
         word-break: normal;
         hyphens: none;
-    }
-
-    .pill:active {
-        cursor: grabbing;
     }
 </style>

@@ -1,13 +1,34 @@
 <script lang="ts">
+    import { onMount } from "svelte";
+    import { fade } from "svelte/transition";
     import { marked } from "marked";
     import closeIcon from "$lib/assets/close-icon.svg";
     import type { Competence } from "$lib/data/education-modes";
+
+    const FADE_MS = 280;
+    const SHAKE_DELAY_MS = 300;
 
     let {
         competence = $bindable<Competence | null>(null),
     }: {
         competence?: Competence | null;
     } = $props();
+
+    let reducedMotion = $state(false);
+
+    onMount(() => {
+        const motionQuery = window.matchMedia(
+            "(prefers-reduced-motion: reduce)",
+        );
+        reducedMotion = motionQuery.matches;
+
+        const onMotionChange = (event: MediaQueryListEvent) => {
+            reducedMotion = event.matches;
+        };
+
+        motionQuery.addEventListener("change", onMotionChange);
+        return () => motionQuery.removeEventListener("change", onMotionChange);
+    });
 
     const close = () => {
         competence = null;
@@ -28,16 +49,18 @@
         role="button"
         tabindex="0"
         aria-label="Kompetenz-Dialog schliessen"
+        transition:fade={{ duration: reducedMotion ? 0 : FADE_MS }}
         onclick={onBackdropClick}
         onkeydown={onBackdropKeydown}
     >
         <div
             class="modal-card"
+            class:modal-enter-shake={!reducedMotion}
             role="dialog"
             tabindex="-1"
             aria-modal="true"
             aria-label={`Kompetenz: ${competence.title}`}
-            style={`--modal-color: ${competence.color ?? "#334155"}`}
+            style={`--modal-color: ${competence.color ?? "#334155"};${!reducedMotion ? ` --modal-shake-delay: ${SHAKE_DELAY_MS}ms;` : ""}`}
         >
             <button
                 class="modal-close"
@@ -83,6 +106,30 @@
         box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
     }
 
+    .modal-card.modal-enter-shake {
+        animation: modal-shake-hack 1.2s var(--modal-shake-delay) ease-in-out;
+    }
+
+    @keyframes modal-shake-hack {
+        0%,
+        50%,
+        100% {
+            transform: rotate(0deg) translateX(0);
+        }
+        10% {
+            transform: rotate(-1deg) translateX(-10px);
+        }
+        20% {
+            transform: rotate(1deg) translateX(10px);
+        }
+        30% {
+            transform: rotate(-0.75deg) translateX(-10px);
+        }
+        40% {
+            transform: rotate(0.75deg) translateX(10px);
+        }
+    }
+
     .modal-close {
         position: absolute;
         top: 23px;
@@ -122,5 +169,11 @@
 
     .modal-description :global(p) {
         margin: 0.5rem 0;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .modal-card.modal-enter-shake {
+            animation: none;
+        }
     }
 </style>

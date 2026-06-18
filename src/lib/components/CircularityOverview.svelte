@@ -200,7 +200,7 @@
                     {#each group.competences as competence}
                         <button
                             type="button"
-                            class="pill pill-button"
+                            class="pill pill-button pill-filter"
                             class:is-active={isCompetenceHighlighted(
                                 competence,
                             )}
@@ -208,9 +208,12 @@
                             onclick={() =>
                                 toggleCompetenceHighlight(competence.slug)}
                         >
-                            {competence.title} ({competenceCountBySlug.get(
-                                competence.slug,
-                            ) ?? 0})
+                            <span class="pill-label">{competence.title}</span>
+                            <span class="pill-count"
+                                >({competenceCountBySlug.get(
+                                    competence.slug,
+                                ) ?? 0})</span
+                            >
                         </button>
                     {/each}
                 </div>
@@ -328,6 +331,10 @@
         align-items: start;
     }
 
+    .aspect-column {
+        min-width: 0;
+    }
+
     .aspect-title-button {
         margin: 0 0 35px;
         border: 2px solid var(--color-black);
@@ -385,6 +392,19 @@
         display: flex;
         flex-wrap: wrap;
         gap: 0.5rem;
+        min-width: 0;
+    }
+
+    .pill-label {
+        flex: 0 1 auto;
+        min-width: 0;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .pill-count {
+        flex-shrink: 0;
     }
 
     .pill {
@@ -406,6 +426,17 @@
     .pill.is-active,
     .pill:hover {
         background: var(--pill-color);
+    }
+
+    .pill.pill-filter {
+        display: inline-flex;
+        width: fit-content;
+        max-width: 100%;
+        justify-content: space-between;
+        gap: 0.35rem;
+        min-width: 0;
+        overflow: hidden;
+        text-align: left;
     }
 
     .pill.is-active:hover {
@@ -539,6 +570,24 @@
     @media (max-width: 1100px) {
         .aspect-grid {
             grid-template-columns: 1fr;
+            gap: 40px;
+        }
+
+        .aspect-column {
+            display: grid;
+            grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+            gap: 15px;
+            align-items: start;
+        }
+
+        .aspect-title-button {
+            margin: 0;
+            height: 120px;
+            align-self: start;
+        }
+
+        .pill-wrap {
+            align-content: start;
         }
 
         .year-header {

@@ -554,10 +554,10 @@
     .pill-title {
         display: block;
         min-width: 0;
-        font-size: var(--h2-size);
-        line-height: var(--h2-line-height);
-        font-weight: var(--h2-weight);
-        letter-spacing: var(--h2-letter-spacing);
+        font-size: 32px;
+        line-height: 40px;
+        font-weight: 300px;
+        letter-spacing: 0.01em;
         text-align: center;
         overflow-wrap: normal;
         word-break: normal;

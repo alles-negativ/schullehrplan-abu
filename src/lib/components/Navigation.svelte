@@ -1,10 +1,12 @@
 <script lang="ts">
     import { browser } from "$app/environment";
     import { page } from "$app/state";
+    import closeIcon from "$lib/assets/close-icon.svg";
     import { getAllEducationModes } from "$lib/data/education-modes";
     import { tick } from "svelte";
 
     const SUBMENU_MOTION_MS = 220;
+    const CONTRACTED_MEDIA = "(max-width: 1399px)";
 
     const educationModes = getAllEducationModes();
     const getModePath = (slug: string) => `/modes/${encodeURIComponent(slug)}`;
@@ -27,6 +29,32 @@
     let lastSubmenuView = $state<
         "lehrplan" | "zirkularitaet" | "overview" | null
     >(null);
+    let isContractedViewport = $state(
+        browser ? window.matchMedia(CONTRACTED_MEDIA).matches : false,
+    );
+    let suppressMenuTransition = $state(false);
+    let navMenuExpanded = $state(false);
+    let navToggleElement = $state<HTMLButtonElement | null>(null);
+    let modeListWrapElement = $state<HTMLDivElement | null>(null);
+
+    const showContractedSubmenu = $derived(
+        isContractedViewport && activeModeIndex >= 0,
+    );
+
+    const focusNavToggle = () => {
+        navToggleElement?.focus();
+    };
+
+    const collapseNavMenu = async () => {
+        if (!navMenuExpanded) return;
+        navMenuExpanded = false;
+        await tick();
+        focusNavToggle();
+    };
+
+    const toggleNavMenu = () => {
+        navMenuExpanded = !navMenuExpanded;
+    };
 
     const updateModeButtonWidthVar = () => {
         if (typeof document === "undefined") return;
@@ -40,6 +68,7 @@
 
     const updateSubmenuPosition = () => {
         if (
+            isContractedViewport ||
             activeModeIndex < 0 ||
             !modeListElement ||
             !modeButtonRefs[activeModeIndex]
@@ -94,14 +123,106 @@
         }, SUBMENU_MOTION_MS);
     };
 
+    const enterContractedViewport = () => {
+        navMenuExpanded = false;
+        suppressMenuTransition = true;
+
+        if (hideSubmenuTimeout) {
+            clearTimeout(hideSubmenuTimeout);
+            hideSubmenuTimeout = undefined;
+        }
+
+        submenuVisible = false;
+        submenuMounted = false;
+        suppressSlideTransition = true;
+
+        requestAnimationFrame(() => {
+            suppressMenuTransition = false;
+            suppressSlideTransition = false;
+        });
+    };
+
+    const leaveContractedViewport = () => {
+        navMenuExpanded = false;
+
+        if (activeModeIndex < 0) {
+            submenuVisible = false;
+            submenuMounted = false;
+            return;
+        }
+
+        if (hideSubmenuTimeout) {
+            clearTimeout(hideSubmenuTimeout);
+            hideSubmenuTimeout = undefined;
+        }
+
+        suppressSlideTransition = true;
+        submenuMounted = true;
+        submenuVisible = true;
+
+        requestAnimationFrame(() => {
+            updateSubmenuPosition();
+            requestAnimationFrame(() => {
+                updateSubmenuPosition();
+                suppressSlideTransition = false;
+            });
+        });
+    };
+
+    const applyViewport = (matches: boolean) => {
+        const wasContracted = isContractedViewport;
+        if (matches === wasContracted) return;
+
+        isContractedViewport = matches;
+
+        if (matches) {
+            enterContractedViewport();
+        } else {
+            leaveContractedViewport();
+        }
+    };
+
+    $effect(() => {
+        if (!browser) return;
+
+        const mq = window.matchMedia(CONTRACTED_MEDIA);
+        const syncViewport = () => applyViewport(mq.matches);
+
+        syncViewport();
+        mq.addEventListener("change", syncViewport);
+        return () => mq.removeEventListener("change", syncViewport);
+    });
+
+    $effect(() => {
+        if (
+            !browser ||
+            !isContractedViewport ||
+            !navMenuExpanded
+        ) {
+            return;
+        }
+
+        const handlePointerDown = (event: PointerEvent) => {
+            const target = event.target;
+            if (!(target instanceof Node)) return;
+            if (modeListWrapElement?.contains(target)) return;
+            void collapseNavMenu();
+        };
+
+        document.addEventListener("pointerdown", handlePointerDown);
+        return () =>
+            document.removeEventListener("pointerdown", handlePointerDown);
+    });
+
     $effect(() => {
         activeModeIndex;
         page.url.pathname;
         modeListElement;
         modeButtonRefs;
         submenuTrackElement;
+        isContractedViewport;
 
-        if (typeof window === "undefined") return;
+        if (typeof window === "undefined" || isContractedViewport) return;
 
         if (activeModeIndex < 0) {
             if (submenuMounted) {
@@ -123,6 +244,7 @@
     $effect(() => {
         if (typeof window === "undefined") return;
         const onResize = () => {
+            applyViewport(window.matchMedia(CONTRACTED_MEDIA).matches);
             updateSubmenuPosition();
             updateModeButtonWidthVar();
         };
@@ -183,6 +305,31 @@
     );
 </script>
 
+{#snippet submenuLinks(onNavigate?: () => void)}
+    <li>
+        <a
+            class="mode-sub-button"
+            class:is-active={submenuView === "lehrplan"}
+            href={getViewPath("lehrplan")}
+            aria-current={submenuView === "lehrplan" ? "page" : undefined}
+            onclick={onNavigate}
+        >
+            Lehrplan
+        </a>
+    </li>
+    <li>
+        <a
+            class="mode-sub-button"
+            class:is-active={submenuView === "zirkularitaet"}
+            href={getViewPath("zirkularitaet")}
+            aria-current={submenuView === "zirkularitaet" ? "page" : undefined}
+            onclick={onNavigate}
+        >
+            Zirkularität
+        </a>
+    </li>
+{/snippet}
+
 <nav class="main-nav" aria-label="Ausbildungsmodi">
     <div class="nav-top">
         <a
@@ -193,39 +340,93 @@
                     e.preventDefault();
                     location.reload();
                 }
+                collapseNavMenu();
             }}
         >Schullehrplan ABU</a
         >
-        <div class="mode-list-wrap">
-            <ul class="mode-list" bind:this={modeListElement}>
-                {#each educationModes as mode, index}
-                    <li>
-                        <a
-                            class="mode-button"
-                            class:is-current={activeModeIndex === index}
-                            href={getModeHref(mode.slug)}
-                            aria-current={page.url.pathname ===
-                            getModePath(mode.slug)
-                                ? "page"
-                                : undefined}
-                            bind:this={modeButtonRefs[index]}
-                        >
-                            {mode.title}
-                        </a>
-                    </li>
-                {/each}
-                <li class="mode-qv-item">
-                    <a
-                        class="mode-button mode-button--qv"
-                        class:is-current={isQvRoute}
-                        href={qvPath}
-                        aria-current={isQvRoute ? "page" : undefined}
+        <div
+            class="mode-list-wrap"
+            class:is-contracted={isContractedViewport}
+            class:is-expanded={navMenuExpanded}
+            bind:this={modeListWrapElement}
+        >
+            {#if showContractedSubmenu}
+                <ul class="mode-list-sub mode-list-sub--contracted">
+                    {@render submenuLinks()}
+                </ul>
+            {/if}
+
+            <div class="nav-dropdown-anchor">
+                {#if isContractedViewport}
+                    <button
+                        type="button"
+                        class="nav-toggle"
+                        class:is-active={navMenuExpanded}
+                        bind:this={navToggleElement}
+                        aria-expanded={navMenuExpanded}
+                        aria-controls="nav-mode-list"
+                        aria-label={navMenuExpanded
+                            ? "Navigation schliessen"
+                            : "Navigation öffnen"}
+                        onclick={toggleNavMenu}
                     >
-                        QV
-                    </a>
-                </li>
-            </ul>
-            {#if submenuMounted}
+                        <img
+                            src={closeIcon}
+                            alt=""
+                            class="nav-toggle-icon"
+                            class:is-plus={!navMenuExpanded}
+                        />
+                    </button>
+                {/if}
+
+                <div
+                    class="mode-menu"
+                    class:is-open={navMenuExpanded}
+                    class:no-transition={suppressMenuTransition}
+                    inert={isContractedViewport && !navMenuExpanded}
+                >
+                    <ul
+                        id="nav-mode-list"
+                        class="mode-list"
+                        bind:this={modeListElement}
+                    >
+                        {#each educationModes as mode, index}
+                            <li>
+                                <a
+                                    class="mode-button"
+                                    class:is-current={activeModeIndex === index}
+                                    href={getModeHref(mode.slug)}
+                                    aria-current={page.url.pathname ===
+                                    getModePath(mode.slug)
+                                        ? "page"
+                                        : undefined}
+                                    bind:this={modeButtonRefs[index]}
+                                    onclick={isContractedViewport
+                                        ? collapseNavMenu
+                                        : undefined}
+                                >
+                                    {mode.title}
+                                </a>
+                            </li>
+                        {/each}
+                        <li class="mode-qv-item">
+                            <a
+                                class="mode-button mode-button--qv"
+                                class:is-current={isQvRoute}
+                                href={qvPath}
+                                aria-current={isQvRoute ? "page" : undefined}
+                                onclick={isContractedViewport
+                                    ? collapseNavMenu
+                                    : undefined}
+                            >
+                                QV
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            {#if !isContractedViewport && submenuMounted}
                 <div
                     class="mode-submenu-track"
                     class:no-slide={suppressSlideTransition}
@@ -237,32 +438,7 @@
                         class:is-visible={submenuVisible}
                     >
                         <ul class="mode-list-sub">
-                            <li>
-                                <a
-                                    class="mode-sub-button"
-                                    class:is-active={submenuView === "lehrplan"}
-                                    href={getViewPath("lehrplan")}
-                                    aria-current={submenuView === "lehrplan"
-                                        ? "page"
-                                        : undefined}
-                                >
-                                    Lehrplan
-                                </a>
-                            </li>
-                            <li>
-                                <a
-                                    class="mode-sub-button"
-                                    class:is-active={submenuView ===
-                                        "zirkularitaet"}
-                                    href={getViewPath("zirkularitaet")}
-                                    aria-current={submenuView ===
-                                    "zirkularitaet"
-                                        ? "page"
-                                        : undefined}
-                                >
-                                    Zirkularität
-                                </a>
-                            </li>
+                            {@render submenuLinks()}
                         </ul>
                     </div>
                 </div>
@@ -275,8 +451,6 @@
     .main-nav {
         position: relative;
         z-index: 4;
-        /* Reserve space for the absolutely positioned submenu row */
-        /* padding-bottom: 180px; */
     }
 
     .nav-top {
@@ -296,6 +470,151 @@
         isolation: isolate;
     }
 
+    @media (max-width: 1399px) {
+        .mode-list-wrap {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 10px;
+            --contracted-nav-control-height: 55px;
+        }
+
+        .nav-dropdown-anchor {
+            display: flex;
+            align-items: center;
+        }
+
+        .mode-list-sub--contracted li {
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-toggle {
+            width: var(--contracted-nav-control-height);
+            height: var(--contracted-nav-control-height);
+        }
+    }
+
+    .nav-dropdown-anchor {
+        position: relative;
+        flex-shrink: 0;
+    }
+
+    .mode-menu {
+        position: relative;
+    }
+
+    @media (min-width: 1400px) {
+        .mode-menu {
+            position: relative;
+            opacity: 1;
+            visibility: visible;
+            transform: none;
+            pointer-events: auto;
+            display: block;
+        }
+
+        .mode-list-sub--contracted {
+            display: none;
+        }
+    }
+
+    @media (max-width: 1399px) {
+        .mode-submenu-track {
+            display: none;
+        }
+
+        .nav-toggle {
+            display: inline-grid;
+        }
+
+        .mode-menu {
+            position: absolute;
+            top: calc(100% + 10px);
+            right: 0;
+            left: auto;
+            z-index: 5;
+            width: max-content;
+            display: none;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            pointer-events: none;
+            transition: none;
+        }
+
+        .mode-menu.is-open {
+            display: block;
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+            pointer-events: auto;
+            animation: mode-menu-open 220ms ease-in-out;
+        }
+
+        .mode-menu.no-transition,
+        .mode-menu.no-transition.is-open {
+            transition: none;
+            animation: none;
+        }
+    }
+
+    @keyframes mode-menu-open {
+        from {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @media (max-width: 1399px) {
+        .mode-list-wrap .mode-list {
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 10px;
+            width: max-content;
+            padding: 0;
+            background: transparent;
+            box-shadow: none;
+        }
+
+        .mode-list-wrap .mode-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: auto;
+            height: var(--contracted-nav-control-height, 55px);
+            max-height: none;
+            padding-block: 0;
+            padding-inline: 25px;
+            line-height: 1;
+        }
+
+        .mode-list-wrap .mode-list-sub--contracted .mode-sub-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            height: var(--contracted-nav-control-height, 55px);
+            max-height: none;
+            padding-block: 0;
+            padding-inline: 25px;
+            font-size: 32px;
+            line-height: 1;
+            font-weight: 300;
+            letter-spacing: 0.01em;
+        }
+    }
+
+    .mode-list-sub--contracted {
+        margin-inline: 0;
+        flex-shrink: 0;
+        align-items: center;
+    }
+
     .mode-list {
         display: flex;
         flex-wrap: nowrap;
@@ -306,7 +625,6 @@
         list-style: none;
         position: relative;
         z-index: 2;
-        /* background: var(--color-background); */
     }
 
     .mode-list li {
@@ -355,6 +673,49 @@
         flex: 0 0 auto;
     }
 
+    .nav-toggle {
+        flex-shrink: 0;
+        border: 1.5px solid var(--color-black);
+        border-radius: 9999px;
+        width: 52px;
+        height: 52px;
+        place-items: center;
+        background: var(--color-white);
+        padding: 0;
+        cursor: pointer;
+        transition:
+            background-color 120ms ease,
+            filter 120ms ease;
+    }
+
+    .nav-toggle:hover,
+    .nav-toggle.is-active {
+        background: var(--color-darkblue);
+    }
+
+    .nav-toggle.is-active:hover {
+        filter: brightness(1.2);
+    }
+
+    .nav-toggle-icon {
+        width: 22px;
+        height: 22px;
+        display: block;
+        filter: brightness(0);
+        transition:
+            transform 220ms ease-in-out,
+            filter 120ms ease;
+    }
+
+    .nav-toggle:hover .nav-toggle-icon,
+    .nav-toggle.is-active .nav-toggle-icon {
+        filter: none;
+    }
+
+    .nav-toggle-icon.is-plus {
+        transform: rotate(45deg);
+    }
+
     .mode-sub-button {
         display: inline-block;
         width: auto;
@@ -365,10 +726,10 @@
         border-radius: 9999px;
         background: var(--color-white);
         color: var(--color-black);
-        font-size: var(--h3-size);
-        line-height: var(--h3-line-height);
-        font-weight: var(--h3-weight);
-        letter-spacing: var(--h3-letter-spacing);
+        font-size: 23px;
+        line-height: 31px;
+        font-weight: 300;
+        letter-spacing: 0.01em;
         text-align: center;
         white-space: nowrap;
         overflow: hidden;
@@ -401,10 +762,10 @@
         background: var(--color-white);
         color: var(--color-black);
         text-decoration: none;
-        font-size: var(--h2-size);
-        line-height: var(--h2-line-height);
-        font-weight: var(--h2-weight);
-        letter-spacing: var(--h2-letter-spacing);
+        font-size: 32px;
+        line-height: 40px;
+        font-weight: 300;
+        letter-spacing: 0.01em;
         white-space: nowrap;
         text-align: center;
         transition:
@@ -432,12 +793,16 @@
     @media (prefers-reduced-motion: reduce) {
         .mode-submenu-track,
         .mode-submenu-panel,
+        .mode-menu,
         .mode-sub-button,
-        .mode-button {
+        .mode-button,
+        .nav-toggle-icon {
             transition: none;
+            animation: none;
         }
 
-        .mode-submenu-panel.is-visible {
+        .mode-submenu-panel.is-visible,
+        .mode-menu.is-open {
             opacity: 1;
             transform: none;
         }

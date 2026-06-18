@@ -113,7 +113,7 @@
     }
 
     .mode-route:not(.is-expanded) {
-        grid-template-columns: minmax(0, 5fr) minmax(0, 1fr) minmax(0, 10fr);
+        grid-template-columns: minmax(0, 5fr) minmax(0, 10fr);
     }
 
     .mode-route > :global(.side-navigation) {
@@ -127,7 +127,7 @@
     }
 
     .topics-content {
-        grid-column: 3;
+        grid-column: 2;
         min-width: 0;
     }
 

@@ -5,6 +5,7 @@
         createMatterTimestepState,
         stepMatterPhysics,
     } from "$lib/matter-timestep";
+    import { getLayoutScale } from "$lib/layout-scale";
 
     type PhysicsPill = Competence & { id: string };
 
@@ -19,13 +20,21 @@
     let pillSizes = $state<Record<string, { pill: number; inner: number }>>({});
     let spawnedPills = $state<Record<string, boolean>>({});
 
-    // Pills are intentionally a fixed size and excluded from the viewport
-    // scaling applied to the rest of the site.
-    const getPillMetrics = () => ({
-        maxWidth: 550,
-        hPadding: 76,
-        minContent: 200,
-    });
+    const PILL_MAX_WIDTH = 550;
+    const PILL_H_PADDING = 76;
+    const PILL_MIN_CONTENT = 200;
+
+    // Mirror the CSS `--u` scaled-pixel unit so the text-fitting bounds match
+    // the rendered (scaled) pill, and therefore the Matter body that is built
+    // from the element's measured size.
+    const getPillMetrics = () => {
+        const scale = getLayoutScale();
+        return {
+            maxWidth: PILL_MAX_WIDTH * scale,
+            hPadding: PILL_H_PADDING * scale,
+            minContent: PILL_MIN_CONTENT * scale,
+        };
+    };
 
     let measurer: HTMLDivElement | null = null;
 
@@ -449,6 +458,35 @@
                     resizeObserverActive = true;
                 });
             });
+            // After the rendered pills re-fit (font/padding scale with the
+            // viewport), rescale each Matter body so its collision geometry
+            // keeps matching the element's new measured size.
+            const syncBodiesToElements = () => {
+                const width = containerEl?.clientWidth ?? 0;
+                const height = containerEl?.clientHeight ?? 0;
+
+                for (const slug of activeSlugs) {
+                    const body = worldBodies.get(slug);
+                    const el = itemElements.get(slug);
+                    const prev = bodySizes.get(slug);
+                    if (!body || !el || !prev) continue;
+
+                    const w = el.offsetWidth;
+                    const h = el.offsetHeight;
+                    if (!w || !h) continue;
+
+                    const sx = w / prev.width;
+                    const sy = h / prev.height;
+                    if (Math.abs(sx - 1) > 0.005 || Math.abs(sy - 1) > 0.005) {
+                        Body.scale(body, sx, sy);
+                        bodySizes.set(slug, { width: w, height: h });
+                        Sleeping.set(body, false);
+                    }
+
+                    if (width && height) clampBodyToStage(body, width, height);
+                }
+            };
+
             resizeObserver = new ResizeObserver(() => {
                 if (!resizeObserverActive || resizeRaf) return;
                 resizeRaf = requestAnimationFrame(() => {
@@ -457,6 +495,11 @@
                         fitPillWidth(el, id);
                     }
                     updateBoundaries();
+                    // Wait for Svelte to flush the new `--pill-w` and the
+                    // browser to lay out before measuring/rescaling bodies.
+                    void tick().then(() => {
+                        requestAnimationFrame(syncBodiesToElements);
+                    });
                 });
             });
             resizeObserver.observe(stage);
@@ -535,10 +578,10 @@
         width: var(--pill-w, auto);
         min-width: 0;
         max-width: var(--pill-max-width, 550px);
-        min-height: 120px;
-        padding: 0 38px;
+        min-height: calc(120 * var(--u));
+        padding: 0 calc(38 * var(--u));
         border-radius: 9999px;
-        box-shadow: inset 0 0 0 2px var(--color-black);
+        box-shadow: inset 0 0 0 calc(2 * var(--u)) var(--color-black);
         background: var(--pill-color);
         color: var(--color-black);
         user-select: none;
@@ -562,8 +605,8 @@
     .pill-title {
         display: block;
         min-width: 0;
-        font-size: 32px;
-        line-height: 40px;
+        font-size: calc(32 * var(--u));
+        line-height: calc(40 * var(--u));
         font-weight: 300;
         letter-spacing: 0.01em;
         text-align: center;

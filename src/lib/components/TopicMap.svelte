@@ -301,7 +301,7 @@
                     style={bubbleStyle(bubble.anchor_topic)}
                     aria-hidden={!active}
                 >
-                    <h2 class="topicmap-bubble-title">{bubble.title}</h2>
+                    <h2 class="topicmap-bubble-title">{bubble.title}:</h2>
                     <p>{bubble.text}</p>
                     <svg
                         class="topicmap-bubble-arrow"
@@ -464,10 +464,13 @@
         align-items: flex-start;
         text-align: left;
         line-height: 1.3;
+        font-size: var(--h5-size);
+        font-weight: var(--h5-weight);
+        letter-spacing: var(--h5-letter-spacing);
     }
 
     .topicmap-qv-annotation-lead {
-        font-weight: var(--h5-weight);
+        font-weight: 600;
     }
 
     .topicmap-qv-annotations {
@@ -554,14 +557,15 @@
     }
 
     .topicmap-bubble-title {
-        margin-bottom: calc(22 * var(--u));
+        font-weight: 500;
+        /* margin-bottom: calc(22 * var(--u)); */
     }
 
     .topicmap-bubble p {
-        font-size: var(--h5-size);
-        line-height: var(--h5-line-height);
-        font-weight: var(--h5-weight);
-        letter-spacing: var(--h5-letter-spacing);
+        font-size: var(--h2-size);
+        line-height: var(--h2-line-height);
+        font-weight: var(--h2-weight);
+        letter-spacing: var(--h2-letter-spacing);
     }
 
     @media (max-width: 960px) {

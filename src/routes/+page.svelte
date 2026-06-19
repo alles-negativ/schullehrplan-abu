@@ -127,11 +127,10 @@
 
 <style>
     .start-page {
-        /* Pill measurement metrics consumed by InteractivePhysics.
-           Pills stay a fixed size and are excluded from viewport scaling. */
-        --pill-max-width: 550px;
-        --pill-h-padding: 76px;
-        --pill-min-content: 200px;
+        /* Pill measurement metrics consumed by InteractivePhysics. */
+        --pill-max-width: calc(550 * var(--u));
+        --pill-h-padding: calc(76 * var(--u));
+        --pill-min-content: calc(200 * var(--u));
 
         display: flex;
         flex-direction: column;

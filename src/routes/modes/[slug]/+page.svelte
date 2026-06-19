@@ -149,6 +149,17 @@
     }
 
     @media (max-width: 1100px) {
+        .mode-overview {
+            width: 100%;
+            margin-left: 0;
+            margin-right: 0;
+            grid-template-columns: minmax(0, 1fr);
+        }
+
+        .overview-content {
+            grid-column: 1;
+        }
+
         .mode-route.is-expanded {
             grid-template-columns: minmax(0, 1fr);
         }

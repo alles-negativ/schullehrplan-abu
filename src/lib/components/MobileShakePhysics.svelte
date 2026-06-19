@@ -4,9 +4,9 @@
         assessMotionSensorReadiness,
         motionSensorsSupported,
         needsMotionPermission,
-        readGravityVector,
+        readLateralTiltAngleFromGravity,
+        readLateralTiltAngleFromOrientation,
         readMotionSample,
-        readTiltGravityFromOrientation,
         requestMotionSensorsAccess,
         verifyMotionSensorsDeliverData,
     } from "$lib/device-motion";
@@ -607,16 +607,11 @@
             const gravityStrength = 1.4;
             const gravitySmoothing = 0.18;
 
-            const applyTiltGravity = (gx: number, gy: number) => {
+            const applyLateralTiltGravity = (angleRad: number) => {
                 if (!engineRef || !motionEnabled) return;
 
-                const magnitude = Math.hypot(gx, gy);
-                if (magnitude < 0.08) return;
-
-                const nx = gx / magnitude;
-                const ny = gy / magnitude;
-                const targetX = nx * gravityStrength;
-                const targetY = ny * gravityStrength;
+                const targetX = Math.sin(angleRad) * gravityStrength;
+                const targetY = Math.cos(angleRad) * gravityStrength;
 
                 smoothedGravityX +=
                     (targetX - smoothedGravityX) * gravitySmoothing;
@@ -641,17 +636,17 @@
             };
 
             sensorHandlers.onOrientation = (event: DeviceOrientationEvent) => {
-                const tilt = readTiltGravityFromOrientation(event);
-                if (!tilt) return;
-                applyTiltGravity(tilt.x, tilt.y);
+                const angle = readLateralTiltAngleFromOrientation(event);
+                if (angle === null) return;
+                applyLateralTiltGravity(angle);
             };
 
             sensorHandlers.onMotion = (event: DeviceMotionEvent) => {
                 if (!motionEnabled || !engineRef || !BodyRef) return;
 
-                const gravity = readGravityVector(event);
-                if (gravity) {
-                    applyTiltGravity(gravity.x, gravity.y);
+                const angle = readLateralTiltAngleFromGravity(event);
+                if (angle !== null) {
+                    applyLateralTiltGravity(angle);
                 }
 
                 const acc = readMotionSample(event);

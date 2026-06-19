@@ -56,7 +56,7 @@
         <p class="mobile-hero-text">
             Ich bin der neue Schullehrplan Allgemeinbildung.
             <br />
-            Schüttle dein Gerät und sieh, wie die Kompetenzen reagieren.
+            Lernen ist bei mir kompetenzorientiert, vernetzt und aufbauend.
         </p>
     </div>
 

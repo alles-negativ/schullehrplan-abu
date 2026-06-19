@@ -217,6 +217,36 @@ export const readMotionSample = (
     return { x: incl.x, y: incl.y, z: incl.z };
 };
 
+export const readLateralTiltAngleFromOrientation = (
+    event: DeviceOrientationEvent,
+    maxDegrees = 45,
+): number | null => {
+    if (event.gamma === null) return null;
+
+    const clamped = Math.max(-maxDegrees, Math.min(maxDegrees, event.gamma));
+    return (clamped * Math.PI) / 180;
+};
+
+export const readLateralTiltAngleFromGravity = (
+    event: DeviceMotionEvent,
+): number | null => {
+    const incl = event.accelerationIncludingGravity;
+    if (!incl || incl.x === null || incl.y === null) return null;
+
+    const planar = Math.hypot(incl.x, incl.y);
+    if (planar < 0.5) return null;
+
+    const sinAngle = incl.x / planar;
+    return Math.asin(Math.max(-1, Math.min(1, sinAngle)));
+};
+
+/** Unit gravity in screen space: down, rotated by lateral tilt. */
+export const gravityFromLateralTiltAngle = (angleRad: number): MotionSample => ({
+    x: Math.sin(angleRad),
+    y: Math.cos(angleRad),
+    z: 0,
+});
+
 export const readGravityVector = (
     event: DeviceMotionEvent,
 ): MotionSample | null => {
@@ -231,24 +261,6 @@ export const readGravityVector = (
     }
 
     return { x: incl.x, y: incl.y, z: incl.z };
-};
-
-export const readTiltGravityFromOrientation = (
-    event: DeviceOrientationEvent,
-): MotionSample | null => {
-    if (event.beta === null && event.gamma === null) return null;
-
-    // Portrait hold: beta ≈ 90° when upright; gamma is left/right tilt.
-    const tiltX = ((event.gamma ?? 0) * Math.PI) / 180;
-    const tiltY = (((event.beta ?? 90) - 90) * Math.PI) / 180;
-
-    const gx = Math.sin(tiltX);
-    const gy = Math.cos(tiltX) * Math.cos(tiltY);
-
-    const magnitude = Math.hypot(gx, gy);
-    if (magnitude < 0.08) return { x: 0, y: 1, z: 0 };
-
-    return { x: gx / magnitude, y: gy / magnitude, z: 0 };
 };
 
 export const readRotationSample = (

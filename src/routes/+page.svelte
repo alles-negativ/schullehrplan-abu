@@ -161,7 +161,7 @@
     .hero-text {
         position: relative;
         z-index: 1;
-        font-size: 50px;
+        font-size: clamp(28px, 3.47vw, 50px);
         line-height: 120%;
         font-weight: var(--h1-weight);
         letter-spacing: var(--h1-letter-spacing);
@@ -173,22 +173,23 @@
         position: relative;
         z-index: 3;
         pointer-events: auto;
-        padding: 50px 100px;
-        border: 3px solid var(--color-black);
+        padding: clamp(20px, 3.47vw, 50px) clamp(32px, 6.94vw, 100px);
+        border: clamp(2px, 0.21vw, 3px) solid var(--color-black);
         border-radius: 9999px;
         background: var(--button-color);
-        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
+        box-shadow: 0 clamp(6px, 0.83vw, 12px) clamp(16px, 2.08vw, 30px)
+            rgba(0, 0, 0, 0.25);
         color: var(--color-black);
-        font-size: 50px;
-        line-height: 56px;
+        font-size: clamp(24px, 3.47vw, 50px);
+        line-height: 1.12;
         font-weight: 300;
         letter-spacing: var(--h2-letter-spacing);
         cursor: pointer;
         transition:
             background-color 160ms ease,
             filter 160ms ease;
-        width: 600px;
-        height: 240px;
+        width: clamp(280px, 41.67vw, 600px);
+        height: clamp(112px, 16.67vw, 240px);
         white-space: pre-line;
         animation: hero-shake-hack 1.2s 0.5s;
     }

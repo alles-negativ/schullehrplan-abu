@@ -109,7 +109,7 @@
         align-items: start;
         grid-template-columns: minmax(0, 16fr);
         transition: grid-template-columns 350ms cubic-bezier(0.4, 0, 0.2, 1);
-        margin-top: 180px;
+        margin-top: calc(180 * var(--u));
     }
 
     .mode-route:not(.is-expanded) {
@@ -132,8 +132,8 @@
     }
 
     .mode-overview {
-        margin: 0 33px;
-        margin-top: 180px;
+        margin: 0 calc(33 * var(--u));
+        margin-top: calc(180 * var(--u));
     }
 
     .overview-content :global(p) {
@@ -155,8 +155,8 @@
 
         .mode-route:not(.is-expanded) {
             grid-template-columns: minmax(0, 1fr);
-            row-gap: 80px;
-            margin-top: 8.5px;
+            row-gap: calc(80 * var(--u));
+            margin-top: calc(8.5 * var(--u));
         }
 
         .mode-route > :global(.side-navigation.is-dropdown) {

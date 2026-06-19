@@ -319,14 +319,14 @@
     .circularity {
         display: flex;
         flex-direction: column;
-        gap: 70px;
-        margin-top: 120px;
+        gap: calc(70 * var(--u));
+        margin-top: calc(120 * var(--u));
     }
 
     .aspect-grid {
         display: grid;
         grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: 10px;
+        gap: calc(10 * var(--u));
         align-items: start;
     }
 
@@ -335,10 +335,10 @@
     }
 
     .aspect-title-button {
-        margin: 0 0 35px;
-        border: 2px solid var(--color-black);
-        border-radius: 999px;
-        padding: 0 30px;
+        margin: 0 0 calc(35 * var(--u));
+        border: calc(2 * var(--u)) solid var(--color-black);
+        border-radius: calc(999 * var(--u));
+        padding: 0 calc(30 * var(--u));
         text-align: center;
         font-size: var(--h2-size);
         line-height: var(--h2-line-height);
@@ -348,20 +348,20 @@
         color: var(--color-black);
         width: 100%;
         cursor: pointer;
-        height: 120px;
+        height: calc(120 * var(--u));
         /* Required for formatAspectTitle line break in Schlüsselkompetenzen */
         white-space: pre-line;
         transition: all 120ms ease;
     }
 
     .aspect-title-button:hover {
-        /* box-shadow: 0px 7px 0px var(--color-black); */
-        /* transform: translateY(-7px); */
+        /* box-shadow: 0px calc(7 * var(--u)) 0px var(--color-black); */
+        /* transform: translateY(calc(-7 * var(--u))); */
         animation: shake 3s ease-in-out infinite;
     }
 
     .aspect-title-button.is-active {
-        box-shadow: 0 9px 15px rgba(0, 0, 0, 0.25);
+        box-shadow: 0 calc(9 * var(--u)) calc(15 * var(--u)) rgba(0, 0, 0, 0.25);
     }
 
     @keyframes shake {
@@ -371,16 +371,16 @@
             transform: rotate(0deg) translateX(0);
         }
         3% {
-            transform: rotate(-1deg) translateX(-5px);
+            transform: rotate(-1deg) translateX(calc(-5 * var(--u)));
         }
         6% {
-            transform: rotate(1deg) translateX(5px);
+            transform: rotate(1deg) translateX(calc(5 * var(--u)));
         }
         9% {
-            transform: rotate(-0.75deg) translateX(-5px);
+            transform: rotate(-0.75deg) translateX(calc(-5 * var(--u)));
         }
         12% {
-            transform: rotate(0.75deg) translateX(5px);
+            transform: rotate(0.75deg) translateX(calc(5 * var(--u)));
         }
         15% {
             transform: rotate(0deg) translateX(0);
@@ -409,14 +409,14 @@
     .pill {
         display: inline-flex;
         align-items: center;
-        padding: 5px 15px;
-        border-radius: 999px;
+        padding: calc(5 * var(--u)) calc(15 * var(--u));
+        border-radius: calc(999 * var(--u));
         font-size: var(--h5-size);
         line-height: var(--h5-line-height);
         font-weight: var(--h5-weight);
         letter-spacing: var(--h5-letter-spacing);
         background: var(--color-white);
-        border: 1px solid var(--color-black);
+        border: calc(1 * var(--u)) solid var(--color-black);
         width: fit-content;
         max-width: 100%;
         cursor: pointer;
@@ -445,14 +445,14 @@
     .years {
         display: flex;
         flex-direction: column;
-        gap: 50px;
+        gap: calc(50 * var(--u));
     }
 
     .year-header {
         display: grid;
         grid-template-columns: 1fr minmax(14rem, 28rem);
         align-items: end;
-        margin: 10px 25px;
+        margin: calc(10 * var(--u)) calc(25 * var(--u));
     }
 
     .year-header h5 {
@@ -471,18 +471,18 @@
     .topic-list {
         display: flex;
         flex-direction: column;
-        gap: 20px;
+        gap: calc(20 * var(--u));
     }
 
     .topic-card {
         background: var(--color-white);
-        border-radius: 25px;
-        padding: 35px 40px 23px 40px;
+        border-radius: calc(25 * var(--u));
+        padding: calc(35 * var(--u)) calc(40 * var(--u)) calc(23 * var(--u)) calc(40 * var(--u));
     }
 
     .topic-card-title {
         margin: 0;
-        margin-left: -33px;
+        margin-left: calc(-33 * var(--u));
         font-size: var(--h2-size);
         line-height: var(--h2-line-height);
         font-weight: var(--h2-weight);
@@ -502,8 +502,8 @@
         align-items: flex-start;
         gap: 1.5rem;
         padding: 0.85rem 0;
-        border-top: 5px solid var(--color-background);
-        margin-left: 35px;
+        border-top: calc(5 * var(--u)) solid var(--color-background);
+        margin-left: calc(35 * var(--u));
         position: relative;
     }
 
@@ -531,8 +531,8 @@
         font-weight: var(--h5-weight);
         letter-spacing: var(--h5-letter-spacing);
         position: absolute;
-        left: -40px;
-        top: 18px;
+        left: calc(-40 * var(--u));
+        top: calc(18 * var(--u));
     }
 
     .reference-text {
@@ -556,7 +556,7 @@
 
     .list-pill {
         flex-shrink: 0;
-        padding: 5px 15px;
+        padding: calc(5 * var(--u)) calc(15 * var(--u));
         background: var(--pill-color);
         color: var(--color-black);
         white-space: nowrap;
@@ -569,19 +569,19 @@
     @media (max-width: 1100px) {
         .aspect-grid {
             grid-template-columns: 1fr;
-            gap: 40px;
+            gap: calc(40 * var(--u));
         }
 
         .aspect-column {
             display: grid;
             grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
-            gap: 15px;
+            gap: calc(15 * var(--u));
             align-items: start;
         }
 
         .aspect-title-button {
             margin: 0;
-            height: 120px;
+            height: calc(120 * var(--u));
             align-self: start;
         }
 

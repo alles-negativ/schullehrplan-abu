@@ -312,7 +312,7 @@
     .side-navigation {
         display: flex;
         flex-direction: column;
-        gap: 50px;
+        gap: calc(50 * var(--u));
         min-width: 0;
         position: relative;
     }
@@ -328,15 +328,15 @@
         width: 100%;
         min-width: 0;
         box-sizing: border-box;
-        border: 1.5px solid var(--color-black);
-        border-radius: 27.5px;
+        border: calc(1.5 * var(--u)) solid var(--color-black);
+        border-radius: calc(27.5 * var(--u));
         background: var(--color-white);
         overflow: hidden;
         transition: background-color 120ms ease;
     }
 
     .topic-dropdown:not(.is-open) {
-        height: 55px;
+        height: calc(55 * var(--u));
     }
 
     .topic-dropdown.is-open {
@@ -362,14 +362,14 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-        gap: 10px;
+        gap: calc(10 * var(--u));
         width: 100%;
         max-width: none;
         height: 100%;
         min-height: 0;
         flex-shrink: 0;
         box-sizing: border-box;
-        padding: 7px 14px 7px 25px;
+        padding: calc(7 * var(--u)) calc(14 * var(--u)) calc(7 * var(--u)) calc(25 * var(--u));
         border: none;
         border-radius: 0;
         background: transparent;
@@ -377,8 +377,8 @@
         cursor: pointer;
         text-align: left;
         font-family: var(--font-sans);
-        font-size: 32px;
-        line-height: 40px;
+        font-size: calc(32 * var(--u));
+        line-height: calc(40 * var(--u));
         font-weight: 300;
         letter-spacing: 0.01em;
         transition:
@@ -393,8 +393,8 @@
     }
 
     .topic-dropdown.is-open .topic-dropdown-trigger {
-        height: 52px;
-        min-height: 52px;
+        height: calc(52 * var(--u));
+        min-height: calc(52 * var(--u));
         background: var(--color-darkblue);
         color: var(--color-white);
         border-radius: 9999px;
@@ -473,7 +473,7 @@
     .topic-dropdown-icon {
         flex-shrink: 0;
         align-self: center;
-        height: 30px;
+        height: calc(30 * var(--u));
         width: auto;
         display: block;
         transform: rotate(180deg);
@@ -496,8 +496,8 @@
     .topic-dropdown-panel {
         display: flex;
         flex-direction: column;
-        gap: 50px;
-        padding: 30px 15px 15px;
+        gap: calc(50 * var(--u));
+        padding: calc(30 * var(--u)) calc(15 * var(--u)) calc(15 * var(--u));
     }
 
     .side-navigation.is-dropdown .lessons-toggle {
@@ -510,12 +510,12 @@
         display: flex;
         align-items: center;
         justify-content: flex-start;
-        gap: 15px;
+        gap: calc(15 * var(--u));
         width: fit-content;
         max-width: 100%;
         position: absolute;
-        top: -70px;
-        margin-left: 30px;
+        top: calc(-70 * var(--u));
+        margin-left: calc(30 * var(--u));
         z-index: 10000;
     }
 
@@ -532,9 +532,9 @@
     .toggle-switch {
         position: relative;
         flex-shrink: 0;
-        width: 40px;
-        height: 20px;
-        border: 1.5px solid var(--color-black);
+        width: calc(40 * var(--u));
+        height: calc(20 * var(--u));
+        border: calc(1.5 * var(--u)) solid var(--color-black);
         border-radius: 9999px;
         background: var(--color-white);
         padding: 0;
@@ -550,8 +550,8 @@
         position: absolute;
         top: 50%;
         left: 0px;
-        width: 17px;
-        height: 17px;
+        width: calc(17 * var(--u));
+        height: calc(17 * var(--u));
         border-radius: 50%;
         background: var(--color-black);
         transform: translateY(-50%);
@@ -561,14 +561,14 @@
     }
 
     .toggle-switch.is-on .toggle-thumb {
-        left: calc(100% - 15px - 2px);
+        left: calc(100% - calc(15 * var(--u)) - calc(2 * var(--u)));
         background: var(--color-white);
     }
 
     section {
         display: flex;
         flex-direction: column;
-        gap: 6px;
+        gap: calc(6 * var(--u));
     }
 
     .year-title {
@@ -577,9 +577,9 @@
         justify-content: space-between;
         flex-wrap: nowrap;
         gap: 0;
-        padding: 3px 15px 4px 15px;
+        padding: calc(3 * var(--u)) calc(15 * var(--u)) calc(4 * var(--u)) calc(15 * var(--u));
         border-radius: 9999px;
-        border: 1.5px solid var(--color-black);
+        border: calc(1.5 * var(--u)) solid var(--color-black);
         color: var(--color-black);
         background: transparent;
         width: fit-content;
@@ -595,7 +595,7 @@
     }
 
     .side-navigation.show-lessons .year-title {
-        gap: 25px;
+        gap: calc(25 * var(--u));
     }
 
     .lesson-count {
@@ -628,7 +628,7 @@
         padding: 0;
         display: flex;
         flex-direction: column;
-        gap: 6px;
+        gap: calc(6 * var(--u));
     }
 
     .topic-button {
@@ -640,7 +640,7 @@
         max-width: 100%;
         box-sizing: border-box;
         text-align: left;
-        padding: 3px 15px 3px 15px;
+        padding: calc(3 * var(--u)) calc(15 * var(--u)) calc(3 * var(--u)) calc(15 * var(--u));
         border-radius: 9999px;
         cursor: pointer;
         text-decoration: none;
@@ -650,7 +650,7 @@
         font-weight: var(--h3-weight);
         letter-spacing: var(--h3-letter-spacing);
         color: var(--color-black);
-        border: 1.5px solid var(--color-black);
+        border: calc(1.5 * var(--u)) solid var(--color-black);
         background: var(--color-white);
         transition:
             background-color 120ms ease,
@@ -666,7 +666,7 @@
     }
 
     .side-navigation.show-lessons .topic-button {
-        gap: 25px;
+        gap: calc(25 * var(--u));
     }
 
     .side-navigation.is-expanded .topic-button {
@@ -674,7 +674,7 @@
         line-height: var(--h1-line-height);
         font-weight: var(--h1-weight);
         letter-spacing: var(--h1-letter-spacing);
-        padding: 10px 30px 10px 30px;
+        padding: calc(10 * var(--u)) calc(30 * var(--u)) calc(10 * var(--u)) calc(30 * var(--u));
     }
 
     .topic-label {
@@ -693,7 +693,7 @@
         font-size: var(--h6-size);
         line-height: var(--h6-line-height);
         letter-spacing: var(--h6-letter-spacing);
-        transform: translateY(-2px);
+        transform: translateY(calc(-2 * var(--u)));
         max-width: 0;
         opacity: 0;
         overflow: hidden;
@@ -711,7 +711,7 @@
     }
 
     .side-navigation.is-expanded .topic-lessons {
-        transform: translateY(-5px);
+        transform: translateY(calc(-5 * var(--u)));
     }
 
     .topic-button:hover,
@@ -730,12 +730,12 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-        gap: 10px;
+        gap: calc(10 * var(--u));
         margin-top: 0;
         max-height: 0;
         opacity: 0;
         overflow: hidden;
-        padding: 0px 0px 0px 30px;
+        padding: 0px 0px 0px calc(30 * var(--u));
         color: var(--color-black);
         font-family: var(--font-mono);
         font-size: var(--h6-size);
@@ -749,22 +749,22 @@
     }
 
     .side-navigation.show-lessons .year-meta {
-        max-height: 40px;
+        max-height: calc(40 * var(--u));
         opacity: 1;
-        margin-top: 5px;
+        margin-top: calc(5 * var(--u));
     }
 
     .pdf-link {
         display: inline-flex;
         align-items: center;
-        gap: 7px;
+        gap: calc(7 * var(--u));
         width: fit-content;
         max-width: 100%;
         box-sizing: border-box;
-        margin-top: 10px;
-        padding: 3px 15px 3px 12px;
+        margin-top: calc(10 * var(--u));
+        padding: calc(3 * var(--u)) calc(15 * var(--u)) calc(3 * var(--u)) calc(12 * var(--u));
         border-radius: 9999px;
-        border: 1.5px solid var(--color-black);
+        border: calc(1.5 * var(--u)) solid var(--color-black);
         background: var(--color-white);
         color: var(--color-black);
         text-decoration: none;

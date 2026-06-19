@@ -77,7 +77,7 @@
         display: grid;
         grid-template-columns: minmax(0, 5fr) minmax(0, 1fr) minmax(0, 10fr);
         column-gap: var(--grid-gutter);
-        margin-top: 180px;
+        margin-top: calc(180 * var(--u));
         align-items: start;
     }
 
@@ -88,11 +88,11 @@
     }
 
     .content-wrap {
-        margin: 0 33px;
+        margin: 0 calc(33 * var(--u));
     }
 
     .impressum-section {
-        margin-top: 80px;
+        margin-top: calc(80 * var(--u));
     }
 
     .section-label {
@@ -112,7 +112,7 @@
     }
 
     .copyright {
-        margin-top: 80px;
+        margin-top: calc(80 * var(--u));
         font-family: var(--font-mono);
         font-size: var(--h6-size);
         line-height: var(--h6-line-height);

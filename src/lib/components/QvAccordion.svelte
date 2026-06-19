@@ -261,20 +261,20 @@
 
 <style>
     .qv-sections {
-        margin-top: 80px;
+        margin-top: calc(80 * var(--u));
     }
 
     .section-item {
         position: relative;
         margin-top: 0.65rem;
-        border: 1.5px solid var(--color-black);
-        border-radius: 30px;
-        padding: 23px 21px 30px 33px;
+        border: calc(1.5 * var(--u)) solid var(--color-black);
+        border-radius: calc(30 * var(--u));
+        padding: calc(23 * var(--u)) calc(21 * var(--u)) calc(30 * var(--u)) calc(33 * var(--u));
         background: var(--color-white);
     }
 
     .section-item:not(.is-expanded) {
-        padding-bottom: 23px;
+        padding-bottom: calc(23 * var(--u));
     }
 
     .section-header {
@@ -306,7 +306,7 @@
 
     .section-summary {
         display: block;
-        margin-top: 5px;
+        margin-top: calc(5 * var(--u));
         font-size: var(--h2-size);
         line-height: var(--h2-line-height);
         font-weight: var(--h2-weight);
@@ -316,10 +316,10 @@
 
     .section-toggle-icon-wrap {
         flex-shrink: 0;
-        border: 1.5px solid var(--color-black);
+        border: calc(1.5 * var(--u)) solid var(--color-black);
         border-radius: 9999px;
-        width: 52px;
-        height: 52px;
+        width: calc(52 * var(--u));
+        height: calc(52 * var(--u));
         display: inline-grid;
         place-items: center;
         background: var(--color-darkblue);
@@ -333,7 +333,7 @@
     }
 
     .section-toggle-icon {
-        height: 30px;
+        height: calc(30 * var(--u));
         display: block;
         transform: rotate(180deg);
         transition: transform 120ms ease;
@@ -363,7 +363,7 @@
     .section-text :global(ul),
     .subsection-text :global(ul) {
         /* margin: 0 0 1rem; */
-        padding-left: 25px;
+        padding-left: calc(25 * var(--u));
     }
 
     .section-text :global(p:last-child),
@@ -393,7 +393,7 @@
 
     .section-table th,
     .section-table td {
-        border: 1.5px solid var(--color-black);
+        border: calc(1.5 * var(--u)) solid var(--color-black);
         padding: 0.6rem 0.85rem;
         text-align: left;
         vertical-align: top;
@@ -418,9 +418,9 @@
     }
 
     .subsection {
-        margin-top: 40px;
-        padding-top: 30px;
-        border-top: 8px solid var(--color-background);
+        margin-top: calc(40 * var(--u));
+        padding-top: calc(30 * var(--u));
+        border-top: calc(8 * var(--u)) solid var(--color-background);
     }
 
     .subsection-heading {

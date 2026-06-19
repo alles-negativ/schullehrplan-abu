@@ -122,7 +122,7 @@
         display: grid;
         grid-template-columns: minmax(0, 5fr) minmax(0, 1fr) minmax(0, 10fr);
         column-gap: var(--grid-gutter);
-        margin-top: 180px;
+        margin-top: calc(180 * var(--u));
         align-items: start;
     }
 
@@ -138,15 +138,15 @@
     }
 
     .content-wrap {
-        margin: 0 33px;
+        margin: 0 calc(33 * var(--u));
     }
 
     .description {
-        margin-top: 35px;
+        margin-top: calc(35 * var(--u));
     }
 
     .description :global(p) {
-        margin: 0 0 30px;
+        margin: 0 0 calc(30 * var(--u));
         font-size: var(--h2-size);
         line-height: var(--h2-line-height);
         font-weight: var(--h2-weight);
@@ -159,8 +159,8 @@
 
     .description :global(ul),
     .description :global(ol) {
-        margin: 0 0 30px;
-        padding-left: 30px;
+        margin: 0 0 calc(30 * var(--u));
+        padding-left: calc(30 * var(--u));
         font-size: var(--h2-size);
         line-height: var(--h2-line-height);
         font-weight: var(--h2-weight);
@@ -181,7 +181,7 @@
     }
 
     .chapter-table-wrap {
-        margin-top: 40px;
+        margin-top: calc(40 * var(--u));
         overflow-x: auto;
     }
 
@@ -202,7 +202,7 @@
 
     .chapter-table th,
     .chapter-table td {
-        border: 1.5px solid var(--color-black);
+        border: calc(1.5 * var(--u)) solid var(--color-black);
         padding: 0.6rem 0.85rem;
         text-align: left;
         vertical-align: top;
@@ -220,11 +220,11 @@
     }
 
     .additional-content {
-        margin-top: 40px;
+        margin-top: calc(40 * var(--u));
     }
 
     .additional-content :global(p) {
-        margin: 0 0 25px;
+        margin: 0 0 calc(25 * var(--u));
         font-size: var(--h3-size);
         line-height: var(--h3-line-height);
         font-weight: var(--h3-weight);
@@ -246,8 +246,8 @@
 
         .qv-route:not(.is-expanded) {
             grid-template-columns: minmax(0, 1fr);
-            row-gap: 80px;
-            margin-top: 8.5px;
+            row-gap: calc(80 * var(--u));
+            margin-top: calc(8.5 * var(--u));
         }
 
         .qv-route > :global(.side-navigation.is-dropdown) {

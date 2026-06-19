@@ -4,6 +4,7 @@
     import closeIcon from "$lib/assets/close-icon.svg";
     import { getAllEducationModes } from "$lib/data/education-modes";
     import { tick } from "svelte";
+    import { fade } from "svelte/transition";
 
     const SUBMENU_MOTION_MS = 220;
     const CONTRACTED_MEDIA = "(max-width: 1399px)";
@@ -36,6 +37,7 @@
     let navMenuExpanded = $state(false);
     let navToggleElement = $state<HTMLButtonElement | null>(null);
     let modeListWrapElement = $state<HTMLDivElement | null>(null);
+    let reducedMotion = $state(false);
 
     const showContractedSubmenu = $derived(
         isContractedViewport && activeModeIndex >= 0,
@@ -186,11 +188,23 @@
         if (!browser) return;
 
         const mq = window.matchMedia(CONTRACTED_MEDIA);
+        const motionQuery = window.matchMedia(
+            "(prefers-reduced-motion: reduce)",
+        );
+        reducedMotion = motionQuery.matches;
+
         const syncViewport = () => applyViewport(mq.matches);
+        const onMotionChange = (event: MediaQueryListEvent) => {
+            reducedMotion = event.matches;
+        };
 
         syncViewport();
         mq.addEventListener("change", syncViewport);
-        return () => mq.removeEventListener("change", syncViewport);
+        motionQuery.addEventListener("change", onMotionChange);
+        return () => {
+            mq.removeEventListener("change", syncViewport);
+            motionQuery.removeEventListener("change", onMotionChange);
+        };
     });
 
     $effect(() => {
@@ -351,7 +365,15 @@
             bind:this={modeListWrapElement}
         >
             {#if showContractedSubmenu}
-                <ul class="mode-list-sub mode-list-sub--contracted">
+                <ul
+                    class="mode-list-sub mode-list-sub--contracted"
+                    in:fade={{
+                        duration: reducedMotion ? 0 : SUBMENU_MOTION_MS,
+                    }}
+                    out:fade={{
+                        duration: reducedMotion ? 0 : SUBMENU_MOTION_MS,
+                    }}
+                >
                     {@render submenuLinks()}
                 </ul>
             {/if}
@@ -475,8 +497,8 @@
             display: flex;
             align-items: center;
             justify-content: flex-end;
-            gap: 10px;
-            --contracted-nav-control-height: 55px;
+            gap: calc(10 * var(--u));
+            --contracted-nav-control-height: calc(55 * var(--u));
         }
 
         .nav-dropdown-anchor {
@@ -530,44 +552,35 @@
 
         .mode-menu {
             position: absolute;
-            top: calc(100% + 10px);
+            top: calc(100% + calc(10 * var(--u)));
             right: 0;
             left: auto;
             z-index: 5;
             width: max-content;
-            display: none;
             opacity: 0;
             visibility: hidden;
-            transform: translateY(-10px);
+            transform: translateY(calc(-10 * var(--u)));
             pointer-events: none;
-            transition: none;
+            transition:
+                opacity 220ms ease-in-out,
+                transform 220ms ease-in-out,
+                visibility 0ms linear 220ms;
         }
 
         .mode-menu.is-open {
-            display: block;
             opacity: 1;
             visibility: visible;
             transform: translateY(0);
             pointer-events: auto;
-            animation: mode-menu-open 220ms ease-in-out;
+            transition:
+                opacity 220ms ease-in-out,
+                transform 220ms ease-in-out,
+                visibility 0ms linear 0ms;
         }
 
         .mode-menu.no-transition,
         .mode-menu.no-transition.is-open {
             transition: none;
-            animation: none;
-        }
-    }
-
-    @keyframes mode-menu-open {
-        from {
-            opacity: 0;
-            transform: translateY(-10px);
-        }
-
-        to {
-            opacity: 1;
-            transform: translateY(0);
         }
     }
 
@@ -575,7 +588,7 @@
         .mode-list-wrap .mode-list {
             flex-direction: column;
             align-items: flex-end;
-            gap: 10px;
+            gap: calc(10 * var(--u));
             width: max-content;
             padding: 0;
             background: transparent;
@@ -587,10 +600,10 @@
             align-items: center;
             justify-content: center;
             width: auto;
-            height: var(--contracted-nav-control-height, 55px);
+            height: var(--contracted-nav-control-height, calc(55 * var(--u)));
             max-height: none;
             padding-block: 0;
-            padding-inline: 25px;
+            padding-inline: calc(25 * var(--u));
             line-height: 1;
         }
 
@@ -598,11 +611,11 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            height: var(--contracted-nav-control-height, 55px);
+            height: var(--contracted-nav-control-height, calc(55 * var(--u)));
             max-height: none;
             padding-block: 0;
-            padding-inline: 25px;
-            font-size: 32px;
+            padding-inline: calc(25 * var(--u));
+            font-size: calc(32 * var(--u));
             line-height: 1;
             font-weight: 300;
             letter-spacing: 0.01em;
@@ -619,7 +632,7 @@
         display: flex;
         flex-wrap: nowrap;
         align-items: center;
-        gap: 10px;
+        gap: calc(10 * var(--u));
         padding: 0;
         margin: 0;
         list-style: none;
@@ -634,7 +647,7 @@
     .mode-submenu-track {
         position: absolute;
         left: 0;
-        top: calc(100% + 10px);
+        top: calc(100% + calc(10 * var(--u)));
         z-index: 1;
         transition: transform 220ms ease-in-out;
     }
@@ -645,7 +658,7 @@
 
     .mode-submenu-panel {
         opacity: 0;
-        transform: translateY(-20px);
+        transform: translateY(calc(-20 * var(--u)));
         pointer-events: none;
         transition:
             transform 220ms ease-in-out,
@@ -661,7 +674,7 @@
     .mode-list-sub {
         display: flex;
         justify-content: center;
-        gap: 10px;
+        gap: calc(10 * var(--u));
         padding: 0;
         margin: 0;
         list-style: none;
@@ -675,10 +688,10 @@
 
     .nav-toggle {
         flex-shrink: 0;
-        border: 1.5px solid var(--color-black);
+        border: calc(1.5 * var(--u)) solid var(--color-black);
         border-radius: 9999px;
-        width: 52px;
-        height: 52px;
+        width: calc(52 * var(--u));
+        height: calc(52 * var(--u));
         place-items: center;
         background: var(--color-white);
         padding: 0;
@@ -698,8 +711,8 @@
     }
 
     .nav-toggle-icon {
-        width: 22px;
-        height: 22px;
+        width: calc(22 * var(--u));
+        height: calc(22 * var(--u));
         display: block;
         filter: brightness(0);
         transition:
@@ -720,14 +733,14 @@
         display: inline-block;
         width: auto;
         box-sizing: border-box;
-        max-height: 45px;
-        padding: 5px 25px;
-        border: 1.5px solid var(--color-black);
+        max-height: calc(45 * var(--u));
+        padding: calc(5 * var(--u)) calc(25 * var(--u));
+        border: calc(1.5 * var(--u)) solid var(--color-black);
         border-radius: 9999px;
         background: var(--color-white);
         color: var(--color-black);
-        font-size: 23px;
-        line-height: 31px;
+        font-size: calc(23 * var(--u));
+        line-height: calc(31 * var(--u));
         font-weight: 300;
         letter-spacing: 0.01em;
         text-align: center;
@@ -755,15 +768,15 @@
 
     .mode-button {
         display: inline-block;
-        max-height: 55px;
-        padding: 7px 25px;
-        border: 1.5px solid var(--color-black);
+        max-height: calc(55 * var(--u));
+        padding: calc(7 * var(--u)) calc(25 * var(--u));
+        border: calc(1.5 * var(--u)) solid var(--color-black);
         border-radius: 9999px;
         background: var(--color-white);
         color: var(--color-black);
         text-decoration: none;
-        font-size: 32px;
-        line-height: 40px;
+        font-size: calc(32 * var(--u));
+        line-height: calc(40 * var(--u));
         font-weight: 300;
         letter-spacing: 0.01em;
         white-space: nowrap;
@@ -777,7 +790,7 @@
     }
 
     .mode-button--qv {
-        padding-inline: 40px;
+        padding-inline: calc(40 * var(--u));
     }
 
     .mode-button:hover,
@@ -798,13 +811,13 @@
         .mode-button,
         .nav-toggle-icon {
             transition: none;
-            animation: none;
         }
 
         .mode-submenu-panel.is-visible,
         .mode-menu.is-open {
             opacity: 1;
             transform: none;
+            visibility: visible;
         }
     }
 </style>

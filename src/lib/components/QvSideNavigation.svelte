@@ -224,7 +224,7 @@
     .side-navigation {
         display: flex;
         flex-direction: column;
-        gap: 50px;
+        gap: calc(50 * var(--u));
         min-width: 0;
         position: relative;
     }
@@ -240,15 +240,15 @@
         width: 100%;
         min-width: 0;
         box-sizing: border-box;
-        border: 1.5px solid var(--color-black);
-        border-radius: 27.5px;
+        border: calc(1.5 * var(--u)) solid var(--color-black);
+        border-radius: calc(27.5 * var(--u));
         background: var(--color-white);
         overflow: hidden;
         transition: background-color 120ms ease;
     }
 
     .topic-dropdown:not(.is-open) {
-        height: 55px;
+        height: calc(55 * var(--u));
     }
 
     .topic-dropdown.is-open {
@@ -274,14 +274,14 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-        gap: 10px;
+        gap: calc(10 * var(--u));
         width: 100%;
         max-width: none;
         height: 100%;
         min-height: 0;
         flex-shrink: 0;
         box-sizing: border-box;
-        padding: 7px 14px 7px 25px;
+        padding: calc(7 * var(--u)) calc(14 * var(--u)) calc(7 * var(--u)) calc(25 * var(--u));
         border: none;
         border-radius: 0;
         background: transparent;
@@ -289,8 +289,8 @@
         cursor: pointer;
         text-align: left;
         font-family: var(--font-sans);
-        font-size: 32px;
-        line-height: 40px;
+        font-size: calc(32 * var(--u));
+        line-height: calc(40 * var(--u));
         font-weight: 300;
         letter-spacing: 0.01em;
         transition:
@@ -305,8 +305,8 @@
     }
 
     .topic-dropdown.is-open .topic-dropdown-trigger {
-        height: 52px;
-        min-height: 52px;
+        height: calc(52 * var(--u));
+        min-height: calc(52 * var(--u));
         background: var(--color-darkblue);
         color: var(--color-white);
         border-radius: 9999px;
@@ -331,7 +331,7 @@
     .topic-dropdown-icon {
         flex-shrink: 0;
         align-self: center;
-        height: 30px;
+        height: calc(30 * var(--u));
         width: auto;
         display: block;
         transform: rotate(180deg);
@@ -354,8 +354,8 @@
     .topic-dropdown-panel {
         display: flex;
         flex-direction: column;
-        gap: 50px;
-        padding: 30px 15px 15px;
+        gap: calc(50 * var(--u));
+        padding: calc(30 * var(--u)) calc(15 * var(--u)) calc(15 * var(--u));
     }
 
     .topic-list {
@@ -364,7 +364,7 @@
         padding: 0;
         display: flex;
         flex-direction: column;
-        gap: 6px;
+        gap: calc(6 * var(--u));
     }
 
     .topic-button {
@@ -376,7 +376,7 @@
         max-width: 100%;
         box-sizing: border-box;
         text-align: left;
-        padding: 3px 15px;
+        padding: calc(3 * var(--u)) calc(15 * var(--u));
         border-radius: 9999px;
         cursor: pointer;
         text-decoration: none;
@@ -386,7 +386,7 @@
         font-weight: var(--h3-weight);
         letter-spacing: var(--h3-letter-spacing);
         color: var(--color-black);
-        border: 1.5px solid var(--color-black);
+        border: calc(1.5 * var(--u)) solid var(--color-black);
         background: var(--color-white);
         transition:
             background-color 120ms ease,

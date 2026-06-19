@@ -127,9 +127,15 @@
 
 <style>
     .start-page {
+        /* Pill measurement metrics consumed by InteractivePhysics.
+           Pills stay a fixed size and are excluded from viewport scaling. */
+        --pill-max-width: 550px;
+        --pill-h-padding: 76px;
+        --pill-min-content: 200px;
+
         display: flex;
         flex-direction: column;
-        gap: 4rem;
+        gap: calc(64 * var(--u));
     }
 
     .intro-stage {
@@ -151,17 +157,22 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        gap: 2rem;
+        gap: calc(32 * var(--u));
         max-width: 80%;
         text-align: center;
         pointer-events: none;
-        top: -85px;
+        top: calc(-85 * var(--u));
     }
 
+    /*
+     * Below 1728px the hero stays fluid between a minimum and its authored
+     * size (`clamp`); the upper bound is `calc(50 * var(--u))`, which equals
+     * 50px until 1728px and then scales up linearly with the viewport.
+     */
     .hero-text {
         position: relative;
         z-index: 1;
-        font-size: clamp(28px, 3.47vw, 50px);
+        font-size: clamp(28px, 3.47vw, calc(50 * var(--u)));
         line-height: 120%;
         font-weight: var(--h1-weight);
         letter-spacing: var(--h1-letter-spacing);
@@ -173,14 +184,15 @@
         position: relative;
         z-index: 3;
         pointer-events: auto;
-        padding: clamp(20px, 3.47vw, 50px) clamp(32px, 6.94vw, 100px);
-        border: clamp(2px, 0.21vw, 3px) solid var(--color-black);
+        padding: clamp(20px, 3.47vw, calc(50 * var(--u)))
+            clamp(32px, 6.94vw, calc(100 * var(--u)));
+        border: clamp(2px, 0.21vw, calc(3 * var(--u))) solid var(--color-black);
         border-radius: 9999px;
         background: var(--button-color);
-        box-shadow: 0 clamp(6px, 0.83vw, 12px) clamp(16px, 2.08vw, 30px)
-            rgba(0, 0, 0, 0.25);
+        box-shadow: 0 clamp(6px, 0.83vw, calc(12 * var(--u)))
+            clamp(16px, 2.08vw, calc(30 * var(--u))) rgba(0, 0, 0, 0.25);
         color: var(--color-black);
-        font-size: clamp(24px, 3.47vw, 50px);
+        font-size: clamp(24px, 3.47vw, calc(50 * var(--u)));
         line-height: 1.12;
         font-weight: 300;
         letter-spacing: var(--h2-letter-spacing);
@@ -188,8 +200,8 @@
         transition:
             background-color 160ms ease,
             filter 160ms ease;
-        width: clamp(280px, 41.67vw, 600px);
-        height: clamp(112px, 16.67vw, 240px);
+        width: clamp(280px, 41.67vw, calc(600 * var(--u)));
+        height: clamp(112px, 16.67vw, calc(240 * var(--u)));
         white-space: pre-line;
         animation: hero-shake-hack 1.2s 0.5s;
     }
@@ -210,16 +222,16 @@
             transform: rotate(0deg) translateX(0);
         }
         10% {
-            transform: rotate(-1deg) translateX(-10px);
+            transform: rotate(-1deg) translateX(calc(-10 * var(--u)));
         }
         20% {
-            transform: rotate(1deg) translateX(10px);
+            transform: rotate(1deg) translateX(calc(10 * var(--u)));
         }
         30% {
-            transform: rotate(-0.75deg) translateX(-10px);
+            transform: rotate(-0.75deg) translateX(calc(-10 * var(--u)));
         }
         40% {
-            transform: rotate(0.75deg) translateX(10px);
+            transform: rotate(0.75deg) translateX(calc(10 * var(--u)));
         }
     }
 
@@ -230,16 +242,16 @@
             transform: rotate(0deg) translateX(0);
         }
         10% {
-            transform: rotate(-1deg) translateX(-10px);
+            transform: rotate(-1deg) translateX(calc(-10 * var(--u)));
         }
         20% {
-            transform: rotate(1deg) translateX(10px);
+            transform: rotate(1deg) translateX(calc(10 * var(--u)));
         }
         30% {
-            transform: rotate(-0.75deg) translateX(-10px);
+            transform: rotate(-0.75deg) translateX(calc(-10 * var(--u)));
         }
         40% {
-            transform: rotate(0.75deg) translateX(10px);
+            transform: rotate(0.75deg) translateX(calc(10 * var(--u)));
         }
     }
 
@@ -250,16 +262,16 @@
             transform: rotate(0deg) translateX(0);
         }
         3% {
-            transform: rotate(-1deg) translateX(-10px);
+            transform: rotate(-1deg) translateX(calc(-10 * var(--u)));
         }
         6% {
-            transform: rotate(1deg) translateX(10px);
+            transform: rotate(1deg) translateX(calc(10 * var(--u)));
         }
         9% {
-            transform: rotate(-0.75deg) translateX(-10px);
+            transform: rotate(-0.75deg) translateX(calc(-10 * var(--u)));
         }
         12% {
-            transform: rotate(0.75deg) translateX(10px);
+            transform: rotate(0.75deg) translateX(calc(10 * var(--u)));
         }
         15% {
             transform: rotate(0deg) translateX(0);

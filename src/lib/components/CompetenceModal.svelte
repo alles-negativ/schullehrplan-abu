@@ -89,7 +89,7 @@
         inset: 0;
         display: grid;
         place-items: center;
-        padding: 30px;
+        padding: calc(30 * var(--u));
         z-index: 1000;
         border: 0;
         width: 100%;
@@ -98,12 +98,12 @@
 
     .modal-card {
         position: relative;
-        width: min(800px, 100%);
-        padding: 30px 30px 30px 30px;
-        border-radius: 25px;
-        border: 1.5px solid var(--color-black);
+        width: min(calc(800 * var(--u)), 100%);
+        padding: calc(30 * var(--u)) calc(30 * var(--u)) calc(30 * var(--u)) calc(30 * var(--u));
+        border-radius: calc(25 * var(--u));
+        border: calc(1.5 * var(--u)) solid var(--color-black);
         background: var(--modal-color);
-        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
+        box-shadow: 0 calc(12 * var(--u)) calc(30 * var(--u)) rgba(0, 0, 0, 0.25);
     }
 
     .modal-card.modal-enter-shake {
@@ -117,27 +117,27 @@
             transform: rotate(0deg) translateX(0);
         }
         10% {
-            transform: rotate(-1deg) translateX(-10px);
+            transform: rotate(-1deg) translateX(calc(-10 * var(--u)));
         }
         20% {
-            transform: rotate(1deg) translateX(10px);
+            transform: rotate(1deg) translateX(calc(10 * var(--u)));
         }
         30% {
-            transform: rotate(-0.75deg) translateX(-10px);
+            transform: rotate(-0.75deg) translateX(calc(-10 * var(--u)));
         }
         40% {
-            transform: rotate(0.75deg) translateX(10px);
+            transform: rotate(0.75deg) translateX(calc(10 * var(--u)));
         }
     }
 
     .modal-close {
         position: absolute;
-        top: 23px;
-        right: 21px;
-        border: 1.5px solid var(--color-black);
+        top: calc(23 * var(--u));
+        right: calc(21 * var(--u));
+        border: calc(1.5 * var(--u)) solid var(--color-black);
         border-radius: 9999px;
-        width: 52px;
-        height: 52px;
+        width: calc(52 * var(--u));
+        height: calc(52 * var(--u));
         display: inline-grid;
         place-items: center;
         background: var(--color-darkblue);
@@ -153,13 +153,13 @@
     }
 
     .modal-close-icon {
-        width: 22px;
-        height: 22px;
+        width: calc(22 * var(--u));
+        height: calc(22 * var(--u));
         display: block;
     }
 
     .modal-aspect {
-        margin-bottom: 20px;
+        margin-bottom: calc(20 * var(--u));
         color: var(--color-black);
         font-size: var(--h5-size);
         line-height: var(--h5-line-height);

@@ -5,6 +5,14 @@
 }
 
 :root {
+    /*
+     * Scaled design pixel. The whole design is authored against a 1728px-wide
+     * viewport. Below that width `--u` resolves to 1px (design renders at its
+     * authored size); at or above it grows linearly with the viewport, so any
+     * value written as `calc(<number> * var(--u))` scales up past 1728px.
+     */
+    --u: max(1px, calc(100vw / 1728));
+
     --color-black: #000000;
     --color-white: #ffffff;
     --color-background: #f0f4f6;
@@ -16,49 +24,49 @@
         -apple-system, sans-serif;
     --font-mono: "Intel One Mono", ui-monospace, "Cascadia Mono", monospace;
 
-    --h1-size: 42px;
-    --h1-line-height: 50px;
+    --h1-size: calc(42 * var(--u));
+    --h1-line-height: calc(50 * var(--u));
     --h1-weight: 300;
     --h1-letter-spacing: 0.01em;
 
-    --h2-size: 32px;
-    --h2-line-height: 40px;
+    --h2-size: calc(32 * var(--u));
+    --h2-line-height: calc(40 * var(--u));
     --h2-weight: 300;
     --h2-letter-spacing: 0.01em;
 
-    --h3-size: 23px;
-    --h3-line-height: 31px;
+    --h3-size: calc(23 * var(--u));
+    --h3-line-height: calc(31 * var(--u));
     --h3-weight: 300;
     --h3-letter-spacing: 0.01em;
 
-    --h4-size: 20px;
-    --h4-line-height: 28px;
+    --h4-size: calc(20 * var(--u));
+    --h4-line-height: calc(28 * var(--u));
     --h4-weight: 500;
     --h4-letter-spacing: 0.01em;
 
-    --h5-size: 18px;
-    --h5-line-height: 24px;
+    --h5-size: calc(18 * var(--u));
+    --h5-line-height: calc(24 * var(--u));
     --h5-weight: 500;
     --h5-letter-spacing: 0.01em;
 
-    --h6-size: 18px;
-    --h6-line-height: 24px;
+    --h6-size: calc(18 * var(--u));
+    --h6-line-height: calc(24 * var(--u));
     --h6-weight: 300;
     --h6-letter-spacing: -0.06em;
 
-    --body-size: 16px;
-    --body-line-height: 24px;
+    --body-size: calc(16 * var(--u));
+    --body-line-height: calc(24 * var(--u));
     --body-weight: 300;
     --body-letter-spacing: 0.01em;
 
-    --p-size: 23px;
+    --p-size: calc(23 * var(--u));
     --p-line-height: 1.27;
     --p-weight: 300;
     --p-letter-spacing: 0.01em;
 
     --grid-columns: 16;
-    --grid-gutter: 15px;
-    --grid-margin: 30px;
+    --grid-gutter: calc(15 * var(--u));
+    --grid-margin: calc(30 * var(--u));
 }
 
 html {
@@ -164,14 +172,14 @@ strong {
 /* Reusable elements */
 .tag {
     display: block;
-    padding: 5px 15px;
-    border-radius: 999px;
+    padding: calc(5 * var(--u)) calc(15 * var(--u));
+    border-radius: calc(999 * var(--u));
     font-size: var(--h5-size);
     line-height: var(--h5-line-height);
     font-weight: var(--h5-weight);
     letter-spacing: var(--h5-letter-spacing);
     background: var(--tag-color);
-    border: 1px solid var(--color-black);
+    border: calc(1 * var(--u)) solid var(--color-black);
     color: var(--color-black);
     width: fit-content;
     max-width: 100%;
@@ -193,16 +201,16 @@ strong {
         transform: rotate(0deg) translateX(0);
     }
     3% {
-        transform: rotate(-1deg) translateX(-5px);
+        transform: rotate(-1deg) translateX(calc(-5 * var(--u)));
     }
     6% {
-        transform: rotate(1deg) translateX(5px);
+        transform: rotate(1deg) translateX(calc(5 * var(--u)));
     }
     9% {
-        transform: rotate(-0.75deg) translateX(-5px);
+        transform: rotate(-0.75deg) translateX(calc(-5 * var(--u)));
     }
     12% {
-        transform: rotate(0.75deg) translateX(5px);
+        transform: rotate(0.75deg) translateX(calc(5 * var(--u)));
     }
     15% {
         transform: rotate(0deg) translateX(0);

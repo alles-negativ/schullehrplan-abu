@@ -129,7 +129,7 @@
 
 <style>
     .content-item {
-        margin: 0px 0 80px 0;
+        margin: 0px 0 calc(80 * var(--u)) 0;
     }
     .content-item:last-child {
         margin-bottom: 0px;
@@ -163,16 +163,16 @@
         width: 100%;
         display: flex;
         flex-wrap: wrap;
-        gap: 60px;
+        gap: calc(60 * var(--u));
         align-items: flex-start;
         justify-content: flex-start;
-        margin-top: 30px;
+        margin-top: calc(30 * var(--u));
     }
 
     .tag-group {
         display: flex;
         flex-direction: column;
-        gap: 20px;
+        gap: calc(20 * var(--u));
         margin-top: 0.2rem;
         min-width: 10.5rem;
         flex: 1 1 10.5rem;
@@ -195,14 +195,14 @@
 
     /* .tag {
         display: block;
-        padding: 6px 15px;
-        border-radius: 999px;
+        padding: calc(6 * var(--u)) calc(15 * var(--u));
+        border-radius: calc(999 * var(--u));
         font-size: var(--h5-size);
         line-height: var(--h5-line-height);
         font-weight: var(--h5-weight);
         letter-spacing: var(--h5-letter-spacing);
         background: var(--tag-color);
-        border: 1px solid var(--color-black);
+        border: calc(1 * var(--u)) solid var(--color-black);
         color: var(--color-black);
         width: fit-content;
         max-width: 100%;
@@ -211,7 +211,7 @@
 
     .tag-specification {
         margin: 0;
-        margin-left: 7px;
+        margin-left: calc(7 * var(--u));
         color: var(--color-black);
         font-size: var(--h5-size);
         line-height: var(--h5-line-height);
@@ -237,7 +237,7 @@
     .tag-specification-glow {
         color: var(--tag-color, #64748b);
         opacity: 1;
-        filter: blur(15px);
+        filter: blur(calc(15 * var(--u)));
         user-select: none;
         pointer-events: none;
         font-weight: 900;
@@ -251,8 +251,8 @@
 
     .line {
         width: 100%;
-        height: 8px;
+        height: calc(8 * var(--u));
         background: var(--color-background);
-        margin: 35px 0 35px 0;
+        margin: calc(35 * var(--u)) 0 calc(35 * var(--u)) 0;
     }
 </style>

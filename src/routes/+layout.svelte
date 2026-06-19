@@ -93,7 +93,7 @@
 
 <style>
     .page-foreground {
-        padding: 30px;
+        padding: calc(30 * var(--u));
         z-index: 1;
         overflow: hidden;
     }

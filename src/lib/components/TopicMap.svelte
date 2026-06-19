@@ -3,6 +3,7 @@
     import { fade } from "svelte/transition";
     import { getAllAspects, type Aspect } from "$lib/data/education-modes";
     import { isAnchorInViewportCenter, getTopicMap } from "$lib/data/topic-map";
+    import { getLayoutScale } from "$lib/layout-scale";
 
     const config = getTopicMap();
     const aspects = getAllAspects();
@@ -29,6 +30,9 @@
     let orbitAngle = $state(0);
     let hoveredTopic = $state<number | null>(null);
     let hoveredQv = $state(false);
+    let viewportWidth = $state(0);
+
+    const layoutScale = $derived(getLayoutScale(viewportWidth || undefined));
 
     const computeOrbitPosition = (
         index: number,
@@ -44,22 +48,15 @@
         };
     };
 
-    const computePillState = (
-        index: number,
-        count: number,
-        rotation: number,
-    ): PillOrbitState =>
-        computeOrbitPosition(
-            index,
-            count,
-            rotation,
-            ORBIT_RADIUS_X,
-            ORBIT_RADIUS_Y,
-        );
-
     const pillStates = $derived.by((): PillOrbitState[] =>
         aspects.map((_, index) =>
-            computePillState(index, aspects.length, orbitAngle),
+            computeOrbitPosition(
+                index,
+                aspects.length,
+                orbitAngle,
+                ORBIT_RADIUS_X * layoutScale,
+                ORBIT_RADIUS_Y * layoutScale,
+            ),
         ),
     );
 
@@ -69,8 +66,8 @@
                 index,
                 config.qv.annotations.length,
                 orbitAngle,
-                QV_ORBIT_RADIUS_X,
-                QV_ORBIT_RADIUS_Y,
+                QV_ORBIT_RADIUS_X * layoutScale,
+                QV_ORBIT_RADIUS_Y * layoutScale,
             ),
         ),
     );
@@ -111,6 +108,7 @@
         if (!sectionEl) return;
 
         viewportHeight = window.innerHeight;
+        viewportWidth = window.innerWidth;
 
         const bubbleLayer = sectionEl.querySelector(".topicmap-bubbles");
         if (!bubbleLayer) return;
@@ -150,6 +148,7 @@
         reducedMotion = motionQuery.matches;
         const mobileQuery = window.matchMedia("(max-width: 960px)");
         isMobile = mobileQuery.matches;
+        viewportWidth = window.innerWidth;
 
         const onMobileChange = (event: MediaQueryListEvent) => {
             isMobile = event.matches;
@@ -326,12 +325,12 @@
     .topicmap {
         position: relative;
         padding-bottom: 4rem;
-        padding-top: 150px;
+        padding-top: calc(150 * var(--u));
         /* overflow: visible; */
     }
 
     .topicmap-title {
-        margin-bottom: 140px;
+        margin-bottom: calc(140 * var(--u));
         text-align: center;
     }
 
@@ -381,7 +380,7 @@
     }
 
     .topicmap-node-wrap:last-child {
-        margin-top: 100px;
+        margin-top: calc(100 * var(--u));
     }
 
     .topicmap-node {
@@ -390,9 +389,9 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        width: 300px;
-        height: 140px;
-        border: 2px solid var(--color-black);
+        width: calc(300 * var(--u));
+        height: calc(140 * var(--u));
+        border: calc(2 * var(--u)) solid var(--color-black);
         border-radius: 9999px;
         background: var(--color-white);
         text-align: center;
@@ -429,8 +428,8 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        padding: 0.35rem 0.85rem;
-        border: 2px solid var(--color-black);
+        padding: calc(5.6 * var(--u)) calc(13.6 * var(--u));
+        border: calc(2 * var(--u)) solid var(--color-black);
         border-radius: 9999px;
         background: var(--pill-color);
         font-size: var(--h5-size);
@@ -440,8 +439,8 @@
         text-align: center;
         transform: translate(-50%, -50%);
         will-change: transform;
-        height: 80px;
-        width: 180px;
+        height: calc(80 * var(--u));
+        width: calc(180 * var(--u));
     }
 
     .topicmap-orbit-pill--qv {
@@ -449,11 +448,11 @@
         align-items: center;
         justify-content: center;
         width: auto;
-        min-width: 11rem;
-        max-width: 14rem;
+        min-width: calc(176 * var(--u));
+        max-width: calc(224 * var(--u));
         height: auto;
-        min-height: 4.5rem;
-        padding: 1.25rem 2.75rem;
+        min-height: calc(72 * var(--u));
+        padding: calc(20 * var(--u)) calc(44 * var(--u));
         font-size: var(--h6-size);
         font-weight: var(--h6-weight, 400);
         letter-spacing: var(--h6-letter-spacing, normal);
@@ -476,15 +475,15 @@
         left: calc(100% + 1rem);
         display: flex;
         flex-direction: column;
-        gap: 0.45rem;
-        min-width: 14rem;
+        gap: calc(7.2 * var(--u));
+        min-width: calc(224 * var(--u));
     }
 
     .topicmap-qv-annotation {
         display: flex;
         align-items: center;
-        padding: 10px 40px;
-        border: 2px solid var(--color-black);
+        padding: calc(10 * var(--u)) calc(40 * var(--u));
+        border: calc(2 * var(--u)) solid var(--color-black);
         border-radius: 9999px;
         background: var(--color-white);
         font-size: var(--h6-size);
@@ -504,8 +503,8 @@
         position: absolute;
         width: 30%;
         /* max-width: 340px; */
-        padding: 30px;
-        border-radius: 35px;
+        padding: calc(30 * var(--u));
+        border-radius: calc(35 * var(--u));
         background: var(--bubble-color);
         color: var(--color-white);
         transition: transform 280ms ease-in;
@@ -518,7 +517,7 @@
     }
 
     .topicmap-bubble--left {
-        left: calc(25% - 90px);
+        left: calc(25% - 90 * var(--u));
         transform: translateY(-50%) translateX(calc(-50% - 50vw));
     }
 
@@ -527,7 +526,7 @@
     }
 
     .topicmap-bubble--right {
-        right: calc(25% - 90px);
+        right: calc(25% - 90 * var(--u));
         transform: translateY(-50%) translateX(calc(50% + 50vw));
     }
 
@@ -538,7 +537,7 @@
     .topicmap-bubble-arrow {
         position: absolute;
         bottom: 0;
-        width: 3rem;
+        width: calc(48 * var(--u));
         height: auto;
         color: var(--bubble-color);
         pointer-events: none;
@@ -555,7 +554,7 @@
     }
 
     .topicmap-bubble-title {
-        margin-bottom: 22px;
+        margin-bottom: calc(22 * var(--u));
     }
 
     .topicmap-bubble p {

@@ -233,7 +233,7 @@
 
 <style>
     .content-wrap {
-        margin: 0 33px;
+        margin: 0 calc(33 * var(--u));
     }
 
     .description {
@@ -241,7 +241,7 @@
     }
 
     .description :global(p) {
-        margin: 0 0 40px;
+        margin: 0 0 calc(40 * var(--u));
     }
 
     .detailed-extension {
@@ -270,11 +270,11 @@
     .detailed-extension-icon-wrap {
         flex-shrink: 0;
         box-sizing: border-box;
-        width: 18px;
-        height: 18px;
+        width: calc(18 * var(--u));
+        height: calc(18 * var(--u));
         border-radius: 9999px;
         background: var(--color-darkblue);
-        border: 1.5px solid var(--color-black);
+        border: calc(1.5 * var(--u)) solid var(--color-black);
         display: inline-flex;
         align-items: center;
         justify-content: center;
@@ -288,8 +288,8 @@
     }
 
     .detailed-extension-icon {
-        width: 9px;
-        height: 12px;
+        width: calc(9 * var(--u));
+        height: calc(12 * var(--u));
         display: block;
     }
 
@@ -302,11 +302,11 @@
     }
 
     .kerninhalte {
-        margin-top: 80px;
+        margin-top: calc(80 * var(--u));
     }
 
     .competence-tags {
-        margin-top: 40px;
+        margin-top: calc(40 * var(--u));
     }
 
     .section-label {
@@ -333,10 +333,10 @@
     }
 
     .aspect-minimums {
-        margin-top: 100px;
+        margin-top: calc(100 * var(--u));
         display: flex;
         flex-direction: column;
-        gap: 40px;
+        gap: calc(40 * var(--u));
     }
 
     .aspect-section-header {
@@ -355,8 +355,8 @@
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        width: 30px;
-        height: 30px;
+        width: calc(30 * var(--u));
+        height: calc(30 * var(--u));
         border-radius: 9999px;
         border: none;
         background: transparent;
@@ -371,12 +371,12 @@
 
     .dice-button.is-active {
         /* background: var(--color-black); */
-        /* box-shadow: 0 9px 15px rgba(0, 0, 0, 0.25); */
+        /* box-shadow: 0 calc(9 * var(--u)) calc(15 * var(--u)) rgba(0, 0, 0, 0.25); */
     }
 
     .dice-icon {
-        width: 20px;
-        height: 20px;
+        width: calc(20 * var(--u));
+        height: calc(20 * var(--u));
         display: block;
     }
 
@@ -387,16 +387,16 @@
             transform: rotate(0deg) translateX(0);
         }
         3% {
-            transform: rotate(-1deg) translateX(-5px);
+            transform: rotate(-1deg) translateX(calc(-5 * var(--u)));
         }
         6% {
-            transform: rotate(1deg) translateX(5px);
+            transform: rotate(1deg) translateX(calc(5 * var(--u)));
         }
         9% {
-            transform: rotate(-0.75deg) translateX(-5px);
+            transform: rotate(-0.75deg) translateX(calc(-5 * var(--u)));
         }
         12% {
-            transform: rotate(0.75deg) translateX(5px);
+            transform: rotate(0.75deg) translateX(calc(5 * var(--u)));
         }
         15% {
             transform: rotate(0deg) translateX(0);

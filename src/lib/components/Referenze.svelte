@@ -119,15 +119,15 @@
 
 <style>
     .referenze {
-        margin-top: 80px;
+        margin-top: calc(80 * var(--u));
     }
 
     .reference-item {
         position: relative;
         margin-top: 0.65rem;
-        border: 1.5px solid var(--color-black);
-        border-radius: 30px; /* must remain that way*/
-        padding: 23px 21px 30px 33px;
+        border: calc(1.5 * var(--u)) solid var(--color-black);
+        border-radius: calc(30 * var(--u)); /* must remain that way*/
+        padding: calc(23 * var(--u)) calc(21 * var(--u)) calc(30 * var(--u)) calc(33 * var(--u));
         background: var(--color-white);
     }
 
@@ -143,7 +143,7 @@
     }
 
     .reference-summary :global(p) {
-        margin: 5px 0 0;
+        margin: calc(5 * var(--u)) 0 0;
         font-size: var(--h2-size);
         line-height: var(--h2-line-height);
         font-weight: var(--h2-weight);
@@ -164,7 +164,7 @@
         margin: 0;
         position: absolute;
         right: 0px;
-        bottom: -13px;
+        bottom: calc(-13 * var(--u));
         font-family: var(--font-mono);
         font-size: var(--h6-size);
         line-height: var(--h6-line-height);
@@ -175,16 +175,16 @@
 
     .reference-toggle {
         position: absolute;
-        top: -2px;
+        top: calc(-2 * var(--u));
         right: 0px;
         border: 0;
         border-radius: 9999px;
-        width: 52px;
-        height: 52px;
+        width: calc(52 * var(--u));
+        height: calc(52 * var(--u));
         display: inline-grid;
         place-items: center;
         background: var(--color-darkblue);
-        border: 1.5px solid var(--color-black);
+        border: calc(1.5 * var(--u)) solid var(--color-black);
         padding: 0;
         cursor: pointer;
         transition:
@@ -197,8 +197,8 @@
     }
 
     .reference-toggle-icon {
-        /* width: 40px; */
-        height: 30px;
+        /* width: calc(40 * var(--u)); */
+        height: calc(30 * var(--u));
         display: block;
         transform: rotate(180deg);
         transition: transform 120ms ease;
@@ -219,6 +219,6 @@
     }
 
     .section-label {
-        margin-left: 33px;
+        margin-left: calc(33 * var(--u));
     }
 </style>

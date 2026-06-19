@@ -19,9 +19,13 @@
     let pillSizes = $state<Record<string, { pill: number; inner: number }>>({});
     let spawnedPills = $state<Record<string, boolean>>({});
 
-    const PILL_MAX_WIDTH = 550;
-    const PILL_H_PADDING = 76;
-    const PILL_MIN_CONTENT = 200;
+    // Pills are intentionally a fixed size and excluded from the viewport
+    // scaling applied to the rest of the site.
+    const getPillMetrics = () => ({
+        maxWidth: 550,
+        hPadding: 76,
+        minContent: 200,
+    });
 
     let measurer: HTMLDivElement | null = null;
 
@@ -59,8 +63,9 @@
         const title = pill.querySelector<HTMLElement>(".pill-title");
         if (!title) return;
 
+        const { maxWidth, hPadding, minContent } = getPillMetrics();
         const m = getMeasurer(title);
-        const maxContent = PILL_MAX_WIDTH - PILL_H_PADDING;
+        const maxContent = maxWidth - hPadding;
         const lineHeight =
             parseFloat(getComputedStyle(m).lineHeight) ||
             parseFloat(getComputedStyle(m).fontSize) * 1.2 ||
@@ -122,11 +127,11 @@
         let contentWidth: number;
 
         if (oneLine <= maxContent) {
-            contentWidth = Math.max(oneLine, PILL_MIN_CONTENT);
+            contentWidth = Math.max(oneLine, minContent);
         } else {
             const targetLines = Math.min(2, measureAt(maxContent).lines);
 
-            let lo = PILL_MIN_CONTENT;
+            let lo = minContent;
             let hi = maxContent;
             let best = maxContent;
 
@@ -144,7 +149,7 @@
         }
 
         const size = {
-            pill: Math.round(contentWidth + PILL_H_PADDING),
+            pill: Math.round(contentWidth + hPadding),
             inner: Math.round(contentWidth),
         };
         pillSizes = { ...pillSizes, [id]: size };
@@ -448,6 +453,9 @@
                 if (!resizeObserverActive || resizeRaf) return;
                 resizeRaf = requestAnimationFrame(() => {
                     resizeRaf = 0;
+                    for (const [id, el] of itemElements) {
+                        fitPillWidth(el, id);
+                    }
                     updateBoundaries();
                 });
             });
@@ -504,8 +512,8 @@
         width: 100vw;
         height: 100vh;
         pointer-events: none;
-        top: -85px;
-        left: -30px;
+        top: calc(-85 * var(--u));
+        left: calc(-30 * var(--u));
     }
 
     .physics-stage {
@@ -526,9 +534,9 @@
         justify-content: center;
         width: var(--pill-w, auto);
         min-width: 0;
-        max-width: 550px;
+        max-width: var(--pill-max-width, 550px);
         min-height: 120px;
-        padding: 0px 38px;
+        padding: 0 38px;
         border-radius: 9999px;
         box-shadow: inset 0 0 0 2px var(--color-black);
         background: var(--pill-color);
@@ -548,7 +556,7 @@
         flex: 0 0 auto;
         width: var(--pill-inner-w, auto);
         min-width: 0;
-        max-width: calc(550px - 76px);
+        max-width: calc(var(--pill-max-width, 550px) - var(--pill-h-padding, 76px));
     }
 
     .pill-title {
@@ -556,7 +564,7 @@
         min-width: 0;
         font-size: 32px;
         line-height: 40px;
-        font-weight: 300px;
+        font-weight: 300;
         letter-spacing: 0.01em;
         text-align: center;
         overflow-wrap: normal;

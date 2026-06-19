@@ -19,20 +19,20 @@
 <style>
     .footer {
         background: var(--color-darkblue);
-        padding: 30px;
-        height: 450px;
+        padding: calc(30 * var(--u));
+        height: calc(450 * var(--u));
         position: relative;
-        margin-top: 200px;
+        margin-top: calc(200 * var(--u));
     }
 
     .footer-navigation {
         display: flex;
-        gap: 10px;
+        gap: calc(10 * var(--u));
         justify-content: center;
         align-items: center;
         position: absolute;
-        right: 30px;
-        top: 30px;
+        right: calc(30 * var(--u));
+        top: calc(30 * var(--u));
     }
 
     .footer-navigation-link {
@@ -42,21 +42,21 @@
         line-height: var(--h5-line-height);
         font-weight: var(--h5-weight);
         letter-spacing: var(--h5-letter-spacing);
-        border: 1px solid var(--color-white);
+        border: calc(1 * var(--u)) solid var(--color-white);
         background: transparent;
         border-radius: 9999px;
-        padding: 6px 15px;
+        padding: calc(6 * var(--u)) calc(15 * var(--u));
     }
 
     .footer-bottom-navigation {
         display: flex;
-        gap: 10px;
+        gap: calc(10 * var(--u));
         justify-content: center;
         align-items: center;
         position: absolute;
-        bottom: 30px;
-        left: 30px;
-        right: 30px;
+        bottom: calc(30 * var(--u));
+        left: calc(30 * var(--u));
+        right: calc(30 * var(--u));
     }
 
     .footer-bottom-navigation-link {

@@ -18,12 +18,18 @@
 
     type FallingCompetence = Competence & { id: string };
 
+    const INTRO_SCROLL_THRESHOLD = 80;
+    const INITIAL_DROP_DELAY_MS = 1400;
+
     let fallingCompetences = $state<FallingCompetence[]>([]);
     let selectedAspect = $state<(typeof aspectOrder)[number] | null>(null);
     let pillDragging = $state(false);
     let isMobile = $state(false);
     let viewportReady = $state(false);
+    let introVisible = $state(true);
+    let heroShakeKey = $state(0);
     let nextPillId = 0;
+    let initialDropTimeout: ReturnType<typeof setTimeout> | null = null;
 
     const pickFromAspect = (
         aspect: (typeof aspectOrder)[number],
@@ -53,7 +59,46 @@
         return pool[Math.floor(Math.random() * pool.length)];
     };
 
+    const clearInitialDropTimeout = () => {
+        if (initialDropTimeout) {
+            clearTimeout(initialDropTimeout);
+            initialDropTimeout = null;
+        }
+    };
+
+    const scheduleInitialDrop = (withShake = false) => {
+        clearInitialDropTimeout();
+        const aspect = pickRandomAspect();
+        selectedAspect = aspect;
+        if (withShake) heroShakeKey += 1;
+        initialDropTimeout = setTimeout(() => {
+            pickFromAspect(aspect, 4 + Math.floor(Math.random() * 3));
+            initialDropTimeout = null;
+        }, INITIAL_DROP_DELAY_MS);
+    };
+
+    const handlePillsVanished = () => {
+        fallingCompetences = [];
+        if (introVisible) {
+            scheduleInitialDrop(true);
+        }
+    };
+
+    const updateIntroVisibility = () => {
+        const atTop = window.scrollY < INTRO_SCROLL_THRESHOLD;
+        if (atTop === introVisible) return;
+
+        introVisible = atTop;
+
+        if (!atTop) {
+            clearInitialDropTimeout();
+        } else if (!fallingCompetences.length) {
+            scheduleInitialDrop(true);
+        }
+    };
+
     const addMoreCompetences = () => {
+        if (!introVisible) return;
         const aspect = pickRandomAspect(selectedAspect);
         selectedAspect = aspect;
         pickFromAspect(aspect, 2 + Math.floor(Math.random() * 3));
@@ -71,13 +116,15 @@
 
         if (isMobile) return;
 
-        const aspect = pickRandomAspect();
-        selectedAspect = aspect;
+        scheduleInitialDrop();
 
-        const timeout = setTimeout(() => {
-            pickFromAspect(aspect, 4 + Math.floor(Math.random() * 3));
-        }, 1400);
-        return () => clearTimeout(timeout);
+        const onScroll = () => requestAnimationFrame(updateIntroVisibility);
+        window.addEventListener("scroll", onScroll, { passive: true });
+
+        return () => {
+            window.removeEventListener("scroll", onScroll);
+            clearInitialDropTimeout();
+        };
     });
 </script>
 
@@ -98,25 +145,29 @@
                         Lernen ist bei mir kompetenzorientiert, vernetzt und aufbauend.
                     </p>
                     {#if selectedAspect}
-                        <button
-                            type="button"
-                            class="hero-button"
-                            style={`--button-color: ${aspectColor}`}
-                            disabled={pillDragging}
-                            onclick={addMoreCompetences}
-                        >
-                            {#if selectedAspect === "Schlüsselkompetenzen"}
-                                Schlüssel-kompetenzen
-                            {:else}
-                                {selectedAspect}
-                            {/if}
-                        </button>
+                        {#key heroShakeKey}
+                            <button
+                                type="button"
+                                class="hero-button"
+                                style={`--button-color: ${aspectColor}`}
+                                disabled={pillDragging}
+                                onclick={addMoreCompetences}
+                            >
+                                {#if selectedAspect === "Schlüsselkompetenzen"}
+                                    Schlüssel-kompetenzen
+                                {:else}
+                                    {selectedAspect}
+                                {/if}
+                            </button>
+                        {/key}
                     {/if}
                 </div>
 
                 <InteractivePhysics
                     competences={fallingCompetences}
                     bind:dragging={pillDragging}
+                    active={introVisible}
+                    onVanished={handlePillsVanished}
                 />
             </section>
 

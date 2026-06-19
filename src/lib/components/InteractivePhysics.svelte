@@ -12,11 +12,27 @@
     let {
         competences = [],
         dragging = $bindable(false),
-    }: { competences?: PhysicsPill[]; dragging?: boolean } = $props();
+        active = true,
+        onVanished,
+    }: {
+        competences?: PhysicsPill[];
+        dragging?: boolean;
+        active?: boolean;
+        onVanished?: () => void;
+    } = $props();
 
     let containerEl = $state<HTMLDivElement | null>(null);
     let itemElements = new Map<string, HTMLDivElement>();
     let spawnPillFn: ((pill: PhysicsPill) => void) | null = null;
+    let flyAwayAllPillsFn: (() => void) | null = null;
+    let activeRef = { current: true };
+
+    $effect(() => {
+        activeRef.current = active;
+        if (!active) {
+            flyAwayAllPillsFn?.();
+        }
+    });
     let pillSizes = $state<Record<string, { pill: number; inner: number }>>({});
     let spawnedPills = $state<Record<string, boolean>>({});
 
@@ -221,8 +237,13 @@
                 Events,
                 Sleeping,
             } = Matter;
+            const NORMAL_GRAVITY = 2.5;
+            const EVICT_GRAVITY = -4;
+            const EVICT_FRICTION_AIR = 0.035;
+            const EVICT_JUMP_IMPULSE = -28;
+            const EVICT_GRAVITY_DELAY_MS = 160;
             const engine = Engine.create();
-            engine.gravity.y = 2.5;
+            engine.gravity.y = NORMAL_GRAVITY;
             engine.enableSleeping = true;
             const wallThickness = 320;
             const stagePadding = 2;
@@ -245,6 +266,7 @@
                 body: import("matter-js").Body,
                 width: number,
                 height: number,
+                allowExitTop = false,
             ) => {
                 const { min, max } = body.bounds;
                 let dx = 0;
@@ -254,7 +276,8 @@
                 else if (max.x > width - stagePadding)
                     dx = width - stagePadding - max.x;
 
-                if (min.y < stagePadding) dy = stagePadding - min.y;
+                if (!allowExitTop && min.y < stagePadding)
+                    dy = stagePadding - min.y;
                 else if (max.y > height - stagePadding)
                     dy = height - stagePadding - max.y;
 
@@ -266,7 +289,80 @@
                 }
             };
 
+            let evicting = false;
+            let evictingGravityFlipped = false;
+            let evictingGravityFlipAt = 0;
+
+            const removePill = (slug: string) => {
+                const body = worldBodies.get(slug);
+                if (body) World.remove(engine.world, body);
+                worldBodies.delete(slug);
+                bodySizes.delete(slug);
+                activeSlugs.delete(slug);
+                const el = itemElements.get(slug);
+                if (el) el.style.opacity = "";
+                const { [slug]: _spawned, ...restSpawned } = spawnedPills;
+                spawnedPills = restSpawned;
+            };
+
+            const finishEviction = () => {
+                if (!evicting) return;
+                evicting = false;
+                evictingGravityFlipped = false;
+                evictingGravityFlipAt = 0;
+                engine.gravity.y = NORMAL_GRAVITY;
+                onVanished?.();
+            };
+
+            const flipEvictGravity = () => {
+                engine.gravity.y = EVICT_GRAVITY;
+                evictingGravityFlipped = true;
+                for (const slug of activeSlugs) {
+                    const body = worldBodies.get(slug);
+                    if (!body) continue;
+                    Sleeping.set(body, false);
+                    body.frictionAir = EVICT_FRICTION_AIR;
+                }
+            };
+
+            const flyAwayAllPills = () => {
+                if (evicting) return;
+
+                if (!activeSlugs.size) {
+                    onVanished?.();
+                    return;
+                }
+
+                evicting = true;
+                evictingGravityFlipped = false;
+                evictingGravityFlipAt = performance.now() + EVICT_GRAVITY_DELAY_MS;
+
+                if (mouseConstraint?.body) {
+                    (mouseConstraint as { body: import("matter-js").Body | null }).body =
+                        null;
+                    dragging = false;
+                }
+
+                for (const slug of activeSlugs) {
+                    const body = worldBodies.get(slug);
+                    if (!body) continue;
+                    Sleeping.set(body, false);
+                    Body.setVelocity(body, {
+                        x: body.velocity.x + (Math.random() - 0.5) * 10,
+                        y:
+                            body.velocity.y +
+                            EVICT_JUMP_IMPULSE +
+                            (Math.random() - 0.5) * 8,
+                    });
+                    Body.setAngularVelocity(
+                        body,
+                        body.angularVelocity + (Math.random() - 0.5) * 0.45,
+                    );
+                }
+            };
+
             const spawnPill = (pill: PhysicsPill) => {
+                if (!activeRef.current || evicting) return;
                 if (activeSlugs.has(pill.id)) return;
 
                 const el = itemElements.get(pill.id);
@@ -395,7 +491,7 @@
                         }
                     }
 
-                    clampBodyToStage(body, width, height);
+                    clampBodyToStage(body, width, height, evicting);
                 }
 
                 stageWidth = width;
@@ -428,6 +524,7 @@
             };
 
             spawnPillFn = spawnPill;
+            flyAwayAllPillsFn = flyAwayAllPills;
 
             updateBoundaries();
             setupMouse();
@@ -440,6 +537,45 @@
                     time,
                     timestep,
                 );
+                if (evicting) {
+                    if (
+                        !evictingGravityFlipped &&
+                        time >= evictingGravityFlipAt
+                    ) {
+                        flipEvictGravity();
+                    }
+
+                    if (evictingGravityFlipped) {
+                        const stageHeight = containerEl?.clientHeight ?? 0;
+
+                        for (const slug of activeSlugs) {
+                            const body = worldBodies.get(slug);
+                            const el = itemElements.get(slug);
+                            if (!body || !el) continue;
+
+                            const { min, max } = body.bounds;
+                            const pillHeight = max.y - min.y;
+                            const visibleHeight =
+                                Math.min(max.y, stageHeight) -
+                                Math.max(min.y, 0);
+                            el.style.opacity = String(
+                                pillHeight > 0
+                                    ? Math.max(
+                                          0,
+                                          Math.min(
+                                              1,
+                                              visibleHeight / pillHeight,
+                                          ),
+                                      )
+                                    : 0,
+                            );
+
+                            if (max.y < 0) removePill(slug);
+                        }
+                        if (!activeSlugs.size) finishEviction();
+                    }
+                }
+
                 for (const slug of activeSlugs) {
                     const body = worldBodies.get(slug);
                     const el = itemElements.get(slug);
@@ -483,7 +619,8 @@
                         Sleeping.set(body, false);
                     }
 
-                    if (width && height) clampBodyToStage(body, width, height);
+                    if (width && height)
+                        clampBodyToStage(body, width, height, evicting);
                 }
             };
 
@@ -512,6 +649,7 @@
                 World.clear(engine.world, false);
                 Engine.clear(engine);
                 spawnPillFn = null;
+                flyAwayAllPillsFn = null;
                 measurer?.remove();
                 measurer = null;
             };

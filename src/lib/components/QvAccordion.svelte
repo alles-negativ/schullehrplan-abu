@@ -39,6 +39,8 @@
         };
     };
 
+    const flexTableLabel = (text: string) => text.split("\n").slice(0, 2);
+
     $effect(() => {
         sections;
         collapsedByIndex = {};
@@ -142,9 +144,13 @@
                                             <tr>
                                                 {#each row as cell, i}
                                                     {#if i === 0}
-                                                        <th scope="row"
-                                                            >{cell}</th
-                                                        >
+                                                        <th scope="row">
+                                                            <span class="flex-table-label">
+                                                                {#each flexTableLabel(cell) as line}
+                                                                    <span class="flex-table-label-line">{line}</span>
+                                                                {/each}
+                                                            </span>
+                                                        </th>
                                                     {:else}
                                                         <td>{cell}</td>
                                                     {/if}
@@ -237,9 +243,13 @@
                                                     <tr>
                                                         {#each row as cell, i}
                                                             {#if i === 0}
-                                                                <th scope="row"
-                                                                    >{cell}</th
-                                                                >
+                                                                <th scope="row">
+                                                                    <span class="flex-table-label">
+                                                                        {#each flexTableLabel(cell) as line}
+                                                                            <span class="flex-table-label-line">{line}</span>
+                                                                        {/each}
+                                                                    </span>
+                                                                </th>
                                                             {:else}
                                                                 <td>{cell}</td>
                                                             {/if}
@@ -387,34 +397,101 @@
     .section-table {
         width: 100%;
         border-collapse: collapse;
-        font-size: var(--body-size);
-        line-height: var(--body-line-height);
+        font-size: var(--h5-size);
+        line-height: var(--h5-line-height);
+        font-weight: var(--h5-weight);
+        letter-spacing: var(--h5-letter-spacing);
     }
 
     .section-table th,
     .section-table td {
-        border: calc(1.5 * var(--u)) solid var(--color-black);
-        padding: 0.6rem 0.85rem;
+        border: none;
+        border-bottom: 1px solid var(--color-black);
+        padding: calc(8 * var(--u)) calc(16 * var(--u));
         text-align: left;
         vertical-align: top;
     }
 
-    .flex-table th:not([scope="row"]),
-    .flex-table td {
+    .flex-table {
+        table-layout: fixed;
+        width: 100%;
+        min-width: calc(360 * var(--u) + 13 * var(--flex-cell-size));
+        --flex-cell-size: calc(2 * var(--h5-line-height) + 16 * var(--u));
+    }
+
+    .flex-table thead th:not(:first-child),
+    .flex-table tbody td {
+        width: var(--flex-cell-size);
+        min-width: var(--flex-cell-size);
+        max-width: var(--flex-cell-size);
+        padding: 0;
         text-align: center;
         white-space: nowrap;
-        padding: 0.6rem 0.5rem;
+        vertical-align: middle;
+        box-sizing: border-box;
+    }
+
+    .flex-table tbody tr {
+        height: var(--flex-cell-size);
+    }
+
+    .flex-table tbody td {
+        height: var(--flex-cell-size);
+        border-left: 1px solid var(--color-black);
+    }
+
+    .flex-table tbody th[scope="row"] {
+        vertical-align: middle;
+    }
+
+    .flex-table-label {
+        display: block;
+        line-height: var(--h5-line-height);
+        overflow: hidden;
+    }
+
+    .flex-table-label-line {
+        display: block;
+        white-space: nowrap;
+        overflow: hidden;
+    }
+
+    .flex-table thead th:first-child,
+    .flex-table tbody th[scope="row"] {
+        text-align: left;
+        white-space: normal;
+        width: auto;
+        min-width: calc(360 * var(--u));
+        overflow: hidden;
+        padding-left: calc(16 * var(--u));
+        padding-right: calc(16 * var(--u));
     }
 
     .section-table thead th {
-        background: var(--color-darkblue);
-        color: var(--color-white);
+        font-size: var(--h4-size);
+        line-height: var(--h5-line-height);
         font-weight: var(--h4-weight);
+        letter-spacing: var(--h4-letter-spacing);
+        background: transparent;
+        color: var(--color-black);
+        border-bottom: 1px solid var(--color-black);
+        padding: calc(14 * var(--u)) calc(16 * var(--u));
     }
 
-    .section-table tbody th[scope="row"] {
-        font-weight: var(--h5-weight);
+    .section-table:not(.flex-table) thead th:first-child {
+        width: 28%;
+    }
+
+    .section-table tbody > tr > th,
+    .section-table tbody > tr > td {
         background: var(--color-background);
+        font-weight: var(--h5-weight);
+        transition: filter 150ms ease;
+    }
+
+    .section-table tbody > tr:hover > th,
+    .section-table tbody > tr:hover > td {
+        filter: brightness(0.9);
     }
 
     .subsection {

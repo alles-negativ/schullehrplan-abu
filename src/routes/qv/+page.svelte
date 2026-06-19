@@ -196,27 +196,46 @@
     .chapter-table {
         width: 100%;
         border-collapse: collapse;
-        font-size: var(--body-size);
-        line-height: var(--body-line-height);
+        font-size: var(--h5-size);
+        line-height: var(--h5-line-height);
+        font-weight: var(--h5-weight);
+        letter-spacing: var(--h5-letter-spacing);
     }
 
     .chapter-table th,
     .chapter-table td {
-        border: calc(1.5 * var(--u)) solid var(--color-black);
-        padding: 0.6rem 0.85rem;
+        border: none;
+        border-bottom: 1px solid var(--color-black);
+        padding: calc(8 * var(--u)) calc(16 * var(--u));
         text-align: left;
         vertical-align: top;
     }
 
     .chapter-table thead th {
-        background: var(--color-darkblue);
-        color: var(--color-white);
+        font-size: var(--h4-size);
+        line-height: var(--h5-line-height);
         font-weight: var(--h4-weight);
+        letter-spacing: var(--h4-letter-spacing);
+        background: transparent;
+        color: var(--color-black);
+        border-bottom: 1px solid var(--color-black);
+        padding: calc(14 * var(--u)) calc(16 * var(--u));
     }
 
-    .chapter-table tbody th[scope="row"] {
+    .chapter-table thead th:first-child {
+        width: 28%;
+    }
+
+    .chapter-table tbody > tr > th,
+    .chapter-table tbody > tr > td {
+        background: var(--color-white);
         font-weight: var(--h5-weight);
-        background: var(--color-background);
+        transition: filter 150ms ease;
+    }
+
+    .chapter-table tbody > tr:hover > th,
+    .chapter-table tbody > tr:hover > td {
+        filter: brightness(0.9);
     }
 
     .additional-content {

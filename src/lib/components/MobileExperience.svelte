@@ -1,22 +1,52 @@
 <script lang="ts">
     import { onMount } from "svelte";
+    import MobileInfoMenu from "$lib/components/MobileInfoMenu.svelte";
+    import MobilePillControls from "$lib/components/MobilePillControls.svelte";
     import MobileShakePhysics from "$lib/components/MobileShakePhysics.svelte";
     import { getAllCompetences, type Competence } from "$lib/data/education-modes";
+    import {
+        createMobileMotionStatus,
+        type MobileMotionControls,
+        type MobileMotionStatus,
+    } from "$lib/mobile-motion-status";
 
     type FallingCompetence = Competence & { id: string };
 
     let fallingCompetences = $state<FallingCompetence[]>([]);
+    let motionStatus = $state<MobileMotionStatus>(createMobileMotionStatus());
+    let motionControls = $state<MobileMotionControls | null>(null);
+    let competencePool: Competence[] = [];
     let nextPillId = 0;
 
+    const createFallingCompetence = (competence: Competence): FallingCompetence => ({
+        ...competence,
+        id: `mobile-pill-${nextPillId++}`,
+    });
+
+    const addPill = () => {
+        if (!competencePool.length) return;
+
+        const competence =
+            competencePool[Math.floor(Math.random() * competencePool.length)];
+        fallingCompetences = [
+            ...fallingCompetences,
+            createFallingCompetence(competence),
+        ];
+    };
+
+    const removePill = () => {
+        if (!fallingCompetences.length) return;
+        fallingCompetences = fallingCompetences.slice(0, -1);
+    };
+
     onMount(() => {
-        const pool = getAllCompetences();
-        const shuffled = [...pool].sort(() => Math.random() - 0.5);
+        competencePool = getAllCompetences();
+        const shuffled = [...competencePool].sort(() => Math.random() - 0.5);
         const count = 8 + Math.floor(Math.random() * 4);
 
-        fallingCompetences = shuffled.slice(0, count).map((competence) => ({
-            ...competence,
-            id: `mobile-pill-${nextPillId++}`,
-        }));
+        fallingCompetences = shuffled
+            .slice(0, count)
+            .map((competence) => createFallingCompetence(competence));
     });
 </script>
 
@@ -30,8 +60,23 @@
     </div>
 
     <div class="physics-area">
-        <MobileShakePhysics competences={fallingCompetences} />
+        <MobileShakePhysics
+            competences={fallingCompetences}
+            bind:motionStatus
+            bind:motionControls
+        />
     </div>
+
+    <MobilePillControls
+        canRemove={fallingCompetences.length > 0}
+        onAdd={addPill}
+        onRemove={removePill}
+    />
+
+    <MobileInfoMenu
+        {motionStatus}
+        onEnableMotion={() => motionControls?.enableMotion()}
+    />
 </main>
 
 <style>

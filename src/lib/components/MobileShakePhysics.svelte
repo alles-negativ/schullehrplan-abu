@@ -1,8 +1,18 @@
 <script lang="ts">
-    import { browser } from "$app/environment";
     import { onMount, tick } from "svelte";
-    import { needsMotionPermission } from "$lib/device-motion";
+    import {
+        assessMotionSensorReadiness,
+        motionSensorsSupported,
+        needsMotionPermission,
+        requestMotionSensorsAccess,
+        verifyMotionSensorsDeliverData,
+    } from "$lib/device-motion";
     import type { Competence } from "$lib/data/education-modes";
+    import {
+        createMobileMotionStatus,
+        type MobileMotionControls,
+        type MobileMotionStatus,
+    } from "$lib/mobile-motion-status";
     import {
         createMatterTimestepState,
         stepMatterPhysics,
@@ -10,35 +20,25 @@
 
     type PhysicsPill = Competence & { id: string };
 
-    type MotionEventConstructor = typeof DeviceMotionEvent & {
-        requestPermission?: () => Promise<PermissionState>;
-    };
-
-    type OrientationEventConstructor = typeof DeviceOrientationEvent & {
-        requestPermission?: () => Promise<PermissionState>;
-    };
-
-    const getMotionEventCtor = (): MotionEventConstructor | undefined =>
-        browser ? window.DeviceMotionEvent : undefined;
-
-    const getOrientationEventCtor = ():
-        | OrientationEventConstructor
-        | undefined => (browser ? window.DeviceOrientationEvent : undefined);
-
-    const motionSensorsSupported = (): boolean =>
-        Boolean(getMotionEventCtor() && getOrientationEventCtor());
-
     let {
         competences = [],
-    }: { competences?: PhysicsPill[] } = $props();
+        motionStatus = $bindable(createMobileMotionStatus()),
+        motionControls = $bindable<MobileMotionControls | null>(null),
+    }: {
+        competences?: PhysicsPill[];
+        motionStatus?: MobileMotionStatus;
+        motionControls?: MobileMotionControls | null;
+    } = $props();
 
     let containerEl = $state<HTMLDivElement | null>(null);
     let itemElements = new Map<string, HTMLDivElement>();
     let spawnPillFn: ((pill: PhysicsPill) => void) | null = null;
+    let removePillFn: ((pillId: string) => void) | null = null;
     let pillSizes = $state<Record<string, { pill: number; inner: number }>>({});
     let motionEnabled = $state(false);
     let needsPermission = $state(false);
     let permissionPending = $state(false);
+    let motionAssessmentComplete = $state(false);
     let sensorsReady = $state(false);
     let sensorsUnavailable = $state(false);
     let permissionDenied = $state(false);
@@ -204,6 +204,7 @@
 
         return {
             destroy() {
+                removePillFn?.(pill.id);
                 itemElements.delete(pill.id);
                 const { [pill.id]: _, ...rest } = pillSizes;
                 pillSizes = rest;
@@ -211,39 +212,61 @@
         };
     };
 
-    const requestMotionAccess = async () => {
-        if (!motionSensorsSupported()) return false;
-
-        permissionPending = true;
-        try {
-            const motionEvent = getMotionEventCtor();
-            const orientationEvent = getOrientationEventCtor();
-            if (!motionEvent || !orientationEvent) return false;
-
-            if (typeof motionEvent.requestPermission === "function") {
-                const motionResult = await motionEvent.requestPermission();
-                if (motionResult !== "granted") return false;
-            }
-
-            if (typeof orientationEvent.requestPermission === "function") {
-                const orientationResult =
-                    await orientationEvent.requestPermission();
-                if (orientationResult !== "granted") return false;
-            }
-
+    const activateMotionSensors = async (): Promise<boolean> => {
+        if (!needsMotionPermission()) {
+            motionEnabled = true;
             return true;
+        }
+
+        const delivers = await verifyMotionSensorsDeliverData();
+        if (!delivers) {
+            sensorsUnavailable = true;
+            motionEnabled = false;
+            return false;
+        }
+
+        motionEnabled = true;
+        return true;
+    };
+
+    const enableMotion = async () => {
+        permissionPending = true;
+        permissionDenied = false;
+
+        try {
+            const access = await requestMotionSensorsAccess();
+            if (access === "denied") {
+                permissionDenied = true;
+                needsPermission = false;
+                return;
+            }
+            if (access !== "granted") {
+                sensorsUnavailable = true;
+                needsPermission = false;
+                return;
+            }
+
+            const activated = await activateMotionSensors();
+            if (activated) needsPermission = false;
         } finally {
             permissionPending = false;
         }
     };
 
-    const enableMotion = async () => {
-        const granted = await requestMotionAccess();
-        if (granted) {
-            motionEnabled = true;
-            needsPermission = false;
-        }
-    };
+    $effect(() => {
+        motionStatus = {
+            assessmentComplete: motionAssessmentComplete,
+            needsPermission,
+            motionEnabled,
+            permissionPending,
+            permissionDenied,
+            sensorsUnavailable,
+        };
+    });
+
+    $effect(() => {
+        motionControls = { enableMotion };
+    });
 
     const attachSensors = () => {
         if (
@@ -293,11 +316,23 @@
     });
 
     onMount(() => {
-        sensorsUnavailable = !motionSensorsSupported();
-        needsPermission = needsMotionPermission();
-        if (!needsPermission && motionSensorsSupported()) {
-            motionEnabled = true;
-        }
+        void assessMotionSensorReadiness().then(async (readiness) => {
+            switch (readiness.status) {
+                case "unavailable":
+                    sensorsUnavailable = true;
+                    break;
+                case "denied":
+                    permissionDenied = true;
+                    break;
+                case "prompt":
+                    needsPermission = true;
+                    break;
+                case "ready":
+                    await activateMotionSensors();
+                    break;
+            }
+            motionAssessmentComplete = true;
+        });
 
         if (!containerEl) return;
         const stage = containerEl;
@@ -311,6 +346,7 @@
         let activeSlugs = new Set<string>();
         let engineRef: import("matter-js").Engine | null = null;
         let BodyRef: typeof import("matter-js").Body | null = null;
+        let mouseConstraint: import("matter-js").MouseConstraint | null = null;
 
         const setup = async () => {
             const Matter = await import("matter-js");
@@ -319,6 +355,8 @@
                 World,
                 Bodies,
                 Body,
+                Mouse,
+                MouseConstraint,
                 Sleeping,
             } = Matter;
             const engine = Engine.create();
@@ -328,7 +366,56 @@
             engine.enableSleeping = true;
             const wallThickness = 200;
             const stagePadding = 2;
-            const sideWallTopExtension = 400;
+
+            const randomInStagePosition = (
+                width: number,
+                height: number,
+                itemWidth: number,
+                itemHeight: number,
+            ) => {
+                const halfDiag = Math.hypot(itemWidth / 2, itemHeight / 2);
+                const minX = stagePadding + halfDiag;
+                const maxX = width - stagePadding - halfDiag;
+                const minY = stagePadding + halfDiag;
+                const maxY = height - stagePadding - halfDiag;
+
+                return {
+                    x:
+                        maxX > minX
+                            ? minX + Math.random() * (maxX - minX)
+                            : width / 2,
+                    y:
+                        maxY > minY
+                            ? minY + Math.random() * (maxY - minY)
+                            : height / 2,
+                };
+            };
+
+            const wakeAllPills = () => {
+                for (const slug of activeSlugs) {
+                    const body = worldBodies.get(slug);
+                    if (body) Sleeping.set(body, false);
+                }
+            };
+
+            const removePill = (pillId: string) => {
+                const body = worldBodies.get(pillId);
+                if (!body) return;
+
+                if (mouseConstraint?.body === body) {
+                    (
+                        mouseConstraint as {
+                            body: import("matter-js").Body | null;
+                        }
+                    ).body = null;
+                }
+
+                World.remove(engine.world, body);
+                worldBodies.delete(pillId);
+                bodySizes.delete(pillId);
+                activeSlugs.delete(pillId);
+                wakeAllPills();
+            };
 
             const clampBodyToStage = (
                 body: import("matter-js").Body,
@@ -378,12 +465,12 @@
                         return;
                     }
                     const chamferRadius = Math.min(itemWidth, itemHeight) / 2;
-                    const halfH = itemHeight / 2;
-                    const halfDiag = Math.hypot(itemWidth / 2, halfH);
-                    const x =
-                        halfDiag +
-                        Math.random() * Math.max(width - halfDiag * 2, 1);
-                    const y = -(halfH + 40 + Math.random() * 120);
+                    const { x, y } = randomInStagePosition(
+                        width,
+                        height,
+                        itemWidth,
+                        itemHeight,
+                    );
                     const body = Bodies.rectangle(x, y, itemWidth, itemHeight, {
                         restitution: 0.62,
                         friction: 0.06,
@@ -402,6 +489,7 @@
                     });
                     activeSlugs.add(pill.id);
                     World.add(engine.world, body);
+                    wakeAllPills();
                 });
             };
 
@@ -421,9 +509,14 @@
                 boundaries = [];
 
                 const wallInset = wallThickness / 2;
-                const sideWallHeight = height + sideWallTopExtension;
-                const sideWallCenterY = (height - sideWallTopExtension) / 2;
                 boundaries = [
+                    Bodies.rectangle(
+                        width / 2,
+                        stagePadding - wallInset,
+                        width,
+                        wallThickness,
+                        { isStatic: true },
+                    ),
                     Bodies.rectangle(
                         width / 2,
                         height - stagePadding + wallInset,
@@ -433,16 +526,16 @@
                     ),
                     Bodies.rectangle(
                         stagePadding - wallInset,
-                        sideWallCenterY,
+                        height / 2,
                         wallThickness,
-                        sideWallHeight,
+                        height,
                         { isStatic: true },
                     ),
                     Bodies.rectangle(
                         width - stagePadding + wallInset,
-                        sideWallCenterY,
+                        height / 2,
                         wallThickness,
-                        sideWallHeight,
+                        height,
                         { isStatic: true },
                     ),
                 ];
@@ -471,8 +564,29 @@
                 stageHeight = height;
             };
 
+            const setupMouse = () => {
+                const mouse = Mouse.create(stage);
+                stage.removeEventListener(
+                    "wheel",
+                    (
+                        mouse as unknown as {
+                            mousewheel: (event: WheelEvent) => void;
+                        }
+                    ).mousewheel,
+                );
+                mouseConstraint = MouseConstraint.create(engine, {
+                    mouse,
+                    constraint: {
+                        stiffness: 0.2,
+                    },
+                });
+                World.add(engine.world, mouseConstraint);
+            };
+
             spawnPillFn = spawnPill;
+            removePillFn = removePill;
             updateBoundaries();
+            setupMouse();
 
             let lastAccel = { x: 0, y: 0, z: 0 };
             let lastShakeAt = 0;
@@ -576,6 +690,7 @@
                 World.clear(engine.world, false);
                 Engine.clear(engine);
                 spawnPillFn = null;
+                removePillFn = null;
                 engineRef = null;
                 BodyRef = null;
                 measurer?.remove();
@@ -595,29 +710,6 @@
 </script>
 
 <section class="shake-wrap" aria-label="Interaktive Kompetenzen">
-    {#if needsPermission && !motionEnabled}
-        <div class="permission-overlay">
-            <p class="permission-text">
-                Schüttle dein Gerät, um die Kompetenzen in Bewegung zu setzen.
-            </p>
-            <button
-                type="button"
-                class="permission-button"
-                disabled={permissionPending}
-                onclick={enableMotion}
-            >
-                {permissionPending ? "Wird aktiviert…" : "Bewegung aktivieren"}
-            </button>
-        </div>
-    {:else if sensorsUnavailable}
-        <div class="permission-overlay permission-overlay--info">
-            <p class="permission-text">
-                Bewegungssteuerung ist auf diesem Gerät nicht verfügbar. Die
-                Kompetenzen fallen dennoch herunter.
-            </p>
-        </div>
-    {/if}
-
     <div class="physics-stage" bind:this={containerEl}>
         {#each competences as competence (competence.id)}
             {@const size = pillSizes[competence.id]}
@@ -644,75 +736,13 @@
         overflow: hidden;
     }
 
-    .permission-overlay {
-        position: absolute;
-        inset: 0;
-        z-index: 5;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        gap: 1.5rem;
-        padding: 2rem;
-        background: rgba(240, 244, 246, 0.92);
-        text-align: center;
-        pointer-events: none;
-    }
-
-    .permission-overlay:not(.permission-overlay--info) {
-        pointer-events: auto;
-    }
-
-    .permission-overlay--info {
-        align-items: flex-end;
-        justify-content: flex-start;
-        background: transparent;
-        padding: 1rem 1.25rem;
-    }
-
-    .permission-overlay--info .permission-text {
-        max-width: none;
-        font-size: 0.95rem;
-        opacity: 0.75;
-    }
-
-    .permission-text {
-        margin: 0;
-        max-width: 18rem;
-        font-size: 1.125rem;
-        line-height: 1.4;
-        font-weight: 400;
-    }
-
-    .permission-hint {
-        margin: 0;
-        max-width: 18rem;
-        font-size: 0.95rem;
-        line-height: 1.35;
-        color: #8a1f1f;
-    }
-
-    .permission-button {
-        padding: 0.85rem 1.5rem;
-        border: 2px solid var(--color-black);
-        border-radius: 9999px;
-        background: var(--color-white);
-        color: var(--color-black);
-        font: inherit;
-        font-size: 1rem;
-        cursor: pointer;
-    }
-
-    .permission-button:disabled {
-        opacity: 0.6;
-        cursor: wait;
-    }
-
     .physics-stage {
         position: relative;
         width: 100%;
         height: 100%;
         overflow: hidden;
+        touch-action: none;
+        pointer-events: auto;
     }
 
     .pill {
@@ -733,8 +763,15 @@
         background: var(--pill-color);
         color: var(--color-black);
         user-select: none;
+        cursor: grab;
+        touch-action: none;
+        pointer-events: auto;
         will-change: transform;
         visibility: hidden;
+    }
+
+    .pill:active {
+        cursor: grabbing;
     }
 
     .pill.is-sized {

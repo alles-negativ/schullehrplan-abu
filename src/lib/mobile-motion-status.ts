@@ -4,11 +4,13 @@ export type MobileMotionStatus = {
     motionEnabled: boolean;
     permissionPending: boolean;
     permissionDenied: boolean;
+    permissionDeclined: boolean;
     sensorsUnavailable: boolean;
 };
 
 export type MobileMotionControls = {
     enableMotion: () => Promise<void>;
+    declineMotion: () => void;
 };
 
 export const createMobileMotionStatus = (): MobileMotionStatus => ({
@@ -17,5 +19,6 @@ export const createMobileMotionStatus = (): MobileMotionStatus => ({
     motionEnabled: false,
     permissionPending: false,
     permissionDenied: false,
+    permissionDeclined: false,
     sensorsUnavailable: false,
 });

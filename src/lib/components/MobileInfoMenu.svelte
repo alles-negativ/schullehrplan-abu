@@ -2,13 +2,7 @@
     import { onMount } from "svelte";
     import type { MobileMotionStatus } from "$lib/mobile-motion-status";
 
-    let {
-        motionStatus,
-        onEnableMotion,
-    }: {
-        motionStatus: MobileMotionStatus;
-        onEnableMotion: () => void | Promise<void>;
-    } = $props();
+    let { motionStatus }: { motionStatus: MobileMotionStatus } = $props();
 
     let menuOpen = $state(false);
     let menuAnchorEl = $state<HTMLDivElement | null>(null);
@@ -55,31 +49,20 @@
         <div class="menu-panel-scroll">
             {#if !motionStatus.assessmentComplete}
                 <p class="menu-text">Steuerung wird geprüft…</p>
-            {:else if motionStatus.needsPermission && !motionStatus.motionEnabled}
-                <p class="menu-text">
-                    Schüttle dein Gerät, um die Kompetenzen in Bewegung zu
-                    setzen. Du kannst sie auch mit dem Finger verschieben.
-                </p>
-                <button
-                    type="button"
-                    class="menu-action-button"
-                    disabled={motionStatus.permissionPending}
-                    onclick={() => void onEnableMotion()}
-                >
-                    {motionStatus.permissionPending
-                        ? "Wird aktiviert…"
-                        : "Bewegung aktivieren"}
-                </button>
             {:else if motionStatus.permissionDenied}
                 <p class="menu-text">
                     Bewegungszugriff wurde verweigert. Du kannst die
                     Kompetenzen trotzdem mit dem Finger verschieben.
                 </p>
+            {:else if motionStatus.permissionDeclined}
+                <p class="menu-text">
+                    Sensoren sind deaktiviert. Du kannst die Kompetenzen mit
+                    dem Finger verschieben.
+                </p>
             {:else if motionStatus.sensorsUnavailable}
                 <p class="menu-text">
                     Bewegungssteuerung ist auf diesem Gerät nicht verfügbar.
-                    Die Kompetenzen fallen dennoch herunter und lassen sich
-                    verschieben.
+                    Die Kompetenzen lassen sich mit dem Finger verschieben.
                 </p>
             {:else if motionStatus.motionEnabled}
                 <p class="menu-text">
@@ -189,44 +172,9 @@
         text-wrap: pretty;
     }
 
-    .menu-action-button {
-        margin-top: 1.25rem;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        min-height: 2.75rem;
-        padding: 0.4375rem 1.5625rem;
-        border: 1.5px solid var(--color-black);
-        border-radius: 9999px;
-        background: var(--color-white);
-        color: var(--color-black);
-        font: inherit;
-        font-size: 1rem;
-        line-height: 1.25;
-        font-weight: 300;
-        letter-spacing: 0.01em;
-        cursor: pointer;
-        transition:
-            background-color 120ms ease,
-            border-color 120ms ease,
-            color 120ms ease,
-            filter 120ms ease;
-    }
-
-    .menu-action-button:hover:not(:disabled) {
-        background: var(--color-darkblue);
-        color: var(--color-white);
-    }
-
-    .menu-action-button:disabled {
-        opacity: 0.6;
-        cursor: wait;
-    }
-
     @media (prefers-reduced-motion: reduce) {
         .menu-panel,
-        .menu-button,
-        .menu-action-button {
+        .menu-button {
             transition: none;
         }
     }

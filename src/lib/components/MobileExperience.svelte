@@ -2,6 +2,7 @@
     import { onMount } from "svelte";
     import MobileInfoMenu from "$lib/components/MobileInfoMenu.svelte";
     import MobilePillControls from "$lib/components/MobilePillControls.svelte";
+    import MobileSensorPermissionModal from "$lib/components/MobileSensorPermissionModal.svelte";
     import MobileShakePhysics from "$lib/components/MobileShakePhysics.svelte";
     import { getAllCompetences, type Competence } from "$lib/data/education-modes";
     import {
@@ -42,7 +43,7 @@
     onMount(() => {
         competencePool = getAllCompetences();
         const shuffled = [...competencePool].sort(() => Math.random() - 0.5);
-        const count = 8 + Math.floor(Math.random() * 4);
+        const count = 5 + Math.floor(Math.random() * 3);
 
         fallingCompetences = shuffled
             .slice(0, count)
@@ -73,10 +74,13 @@
         onRemove={removePill}
     />
 
-    <MobileInfoMenu
+    <MobileSensorPermissionModal
         {motionStatus}
-        onEnableMotion={() => motionControls?.enableMotion()}
+        onAccept={() => motionControls?.enableMotion()}
+        onDecline={() => motionControls?.declineMotion()}
     />
+
+    <MobileInfoMenu {motionStatus} />
 </main>
 
 <style>

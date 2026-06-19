@@ -4,6 +4,9 @@
         assessMotionSensorReadiness,
         motionSensorsSupported,
         needsMotionPermission,
+        readGravityVector,
+        readMotionSample,
+        readTiltGravityFromOrientation,
         requestMotionSensorsAccess,
         verifyMotionSensorsDeliverData,
     } from "$lib/device-motion";
@@ -42,6 +45,7 @@
     let sensorsReady = $state(false);
     let sensorsUnavailable = $state(false);
     let permissionDenied = $state(false);
+    let permissionDeclined = $state(false);
 
     let sensorHandlers: {
         onOrientation: ((event: DeviceOrientationEvent) => void) | null;
@@ -229,6 +233,12 @@
         return true;
     };
 
+    const declineMotion = () => {
+        permissionDeclined = true;
+        needsPermission = false;
+        motionEnabled = false;
+    };
+
     const enableMotion = async () => {
         permissionPending = true;
         permissionDenied = false;
@@ -260,12 +270,13 @@
             motionEnabled,
             permissionPending,
             permissionDenied,
+            permissionDeclined,
             sensorsUnavailable,
         };
     });
 
     $effect(() => {
-        motionControls = { enableMotion };
+        motionControls = { enableMotion, declineMotion };
     });
 
     const attachSensors = () => {
@@ -590,41 +601,66 @@
 
             let lastAccel = { x: 0, y: 0, z: 0 };
             let lastShakeAt = 0;
-            let smoothedGamma = 0;
-            let smoothedBeta = 0;
+            let smoothedGravityX = 0;
+            let smoothedGravityY = 1;
+            let lastAppliedGravity = { x: 0, y: 1 };
+            const gravityStrength = 1.4;
+            const gravitySmoothing = 0.18;
+
+            const applyTiltGravity = (gx: number, gy: number) => {
+                if (!engineRef || !motionEnabled) return;
+
+                const magnitude = Math.hypot(gx, gy);
+                if (magnitude < 0.08) return;
+
+                const nx = gx / magnitude;
+                const ny = gy / magnitude;
+                const targetX = nx * gravityStrength;
+                const targetY = ny * gravityStrength;
+
+                smoothedGravityX +=
+                    (targetX - smoothedGravityX) * gravitySmoothing;
+                smoothedGravityY +=
+                    (targetY - smoothedGravityY) * gravitySmoothing;
+
+                engineRef.gravity.x = smoothedGravityX;
+                engineRef.gravity.y = smoothedGravityY;
+
+                if (
+                    Math.hypot(
+                        smoothedGravityX - lastAppliedGravity.x,
+                        smoothedGravityY - lastAppliedGravity.y,
+                    ) > 0.04
+                ) {
+                    lastAppliedGravity = {
+                        x: smoothedGravityX,
+                        y: smoothedGravityY,
+                    };
+                    wakeAllPills();
+                }
+            };
 
             sensorHandlers.onOrientation = (event: DeviceOrientationEvent) => {
-                if (!motionEnabled || !engineRef) return;
-
-                const gamma = event.gamma ?? 0;
-                const beta = Math.max(-45, Math.min(45, event.beta ?? 0));
-
-                smoothedGamma += (gamma - smoothedGamma) * 0.15;
-                smoothedBeta += (beta - smoothedBeta) * 0.15;
-
-                const gravityScale = 1.4;
-                engineRef.gravity.x = (smoothedGamma / 45) * gravityScale;
-                engineRef.gravity.y =
-                    Math.max(0.35, (smoothedBeta / 45 + 1) * 0.55 * gravityScale);
+                const tilt = readTiltGravityFromOrientation(event);
+                if (!tilt) return;
+                applyTiltGravity(tilt.x, tilt.y);
             };
 
             sensorHandlers.onMotion = (event: DeviceMotionEvent) => {
                 if (!motionEnabled || !engineRef || !BodyRef) return;
 
-                const acc = event.acceleration;
-                if (
-                    !acc ||
-                    acc.x === null ||
-                    acc.y === null ||
-                    acc.z === null
-                ) {
-                    return;
+                const gravity = readGravityVector(event);
+                if (gravity) {
+                    applyTiltGravity(gravity.x, gravity.y);
                 }
+
+                const acc = readMotionSample(event);
+                if (!acc) return;
 
                 const dx = acc.x - lastAccel.x;
                 const dy = acc.y - lastAccel.y;
                 const dz = acc.z - lastAccel.z;
-                lastAccel = { x: acc.x, y: acc.y, z: acc.z };
+                lastAccel = acc;
 
                 const intensity = Math.hypot(dx, dy, dz);
                 const now = performance.now();

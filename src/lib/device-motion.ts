@@ -217,6 +217,40 @@ export const readMotionSample = (
     return { x: incl.x, y: incl.y, z: incl.z };
 };
 
+export const readGravityVector = (
+    event: DeviceMotionEvent,
+): MotionSample | null => {
+    const incl = event.accelerationIncludingGravity;
+    if (
+        !incl ||
+        incl.x === null ||
+        incl.y === null ||
+        incl.z === null
+    ) {
+        return null;
+    }
+
+    return { x: incl.x, y: incl.y, z: incl.z };
+};
+
+export const readTiltGravityFromOrientation = (
+    event: DeviceOrientationEvent,
+): MotionSample | null => {
+    if (event.beta === null && event.gamma === null) return null;
+
+    // Portrait hold: beta ≈ 90° when upright; gamma is left/right tilt.
+    const tiltX = ((event.gamma ?? 0) * Math.PI) / 180;
+    const tiltY = (((event.beta ?? 90) - 90) * Math.PI) / 180;
+
+    const gx = Math.sin(tiltX);
+    const gy = Math.cos(tiltX) * Math.cos(tiltY);
+
+    const magnitude = Math.hypot(gx, gy);
+    if (magnitude < 0.08) return { x: 0, y: 1, z: 0 };
+
+    return { x: gx / magnitude, y: gy / magnitude, z: 0 };
+};
+
 export const readRotationSample = (
     event: DeviceMotionEvent,
 ): MotionSample | null => {

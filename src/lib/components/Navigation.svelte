@@ -175,11 +175,13 @@
         const wasContracted = isContractedViewport;
         if (matches === wasContracted) return;
 
-        isContractedViewport = matches;
-
         if (matches) {
             enterContractedViewport();
-        } else {
+        }
+
+        isContractedViewport = matches;
+
+        if (!matches) {
             leaveContractedViewport();
         }
     };
@@ -370,9 +372,6 @@
                     in:fade={{
                         duration: reducedMotion ? 0 : SUBMENU_MOTION_MS,
                     }}
-                    out:fade={{
-                        duration: reducedMotion ? 0 : SUBMENU_MOTION_MS,
-                    }}
                 >
                     {@render submenuLinks()}
                 </ul>
@@ -551,6 +550,7 @@
         }
 
         .mode-menu {
+            display: none;
             position: absolute;
             top: calc(100% + calc(10 * var(--u)));
             right: 0;
@@ -568,6 +568,7 @@
         }
 
         .mode-menu.is-open {
+            display: block;
             opacity: 1;
             visibility: visible;
             transform: translateY(0);

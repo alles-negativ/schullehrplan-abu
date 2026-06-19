@@ -365,6 +365,20 @@ collections:
                                         label: Text
                                         name: text
                                         widget: string
+    - name: impressum
+      label: Impressum
+      files:
+          - label: Impressum
+            name: index
+            file: content/impressum/index.json
+            fields:
+                - { label: Titel, name: title, widget: string }
+                - {
+                      label: Inhalt,
+                      name: content,
+                      widget: markdown,
+                      hint: "Abschnittstitel mit ##. PHZH rot hervorheben: <span class=\"phzh-accent\">PHZH</span>",
+                  }
     - name: aspects
       label: Aspekte
       label_singular: Aspekt

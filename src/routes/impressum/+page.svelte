@@ -1,72 +1,24 @@
+<script lang="ts">
+    import { marked } from "marked";
+
+    let { data } = $props();
+</script>
+
 <svelte:head>
-    <title>Schullehrplan ABU - Impressum</title>
+    <title>Schullehrplan ABU - {data.impressum.title}</title>
 </svelte:head>
 
 <div class="impressum-route mode-grid">
     <section class="topics-content">
         <article class="impressum">
             <div class="content-wrap">
-                <h1 class="topic-title">Impressum</h1>
+                <h1 class="topic-title">{data.impressum.title}</h1>
 
-                <section class="impressum-section">
-                    <h2 class="section-label">Herausgeberin und Redaktion</h2>
-                    <p>
-                        Bildungsdirektion Kanton Zürich<br />
-                        Mittelschul- und Berufsbildungsamt<br />
-                        Ausstellungsstrasse 80, 8090 Zürich<br />
-                        <a href="mailto:info@mba.ch">info@mba.ch</a>
-                    </p>
-                </section>
-
-                <section class="impressum-section">
-                    <h2 class="section-label">Autorinnen und Autoren</h2>
-                    <p>
-                        <strong>Kerngruppe:</strong>
-                        Koller Markus, ABZ; Rusch Pascal, BBW; Walther Corinna, BFSU;
-                        Andeer Nadine, BFSW; Lindegger Fabian, GBW; Reith Patric,
-                        PLAU; Glaus Christof, DLH; Atzenweiler Andreas, LKB.
-                    </p>
-                    <p>
-                        <strong>Teilprojektmitglieder:</strong>
-                        Bänziger Mark, BBZ; Vögeli Nina, BSB; Weiss Susanne, BSDPZ;
-                        Siddiqui-Hemmi Carolina, BFSH; Sander Tina, BSMG; Weber Daniel,
-                        BSR; Santoro Nino, BZLT; Leuenberger Renate, BZZ; Otazo Priscilla,
-                        Careum; Florian Schmid, EB; Dörflinger David, Juventus Schule;
-                        Heini Christine, SfGZ; Rohrer Natalie, Strickhof; Lutz Natalie,
-                        TBZ; Brunner Matthias, WSKVW; Greiner Christian, ZAG; Schoch
-                        Andreas, PK ABU.
-                    </p>
-                </section>
-
-                <section class="impressum-section">
-                    <h2 class="section-label">Projektausschuss</h2>
-                    <p>
-                        Prof. Dr. Markus Zwyssig, MBA; John Coviello, PK ABU;
-                        Heinz Schlegel, KRB; Daniel Degen, PHZH
-                    </p>
-                </section>
-
-                <section class="impressum-section">
-                    <h2 class="section-label">Projektleitung</h2>
-                    <p>Marianne Glutz</p>
-                </section>
-
-                <section class="impressum-section">
-                    <h2 class="section-label">Pädagogische Expertise</h2>
-                    <p>Daniel Degen, PHZH</p>
-                </section>
-
-                <section class="impressum-section">
-                    <h2 class="section-label">Gestaltung</h2>
-                    <p>Web: PHZH, Büro Kanalz-Weibel; Print: kdmz</p>
-                </section>
-
-                <section class="impressum-section">
-                    <h2 class="section-label">Ausgabe</h2>
-                    <p>1.7.2026, Version 1, 800 Expl. gedruckt</p>
-                </section>
-
-                <p class="copyright">© Bildungsdirektion Kanton Zürich</p>
+                {#if data.impressum.content}
+                    <div class="impressum-content">
+                        {@html marked.parse(data.impressum.content) as string}
+                    </div>
+                {/if}
             </div>
         </article>
     </section>
@@ -91,32 +43,62 @@
         margin: 0 calc(33 * var(--u));
     }
 
-    .impressum-section {
+    .impressum-content {
         margin-top: calc(80 * var(--u));
     }
 
-    .section-label {
-        margin: 0 0 0.35rem;
-        font-size: var(--h4-size);
-        line-height: var(--h4-line-height);
-        font-weight: var(--h4-weight);
-        letter-spacing: var(--h4-letter-spacing);
+    .impressum-content :global(h2) {
+        margin: calc(50 * var(--u)) 0 0;
+        font-size: var(--h2-size);
+        line-height: var(--h2-line-height);
+        font-weight: 500;
+        letter-spacing: var(--h2-letter-spacing);
     }
 
-    p + p {
+    .impressum-content :global(h2:first-child) {
+        margin-top: 0;
+    }
+
+    .impressum-content :global(p) {
+        margin: 0;
+        font-size: var(--h2-size);
+        line-height: var(--h2-line-height);
+        font-weight: var(--h2-weight);
+        letter-spacing: var(--h2-letter-spacing);
+    }
+
+    .impressum-content :global(p + p) {
         margin-top: 1.25rem;
     }
 
-    a {
-        color: inherit;
+    .impressum-content :global(strong) {
+        font-weight: 600;
     }
 
-    .copyright {
-        margin-top: calc(80 * var(--u));
-        font-family: var(--font-mono);
-        font-size: var(--h6-size);
-        line-height: var(--h6-line-height);
-        font-weight: var(--h6-weight);
-        letter-spacing: var(--h6-letter-spacing);
+    .impressum-content :global(a) {
+        color: var(--color-black);
+        border-bottom: 2px solid var(--color-black);
+    }
+    .impressum-content :global(a:hover) {
+        color: var(--color-selection);
+        border-bottom: 2px solid var(--color-selection);
+    }
+
+    @media (max-width: 1100px) {
+        .impressum-route {
+            width: 100%;
+            margin-left: 0;
+            margin-right: 0;
+            grid-template-columns: minmax(0, 1fr);
+        }
+
+        .topics-content {
+            grid-column: 1;
+        }
+
+        .content-wrap {
+            margin-left: 0;
+            margin-right: 0;
+        }
     }
 </style>

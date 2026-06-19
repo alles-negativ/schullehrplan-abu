@@ -6,6 +6,7 @@
         stepMatterPhysics,
     } from "$lib/matter-timestep";
     import { getLayoutScale } from "$lib/layout-scale";
+    import { pillDragging as pillDraggingStore } from "$lib/pill-dragging";
 
     type PhysicsPill = Competence & { id: string };
 
@@ -20,6 +21,10 @@
         active?: boolean;
         onVanished?: () => void;
     } = $props();
+
+    $effect(() => {
+        pillDraggingStore.set(dragging);
+    });
 
     let containerEl = $state<HTMLDivElement | null>(null);
     let itemElements = new Map<string, HTMLDivElement>();
@@ -662,6 +667,7 @@
 
         return () => {
             teardown?.();
+            pillDraggingStore.set(false);
         };
     });
 </script>

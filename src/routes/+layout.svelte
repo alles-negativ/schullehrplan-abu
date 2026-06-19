@@ -8,6 +8,7 @@
     import { getRandomCompetenceFaviconHrefs } from "$lib/favicon";
     import Navigation from "$lib/components/Navigation.svelte";
     import Footer from "$lib/components/Footer.svelte";
+    import StickyPdfLink from "$lib/components/StickyPdfLink.svelte";
     import {
         isMobileViewport,
         watchMobileViewport,
@@ -87,6 +88,14 @@
         {/if}
     </div>
     {#if !isMobile}
+        {#if page.url.pathname === "/"}
+            <div class="footer-gap">
+                <StickyPdfLink
+                    href="/uploads/5_SLP_Einleitung_allg.Teil_20260512.pdf"
+                    label="Rahmenlehrplan"
+                />
+            </div>
+        {/if}
         <Footer />
     {/if}
 {/if}
@@ -101,5 +110,10 @@
     .page-foreground.is-mobile {
         padding: 0;
         overflow: visible;
+    }
+
+    .footer-gap {
+        position: relative;
+        height: calc(200 * var(--u));
     }
 </style>

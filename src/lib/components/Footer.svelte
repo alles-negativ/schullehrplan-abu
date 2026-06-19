@@ -2,7 +2,7 @@
     import mbaLogo from "$lib/assets/MBA-Logo_neg 1.svg";
 </script>
 
-<footer class="footer">
+<footer id="site-footer" class="footer">
     <div class="footer-content">
         <img src={mbaLogo} alt="MBA Logo" class="footer-logo" />
     </div>
@@ -22,7 +22,7 @@
         padding: calc(30 * var(--u));
         height: calc(450 * var(--u));
         position: relative;
-        margin-top: calc(200 * var(--u));
+        margin-top: 0;
     }
 
     .footer-navigation {

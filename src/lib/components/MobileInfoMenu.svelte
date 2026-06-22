@@ -152,11 +152,12 @@
     }
 
     .menu-panel {
+        --panel-max-height: calc(100vh - 1rem - 2.5rem - 0.625rem - 1rem);
         position: fixed;
         top: calc(1rem + 2.5rem + 0.625rem);
         right: 1rem;
         left: 1rem;
-        bottom: 1rem;
+        max-height: var(--panel-max-height);
         z-index: 11;
         display: block;
         box-sizing: border-box;
@@ -186,7 +187,7 @@
     }
 
     .menu-panel-scroll {
-        height: 100%;
+        max-height: calc(var(--panel-max-height) - 2.5rem);
         overflow-y: auto;
         overscroll-behavior: contain;
         -webkit-overflow-scrolling: touch;
@@ -206,11 +207,11 @@
 
     .menu-intro :global(p) {
         margin: 0;
-        font-size: var(--p-size);
-        line-height: var(--p-line-height);
-        font-weight: var(--p-weight);
-        letter-spacing: var(--p-letter-spacing);
-        text-align: center;
+        font-size: var(--h3-size);
+        line-height: var(--h3-line-height);
+        font-weight: var(--h3-weight);
+        letter-spacing: var(--h3-letter-spacing);
+        /* text-align: center; */
     }
 
     .menu-intro :global(p + p) {
@@ -218,7 +219,7 @@
     }
 
     .menu-content {
-        margin: 0 0 1.25rem;
+        /* margin: 0 0 1.25rem; */
     }
 
     .menu-content :global(h2) {
@@ -235,10 +236,10 @@
 
     .menu-content :global(p) {
         margin: 0;
-        font-size: var(--body-size);
-        line-height: var(--body-line-height);
-        font-weight: var(--body-weight);
-        letter-spacing: var(--body-letter-spacing);
+        font-size: var(--h5-size);
+        line-height: var(--h5-line-height);
+        font-weight: var(--h5-weight);
+        letter-spacing: var(--h5-letter-spacing);
     }
 
     .menu-content :global(p + p) {

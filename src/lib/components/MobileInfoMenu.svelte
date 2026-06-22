@@ -207,9 +207,9 @@
 
     .menu-intro :global(p) {
         margin: 0;
-        font-size: var(--h3-size);
+        font-size: 26px;
         line-height: var(--h3-line-height);
-        font-weight: var(--h3-weight);
+        font-weight: 400;
         letter-spacing: var(--h3-letter-spacing);
         /* text-align: center; */
     }
@@ -238,12 +238,12 @@
         margin: 0;
         font-size: var(--h5-size);
         line-height: var(--h5-line-height);
-        font-weight: var(--h5-weight);
+        font-weight: 400;
         letter-spacing: var(--h5-letter-spacing);
     }
 
     .menu-content :global(p + p) {
-        margin-top: 0.75rem;
+        margin-top: 0.3rem;
     }
 
     .menu-content :global(strong) {

@@ -291,6 +291,18 @@
 
 <style>
     .mobile-experience {
+        /*
+         * Mobile design unit. Authored at 400px viewport width; scales linearly
+         * below and above, capped at 700px.
+         */
+        --mobile-scale: min(
+            calc(700 / 400),
+            calc(100vw / 400px)
+        );
+        --pill-max-width: calc(300px * var(--mobile-scale));
+        --pill-h-padding: calc(48px * var(--mobile-scale));
+        --pill-min-content: calc(120px * var(--mobile-scale));
+
         position: fixed;
         inset: 0;
         background: var(--color-background);
@@ -316,16 +328,18 @@
 
     .aspect-button {
         pointer-events: auto;
-        width: min(100%, 17rem);
-        min-height: 4.5rem;
-        padding: 0rem 1.5rem;
-        height: 8rem;
-        border: 1.5px solid var(--color-black);
+        width: min(100%, calc(272px * var(--mobile-scale)));
+        min-height: calc(72px * var(--mobile-scale));
+        padding: 0 calc(24px * var(--mobile-scale));
+        height: calc(128px * var(--mobile-scale));
+        border: max(1px, calc(1.5px * var(--mobile-scale))) solid
+            var(--color-black);
         border-radius: 9999px;
         background: var(--button-color);
-        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+        box-shadow: 0 calc(6px * var(--mobile-scale))
+            calc(16px * var(--mobile-scale)) rgba(0, 0, 0, 0.25);
         color: var(--color-black);
-        font-size: var(--h3-size);
+        font-size: calc(23px * var(--mobile-scale));
         line-height: 1.12;
         font-weight: 300;
         letter-spacing: var(--h2-letter-spacing);
@@ -354,16 +368,17 @@
             transform: rotate(0deg) translateX(0);
         }
         10% {
-            transform: rotate(-1deg) translateX(-4px);
+            transform: rotate(-1deg) translateX(calc(-4px * var(--mobile-scale)));
         }
         20% {
-            transform: rotate(1deg) translateX(4px);
+            transform: rotate(1deg) translateX(calc(4px * var(--mobile-scale)));
         }
         30% {
-            transform: rotate(-0.75deg) translateX(-4px);
+            transform: rotate(-0.75deg)
+                translateX(calc(-4px * var(--mobile-scale)));
         }
         40% {
-            transform: rotate(0.75deg) translateX(4px);
+            transform: rotate(0.75deg) translateX(calc(4px * var(--mobile-scale)));
         }
     }
 
@@ -374,16 +389,17 @@
             transform: rotate(0deg) translateX(0);
         }
         10% {
-            transform: rotate(-1deg) translateX(-4px);
+            transform: rotate(-1deg) translateX(calc(-4px * var(--mobile-scale)));
         }
         20% {
-            transform: rotate(1deg) translateX(4px);
+            transform: rotate(1deg) translateX(calc(4px * var(--mobile-scale)));
         }
         30% {
-            transform: rotate(-0.75deg) translateX(-4px);
+            transform: rotate(-0.75deg)
+                translateX(calc(-4px * var(--mobile-scale)));
         }
         40% {
-            transform: rotate(0.75deg) translateX(4px);
+            transform: rotate(0.75deg) translateX(calc(4px * var(--mobile-scale)));
         }
     }
 

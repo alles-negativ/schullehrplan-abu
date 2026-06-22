@@ -155,8 +155,8 @@
         --panel-max-height: calc(100vh - 1rem - 2.5rem - 0.625rem - 1rem);
         position: fixed;
         top: calc(1rem + 2.5rem + 0.625rem);
-        right: 1rem;
         left: 1rem;
+        width: min(calc(100vw - 2rem), 400px);
         max-height: var(--panel-max-height);
         z-index: 11;
         display: block;

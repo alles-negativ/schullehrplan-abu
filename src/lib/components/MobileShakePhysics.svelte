@@ -20,6 +20,7 @@
         createMatterTimestepState,
         stepMatterPhysics,
     } from "$lib/matter-timestep";
+    import { getMobileScale } from "$lib/mobile-scale";
 
     type PhysicsPill = Competence & { id: string };
 
@@ -105,6 +106,15 @@
     const PILL_H_PADDING = 48;
     const PILL_MIN_CONTENT = 120;
 
+    const getPillMetrics = () => {
+        const scale = getMobileScale();
+        return {
+            maxWidth: PILL_MAX_WIDTH * scale,
+            hPadding: PILL_H_PADDING * scale,
+            minContent: PILL_MIN_CONTENT * scale,
+        };
+    };
+
     let measurer: HTMLDivElement | null = null;
 
     const getMeasurer = (title: HTMLElement) => {
@@ -139,7 +149,8 @@
         if (!title) return;
 
         const m = getMeasurer(title);
-        const maxContent = PILL_MAX_WIDTH - PILL_H_PADDING;
+        const { maxWidth, hPadding, minContent } = getPillMetrics();
+        const maxContent = maxWidth - hPadding;
         const lineHeight =
             parseFloat(getComputedStyle(m).lineHeight) ||
             parseFloat(getComputedStyle(m).fontSize) * 1.2 ||
@@ -201,11 +212,11 @@
         let contentWidth: number;
 
         if (oneLine <= maxContent) {
-            contentWidth = Math.max(oneLine, PILL_MIN_CONTENT);
+            contentWidth = Math.max(oneLine, minContent);
         } else {
             const targetLines = Math.min(2, measureAt(maxContent).lines);
 
-            let lo = PILL_MIN_CONTENT;
+            let lo = minContent;
             let hi = maxContent;
             let best = maxContent;
 
@@ -223,7 +234,7 @@
         }
 
         const size = {
-            pill: Math.round(contentWidth + PILL_H_PADDING),
+            pill: Math.round(contentWidth + hPadding),
             inner: Math.round(contentWidth),
         };
         pillSizes = { ...pillSizes, [id]: size };
@@ -771,11 +782,51 @@
             raf = requestAnimationFrame(frame);
 
             let resizeRaf = 0;
+            let resizeObserverActive = false;
+            requestAnimationFrame(() => {
+                requestAnimationFrame(() => {
+                    resizeObserverActive = true;
+                });
+            });
+
+            const syncBodiesToElements = () => {
+                const width = containerEl?.clientWidth ?? 0;
+                const height = containerEl?.clientHeight ?? 0;
+
+                for (const slug of activeSlugs) {
+                    const body = worldBodies.get(slug);
+                    const el = itemElements.get(slug);
+                    const prev = bodySizes.get(slug);
+                    if (!body || !el || !prev) continue;
+
+                    const w = el.offsetWidth;
+                    const h = el.offsetHeight;
+                    if (!w || !h) continue;
+
+                    const sx = w / prev.width;
+                    const sy = h / prev.height;
+                    if (Math.abs(sx - 1) > 0.005 || Math.abs(sy - 1) > 0.005) {
+                        Body.scale(body, sx, sy);
+                        bodySizes.set(slug, { width: w, height: h });
+                        Sleeping.set(body, false);
+                    }
+
+                    if (width && height) clampBodyToStage(body, width, height);
+                    syncElementToBody(el, body);
+                }
+            };
+
             resizeObserver = new ResizeObserver(() => {
-                if (resizeRaf) return;
+                if (!resizeObserverActive || resizeRaf) return;
                 resizeRaf = requestAnimationFrame(() => {
                     resizeRaf = 0;
+                    for (const [id, el] of itemElements) {
+                        fitPillWidth(el, id);
+                    }
                     updateBoundaries();
+                    void tick().then(() => {
+                        requestAnimationFrame(syncBodiesToElements);
+                    });
                 });
             });
             resizeObserver.observe(stage);
@@ -819,7 +870,9 @@
                 class="pill"
                 class:is-sized={size}
                 class:is-spawned={spawnedPills[competence.id]}
-                style={`--pill-color: ${competence.color ?? "#64748b"};${size ? `--pill-w: ${size.pill}px; --pill-inner-w: ${size.inner}px;` : ""}`}
+                style:--pill-color={competence.color ?? "#64748b"}
+                style:--pill-w={size ? `${size.pill}px` : undefined}
+                style:--pill-inner-w={size ? `${size.inner}px` : undefined}
                 use:trackItem={competence}
             >
                 <div class="pill-inner">
@@ -858,12 +911,13 @@
         justify-content: center;
         width: var(--pill-w, auto);
         min-width: 0;
-        max-width: 300px;
-        min-height: 72px;
-        padding: 0 24px;
+        max-width: var(--pill-max-width, 300px);
+        min-height: calc(72px * var(--mobile-scale, 1));
+        padding: 0 calc(24px * var(--mobile-scale, 1));
         border-radius: 9999px;
         /* box-shadow: inset 0 0 0 1.5px var(--color-black); */
-        border: 1.5px solid var(--color-black);
+        border: max(1px, calc(1.5px * var(--mobile-scale, 1))) solid
+            var(--color-black);
         background: var(--pill-color);
         color: var(--color-black);
         user-select: none;
@@ -886,13 +940,15 @@
         flex: 0 0 auto;
         width: var(--pill-inner-w, auto);
         min-width: 0;
-        max-width: calc(300px - 48px);
+        max-width: calc(
+            var(--pill-max-width, 300px) - var(--pill-h-padding, 48px)
+        );
     }
 
     .pill-title {
         display: block;
         min-width: 0;
-        font-size: 1.125rem;
+        font-size: calc(18px * var(--mobile-scale, 1));
         line-height: 1.25;
         font-weight: 300;
         letter-spacing: 0.01em;

@@ -1,8 +1,16 @@
 <script lang="ts">
     import { onMount } from "svelte";
+    import { marked } from "marked";
+    import type { MobileContent } from "$lib/data/mobile";
     import type { MobileMotionStatus } from "$lib/mobile-motion-status";
 
-    let { motionStatus }: { motionStatus: MobileMotionStatus } = $props();
+    let {
+        motionStatus,
+        mobile,
+    }: {
+        motionStatus: MobileMotionStatus;
+        mobile: MobileContent;
+    } = $props();
 
     let menuOpen = $state(false);
     let menuAnchorEl = $state<HTMLDivElement | null>(null);
@@ -37,7 +45,7 @@
         aria-controls="mobile-info-panel"
         onclick={toggleMenu}
     >
-        Info
+        Schullehrplan ABU
     </button>
 
     <div
@@ -47,22 +55,34 @@
         inert={!menuOpen}
     >
         <div class="menu-panel-scroll">
-            {#if !motionStatus.assessmentComplete}
+            {#if mobile.intro}
+                <div class="menu-intro">
+                    {@html marked.parse(mobile.intro) as string}
+                </div>
+            {/if}
+
+            {#if mobile.content}
+                <div class="menu-content">
+                    {@html marked.parse(mobile.content) as string}
+                </div>
+            {/if}
+
+            <!-- {#if !motionStatus.assessmentComplete}
                 <p class="menu-text">Steuerung wird geprüft…</p>
             {:else if motionStatus.permissionDenied}
                 <p class="menu-text">
-                    Bewegungszugriff wurde verweigert. Du kannst die
-                    Kompetenzen trotzdem mit dem Finger verschieben.
+                    Bewegungszugriff wurde verweigert. Du kannst die Kompetenzen
+                    trotzdem mit dem Finger verschieben.
                 </p>
             {:else if motionStatus.permissionDeclined}
                 <p class="menu-text">
-                    Sensoren sind deaktiviert. Du kannst die Kompetenzen mit
-                    dem Finger verschieben.
+                    Sensoren sind deaktiviert. Du kannst die Kompetenzen mit dem
+                    Finger verschieben.
                 </p>
             {:else if motionStatus.sensorsUnavailable}
                 <p class="menu-text">
-                    Bewegungssteuerung ist auf diesem Gerät nicht verfügbar.
-                    Die Kompetenzen lassen sich mit dem Finger verschieben.
+                    Bewegungssteuerung ist auf diesem Gerät nicht verfügbar. Die
+                    Kompetenzen lassen sich mit dem Finger verschieben.
                 </p>
             {:else if motionStatus.motionEnabled}
                 <p class="menu-text">
@@ -71,10 +91,10 @@
                 </p>
             {:else}
                 <p class="menu-text">
-                    Verschiebe die Kompetenzen mit dem Finger. Schütteln ist
-                    auf diesem Gerät nicht verfügbar.
+                    Verschiebe die Kompetenzen mit dem Finger. Schütteln ist auf
+                    diesem Gerät nicht verfügbar.
                 </p>
-            {/if}
+            {/if} -->
         </div>
     </div>
 </div>
@@ -83,28 +103,29 @@
     .mobile-info-menu {
         position: absolute;
         top: 1rem;
-        right: 1rem;
+        left: 1rem;
         z-index: 10;
         isolation: isolate;
     }
 
-    .menu-button {
+    button.menu-button {
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        min-height: 2.75rem;
-        padding: 0.4375rem 1.5625rem;
+        min-height: 2.5rem;
+        padding: 0.4375rem 1.125rem;
         border: 1.5px solid var(--color-black);
         border-radius: 9999px;
         background: var(--color-white);
         color: var(--color-black);
-        font: inherit;
-        font-size: 1.125rem;
-        line-height: 1.25;
-        font-weight: 300;
-        letter-spacing: 0.01em;
+        font-size: var(--h5-size);
+        line-height: var(--h5-line-height);
+        font-weight: 400;
+        letter-spacing: var(--h5-letter-spacing);
         white-space: nowrap;
         cursor: pointer;
+        appearance: none;
+        -webkit-appearance: none;
         transition:
             background-color 120ms ease,
             border-color 120ms ease,
@@ -112,19 +133,27 @@
             filter 120ms ease;
     }
 
-    .menu-button:hover,
-    .menu-button.is-active {
+    @media (hover: hover) {
+        button.menu-button:hover {
+            background: var(--color-darkblue);
+            color: var(--color-white);
+        }
+    }
+
+    button.menu-button.is-active {
         background: var(--color-darkblue);
         color: var(--color-white);
     }
 
-    .menu-button.is-active:hover {
-        filter: brightness(1.2);
+    @media (hover: hover) {
+        button.menu-button.is-active:hover {
+            filter: brightness(1.2);
+        }
     }
 
     .menu-panel {
         position: fixed;
-        top: calc(1rem + 2.75rem + 0.625rem);
+        top: calc(1rem + 2.5rem + 0.625rem);
         right: 1rem;
         left: 1rem;
         bottom: 1rem;
@@ -161,6 +190,80 @@
         overflow-y: auto;
         overscroll-behavior: contain;
         -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+    }
+
+    .menu-panel-scroll::-webkit-scrollbar {
+        display: none;
+    }
+
+    .menu-intro {
+        margin: 0 0 1.25rem;
+        text-align: center;
+        text-wrap: balance;
+    }
+
+    .menu-intro :global(p) {
+        margin: 0;
+        font-size: var(--p-size);
+        line-height: var(--p-line-height);
+        font-weight: var(--p-weight);
+        letter-spacing: var(--p-letter-spacing);
+        text-align: center;
+    }
+
+    .menu-intro :global(p + p) {
+        margin-top: 0.75rem;
+    }
+
+    .menu-content {
+        margin: 0 0 1.25rem;
+    }
+
+    .menu-content :global(h2) {
+        margin: 1.25rem 0 0;
+        font-size: var(--h3-size);
+        line-height: var(--h3-line-height);
+        font-weight: 500;
+        letter-spacing: var(--h3-letter-spacing);
+    }
+
+    .menu-content :global(h2:first-child) {
+        margin-top: 0;
+    }
+
+    .menu-content :global(p) {
+        margin: 0;
+        font-size: var(--body-size);
+        line-height: var(--body-line-height);
+        font-weight: var(--body-weight);
+        letter-spacing: var(--body-letter-spacing);
+    }
+
+    .menu-content :global(p + p) {
+        margin-top: 0.75rem;
+    }
+
+    .menu-content :global(strong) {
+        font-weight: 600;
+    }
+
+    .menu-content :global(a) {
+        color: var(--color-black);
+        border-bottom: 1px solid var(--color-black);
+    }
+
+    .menu-content :global(h2) {
+        margin: 0.75rem 0 0;
+        font-size: var(--h5-size);
+        line-height: var(--h5-line-height);
+        font-weight: 500;
+        letter-spacing: var(--h5-letter-spacing);
+    }
+
+    .menu-content :global(h2:first-child) {
+        margin-top: 0;
     }
 
     .menu-text {
@@ -174,7 +277,7 @@
 
     @media (prefers-reduced-motion: reduce) {
         .menu-panel,
-        .menu-button {
+        button.menu-button {
             transition: none;
         }
     }

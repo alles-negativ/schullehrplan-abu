@@ -10,6 +10,8 @@
     } from "$lib/data/education-modes";
     import { isMobileViewport } from "$lib/mobile-view";
 
+    let { data } = $props();
+
     const aspectOrder = [
         "Gesellschaftliche Inhalte",
         "Sprachmodi",
@@ -134,7 +136,7 @@
 
 {#if viewportReady}
     {#if isMobile}
-        <MobileExperience />
+        <MobileExperience mobile={data.mobile} />
     {:else}
         <main class="start-page">
             <section class="intro-stage" aria-label="Willkommen">

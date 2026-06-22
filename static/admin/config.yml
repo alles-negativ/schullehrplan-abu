@@ -379,6 +379,25 @@ collections:
                       widget: markdown,
                       hint: "Abschnittstitel mit ##. PHZH rot hervorheben: <span class=\"phzh-accent\">PHZH</span>",
                   }
+    - name: mobile
+      label: Mobile Startseite
+      files:
+          - label: Mobile Startseite
+            name: index
+            file: content/mobile/index.json
+            fields:
+                - {
+                      label: Intro,
+                      name: intro,
+                      widget: markdown,
+                      hint: "Zentrierter Einleitungstext im Dropdown.",
+                  }
+                - {
+                      label: Inhalt,
+                      name: content,
+                      widget: markdown,
+                      hint: "Zusätzlicher Text unter dem Intro, z. B. mit ## für Abschnittstitel.",
+                  }
     - name: aspects
       label: Aspekte
       label_singular: Aspekt

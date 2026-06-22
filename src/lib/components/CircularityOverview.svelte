@@ -16,8 +16,7 @@
     let { mode }: { mode: EducationMode } = $props();
     const years = $derived(getModeYears(mode));
     let selectedCompetence = $state<Competence | null>(null);
-    let highlightedCompetenceSlug = $state<string | null>(null);
-    let highlightedAspectTitle = $state<string | null>(null);
+    let selectedCompetenceSlugs = $state(new Set<string>());
 
     type AspectGroup = {
         title: string;
@@ -55,50 +54,55 @@
     const formatAspectTitle = (title: string) =>
         title === "Schlüsselkompetenzen" ? "Schlüssel\nkompetenzen" : title;
 
-    const isAspectHighlighted = (aspectTitle: string) =>
-        highlightedAspectTitle === aspectTitle;
+    const getAspectCompetenceSlugs = (aspectTitle: string) =>
+        aspectGroups
+            .find((group) => group.title === aspectTitle)
+            ?.competences.map((competence) => competence.slug) ?? [];
 
-    const isCompetenceHighlighted = (competence: Competence) => {
-        if (highlightedCompetenceSlug) {
-            return competence.slug === highlightedCompetenceSlug;
-        }
-        if (highlightedAspectTitle) {
-            return competence.aspect === highlightedAspectTitle;
-        }
-        return false;
+    const isCompetenceSelected = (competence: Competence) =>
+        selectedCompetenceSlugs.has(competence.slug);
+
+    const isAspectFullySelected = (aspectTitle: string) => {
+        const slugs = getAspectCompetenceSlugs(aspectTitle);
+        return (
+            slugs.length > 0 &&
+            slugs.every((slug) => selectedCompetenceSlugs.has(slug))
+        );
     };
 
-    const toggleAspectHighlight = (aspectTitle: string) => {
-        if (highlightedAspectTitle === aspectTitle) {
-            highlightedAspectTitle = null;
-            return;
+    const toggleAspectSelection = (aspectTitle: string) => {
+        const slugs = getAspectCompetenceSlugs(aspectTitle);
+        if (slugs.length === 0) return;
+
+        const next = new Set(selectedCompetenceSlugs);
+        const allSelected = slugs.every((slug) => next.has(slug));
+
+        for (const slug of slugs) {
+            if (allSelected) {
+                next.delete(slug);
+            } else {
+                next.add(slug);
+            }
         }
-        highlightedAspectTitle = aspectTitle;
-        highlightedCompetenceSlug = null;
+
+        selectedCompetenceSlugs = next;
     };
 
-    const toggleCompetenceHighlight = (slug: string) => {
-        if (highlightedCompetenceSlug === slug) {
-            highlightedCompetenceSlug = null;
-            return;
+    const toggleCompetenceSelection = (slug: string) => {
+        const next = new Set(selectedCompetenceSlugs);
+        if (next.has(slug)) {
+            next.delete(slug);
+        } else {
+            next.add(slug);
         }
-        highlightedCompetenceSlug = slug;
-        highlightedAspectTitle = null;
+        selectedCompetenceSlugs = next;
     };
 
-    const hasActiveFilter = $derived(
-        highlightedCompetenceSlug != null || highlightedAspectTitle != null,
-    );
+    const hasActiveFilter = $derived(selectedCompetenceSlugs.size > 0);
 
     const isCompetenceVisible = (competence: Competence | null | undefined) => {
         if (!competence || !hasActiveFilter) return false;
-        if (highlightedCompetenceSlug) {
-            return competence.slug === highlightedCompetenceSlug;
-        }
-        if (highlightedAspectTitle) {
-            return competence.aspect === highlightedAspectTitle;
-        }
-        return false;
+        return selectedCompetenceSlugs.has(competence.slug);
     };
 
     const collectReferenceSlugs = (
@@ -190,9 +194,9 @@
                 <button
                     type="button"
                     class="aspect-title-button"
-                    class:is-active={isAspectHighlighted(group.title)}
+                    class:is-active={isAspectFullySelected(group.title)}
                     style={`--aspect-color: ${getAspectColor(group.title)}`}
-                    onclick={() => toggleAspectHighlight(group.title)}
+                    onclick={() => toggleAspectSelection(group.title)}
                 >
                     {formatAspectTitle(group.title)}
                 </button>
@@ -201,12 +205,10 @@
                         <button
                             type="button"
                             class="pill pill-button pill-filter"
-                            class:is-active={isCompetenceHighlighted(
-                                competence,
-                            )}
+                            class:is-active={isCompetenceSelected(competence)}
                             style={`--pill-color: ${competence.color ?? "#64748b"}`}
                             onclick={() =>
-                                toggleCompetenceHighlight(competence.slug)}
+                                toggleCompetenceSelection(competence.slug)}
                         >
                             <span class="pill-label">{competence.title}</span>
                             <span class="pill-count"
@@ -250,7 +252,7 @@
                                             <button
                                                 type="button"
                                                 class="pill list-pill pill-button"
-                                                class:is-active={isCompetenceHighlighted(
+                                                class:is-active={isCompetenceSelected(
                                                     competence,
                                                 )}
                                                 style={`--pill-color: ${competence.color ?? "#64748b"}`}
@@ -291,7 +293,7 @@
                                                 <button
                                                     type="button"
                                                     class="pill list-pill pill-button"
-                                                    class:is-active={isCompetenceHighlighted(
+                                                    class:is-active={isCompetenceSelected(
                                                         competence,
                                                     )}
                                                     style={`--pill-color: ${competence.color ?? "#64748b"}`}
@@ -422,9 +424,16 @@
         cursor: pointer;
     }
 
-    .pill.is-active,
-    .pill:hover {
+    .pill.is-active {
         background: var(--pill-color);
+    }
+
+    .pill.list-pill:hover {
+        background: var(--pill-color);
+    }
+
+    .pill.pill-filter:hover:not(.is-active) {
+        background: #e5e5e5;
     }
 
     .pill.pill-filter {

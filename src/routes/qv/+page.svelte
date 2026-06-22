@@ -41,10 +41,7 @@
     <title>Schullehrplan ABU - Qualifikationsverfahren</title>
 </svelte:head>
 
-<div
-    class="qv-route mode-grid"
-    class:is-expanded={selectedChapterIndex === -1}
->
+<div class="qv-route mode-grid" class:is-expanded={selectedChapterIndex === -1}>
     <QvSideNavigation
         chapters={data.qv.chapters}
         {selectedChapterIndex}
@@ -70,33 +67,35 @@
 
                     {#each selectedChapter.tables ?? [] as table}
                         <div class="chapter-table-wrap">
+                            <div class="chapter-table-scroll">
+                                <table class="chapter-table">
+                                    <thead>
+                                        <tr>
+                                            {#each table.columns as col}
+                                                <th scope="col">{col}</th>
+                                            {/each}
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {#each table.rows as row}
+                                            <tr>
+                                                {#each row as cell, i}
+                                                    {#if i === 0}
+                                                        <th scope="row">{cell}</th>
+                                                    {:else}
+                                                        <td>{cell}</td>
+                                                    {/if}
+                                                {/each}
+                                            </tr>
+                                        {/each}
+                                    </tbody>
+                                </table>
+                            </div>
                             {#if table.caption}
                                 <p class="chapter-table-caption">
                                     {table.caption}
                                 </p>
                             {/if}
-                            <table class="chapter-table">
-                                <thead>
-                                    <tr>
-                                        {#each table.columns as col}
-                                            <th scope="col">{col}</th>
-                                        {/each}
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {#each table.rows as row}
-                                        <tr>
-                                            {#each row as cell, i}
-                                                {#if i === 0}
-                                                    <th scope="row">{cell}</th>
-                                                {:else}
-                                                    <td>{cell}</td>
-                                                {/if}
-                                            {/each}
-                                        </tr>
-                                    {/each}
-                                </tbody>
-                            </table>
                         </div>
                     {/each}
 
@@ -110,7 +109,10 @@
                 </div>
 
                 {#if selectedChapter.sections.length > 0}
-                    <QvAccordion sections={selectedChapter.sections} chapterNumber={selectedChapter.number} />
+                    <QvAccordion
+                        sections={selectedChapter.sections}
+                        chapterNumber={selectedChapter.number}
+                    />
                 {/if}
             </article>
         </section>
@@ -182,11 +184,14 @@
 
     .chapter-table-wrap {
         margin-top: calc(40 * var(--u));
+    }
+
+    .chapter-table-scroll {
         overflow-x: auto;
     }
 
     .chapter-table-caption {
-        margin: 0 0 0.75rem;
+        margin: 0.75rem 0 0;
         font-size: var(--p-size);
         line-height: var(--p-line-height);
         font-weight: var(--p-weight);
@@ -230,12 +235,16 @@
     .chapter-table tbody > tr > td {
         background: var(--color-white);
         font-weight: var(--h5-weight);
-        transition: filter 150ms ease;
+        transition: background 150ms ease;
     }
 
     .chapter-table tbody > tr:hover > th,
     .chapter-table tbody > tr:hover > td {
-        filter: brightness(0.9);
+        background: color-mix(
+            in srgb,
+            var(--color-background) 40%,
+            var(--color-white)
+        );
     }
 
     .additional-content {

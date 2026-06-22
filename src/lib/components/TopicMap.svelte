@@ -558,14 +558,14 @@
 
     .topicmap-bubble-title {
         font-weight: 500;
-        /* margin-bottom: calc(22 * var(--u)); */
+        margin-bottom: calc(10 * var(--u));
     }
 
     .topicmap-bubble p {
-        font-size: var(--h2-size);
-        line-height: var(--h2-line-height);
-        font-weight: var(--h2-weight);
-        letter-spacing: var(--h2-letter-spacing);
+        font-size: var(--h3-size);
+        line-height: var(--h3-line-height);
+        font-weight: var(--h3-weight);
+        letter-spacing: var(--h3-letter-spacing);
     }
 
     @media (max-width: 960px) {

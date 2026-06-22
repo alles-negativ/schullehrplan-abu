@@ -9,10 +9,7 @@
     import Navigation from "$lib/components/Navigation.svelte";
     import Footer from "$lib/components/Footer.svelte";
     import StickyPdfLink from "$lib/components/StickyPdfLink.svelte";
-    import {
-        isMobileViewport,
-        watchMobileViewport,
-    } from "$lib/mobile-view";
+    import { isMobileViewport, watchMobileViewport } from "$lib/mobile-view";
 
     const SELECTION_ROTATE_MS = 5000;
 
@@ -88,14 +85,17 @@
         {/if}
     </div>
     {#if !isMobile}
-        {#if page.url.pathname === "/"}
-            <div class="footer-gap">
+        <div
+            class="footer-gap"
+            class:has-sticky-pdf={page.url.pathname === "/"}
+        >
+            {#if page.url.pathname === "/"}
                 <StickyPdfLink
                     href="/uploads/5_SLP_Einleitung_allg.Teil_20260512.pdf"
-                    label="Rahmenlehrplan"
+                    label="Grundlagen"
                 />
-            </div>
-        {/if}
+            {/if}
+        </div>
         <Footer />
     {/if}
 {/if}
@@ -114,6 +114,11 @@
 
     .footer-gap {
         position: relative;
+        min-height: var(--footer-content-gap);
+    }
+
+    .footer-gap.has-sticky-pdf {
         height: calc(200 * var(--u));
+        min-height: calc(200 * var(--u));
     }
 </style>

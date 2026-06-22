@@ -97,68 +97,77 @@
                         {#if section.table}
                             {@const table = section.table}
                             <div class="section-table-block">
+                                <div class="section-table-scroll">
+                                    <table class="section-table">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col"
+                                                    >{table.column_label ??
+                                                        "Teil"}</th
+                                                >
+                                                <th scope="col"
+                                                    >{table.column_description ??
+                                                        "Inhalt / Beschreibung"}</th
+                                                >
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {#each table.rows as row}
+                                                <tr>
+                                                    <th scope="row">{row.label}</th>
+                                                    <td>{row.description}</td>
+                                                </tr>
+                                            {/each}
+                                        </tbody>
+                                    </table>
+                                </div>
                                 {#if table.caption}
                                     <p class="table-caption">{table.caption}</p>
                                 {/if}
-                                <table class="section-table">
-                                    <thead>
-                                        <tr>
-                                            <th scope="col"
-                                                >{table.column_label ??
-                                                    "Teil"}</th
-                                            >
-                                            <th scope="col"
-                                                >{table.column_description ??
-                                                    "Inhalt / Beschreibung"}</th
-                                            >
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {#each table.rows as row}
-                                            <tr>
-                                                <th scope="row">{row.label}</th>
-                                                <td>{row.description}</td>
-                                            </tr>
-                                        {/each}
-                                    </tbody>
-                                </table>
                             </div>
                         {/if}
 
                         {#if section.flex_table}
                             {@const ft = section.flex_table}
                             <div class="section-table-block">
+                                <div class="section-table-scroll">
+                                    <table class="section-table flex-table">
+                                        <thead>
+                                            <tr>
+                                                {#each ft.columns as col}
+                                                    <th scope="col">{col}</th>
+                                                {/each}
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {#each ft.rows as row}
+                                                <tr>
+                                                    {#each row as cell, i}
+                                                        {#if i === 0}
+                                                            <th scope="row">
+                                                                <span
+                                                                    class="flex-table-label"
+                                                                >
+                                                                    {#each flexTableLabel(cell) as line}
+                                                                        <span
+                                                                            class="flex-table-label-line"
+                                                                            >{line}</span
+                                                                        >
+                                                                    {/each}
+                                                                </span>
+                                                            </th>
+                                                        {:else}
+                                                            <td>{cell}</td>
+                                                        {/if}
+                                                    {/each}
+                                                </tr>
+                                            {/each}
+                                        </tbody>
+                                    </table>
+                                </div>
                                 {#if ft.caption}
                                     <p class="table-caption">{ft.caption}</p>
                                 {/if}
-                                <table class="section-table flex-table">
-                                    <thead>
-                                        <tr>
-                                            {#each ft.columns as col}
-                                                <th scope="col">{col}</th>
-                                            {/each}
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {#each ft.rows as row}
-                                            <tr>
-                                                {#each row as cell, i}
-                                                    {#if i === 0}
-                                                        <th scope="row">
-                                                            <span class="flex-table-label">
-                                                                {#each flexTableLabel(cell) as line}
-                                                                    <span class="flex-table-label-line">{line}</span>
-                                                                {/each}
-                                                            </span>
-                                                        </th>
-                                                    {:else}
-                                                        <td>{cell}</td>
-                                                    {/if}
-                                                {/each}
-                                            </tr>
-                                        {/each}
-                                    </tbody>
-                                </table>
                             </div>
                         {/if}
 
@@ -187,77 +196,90 @@
                                 {#if subsection.table}
                                     {@const table = subsection.table}
                                     <div class="section-table-block">
+                                        <div class="section-table-scroll">
+                                            <table class="section-table">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col"
+                                                            >{table.column_label ??
+                                                                "Teil"}</th
+                                                        >
+                                                        <th scope="col"
+                                                            >{table.column_description ??
+                                                                "Inhalt / Beschreibung"}</th
+                                                        >
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {#each table.rows as row}
+                                                        <tr>
+                                                            <th scope="row"
+                                                                >{row.label}</th
+                                                            >
+                                                            <td
+                                                                >{row.description}</td
+                                                            >
+                                                        </tr>
+                                                    {/each}
+                                                </tbody>
+                                            </table>
+                                        </div>
                                         {#if table.caption}
                                             <p class="table-caption">
                                                 {table.caption}
                                             </p>
                                         {/if}
-                                        <table class="section-table">
-                                            <thead>
-                                                <tr>
-                                                    <th scope="col"
-                                                        >{table.column_label ??
-                                                            "Teil"}</th
-                                                    >
-                                                    <th scope="col"
-                                                        >{table.column_description ??
-                                                            "Inhalt / Beschreibung"}</th
-                                                    >
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                {#each table.rows as row}
-                                                    <tr>
-                                                        <th scope="row"
-                                                            >{row.label}</th
-                                                        >
-                                                        <td
-                                                            >{row.description}</td
-                                                        >
-                                                    </tr>
-                                                {/each}
-                                            </tbody>
-                                        </table>
                                     </div>
                                 {/if}
                                 {#if subsection.flex_table}
                                     {@const ft = subsection.flex_table}
                                     <div class="section-table-block">
+                                        <div class="section-table-scroll">
+                                            <table
+                                                class="section-table flex-table"
+                                            >
+                                                <thead>
+                                                    <tr>
+                                                        {#each ft.columns as col}
+                                                            <th scope="col"
+                                                                >{col}</th
+                                                            >
+                                                        {/each}
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {#each ft.rows as row}
+                                                        <tr>
+                                                            {#each row as cell, i}
+                                                                {#if i === 0}
+                                                                    <th
+                                                                        scope="row"
+                                                                    >
+                                                                        <span
+                                                                            class="flex-table-label"
+                                                                        >
+                                                                            {#each flexTableLabel(cell) as line}
+                                                                                <span
+                                                                                    class="flex-table-label-line"
+                                                                                    >{line}</span
+                                                                                >
+                                                                            {/each}
+                                                                        </span>
+                                                                    </th>
+                                                                {:else}
+                                                                    <td>{cell}</td>
+                                                                {/if}
+                                                            {/each}
+                                                        </tr>
+                                                    {/each}
+                                                </tbody>
+                                            </table>
+                                        </div>
                                         {#if ft.caption}
                                             <p class="table-caption">
                                                 {ft.caption}
                                             </p>
                                         {/if}
-                                        <table class="section-table flex-table">
-                                            <thead>
-                                                <tr>
-                                                    {#each ft.columns as col}
-                                                        <th scope="col"
-                                                            >{col}</th
-                                                        >
-                                                    {/each}
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                {#each ft.rows as row}
-                                                    <tr>
-                                                        {#each row as cell, i}
-                                                            {#if i === 0}
-                                                                <th scope="row">
-                                                                    <span class="flex-table-label">
-                                                                        {#each flexTableLabel(cell) as line}
-                                                                            <span class="flex-table-label-line">{line}</span>
-                                                                        {/each}
-                                                                    </span>
-                                                                </th>
-                                                            {:else}
-                                                                <td>{cell}</td>
-                                                            {/if}
-                                                        {/each}
-                                                    </tr>
-                                                {/each}
-                                            </tbody>
-                                        </table>
                                     </div>
                                 {/if}
                             </div>
@@ -279,7 +301,8 @@
         margin-top: 0.65rem;
         border: calc(1.5 * var(--u)) solid var(--color-black);
         border-radius: calc(30 * var(--u));
-        padding: calc(23 * var(--u)) calc(21 * var(--u)) calc(30 * var(--u)) calc(33 * var(--u));
+        padding: calc(23 * var(--u)) calc(21 * var(--u)) calc(30 * var(--u))
+            calc(33 * var(--u));
         background: var(--color-white);
     }
 
@@ -387,11 +410,14 @@
 
     .section-table-block {
         margin-top: 1.5rem;
+    }
+
+    .section-table-scroll {
         overflow-x: auto;
     }
 
     .table-caption {
-        margin: 0 0 0.75rem;
+        margin: 0.75rem 0 0;
     }
 
     .section-table {
@@ -469,7 +495,7 @@
 
     .section-table thead th {
         font-size: var(--h4-size);
-        line-height: var(--h5-line-height);
+        line-height: var(--h5-line-height); 
         font-weight: var(--h4-weight);
         letter-spacing: var(--h4-letter-spacing);
         background: transparent;
@@ -491,7 +517,7 @@
 
     .section-table tbody > tr:hover > th,
     .section-table tbody > tr:hover > td {
-        filter: brightness(0.9);
+        filter: brightness(0.975);
     }
 
     .subsection {

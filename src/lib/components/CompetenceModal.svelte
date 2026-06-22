@@ -6,7 +6,8 @@
     import type { Competence } from "$lib/data/education-modes";
 
     const FADE_MS = 280;
-    const SHAKE_DELAY_MS = 100;
+    const SLIDE_MS = 400;
+    const SLIDE_DELAY_MS = 100;
 
     let {
         competence = $bindable<Competence | null>(null),
@@ -55,12 +56,12 @@
     >
         <div
             class="modal-card"
-            class:modal-enter-shake={!reducedMotion}
+            class:modal-enter-slide={!reducedMotion}
             role="dialog"
             tabindex="-1"
             aria-modal="true"
             aria-label={`Kompetenz: ${competence.title}`}
-            style={`--modal-color: ${competence.color ?? "#334155"};${!reducedMotion ? ` --modal-shake-delay: ${SHAKE_DELAY_MS}ms;` : ""}`}
+            style={`--modal-color: ${competence.color ?? "#334155"};${!reducedMotion ? ` --modal-enter-delay: ${SLIDE_DELAY_MS}ms; --modal-slide-duration: ${SLIDE_MS}ms;` : ""}`}
         >
             <button
                 class="modal-close"
@@ -99,34 +100,28 @@
     .modal-card {
         position: relative;
         width: min(calc(800 * var(--u)), 100%);
-        padding: calc(30 * var(--u)) calc(30 * var(--u)) calc(30 * var(--u)) calc(30 * var(--u));
+        padding: calc(30 * var(--u)) calc(30 * var(--u)) calc(30 * var(--u))
+            calc(30 * var(--u));
         border-radius: calc(25 * var(--u));
         border: calc(1.5 * var(--u)) solid var(--color-black);
         background: var(--modal-color);
-        box-shadow: 0 calc(12 * var(--u)) calc(30 * var(--u)) rgba(0, 0, 0, 0.25);
+        box-shadow: 0 calc(12 * var(--u)) calc(30 * var(--u))
+            rgba(0, 0, 0, 0.25);
     }
 
-    .modal-card.modal-enter-shake {
-        animation: modal-shake-hack 0.8s var(--modal-shake-delay) ease-in-out;
+    .modal-card.modal-enter-slide {
+        animation: modal-slide-in var(--modal-slide-duration, 400ms)
+            var(--modal-enter-delay, 0ms) ease-out both;
     }
 
-    @keyframes modal-shake-hack {
-        0%,
-        50%,
-        100% {
-            transform: rotate(0deg) translateX(0);
+    @keyframes modal-slide-in {
+        from {
+            transform: translateY(calc(-80 * var(--u)));
+            opacity: 0;
         }
-        10% {
-            transform: rotate(-1deg) translateX(calc(-10 * var(--u)));
-        }
-        20% {
-            transform: rotate(1deg) translateX(calc(10 * var(--u)));
-        }
-        30% {
-            transform: rotate(-0.75deg) translateX(calc(-10 * var(--u)));
-        }
-        40% {
-            transform: rotate(0.75deg) translateX(calc(10 * var(--u)));
+        to {
+            transform: translateY(0);
+            opacity: 1;
         }
     }
 
@@ -172,7 +167,7 @@
     }
 
     @media (prefers-reduced-motion: reduce) {
-        .modal-card.modal-enter-shake {
+        .modal-card.modal-enter-slide {
             animation: none;
         }
     }

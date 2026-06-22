@@ -67,6 +67,7 @@
     --grid-columns: 16;
     --grid-gutter: calc(15 * var(--u));
     --grid-margin: calc(30 * var(--u));
+    --footer-content-gap: calc(200 * var(--u));
 }
 
 html {

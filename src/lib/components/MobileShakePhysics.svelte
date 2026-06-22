@@ -23,21 +23,66 @@
 
     type PhysicsPill = Competence & { id: string };
 
+    type PillAnchor = {
+        id: string;
+        x: number;
+        y: number;
+        width: number;
+        height: number;
+    };
+
     let {
         competences = [],
+        dragging = $bindable(false),
+        getPillAnchors = $bindable<(() => PillAnchor[]) | null>(null),
         motionStatus = $bindable(createMobileMotionStatus()),
         motionControls = $bindable<MobileMotionControls | null>(null),
     }: {
         competences?: PhysicsPill[];
+        dragging?: boolean;
+        getPillAnchors?: (() => PillAnchor[]) | null;
         motionStatus?: MobileMotionStatus;
         motionControls?: MobileMotionControls | null;
     } = $props();
+
+    $effect(() => {
+        getPillAnchors = () => {
+            if (!containerEl) return [];
+
+            const origin = containerEl.getBoundingClientRect();
+            const anchors: PillAnchor[] = [];
+
+            for (const [id, el] of itemElements) {
+                if (!competences.some((competence) => competence.id === id)) {
+                    continue;
+                }
+
+                const rect = el.getBoundingClientRect();
+                if (!rect.width || !rect.height) continue;
+
+                anchors.push({
+                    id,
+                    x: rect.left - origin.left + rect.width / 2,
+                    y: rect.top - origin.top + rect.height / 2,
+                    width: rect.width,
+                    height: rect.height,
+                });
+            }
+
+            return anchors;
+        };
+
+        return () => {
+            getPillAnchors = null;
+        };
+    });
 
     let containerEl = $state<HTMLDivElement | null>(null);
     let itemElements = new Map<string, HTMLDivElement>();
     let spawnPillFn: ((pill: PhysicsPill) => void) | null = null;
     let removePillFn: ((pillId: string) => void) | null = null;
     let pillSizes = $state<Record<string, { pill: number; inner: number }>>({});
+    let spawnedPills = $state<Record<string, boolean>>({});
     let motionEnabled = $state(false);
     let needsPermission = $state(false);
     let permissionPending = $state(false);
@@ -212,6 +257,8 @@
                 itemElements.delete(pill.id);
                 const { [pill.id]: _, ...rest } = pillSizes;
                 pillSizes = rest;
+                const { [pill.id]: _spawned, ...restSpawned } = spawnedPills;
+                spawnedPills = restSpawned;
             },
         };
     };
@@ -368,6 +415,7 @@
                 Body,
                 Mouse,
                 MouseConstraint,
+                Events,
                 Sleeping,
             } = Matter;
             const engine = Engine.create();
@@ -377,6 +425,17 @@
             engine.enableSleeping = true;
             const wallThickness = 200;
             const stagePadding = 2;
+
+            const syncElementToBody = (
+                el: HTMLDivElement,
+                body: import("matter-js").Body,
+            ) => {
+                const w = el.offsetWidth || 120;
+                const h = el.offsetHeight || 32;
+                const x = body.position.x - w / 2;
+                const y = body.position.y - h / 2;
+                el.style.transform = `translate(${x}px, ${y}px) rotate(${body.angle}rad)`;
+            };
 
             const randomInStagePosition = (
                 width: number,
@@ -388,7 +447,10 @@
                 const minX = stagePadding + halfDiag;
                 const maxX = width - stagePadding - halfDiag;
                 const minY = stagePadding + halfDiag;
-                const maxY = height - stagePadding - halfDiag;
+                const maxY = Math.max(
+                    minY,
+                    height / 2 - halfDiag,
+                );
 
                 return {
                     x:
@@ -419,6 +481,7 @@
                             body: import("matter-js").Body | null;
                         }
                     ).body = null;
+                    dragging = false;
                 }
 
                 World.remove(engine.world, body);
@@ -493,6 +556,7 @@
                     Body.setAngle(body, (Math.random() - 0.5) * Math.PI);
                     Body.setVelocity(body, { x: 0, y: 0 });
                     Body.setAngularVelocity(body, 0);
+                    syncElementToBody(el, body);
                     worldBodies.set(pill.id, body);
                     bodySizes.set(pill.id, {
                         width: itemWidth,
@@ -500,6 +564,7 @@
                     });
                     activeSlugs.add(pill.id);
                     World.add(engine.world, body);
+                    spawnedPills = { ...spawnedPills, [pill.id]: true };
                     wakeAllPills();
                 });
             };
@@ -590,6 +655,12 @@
                     constraint: {
                         stiffness: 0.2,
                     },
+                });
+                Events.on(mouseConstraint, "startdrag", () => {
+                    dragging = true;
+                });
+                Events.on(mouseConstraint, "enddrag", () => {
+                    dragging = false;
                 });
                 World.add(engine.world, mouseConstraint);
             };
@@ -747,6 +818,7 @@
             <div
                 class="pill"
                 class:is-sized={size}
+                class:is-spawned={spawnedPills[competence.id]}
                 style={`--pill-color: ${competence.color ?? "#64748b"};${size ? `--pill-w: ${size.pill}px; --pill-inner-w: ${size.inner}px;` : ""}`}
                 use:trackItem={competence}
             >
@@ -790,7 +862,8 @@
         min-height: 72px;
         padding: 0 24px;
         border-radius: 9999px;
-        box-shadow: inset 0 0 0 2px var(--color-black);
+        /* box-shadow: inset 0 0 0 1.5px var(--color-black); */
+        border: 1.5px solid var(--color-black);
         background: var(--pill-color);
         color: var(--color-black);
         user-select: none;
@@ -805,7 +878,7 @@
         cursor: grabbing;
     }
 
-    .pill.is-sized {
+    .pill.is-sized.is-spawned {
         visibility: visible;
     }
 

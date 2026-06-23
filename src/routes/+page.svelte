@@ -22,6 +22,10 @@
 
     const INTRO_SCROLL_THRESHOLD = 80;
     const INITIAL_DROP_DELAY_MS = 1400;
+    const SCROLL_HINT_IDLE_MS = 30_000;
+    const SCROLL_HINT_DELTA_PX = 24;
+    const SCROLL_HINT_IMPULSE_MS = 160;
+    const SCROLL_HINT_GAP_MS = 320;
 
     let fallingCompetences = $state<FallingCompetence[]>([]);
     let selectedAspect = $state<(typeof aspectOrder)[number] | null>(null);
@@ -32,6 +36,9 @@
     let heroShakeKey = $state(0);
     let nextPillId = 0;
     let initialDropTimeout: ReturnType<typeof setTimeout> | null = null;
+    let scrollHintIdleTimer: ReturnType<typeof setTimeout> | null = null;
+    let scrollHintPlaying = false;
+    let scrollHintGeneration = 0;
 
     const pickFromAspect = (
         aspect: (typeof aspectOrder)[number],
@@ -94,9 +101,137 @@
 
         if (!atTop) {
             clearInitialDropTimeout();
+            clearScrollHintIdleTimer();
+            cancelScrollHint();
         } else if (!fallingCompetences.length) {
             scheduleInitialDrop(true);
+            armScrollHintTimer();
         }
+    };
+
+    const clearScrollHintIdleTimer = () => {
+        if (scrollHintIdleTimer) {
+            clearTimeout(scrollHintIdleTimer);
+            scrollHintIdleTimer = null;
+        }
+    };
+
+    const cancelScrollHint = () => {
+        scrollHintGeneration += 1;
+        scrollHintPlaying = false;
+    };
+
+    const armScrollHintTimer = () => {
+        clearScrollHintIdleTimer();
+        scrollHintIdleTimer = setTimeout(() => {
+            scrollHintIdleTimer = null;
+            void playScrollHint();
+        }, SCROLL_HINT_IDLE_MS);
+    };
+
+    const resetScrollHintIdle = () => {
+        if (scrollHintPlaying) cancelScrollHint();
+        armScrollHintTimer();
+    };
+
+    const pauseScrollHint = (ms: number, generation: number) =>
+        new Promise<void>((resolve) => {
+            setTimeout(() => {
+                if (generation === scrollHintGeneration) resolve();
+            }, ms);
+        });
+
+    const animateScrollY = (
+        targetY: number,
+        durationMs: number,
+        generation: number,
+    ) =>
+        new Promise<void>((resolve) => {
+            if (generation !== scrollHintGeneration) {
+                resolve();
+                return;
+            }
+
+            const startY = window.scrollY;
+            const delta = targetY - startY;
+            if (delta === 0 || durationMs <= 0) {
+                window.scrollTo(0, targetY);
+                resolve();
+                return;
+            }
+
+            const start = performance.now();
+            const step = (now: number) => {
+                if (generation !== scrollHintGeneration) {
+                    resolve();
+                    return;
+                }
+
+                const progress = Math.min((now - start) / durationMs, 1);
+                const eased = 1 - (1 - progress) ** 2;
+                window.scrollTo(0, startY + delta * eased);
+
+                if (progress < 1) requestAnimationFrame(step);
+                else resolve();
+            };
+
+            requestAnimationFrame(step);
+        });
+
+    const playScrollHintImpulse = async (
+        startY: number,
+        generation: number,
+    ) => {
+        await animateScrollY(
+            startY + SCROLL_HINT_DELTA_PX,
+            SCROLL_HINT_IMPULSE_MS,
+            generation,
+        );
+        if (generation !== scrollHintGeneration) return;
+        await animateScrollY(startY, SCROLL_HINT_IMPULSE_MS, generation);
+    };
+
+    const playScrollHint = async () => {
+        if (
+            scrollHintPlaying ||
+            !introVisible ||
+            window.scrollY >= INTRO_SCROLL_THRESHOLD ||
+            window.matchMedia("(prefers-reduced-motion: reduce)").matches
+        ) {
+            armScrollHintTimer();
+            return;
+        }
+
+        const generation = scrollHintGeneration;
+        scrollHintPlaying = true;
+        const startY = window.scrollY;
+
+        try {
+            await playScrollHintImpulse(startY, generation);
+            if (generation !== scrollHintGeneration) return;
+            await pauseScrollHint(SCROLL_HINT_GAP_MS, generation);
+            if (generation !== scrollHintGeneration) return;
+            await playScrollHintImpulse(startY, generation);
+        } finally {
+            if (generation === scrollHintGeneration) {
+                scrollHintPlaying = false;
+                armScrollHintTimer();
+            }
+        }
+    };
+
+    const isScrollKey = (event: KeyboardEvent) => {
+        const { key, code } = event;
+        return (
+            key === "ArrowDown" ||
+            key === "ArrowUp" ||
+            key === "PageDown" ||
+            key === "PageUp" ||
+            key === " " ||
+            key === "Home" ||
+            key === "End" ||
+            code === "Space"
+        );
     };
 
     const addMoreCompetences = () => {
@@ -119,13 +254,32 @@
         if (isMobile) return;
 
         scheduleInitialDrop();
+        armScrollHintTimer();
 
-        const onScroll = () => requestAnimationFrame(updateIntroVisibility);
+        const onScroll = () => {
+            if (!scrollHintPlaying) armScrollHintTimer();
+            requestAnimationFrame(updateIntroVisibility);
+        };
+        const onScrollIntent = () => resetScrollHintIdle();
+        const onKeyDown = (event: KeyboardEvent) => {
+            if (isScrollKey(event)) onScrollIntent();
+        };
+
         window.addEventListener("scroll", onScroll, { passive: true });
+        window.addEventListener("wheel", onScrollIntent, { passive: true });
+        window.addEventListener("touchstart", onScrollIntent, {
+            passive: true,
+        });
+        window.addEventListener("keydown", onKeyDown);
 
         return () => {
             window.removeEventListener("scroll", onScroll);
+            window.removeEventListener("wheel", onScrollIntent);
+            window.removeEventListener("touchstart", onScrollIntent);
+            window.removeEventListener("keydown", onKeyDown);
             clearInitialDropTimeout();
+            clearScrollHintIdleTimer();
+            cancelScrollHint();
         };
     });
 </script>

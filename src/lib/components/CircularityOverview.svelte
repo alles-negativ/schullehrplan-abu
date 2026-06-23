@@ -1,5 +1,6 @@
 <script lang="ts">
     import CompetenceModal from "$lib/components/CompetenceModal.svelte";
+    import { tick } from "svelte";
     import {
         getAllCompetences,
         getAspectByTitle,
@@ -17,6 +18,8 @@
     const years = $derived(getModeYears(mode));
     let selectedCompetence = $state<Competence | null>(null);
     let selectedCompetenceSlugs = $state(new Set<string>());
+    let yearsListEl = $state<HTMLElement | null>(null);
+    let hasScrolledToList = $state(false);
 
     type AspectGroup = {
         title: string;
@@ -70,10 +73,24 @@
         );
     };
 
+    const maybeScrollToYearsList = async (activating: boolean) => {
+        if (!activating || hasScrolledToList || !yearsListEl) return;
+
+        hasScrolledToList = true;
+        await tick();
+
+        const behavior = window.matchMedia("(prefers-reduced-motion: reduce)")
+            .matches
+            ? "auto"
+            : "smooth";
+        yearsListEl.scrollIntoView({ behavior, block: "start" });
+    };
+
     const toggleAspectSelection = (aspectTitle: string) => {
         const slugs = getAspectCompetenceSlugs(aspectTitle);
         if (slugs.length === 0) return;
 
+        const wasEmpty = selectedCompetenceSlugs.size === 0;
         const next = new Set(selectedCompetenceSlugs);
         const allSelected = slugs.every((slug) => next.has(slug));
 
@@ -86,9 +103,12 @@
         }
 
         selectedCompetenceSlugs = next;
+        void maybeScrollToYearsList(wasEmpty && next.size > 0);
     };
 
     const toggleCompetenceSelection = (slug: string) => {
+        const wasEmpty = selectedCompetenceSlugs.size === 0;
+        const adding = !selectedCompetenceSlugs.has(slug);
         const next = new Set(selectedCompetenceSlugs);
         if (next.has(slug)) {
             next.delete(slug);
@@ -96,6 +116,7 @@
             next.add(slug);
         }
         selectedCompetenceSlugs = next;
+        void maybeScrollToYearsList(wasEmpty && adding);
     };
 
     const hasActiveFilter = $derived(selectedCompetenceSlugs.size > 0);
@@ -222,7 +243,7 @@
         {/each}
     </div>
 
-    <div class="years">
+    <div class="years" bind:this={yearsListEl}>
         {#each years as year}
             <section class="year-section">
                 <div class="year-header">

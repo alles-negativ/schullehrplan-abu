@@ -56,36 +56,36 @@
     },
     "bubbles": [
         {
-            "title": "Themen und Leitidee",
-            "text": "Strukturieren das Lernen über die Lehrjahre hinweg.",
+            "title": "Leitideen und Themen",
+            "text": "begründen die Relevanz und strukturieren das Lernen.",
             "side": "left",
             "order": 1,
             "anchor_topic": 2
         },
         {
             "title": "Individueller Lebensbezug",
-            "text": "Verbindet das Lernen mit der Realität der Lernenden.",
+            "text": "verbindet Lernen mit der schulischen, betrieblichen und privaten Realität.",
             "side": "right",
             "order": 2,
             "anchor_topic": 4
         },
         {
             "title": "Kompetenzen",
-            "text": "Stärken die Lernenden in ihrem Handeln.",
+            "text": "stärken die Lernenden in ihrem praxisrelevanten Handeln.",
             "side": "left",
             "order": 3,
             "anchor_topic": 5
         },
         {
             "title": "Zirkularität",
-            "text": "Ermöglicht Tiefe und Transfer des Lernens.",
+            "text": "vertieft Kompetenzen und fördert vernetztes, nachhaltiges Lernen.",
             "side": "right",
             "order": 4,
             "anchor_topic": 7
         },
         {
             "title": "Sprache",
-            "text": "Legt die Basis für die Aneignung aller Kompetenzen.",
+            "text": "bildet die Basis für das Lernen und die Aneignung von Kompetenzen.",
             "side": "left",
             "order": 5,
             "anchor_topic": 8

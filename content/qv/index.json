@@ -25,7 +25,6 @@
         {
             "number": 1,
             "title": "Erfahrungsnote",
-            "intro": "Die Erfahrungsnote spiegelt die kontinuierliche Lernleistung der Lernenden über die gesamte Ausbildungsdauer. Sie ergibt sich aus dem arithmetischen Mittel aller Zeugnisnoten im allgemeinbildenden Unterricht und fliesst als einer von drei gleichgewichteten Teilen in die Abschlussnote der 3- und 4-jährigen beruflichen Grundbildungen ein.",
             "sections": [
                 {
                     "number": "1",
@@ -74,7 +73,6 @@
         {
             "number": 2,
             "title": "Schlussarbeit",
-            "intro": "Die Schlussarbeit ist ein eigenständiges Projekt, in dem Lernende ein selbstgewähltes Thema mit gesellschaftlichem Bezug bearbeiten. Sie umfasst ein Produkt, eine Prozessdokumentation und eine abschliessende Präsentation. Als obligatorischer Bestandteil des QV ist sie für alle Lernenden der 3- und 4-jährigen beruflichen Grundbildungen verbindlich.",
             "sections": [
                 {
                     "number": "1",
@@ -381,7 +379,6 @@
         {
             "number": 3,
             "title": "Schlussprüfung",
-            "intro": "Die Schlussprüfung ist der dritte Bestandteil des QV und wird kantonal organisiert und ausgewertet. In einer standardisierten, schriftlichen Prüfung wird überprüft, inwieweit Lernende Wissen und Verständnis über die im ABU behandelten Lehrinhalte erworben haben. Die Prüfung findet unter kantonal einheitlichen Bedingungen statt.",
             "sections": [
                 {
                     "number": "1",
@@ -443,7 +440,6 @@
         {
             "number": 4,
             "title": "Exkurs: Umgang mit digitalen Hilfsmitteln",
-            "intro": "Die zunehmende Verfügbarkeit von Künstlicher Intelligenz und anderen digitalen Werkzeugen stellt Lehrpersonen und Lernende vor neue Fragen rund um Selbstständigkeit, Transparenz und Integrität. Dieser Exkurs legt verbindliche Grundsätze für den Einsatz digitaler Hilfsmittel im Rahmen des ABU-QV fest — von allgemeinen Prinzipien über Deklarationspflichten bis hin zu ethischen Überlegungen.",
             "sections": [
                 {
                     "number": "1",

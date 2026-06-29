@@ -47,7 +47,7 @@
 
     .director-statement-title {
         margin-top: calc(80 * var(--u));
-        margin-bottom: calc(80 * var(--u));
+        margin-bottom: calc(120 * var(--u));
         text-align: center;
         font-size: var(--h1-size);
         line-height: var(--h1-line-height);
@@ -61,7 +61,7 @@
     .director-statement-body {
         display: grid;
         grid-template-columns: 1fr 2fr;
-        gap: calc(80 * var(--u));
+        gap: calc(50 * var(--u));
         align-items: start;
     }
 
@@ -77,7 +77,8 @@
         width: 100%;
         height: 100%;
         object-fit: cover;
-        border-radius: calc(30 * var(--u));
+        /* border-radius: calc(30 * var(--u)); */
+        border-radius: 30px;
     }
 
     .director-statement-content {

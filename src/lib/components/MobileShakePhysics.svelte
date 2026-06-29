@@ -38,12 +38,16 @@
         getPillAnchors = $bindable<(() => PillAnchor[]) | null>(null),
         motionStatus = $bindable(createMobileMotionStatus()),
         motionControls = $bindable<MobileMotionControls | null>(null),
+        shakeVanishDurationMs = 3000,
+        onShakeSustained,
     }: {
         competences?: PhysicsPill[];
         dragging?: boolean;
         getPillAnchors?: (() => PillAnchor[]) | null;
         motionStatus?: MobileMotionStatus;
         motionControls?: MobileMotionControls | null;
+        shakeVanishDurationMs?: number;
+        onShakeSustained?: () => void;
     } = $props();
 
     $effect(() => {
@@ -683,6 +687,10 @@
 
             let lastAccel = { x: 0, y: 0, z: 0 };
             let lastShakeAt = 0;
+            let lastShakeActivityAt = 0;
+            let shakeSessionStartAt: number | null = null;
+            const SHAKE_INTENSITY_THRESHOLD = 1.8;
+            const SHAKE_ACTIVITY_GAP_MS = 250;
             let smoothedGravityX = 0;
             let smoothedGravityY = 1;
             let lastAppliedGravity = { x: 0, y: 1 };
@@ -741,7 +749,30 @@
 
                 const intensity = Math.hypot(dx, dy, dz);
                 const now = performance.now();
-                if (intensity < 1.8 || now - lastShakeAt < 70) return;
+
+                if (intensity >= SHAKE_INTENSITY_THRESHOLD) {
+                    if (
+                        shakeSessionStartAt !== null &&
+                        now - lastShakeActivityAt > SHAKE_ACTIVITY_GAP_MS
+                    ) {
+                        shakeSessionStartAt = null;
+                    }
+
+                    lastShakeActivityAt = now;
+
+                    if (shakeSessionStartAt === null) {
+                        shakeSessionStartAt = now;
+                    } else if (
+                        now - shakeSessionStartAt >= shakeVanishDurationMs
+                    ) {
+                        onShakeSustained?.();
+                        shakeSessionStartAt = now;
+                    }
+                }
+
+                if (intensity < SHAKE_INTENSITY_THRESHOLD || now - lastShakeAt < 70) {
+                    return;
+                }
 
                 lastShakeAt = now;
                 const forceScale = Math.min(intensity * 0.0009, 0.012);

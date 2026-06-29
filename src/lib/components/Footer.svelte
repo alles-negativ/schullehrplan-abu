@@ -12,7 +12,7 @@
             class="footer-navigation-link"
             href="/uploads/5_SLP_Einleitung_allg.Teil_20260512.pdf"
             target="_blank"
-            rel="noopener noreferrer">Rahmenlehrplan.pdf</a
+            rel="noopener noreferrer">Schullehrplan.pdf</a
         >
         <a
             class="footer-navigation-link footer-navigation-link-with-icon"

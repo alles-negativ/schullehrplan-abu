@@ -25,6 +25,7 @@
     ] as const;
 
     const SHAKE_BEFORE_DROP_MS = 800;
+    const SHAKE_VANISH_DURATION_MS = 3000;
     const POOF_DURATION_MS = 300;
     const PILL_SPAWN_INTERVAL_MIN_MS = 90;
     const PILL_SPAWN_INTERVAL_MAX_MS = 280;
@@ -75,6 +76,8 @@
         Math.random() *
             (PILL_SPAWN_INTERVAL_MAX_MS - PILL_SPAWN_INTERVAL_MIN_MS);
 
+    const randomPillCount = () => 1 + Math.floor(Math.random() * 3);
+
     const clearPillSpawnTimeouts = () => {
         for (const timeout of pillSpawnTimeouts) {
             clearTimeout(timeout);
@@ -86,8 +89,6 @@
         aspect: (typeof aspectOrder)[number],
         count: number,
     ) => {
-        clearPillSpawnTimeouts();
-
         const pool = getAllCompetences().filter(
             (competence) => competence.aspect === aspect,
         );
@@ -198,25 +199,17 @@
         }
     };
 
-    const scheduleAspectPills = (
+    const addAspectPillsWithShake = (
         aspect: (typeof aspectOrder)[number],
-        withShake = false,
     ) => {
         clearAspectDropTimeout();
-        clearPillSpawnTimeouts();
-        clearVanishTimeouts();
-        clearPoofRemoveTimeouts();
-        vanishPillsWithPoof();
-
-        if (withShake) {
-            isShaking = true;
-            heroShakeKey += 1;
-        }
+        displayedAspect = aspect;
+        isShaking = true;
+        heroShakeKey += 1;
 
         aspectDropTimeout = setTimeout(() => {
-            displayedAspect = aspect;
             isShaking = false;
-            spawnPillsFromAspect(aspect, 4 + Math.floor(Math.random() * 3));
+            spawnPillsFromAspect(aspect, randomPillCount());
             aspectDropTimeout = null;
         }, SHAKE_BEFORE_DROP_MS);
     };
@@ -225,7 +218,12 @@
         if (pillDragging || isShaking) return;
 
         const aspect = pickRandomAspect(displayedAspect);
-        scheduleAspectPills(aspect, true);
+        addAspectPillsWithShake(aspect);
+    };
+
+    const handleShakeSustained = () => {
+        if (pillDragging || isShaking || !fallingCompetences.length) return;
+        vanishPillsWithPoof();
     };
 
     const aspectColor = $derived(
@@ -237,7 +235,7 @@
     onMount(() => {
         const aspect = pickRandomAspect();
         displayedAspect = aspect;
-        scheduleAspectPills(aspect, true);
+        spawnPillsFromAspect(aspect, randomPillCount());
 
         return () => {
             clearAspectDropTimeout();
@@ -256,6 +254,8 @@
             bind:getPillAnchors
             bind:motionStatus
             bind:motionControls
+            shakeVanishDurationMs={SHAKE_VANISH_DURATION_MS}
+            onShakeSustained={handleShakeSustained}
         />
         <MobilePoofEffects bursts={poofBursts} />
     </div>

@@ -26,6 +26,7 @@
 
     const SHAKE_BEFORE_DROP_MS = 800;
     const SHAKE_VANISH_DURATION_MS = 3000;
+    const FIRST_PILL_COUNT = 3;
     const POOF_DURATION_MS = 300;
     const PILL_SPAWN_INTERVAL_MIN_MS = 90;
     const PILL_SPAWN_INTERVAL_MAX_MS = 280;
@@ -63,6 +64,15 @@
     let poofRemoveTimeouts: ReturnType<typeof setTimeout>[] = [];
     let getPillAnchors = $state<(() => PillAnchor[]) | null>(null);
     let poofBursts = $state<PoofBurst[]>([]);
+    let hasInitialPillsSpawned = false;
+
+    const sensorModalVisible = $derived(
+        motionStatus.assessmentComplete &&
+            motionStatus.needsPermission &&
+            !motionStatus.motionEnabled &&
+            !motionStatus.permissionDenied &&
+            !motionStatus.permissionDeclined,
+    );
 
     const createFallingCompetence = (
         competence: Competence,
@@ -232,10 +242,22 @@
             : "var(--color-white)",
     );
 
+    $effect(() => {
+        if (
+            hasInitialPillsSpawned ||
+            !motionStatus.assessmentComplete ||
+            sensorModalVisible ||
+            !displayedAspect
+        ) {
+            return;
+        }
+
+        hasInitialPillsSpawned = true;
+        spawnPillsFromAspect(displayedAspect, FIRST_PILL_COUNT);
+    });
+
     onMount(() => {
-        const aspect = pickRandomAspect();
-        displayedAspect = aspect;
-        spawnPillsFromAspect(aspect, randomPillCount());
+        displayedAspect = pickRandomAspect();
 
         return () => {
             clearAspectDropTimeout();

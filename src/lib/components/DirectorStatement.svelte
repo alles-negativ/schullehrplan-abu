@@ -53,8 +53,8 @@
         line-height: var(--h1-line-height);
         font-weight: var(--h1-weight);
         letter-spacing: var(--h1-letter-spacing);
-        text-wrap: balance;
-        max-width: 70%;
+        /* text-wrap: balance; */
+        max-width: 80%;
         margin-inline: auto;
     }
 

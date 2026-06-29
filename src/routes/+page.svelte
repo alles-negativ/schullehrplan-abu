@@ -2,6 +2,7 @@
     import { onMount } from "svelte";
     import InteractivePhysics from "$lib/components/InteractivePhysics.svelte";
     import MobileExperience from "$lib/components/MobileExperience.svelte";
+    import DirectorStatement from "$lib/components/DirectorStatement.svelte";
     import TopicMap from "$lib/components/TopicMap.svelte";
     import {
         getAllCompetences,
@@ -328,6 +329,8 @@
             </section>
 
             <TopicMap />
+
+            <DirectorStatement />
         </main>
     {/if}
 {/if}

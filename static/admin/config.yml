@@ -379,6 +379,37 @@ collections:
                       widget: markdown,
                       hint: "Abschnittstitel mit ##. PHZH rot hervorheben: <span class=\"phzh-accent\">PHZH</span>",
                   }
+    - name: statement
+      label: Wort der Bildungsdirektorin
+      files:
+          - label: Startseite Statement
+            name: index
+            file: content/statement/index.json
+            fields:
+                - { label: Titel, name: title, widget: string }
+                - {
+                      label: Porträt,
+                      name: image,
+                      widget: image,
+                      hint: "Bild der Bildungsdirektorin (empfohlen: Hochformat).",
+                  }
+                - {
+                      label: Bild-Alternativtext,
+                      name: image_alt,
+                      widget: string,
+                  }
+                - {
+                      label: Einleitung,
+                      name: lead,
+                      widget: text,
+                      hint: "Grosser Einleitungssatz neben dem Porträt.",
+                  }
+                - label: Absätze
+                  name: paragraphs
+                  label_singular: Absatz
+                  widget: list
+                  min: 1
+                  field: { label: Text, name: text, widget: text }
     - name: mobile
       label: Mobile Startseite
       files:

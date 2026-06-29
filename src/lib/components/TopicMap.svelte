@@ -567,35 +567,4 @@
         font-weight: var(--h3-weight);
         letter-spacing: var(--h3-letter-spacing);
     }
-
-    @media (max-width: 960px) {
-        .topicmap-qv-annotations {
-            position: static;
-            margin-top: 0.75rem;
-            min-width: 0;
-        }
-
-        .topicmap-node-wrap {
-            flex-direction: column;
-        }
-
-        .topicmap-bubbles {
-            position: static;
-            display: grid;
-            gap: 1rem;
-            margin-top: 2rem;
-        }
-
-        .topicmap-bubble {
-            position: static;
-            width: 100%;
-            max-width: none;
-            opacity: 1;
-            transform: none;
-        }
-
-        .topicmap-bubble-arrow {
-            display: none;
-        }
-    }
 </style>

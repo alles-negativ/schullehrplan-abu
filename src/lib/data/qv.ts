@@ -44,6 +44,7 @@ export type QvChapter = {
 
 export type QvContent = {
 	title: string;
+	eba_to_efz_pdf?: string;
 	chapters: QvChapter[];
 };
 
@@ -100,6 +101,7 @@ const loadQvContent = (): QvContent => {
 
 	return {
 		title: data.title ?? defaultContent.title,
+		eba_to_efz_pdf: data.eba_to_efz_pdf,
 		chapters: (data.chapters ?? defaultContent.chapters).map((chapter) =>
 			normalizeChapter(chapter)
 		)

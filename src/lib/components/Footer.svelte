@@ -10,13 +10,13 @@
     <div class="footer-navigation">
         <a
             class="footer-navigation-link"
-            href="/uploads/5_SLP_Einleitung_allg.Teil_20260512.pdf"
+            href="/uploads/Rahmenlehrplan.pdf"
             target="_blank"
-            rel="noopener noreferrer">Schullehrplan.pdf</a
+            rel="noopener noreferrer">Rahmenlehrplan.pdf</a
         >
         <a
             class="footer-navigation-link footer-navigation-link-with-icon"
-            href="https://bzz.ch/app/uploads/2024/11/Verordnung-des-SBFI-ueber-Mindestvorschriften-fuer-die-Allgemeinbildung-in-der-beruflichen-Grundbildung.pdf"
+            href="https://www.fedlex.admin.ch/eli/oc/2025/263/de"
             target="_blank"
             rel="noopener noreferrer"
         >

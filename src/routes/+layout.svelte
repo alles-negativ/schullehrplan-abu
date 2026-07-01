@@ -91,7 +91,7 @@
         >
             {#if page.url.pathname === "/"}
                 <StickyPdfLink
-                    href="/uploads/5_SLP_Einleitung_allg.Teil_20260512.pdf"
+                    href="/uploads/SLP_Einleitung_allg.Teil_20260630_final.pdf"
                     label="Grundlagen"
                 />
             {/if}

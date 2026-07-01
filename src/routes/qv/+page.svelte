@@ -44,6 +44,7 @@
 <div class="qv-route mode-grid" class:is-expanded={selectedChapterIndex === -1}>
     <QvSideNavigation
         chapters={data.qv.chapters}
+        ebaToEfzPdf={data.qv.eba_to_efz_pdf}
         {selectedChapterIndex}
         expanded={selectedChapterIndex === -1}
         {getChapterHref}

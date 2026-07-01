@@ -247,6 +247,12 @@ collections:
             file: content/qv/index.json
             fields:
                 - { label: Titel, name: title, widget: string }
+                - {
+                      label: Übertritt EBA zu EFZ (PDF),
+                      name: eba_to_efz_pdf,
+                      widget: file,
+                      required: false,
+                  }
                 - label: Kapitel
                   name: chapters
                   label_singular: Kapitel

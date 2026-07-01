@@ -4,6 +4,7 @@
     import { onMount, tick } from "svelte";
     import { fade, slide } from "svelte/transition";
     import arrowIcon from "$lib/assets/arrow.svg";
+    import pdfIcon from "$lib/assets/pdf-icon.svg";
     import type { QvChapter } from "$lib/data/qv";
 
     const DROPDOWN_MEDIA = "(max-width: 1100px)";
@@ -12,11 +13,13 @@
 
     let {
         chapters,
+        ebaToEfzPdf,
         selectedChapterIndex = -1,
         expanded = false,
         getChapterHref,
     }: {
         chapters: QvChapter[];
+        ebaToEfzPdf?: string;
         selectedChapterIndex?: number;
         expanded?: boolean;
         getChapterHref: (chapterIndex: number) => string;
@@ -165,6 +168,18 @@
             {/each}
         </ul>
     </nav>
+
+    {#if ebaToEfzPdf}
+        <a
+            class="pdf-link"
+            href={ebaToEfzPdf}
+            target="_blank"
+            rel="noopener noreferrer"
+        >
+            <img src={pdfIcon} alt="" class="pdf-icon" aria-hidden="true" />
+            <span>Übertritt EBA zu EFZ</span>
+        </a>
+    {/if}
 {/snippet}
 
 {#if useDropdown}
@@ -413,10 +428,48 @@
         filter: brightness(1.2);
     }
 
+    .pdf-link {
+        display: inline-flex;
+        align-items: center;
+        gap: calc(7 * var(--u));
+        width: fit-content;
+        max-width: 100%;
+        box-sizing: border-box;
+        margin-top: calc(10 * var(--u));
+        padding: calc(3 * var(--u)) calc(15 * var(--u)) calc(3 * var(--u)) calc(12 * var(--u));
+        border-radius: 9999px;
+        border: calc(1.5 * var(--u)) solid var(--color-black);
+        background: var(--color-white);
+        color: var(--color-black);
+        text-decoration: none;
+        font-family: var(--font-sans);
+        font-size: var(--h5-size);
+        line-height: var(--h5-line-height);
+        font-weight: var(--h5-weight);
+        letter-spacing: var(--h5-letter-spacing);
+        transition:
+            background-color 120ms ease,
+            color 120ms ease;
+    }
+
+    .pdf-link:hover {
+        background: var(--color-darkblue);
+        color: var(--color-white);
+    }
+
+    .pdf-link:hover .pdf-icon {
+        filter: invert(1);
+    }
+
+    .pdf-icon {
+        flex-shrink: 0;
+    }
+
     @media (prefers-reduced-motion: reduce) {
         .topic-dropdown,
         .topic-dropdown-icon,
-        .topic-button {
+        .topic-button,
+        .pdf-link {
             transition: none;
         }
     }

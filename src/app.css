@@ -46,7 +46,7 @@
 
     --h5-size: calc(18 * var(--u));
     --h5-line-height: calc(24 * var(--u));
-    --h5-weight: 500;
+    --h5-weight: 400;
     --h5-letter-spacing: 0.01em;
 
     --h6-size: calc(18 * var(--u));

@@ -55,6 +55,14 @@
         {/if}
         <!-- Content is authored in CMS markdown -->
         <div class="content-text">{@html html}</div>
+        {#if content.location?.trim()}
+            <div class="content-location-container">
+                <h4 class="content-location-label">Externe Lernorte</h4>
+                <p class="content-location-text">
+                    {content.location}
+                </p>
+            </div>
+        {/if}
         <div class="content-tags">
             {#if socialAspects.length > 0}
                 <div class="tag-group">
@@ -92,7 +100,11 @@
             {/if}
             {#if languageAspects.length > 0}
                 <div class="tag-group">
-                    <span class="tag-group-label">Sprachmodi</span>
+                    <span class="tag-group-label"
+                        >{languageAspects.length === 1
+                            ? "Sprachmodus"
+                            : "Sprachmodi"}</span
+                    >
                     {#each languageAspects as item}
                         <div
                             class="aspect-item"
@@ -141,6 +153,18 @@
         line-height: var(--p-line-height);
         font-weight: var(--p-weight);
         letter-spacing: var(--p-letter-spacing);
+    }
+
+    .content-location-container {
+        margin-top: 2rem;
+    }
+
+    .content-location-label {
+        margin: 0 0 0.2rem;
+    }
+
+    .content-location-text {
+        margin: 0;
     }
 
     .content-body {

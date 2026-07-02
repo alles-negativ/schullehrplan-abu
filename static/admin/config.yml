@@ -114,6 +114,12 @@ collections:
                                         name: number,
                                         widget: number,
                                     }
+                                  - {
+                                        label: Externe Lernorte,
+                                        name: location,
+                                        widget: string,
+                                        required: false,
+                                    }
                                   - label: Gesellschaftliche Inhalte
                                     name: social_aspects
                                     widget: list

@@ -7,6 +7,7 @@ export type LearningContent = {
 	title?: string;
 	titel?: string;
 	number?: number;
+	location?: string;
 	social_aspects?: AspectReference[];
 	language_aspects?: AspectReference[];
 	essential_competences?: string[];

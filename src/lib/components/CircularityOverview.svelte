@@ -280,8 +280,11 @@
                                                 onclick={() =>
                                                     (selectedCompetence =
                                                         competence)}
-                                                >{competence.title}</button
                                             >
+                                                <span class="pill-label"
+                                                    >{competence.title}</span
+                                                >
+                                            </button>
                                         {/if}
                                     {/each}
                                 </div>
@@ -321,8 +324,11 @@
                                                     onclick={() =>
                                                         (selectedCompetence =
                                                             competence)}
-                                                    >{competence.title}</button
                                                 >
+                                                    <span class="pill-label"
+                                                        >{competence.title}</span
+                                                    >
+                                                </button>
                                             {/if}
                                         {/each}
                                     </div>
@@ -582,14 +588,17 @@
         align-items: center;
         margin-left: auto;
         width: 50%;
+        min-width: 0;
     }
 
     .list-pill {
-        flex-shrink: 0;
+        flex: 0 1 auto;
+        min-width: 0;
+        max-width: 100%;
+        overflow: hidden;
         padding: calc(5 * var(--u)) calc(15 * var(--u));
         background: var(--pill-color);
         color: var(--color-black);
-        white-space: nowrap;
     }
 
     .pill-button {

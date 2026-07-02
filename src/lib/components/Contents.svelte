@@ -57,7 +57,7 @@
         <div class="content-text">{@html html}</div>
         {#if content.location?.trim()}
             <div class="content-location-container">
-                <h4 class="content-location-label">Externe Lernorte</h4>
+                <h4 class="content-location-lable">Zusätzlicher Hinweis</h4>
                 <p class="content-location-text">
                     {content.location}
                 </p>

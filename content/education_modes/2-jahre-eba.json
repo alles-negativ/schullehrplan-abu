@@ -26,6 +26,7 @@
                                 {
                                     "titel": "Ich kann mich in der Arbeits- und Ausbildungswelt anhand der Informationen zum Lehrvertrag orientieren und bei Fragen oder Konflikten bei dafür vorgesehenen Kontaktstellen Unterstützung holen.",
                                     "number": 1,
+                                    "location": "Externe Lernorte: Schule und Umgebung kennenlernen, Stadtrundgang",
                                     "social_aspects": [
                                         {
                                             "aspect": "recht",
@@ -68,6 +69,7 @@
                                 {
                                     "titel": "Ich kann zentrale Aussagen zu Regeln und Zuständigkeiten in Schule und Betrieb beschreiben und verhalte mich in typischen Situationen respektvoll und verständlich.",
                                     "number": 1,
+                                    "location": "Kooperation mit Berufskunde möglich",
                                     "social_aspects": [
                                         {
                                             "aspect": "recht",
@@ -84,6 +86,7 @@
                                 {
                                     "titel": "Ich kann meine psychischen und physischen Grenzen erkennen und zentrale Aussagen aus Gesprächen oder Texten zu Entlastungsstrategien und Regeln verstehen, um passende Verhaltensweisen für mich abzuleiten.",
                                     "number": 2,
+                                    "location": "Kooperation mit Berufskunde möglich",
                                     "social_aspects": [
                                         {
                                             "aspect": "identitat-sozialisation",
@@ -120,8 +123,8 @@
                             "learning_contents": [
                                 {
                                     "titel": "Ich kann ein Budget erstellen, reflektiere darin aufgeführte Konsumentscheidungen und identifiziere Risiken für Schulden.",
-                                    "location": "Schuldenberatung",
                                     "number": 1,
+                                    "location": "Externe Lernorte: Schuldenberatung",
                                     "social_aspects": [
                                         {
                                             "aspect": "wirtschaft",
@@ -160,6 +163,7 @@
                                 {
                                     "titel": "Ich kann die Dienstleistungen oder Waren meines Betriebs und ihre Kundschaft beschreiben und erklären, mit welchen Werbemassnahmen diese erreicht werden.",
                                     "number": 1,
+                                    "location": "Kooperation mit Berufskunde möglich",
                                     "social_aspects": [
                                         {
                                             "aspect": "wirtschaft",
@@ -213,6 +217,7 @@
                                 {
                                     "titel": "Ich kann aufzeigen, welchen Sicherheits- und Gesundheitsrisiken ich im Alltag und im Betrieb ausgesetzt bin.",
                                     "number": 1,
+                                    "location": "Kooperation mit Berufskunde möglich · Externe Lernorte: Infrastruktur-Anlagen wie die Wasseraufbereitung der Gemeinde besuchen",
                                     "social_aspects": [
                                         {
                                             "aspect": "recht",
@@ -229,6 +234,7 @@
                                 {
                                     "titel": "Ich kann prüfen, wie ich geschützt bin und mich situationsgerecht absichern.",
                                     "number": 2,
+                                    "location": "Kooperation mit Berufskunde möglich",
                                     "social_aspects": [
                                         {
                                             "aspect": "recht",
@@ -251,6 +257,7 @@
                                 {
                                     "titel": "Ich kann gesellschaftliche Erwartungen und Normen zu Körper, Geschlecht und Identität erkennen und reflektieren.",
                                     "number": 1,
+                                    "location": "Kooperation mit Berufskunde möglich · Externe Lernorte: Kulturveranstaltungen zu diesem Thema besuchen",
                                     "social_aspects": [
                                         {
                                             "aspect": "identitat-sozialisation",
@@ -267,6 +274,7 @@
                                 {
                                     "titel": "Ich kann Möglichkeiten für einen gesundheitsfördernden Lebensstil beruflich und privat beschreiben und bewerten.",
                                     "number": 2,
+                                    "location": "Kooperation mit Sport möglich",
                                     "social_aspects": [
                                         {
                                             "aspect": "identitat-sozialisation",
@@ -304,6 +312,7 @@
                                 {
                                     "titel": "Ich kann digitale Werkzeuge und deren Funktionen situationsgerecht nutzen.",
                                     "number": 1,
+                                    "location": "Kooperation mit Berufskunde möglich: Wo in der Berufskunde und im Lehrbetrieb werden welche digitalen Werkzeuge eingesetzt?",
                                     "social_aspects": [
                                         {
                                             "aspect": "technologie-transformation",
@@ -320,6 +329,7 @@
                                 {
                                     "titel": "Ich kann Funktionen von KI anwenden und ein eigenes Ausgangsprodukt (Text, Foto etc.) mit KI überarbeiten.",
                                     "number": 2,
+                                    "location": "Kooperation mit Berufskunde möglich: Wie können im Lehrbetrieb Arbeitsprozesse mit KI unterstützt werden?",
                                     "social_aspects": [
                                         {
                                             "aspect": "kultur",
@@ -342,6 +352,7 @@
                                 {
                                     "titel": "Ich kann Informationen für Alltag, Schule und Beruf recherchieren und ihre Verlässlichkeit beurteilen.",
                                     "number": 1,
+                                    "location": "Kooperation mit Berufskunde möglich",
                                     "social_aspects": [
                                         {
                                             "aspect": "technologie-transformation",
@@ -358,6 +369,7 @@
                                 {
                                     "titel": "Ich kann verantwortungsvoll mit Social Media umgehen, KI-Inhalte erkennen und sie in ihren kulturellen Kontext einordnen.",
                                     "number": 2,
+                                    "location": "Kooperation mit Berufskunde möglich",
                                     "social_aspects": [
                                         {
                                             "aspect": "kultur",
@@ -416,6 +428,7 @@
                                 {
                                     "titel": "Ich kann eigene Standpunkte zur Meinungsbildung entwickeln und diese in Gesprächen argumentativ vertreten.",
                                     "number": 2,
+                                    "location": "Kooperation mit Politik möglich",
                                     "social_aspects": [
                                         {
                                             "aspect": "politik",
@@ -438,6 +451,7 @@
                                 {
                                     "titel": "Ich kann das politische System der Schweiz darstellen und Möglichkeiten der politischen Teilhabe aufzeigen.",
                                     "number": 1,
+                                    "location": "Externe Lernorte: Gemeinde / Parlament / Gericht",
                                     "social_aspects": [
                                         {
                                             "aspect": "politik",
@@ -582,6 +596,7 @@
                                 {
                                     "titel": "Ich kann meine Fähigkeiten, Interessen, Werte und Ziele benennen und reflektieren.",
                                     "number": 1,
+                                    "location": "Externe Lernorte: BIZ/Laufbahnzentrum, Coworking-Space oder modernes Unternehmen, Berufsmesse, RAV",
                                     "social_aspects": [
                                         {
                                             "aspect": "identitat-sozialisation",
@@ -598,6 +613,7 @@
                                 {
                                     "titel": "Ich kann meine berufliche Laufbahn planen, mein Bewerbungsdossier aktualisieren und die Bedeutung von lebenslangem Lernen erkennen.",
                                     "number": 2,
+                                    "location": "Kooperation mit Berufskunde möglich",
                                     "social_aspects": [
                                         {
                                             "aspect": "wirtschaft",
@@ -636,6 +652,7 @@
                                 {
                                     "titel": "Ich kann die Unterlagen für einen Austausch mit den Behörden oder mit einer anderen Akteurin/einem anderen Akteur zusammenstellen und diese einreichen.",
                                     "number": 2,
+                                    "location": "Externe Lernorte: Besuch einer Gemeinde / kantonalen Verwaltung",
                                     "social_aspects": [
                                         {
                                             "aspect": "wirtschaft",
@@ -673,6 +690,7 @@
                                 {
                                     "titel": "Ich kann kulturelle Ausdrucksformen wie Sprache, Bilder oder Werke aus meinem Umfeld beschreiben und ihre Bedeutung erklären.",
                                     "number": 1,
+                                    "location": "Externe Lernorte: Besuch einer Ausstellung oder eines Museums",
                                     "social_aspects": [
                                         {
                                             "aspect": "kultur",
@@ -711,6 +729,7 @@
                                 {
                                     "titel": "Ich kann kreative Ausdrucksformen nutzen, um auf gesellschaftliche Entwicklungen zu reagieren und Denkanstösse zu geben.",
                                     "number": 1,
+                                    "location": "Kooperation mit Berufskunde möglich · Externe Lernorte: Regionale Kunstworkshops",
                                     "social_aspects": [
                                         {
                                             "aspect": "kultur",
@@ -727,6 +746,7 @@
                                 {
                                     "titel": "Ich kann verschiedene Lesarten eines Kunstwerks begründet diskutieren.",
                                     "number": 2,
+                                    "location": "Externe Lernorte: Besuch einer Ausstellung oder eines Museums",
                                     "social_aspects": [
                                         {
                                             "aspect": "ethik",

@@ -131,10 +131,14 @@
     ) => {
         const slugs = new Set<string>(reference.essential_competences ?? []);
         for (const content of reference.learning_contents ?? []) {
-            for (const entry of content.social_aspects ?? [])
-                slugs.add(getAspectSlug(entry));
-            for (const entry of content.language_aspects ?? [])
-                slugs.add(getAspectSlug(entry));
+            for (const entry of content.social_aspects ?? []) {
+                const slug = getAspectSlug(entry);
+                if (slug) slugs.add(slug);
+            }
+            for (const entry of content.language_aspects ?? []) {
+                const slug = getAspectSlug(entry);
+                if (slug) slugs.add(slug);
+            }
             for (const slug of content.essential_competences ?? [])
                 slugs.add(slug);
         }

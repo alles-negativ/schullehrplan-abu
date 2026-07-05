@@ -1,5 +1,5 @@
 export type AspectReference = {
-	aspect: string;
+	aspect?: string;
 	specification?: string;
 };
 
@@ -13,7 +13,7 @@ export type LearningContent = {
 	essential_competences?: string[];
 };
 
-export const getAspectSlug = (entry: string | AspectReference): string =>
+export const getAspectSlug = (entry: string | AspectReference): string | undefined =>
 	typeof entry === 'string' ? entry : entry.aspect;
 
 export const getAspectSpecification = (entry: string | AspectReference): string | undefined =>
@@ -201,8 +201,14 @@ export const getModeCompetenceCounts = (mode: EducationMode): Map<string, number
 			for (const ref of topic.individual_reference ?? []) {
 				for (const slug of ref.essential_competences ?? []) addSlug(slug);
 				for (const content of ref.learning_contents ?? []) {
-					for (const entry of content.social_aspects ?? []) addSlug(getAspectSlug(entry));
-					for (const entry of content.language_aspects ?? []) addSlug(getAspectSlug(entry));
+					for (const entry of content.social_aspects ?? []) {
+						const slug = getAspectSlug(entry);
+						if (slug) addSlug(slug);
+					}
+					for (const entry of content.language_aspects ?? []) {
+						const slug = getAspectSlug(entry);
+						if (slug) addSlug(slug);
+					}
 					for (const slug of content.essential_competences ?? []) addSlug(slug);
 				}
 			}

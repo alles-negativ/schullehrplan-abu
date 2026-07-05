@@ -10,6 +10,9 @@
     } from "$lib/data/education-modes";
 
     type AspectDisplay = Competence & { specification?: string };
+    type AspectDisplayItem =
+        | { kind: "competence"; competence: AspectDisplay }
+        | { kind: "text"; text: string };
 
     let {
         content,
@@ -25,14 +28,21 @@
     const html = $derived(marked.parse(title) as string);
     const mapAspects = (
         entries: LearningContent["social_aspects"],
-    ): AspectDisplay[] => {
-        const result: AspectDisplay[] = [];
+    ): AspectDisplayItem[] => {
+        const result: AspectDisplayItem[] = [];
         for (const entry of entries ?? []) {
-            const competence = getCompetenceBySlug(getAspectSlug(entry));
+            const slug = getAspectSlug(entry);
+            const specification = getAspectSpecification(entry);
+            if (!slug) {
+                if (specification)
+                    result.push({ kind: "text", text: specification });
+                continue;
+            }
+            const competence = getCompetenceBySlug(slug);
             if (!competence) continue;
             result.push({
-                ...competence,
-                specification: getAspectSpecification(entry),
+                kind: "competence",
+                competence: { ...competence, specification },
             });
         }
         return result;
@@ -42,6 +52,40 @@
     const languageAspects = $derived(mapAspects(content.language_aspects));
     let selectedCompetence = $state<AspectDisplay | null>(null);
 </script>
+
+{#snippet aspectItems(items: AspectDisplayItem[])}
+    {#each items as item}
+        {#if item.kind === "text"}
+            <p class="aspect-text-only">{item.text}</p>
+        {:else}
+            <div
+                class="aspect-item"
+                style={`--tag-color: ${item.competence.color ?? "#64748b"}`}
+            >
+                <button
+                    type="button"
+                    class="tag"
+                    onclick={() => (selectedCompetence = item.competence)}
+                    >{item.competence.title}</button
+                >
+                {#if item.competence.specification}
+                    <p class="tag-specification">
+                        <span class="tag-specification-text">
+                            <span
+                                class="tag-specification-glow"
+                                aria-hidden="true"
+                                >{item.competence.specification}</span
+                            >
+                            <span class="tag-specification-label"
+                                >{item.competence.specification}</span
+                            >
+                        </span>
+                    </p>
+                {/if}
+            </div>
+        {/if}
+    {/each}
+{/snippet}
 
 <li class="content-item">
     <div class="line-container">
@@ -69,33 +113,7 @@
                     <span class="tag-group-label"
                         >Gesellschaftliche Inhalte</span
                     >
-                    {#each socialAspects as item}
-                        <div
-                            class="aspect-item"
-                            style={`--tag-color: ${item.color ?? "#64748b"}`}
-                        >
-                            <button
-                                type="button"
-                                class="tag"
-                                onclick={() => (selectedCompetence = item)}
-                                >{item.title}</button
-                            >
-                            {#if item.specification}
-                                <p class="tag-specification">
-                                    <span class="tag-specification-text">
-                                        <span
-                                            class="tag-specification-glow"
-                                            aria-hidden="true"
-                                            >{item.specification}</span
-                                        >
-                                        <span class="tag-specification-label"
-                                            >{item.specification}</span
-                                        >
-                                    </span>
-                                </p>
-                            {/if}
-                        </div>
-                    {/each}
+                    {@render aspectItems(socialAspects)}
                 </div>
             {/if}
             {#if languageAspects.length > 0}
@@ -105,33 +123,7 @@
                             ? "Sprachmodus"
                             : "Sprachmodi"}</span
                     >
-                    {#each languageAspects as item}
-                        <div
-                            class="aspect-item"
-                            style={`--tag-color: ${item.color ?? "#64748b"}`}
-                        >
-                            <button
-                                type="button"
-                                class="tag"
-                                onclick={() => (selectedCompetence = item)}
-                                >{item.title}</button
-                            >
-                            {#if item.specification}
-                                <p class="tag-specification">
-                                    <span class="tag-specification-text">
-                                        <span
-                                            class="tag-specification-glow"
-                                            aria-hidden="true"
-                                            >{item.specification}</span
-                                        >
-                                        <span class="tag-specification-label"
-                                            >{item.specification}</span
-                                        >
-                                    </span>
-                                </p>
-                            {/if}
-                        </div>
-                    {/each}
+                    {@render aspectItems(languageAspects)}
                 </div>
             {/if}
         </div>
@@ -232,6 +224,18 @@
         max-width: 100%;
         cursor: pointer;
     } */
+
+    .aspect-text-only {
+        margin: 0;
+        /* margin-left: calc(7 * var(--u)); */
+        color: var(--color-black);
+        font-size: var(--h5-size);
+        line-height: var(--h5-line-height);
+        font-weight: var(--h5-weight);
+        letter-spacing: var(--h5-letter-spacing);
+        color: var(--color-black);
+        opacity: 0.5;
+    }
 
     .tag-specification {
         margin: 0;

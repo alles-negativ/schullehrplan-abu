@@ -127,7 +127,8 @@
         margin-top: 0.65rem;
         border: calc(1.5 * var(--u)) solid var(--color-black);
         border-radius: calc(30 * var(--u)); /* must remain that way*/
-        padding: calc(23 * var(--u)) calc(21 * var(--u)) calc(30 * var(--u)) calc(33 * var(--u));
+        padding: calc(23 * var(--u)) calc(21 * var(--u)) calc(30 * var(--u))
+            calc(33 * var(--u));
         background: var(--color-white);
     }
 
@@ -138,8 +139,8 @@
 
     .reference-meta {
         min-width: 0;
-        padding-right: 3.1rem;
-        /* padding-bottom: 1.55rem; */
+        padding-right: 3.5rem;
+        padding-bottom: 0.5rem;
     }
 
     .reference-summary :global(p) {

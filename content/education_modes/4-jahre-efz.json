@@ -1500,13 +1500,25 @@
                       "specification": "Lernstrategien, Strategien zur Bewältigung von Herausforderungen"
                     }
                   ],
-                  "language_aspects": []
+                  "language_aspects": [
+                    {
+                      "specification": "Gemäss individueller Präferenz"
+                    }
+                  ]
                 },
                 {
                   "titel": "Ich kann Zusammenhänge in den zentralen Schlussprüfungsthemen in einer strukturierten Lernübersicht nachweisen.",
                   "number": 2,
-                  "social_aspects": [],
-                  "language_aspects": []
+                  "social_aspects": [
+                    {
+                      "specification": "Ausgewählte Themen der Allgemeinbildung"
+                    }
+                  ],
+                  "language_aspects": [
+                    {
+                      "specification": "Gemäss individueller Präferenz"
+                    }
+                  ]
                 }
               ]
             }

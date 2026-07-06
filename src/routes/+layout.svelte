@@ -28,17 +28,22 @@
         appleTouchIcon = randomFavicon.appleTouchIcon;
 
         let currentSelection = pickRandomCompetenceColor();
-        document.documentElement.style.setProperty(
-            "--color-selection",
-            currentSelection,
-        );
+        const setSelectionColor = (color: string) => {
+            document.documentElement.style.setProperty(
+                "--color-selection",
+                color,
+            );
+            document.documentElement.style.setProperty(
+                "--color-selection-snap",
+                color,
+            );
+        };
+
+        setSelectionColor(currentSelection);
 
         const selectionInterval = window.setInterval(() => {
             currentSelection = pickRandomCompetenceColor(currentSelection);
-            document.documentElement.style.setProperty(
-                "--color-selection",
-                currentSelection,
-            );
+            setSelectionColor(currentSelection);
         }, SELECTION_ROTATE_MS);
 
         const stopViewportWatch = watchMobileViewport((mobile) => {

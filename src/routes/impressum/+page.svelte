@@ -21,6 +21,22 @@
                 {/if}
             </div>
         </article>
+        {#if data.impressum.image}
+            <figure class="impressum-image-wrap">
+                <img
+                    src={data.impressum.image}
+                    alt={data.impressum.image_alt ?? ""}
+                    class="impressum-image"
+                />
+                {#if data.impressum.image_caption}
+                    <figcaption class="impressum-image-text">
+                        {@html marked.parseInline(
+                            data.impressum.image_caption,
+                        ) as string}
+                    </figcaption>
+                {/if}
+            </figure>
+        {/if}
     </section>
 </div>
 
@@ -41,6 +57,38 @@
 
     .content-wrap {
         margin: 0 calc(33 * var(--u));
+    }
+
+    .impressum-image-wrap {
+        margin: 0;
+        padding: 0 calc(33 * var(--u));
+    }
+
+    .impressum-image {
+        display: block;
+        width: 100%;
+        margin-top: calc(120 * var(--u));
+    }
+
+    .impressum-image-text {
+        margin: calc(20 * var(--u)) 0 0;
+        font-size: var(--h5-size);
+        line-height: var(--h5-line-height);
+        font-weight: var(--h5-weight);
+        letter-spacing: var(--h5-letter-spacing);
+    }
+
+    .impressum-image-text :global(a) {
+        color: var(--color-black);
+        border-bottom: 2px solid var(--color-black);
+        transition:
+            color 900ms ease,
+            border-bottom-color 900ms ease;
+    }
+
+    .impressum-image-text :global(a:hover) {
+        color: var(--color-selection-snap);
+        border-bottom-color: var(--color-selection-snap);
     }
 
     .impressum-content {
@@ -78,10 +126,21 @@
     .impressum-content :global(a) {
         color: var(--color-black);
         border-bottom: 2px solid var(--color-black);
+        transition:
+            color 900ms ease,
+            border-bottom-color 900ms ease;
     }
+
     .impressum-content :global(a:hover) {
-        color: var(--color-selection);
-        border-bottom: 2px solid var(--color-selection);
+        color: var(--color-selection-snap);
+        border-bottom-color: var(--color-selection-snap);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .impressum-image-text :global(a),
+        .impressum-content :global(a) {
+            transition: none;
+        }
     }
 
     @media (max-width: 1100px) {
@@ -99,6 +158,10 @@
         .content-wrap {
             margin-left: 0;
             margin-right: 0;
+        }
+
+        .impressum-image-wrap {
+            padding: 0;
         }
     }
 </style>

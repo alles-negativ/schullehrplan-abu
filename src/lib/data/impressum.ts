@@ -1,6 +1,9 @@
 export type ImpressumContent = {
 	title: string;
 	content: string;
+	image?: string;
+	image_alt?: string;
+	image_caption?: string;
 };
 
 const rawImpressum = import.meta.glob('../../../content/impressum/*.json', { eager: true });
@@ -16,7 +19,10 @@ const loadImpressumContent = (): ImpressumContent => {
 
 	return {
 		title: data.title ?? defaultContent.title,
-		content: typeof data.content === 'string' ? data.content : defaultContent.content
+		content: typeof data.content === 'string' ? data.content : defaultContent.content,
+		image: data.image,
+		image_alt: data.image_alt,
+		image_caption: data.image_caption
 	};
 };
 

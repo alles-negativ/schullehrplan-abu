@@ -391,6 +391,25 @@ collections:
                       widget: markdown,
                       hint: "Abschnittstitel mit ##. PHZH rot hervorheben: <span class=\"phzh-accent\">PHZH</span>",
                   }
+                - {
+                      label: Bild,
+                      name: image,
+                      widget: image,
+                      required: false,
+                  }
+                - {
+                      label: Bild-Alternativtext,
+                      name: image_alt,
+                      widget: string,
+                      required: false,
+                  }
+                - {
+                      label: Bildunterschrift,
+                      name: image_caption,
+                      widget: markdown,
+                      required: false,
+                      hint: "Links mit [Text](https://…).",
+                  }
     - name: statement
       label: Wort der Bildungsdirektorin
       files:

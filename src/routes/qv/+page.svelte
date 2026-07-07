@@ -82,7 +82,9 @@
                                             <tr>
                                                 {#each row as cell, i}
                                                     {#if i === 0}
-                                                        <th scope="row">{cell}</th>
+                                                        <th scope="row"
+                                                            >{cell}</th
+                                                        >
                                                     {:else}
                                                         <td>{cell}</td>
                                                     {/if}

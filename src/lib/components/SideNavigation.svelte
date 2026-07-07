@@ -67,59 +67,7 @@
         return Number.isFinite(parsed) && parsed > 0 ? parsed : 1;
     };
 
-    const computeIdealStickyTop = (
-        topGap: number,
-        bottomGap: number,
-        navHeight: number,
-        viewportHeight: number,
-        parentTop: number,
-        parentHeight: number,
-        scrollY: number,
-    ) => {
-        const availableHeight = viewportHeight - topGap - bottomGap;
-
-        if (navHeight <= availableHeight) {
-            return topGap;
-        }
-
-        const parentBottom = parentTop + parentHeight;
-        const maxTop = topGap;
-        const minTop = viewportHeight - navHeight - bottomGap;
-        const scrollStart = parentTop - topGap;
-        const scrollEnd = parentBottom - viewportHeight + bottomGap;
-
-        if (scrollY <= scrollStart) return maxTop;
-        if (scrollY >= scrollEnd) return minTop;
-        return maxTop - (scrollY - scrollStart);
-    };
-
-    const getStickyMetrics = () => {
-        const u = getUnit();
-        const topGap = 30 * u + 70 * u;
-        const bottomGap = 30 * u;
-        const scrollY = window.scrollY;
-        const viewportHeight = window.innerHeight;
-        const navHeight = asideElement?.offsetHeight ?? 0;
-        const parent = asideElement?.parentElement;
-
-        if (!parent) {
-            return { topGap, bottomGap, idealTop: topGap };
-        }
-
-        const parentTop = parent.getBoundingClientRect().top + scrollY;
-        const parentHeight = parent.offsetHeight;
-        const idealTop = computeIdealStickyTop(
-            topGap,
-            bottomGap,
-            navHeight,
-            viewportHeight,
-            parentTop,
-            parentHeight,
-            scrollY,
-        );
-
-        return { topGap, bottomGap, idealTop };
-    };
+    const getStickyTopPx = () => 100 * getUnit();
 
     const clearStickySlide = () => {
         if (slideTimeout) clearTimeout(slideTimeout);
@@ -187,9 +135,7 @@
         isFrozen = false;
         freezeTranslateY = 0;
         isStickyActive = true;
-
-        const { idealTop } = getStickyMetrics();
-        moveStickyTo(idealTop, fromTop);
+        moveStickyTo(getStickyTopPx(), fromTop);
     };
 
     const updateStickyScrollPosition = () => {
@@ -220,8 +166,6 @@
             return;
         }
 
-        const { idealTop } = getStickyMetrics();
-        moveStickyTo(idealTop);
         lastScrollY = scrollY;
     };
 
@@ -383,6 +327,7 @@
             isFrozen = false;
             freezeTranslateY = 0;
             clearLayoutAnchor();
+            clearStickySlide();
             return;
         }
 
@@ -419,12 +364,11 @@
         window.addEventListener("wheel", onWheel, { passive: true });
         window.addEventListener("scroll", onScroll, { passive: true });
         window.addEventListener("resize", onLayoutChange);
-        void tick().then(onLayoutChange);
 
         return () => {
             resizeObserver.disconnect();
-            clearStickySlide();
             clearLayoutAnchor();
+            clearStickySlide();
             window.removeEventListener("wheel", onWheel);
             window.removeEventListener("scroll", onScroll);
             window.removeEventListener("resize", onLayoutChange);
@@ -620,6 +564,7 @@
 
     .side-navigation.has-sticky-scroll {
         position: sticky;
+        top: calc(100 * var(--u));
         align-self: start;
     }
 
@@ -685,7 +630,8 @@
         min-height: 0;
         flex-shrink: 0;
         box-sizing: border-box;
-        padding: calc(7 * var(--u)) calc(14 * var(--u)) calc(7 * var(--u)) calc(25 * var(--u));
+        padding: calc(7 * var(--u)) calc(14 * var(--u)) calc(7 * var(--u))
+            calc(25 * var(--u));
         border: none;
         border-radius: 0;
         background: transparent;
@@ -893,7 +839,8 @@
         justify-content: space-between;
         flex-wrap: nowrap;
         gap: 0;
-        padding: calc(3 * var(--u)) calc(15 * var(--u)) calc(4 * var(--u)) calc(15 * var(--u));
+        padding: calc(3 * var(--u)) calc(15 * var(--u)) calc(4 * var(--u))
+            calc(15 * var(--u));
         border-radius: 9999px;
         border: calc(1.5 * var(--u)) solid var(--color-black);
         color: var(--color-black);
@@ -956,7 +903,8 @@
         max-width: 100%;
         box-sizing: border-box;
         text-align: left;
-        padding: calc(3 * var(--u)) calc(15 * var(--u)) calc(3 * var(--u)) calc(15 * var(--u));
+        padding: calc(3 * var(--u)) calc(15 * var(--u)) calc(3 * var(--u))
+            calc(15 * var(--u));
         border-radius: 9999px;
         cursor: pointer;
         text-decoration: none;
@@ -990,7 +938,8 @@
         line-height: var(--h1-line-height);
         font-weight: var(--h1-weight);
         letter-spacing: var(--h1-letter-spacing);
-        padding: calc(10 * var(--u)) calc(30 * var(--u)) calc(10 * var(--u)) calc(30 * var(--u));
+        padding: calc(10 * var(--u)) calc(30 * var(--u)) calc(10 * var(--u))
+            calc(30 * var(--u));
     }
 
     .topic-label {
@@ -1078,7 +1027,8 @@
         max-width: 100%;
         box-sizing: border-box;
         margin-top: calc(10 * var(--u));
-        padding: calc(3 * var(--u)) calc(15 * var(--u)) calc(3 * var(--u)) calc(12 * var(--u));
+        padding: calc(3 * var(--u)) calc(15 * var(--u)) calc(3 * var(--u))
+            calc(12 * var(--u));
         border-radius: 9999px;
         border: calc(1.5 * var(--u)) solid var(--color-black);
         background: var(--color-white);

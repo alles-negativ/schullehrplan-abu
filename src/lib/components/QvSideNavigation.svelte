@@ -183,10 +183,7 @@
 {/snippet}
 
 {#if useDropdown}
-    <div
-        class="side-navigation is-dropdown"
-        bind:this={dropdownRootElement}
-    >
+    <div class="side-navigation is-dropdown" bind:this={dropdownRootElement}>
         <div
             class="topic-dropdown"
             class:is-open={dropdownExpanded}
@@ -296,7 +293,8 @@
         min-height: 0;
         flex-shrink: 0;
         box-sizing: border-box;
-        padding: calc(7 * var(--u)) calc(14 * var(--u)) calc(7 * var(--u)) calc(25 * var(--u));
+        padding: calc(7 * var(--u)) calc(14 * var(--u)) calc(7 * var(--u))
+            calc(25 * var(--u));
         border: none;
         border-radius: 0;
         background: transparent;
@@ -436,7 +434,8 @@
         max-width: 100%;
         box-sizing: border-box;
         margin-top: calc(10 * var(--u));
-        padding: calc(3 * var(--u)) calc(15 * var(--u)) calc(3 * var(--u)) calc(12 * var(--u));
+        padding: calc(3 * var(--u)) calc(15 * var(--u)) calc(3 * var(--u))
+            calc(12 * var(--u));
         border-radius: 9999px;
         border: calc(1.5 * var(--u)) solid var(--color-black);
         background: var(--color-white);

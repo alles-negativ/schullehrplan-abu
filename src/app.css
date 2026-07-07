@@ -27,7 +27,7 @@
 
     --h1-size: calc(42 * var(--u));
     --h1-line-height: calc(50 * var(--u));
-    --h1-weight: 300;
+    --h1-weight: 400;
     --h1-letter-spacing: 0.01em;
 
     --h2-size: calc(32 * var(--u));
@@ -37,27 +37,27 @@
 
     --h3-size: calc(23 * var(--u));
     --h3-line-height: calc(31 * var(--u));
-    --h3-weight: 300;
+    --h3-weight: 400;
     --h3-letter-spacing: 0.01em;
 
     --h4-size: calc(20 * var(--u));
     --h4-line-height: calc(28 * var(--u));
-    --h4-weight: 500;
+    --h4-weight: 600;
     --h4-letter-spacing: 0.01em;
 
     --h5-size: calc(18 * var(--u));
     --h5-line-height: calc(24 * var(--u));
-    --h5-weight: 400;
+    --h5-weight: 500;
     --h5-letter-spacing: 0.01em;
 
     --h6-size: calc(18 * var(--u));
     --h6-line-height: calc(24 * var(--u));
-    --h6-weight: 300;
+    --h6-weight: 400;
     --h6-letter-spacing: -0.06em;
 
     --body-size: calc(16 * var(--u));
     --body-line-height: calc(24 * var(--u));
-    --body-weight: 300;
+    --body-weight: 400;
     --body-letter-spacing: 0.01em;
 
     --p-size: calc(23 * var(--u));

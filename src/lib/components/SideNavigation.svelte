@@ -19,6 +19,7 @@
     const DROPDOWN_SLIDE_MS = 220;
     const STICKY_SLIDE_MS = 280;
     const STICKY_SLIDE_THRESHOLD = 8;
+    const LESSON_LAYOUT_MS = 400;
 
     let {
         mode,
@@ -49,6 +50,8 @@
     let reducedMotion = $state(false);
     let lastScrollY = 0;
     let slideTimeout: ReturnType<typeof setTimeout> | undefined;
+    let layoutAnchorTop: number | null = null;
+    let layoutAnchorTimer: ReturnType<typeof setTimeout> | undefined;
 
     const useDropdown = $derived(isNarrowViewport && !expanded);
     const useStickyScroll = $derived(!useDropdown);
@@ -222,6 +225,70 @@
         lastScrollY = scrollY;
     };
 
+    const clearLayoutAnchor = () => {
+        if (layoutAnchorTimer) clearTimeout(layoutAnchorTimer);
+        layoutAnchorTimer = undefined;
+        layoutAnchorTop = null;
+    };
+
+    const beginLayoutAnchor = () => {
+        if (!asideElement) return;
+        layoutAnchorTop = asideElement.getBoundingClientRect().top;
+        if (layoutAnchorTimer) clearTimeout(layoutAnchorTimer);
+        layoutAnchorTimer = setTimeout(() => {
+            clearLayoutAnchor();
+        }, LESSON_LAYOUT_MS);
+    };
+
+    const applyLayoutAnchor = () => {
+        if (!asideElement || layoutAnchorTop === null) return;
+
+        if (isFrozen) {
+            const parent = asideElement.parentElement;
+            if (!parent) return;
+            freezeTranslateY =
+                layoutAnchorTop - parent.getBoundingClientRect().top;
+            return;
+        }
+
+        if (isStickyActive) {
+            clearStickySlide();
+            stickyTopPx = layoutAnchorTop;
+        }
+    };
+
+    const maintainVisualPosition = () => {
+        if (!asideElement) return;
+
+        if (isFrozen) {
+            const parent = asideElement.parentElement;
+            if (!parent) return;
+            freezeTranslateY =
+                asideElement.getBoundingClientRect().top -
+                parent.getBoundingClientRect().top;
+            return;
+        }
+
+        if (isStickyActive && !isSlidingTop) {
+            clearStickySlide();
+            stickyTopPx = asideElement.getBoundingClientRect().top;
+        }
+    };
+
+    const onLayoutChange = () => {
+        if (layoutAnchorTop !== null) {
+            applyLayoutAnchor();
+            return;
+        }
+
+        if (isFrozen || isStickyActive) {
+            maintainVisualPosition();
+            return;
+        }
+
+        updateStickyScrollPosition();
+    };
+
     const setScrollDirection = (direction: "up" | "down") => {
         if (direction === "down") {
             if (!isFrozen) freezeNav();
@@ -262,10 +329,12 @@
     };
 
     const toggleLessons = () => {
+        beginLayoutAnchor();
         showLessons = !showLessons;
         if (browser) {
             localStorage.setItem(LESSONS_STORAGE_KEY, String(showLessons));
         }
+        void tick().then(onLayoutChange);
     };
 
     onMount(() => {
@@ -313,12 +382,9 @@
             isStickyActive = false;
             isFrozen = false;
             freezeTranslateY = 0;
+            clearLayoutAnchor();
             return;
         }
-
-        showLessons;
-        expanded;
-        mode;
 
         isFrozen = false;
         freezeTranslateY = 0;
@@ -344,8 +410,7 @@
             updateStickyScrollPosition();
         };
 
-        const update = () => updateStickyScrollPosition();
-        const resizeObserver = new ResizeObserver(update);
+        const resizeObserver = new ResizeObserver(onLayoutChange);
         resizeObserver.observe(asideElement);
 
         const parent = asideElement.parentElement;
@@ -353,15 +418,16 @@
 
         window.addEventListener("wheel", onWheel, { passive: true });
         window.addEventListener("scroll", onScroll, { passive: true });
-        window.addEventListener("resize", update);
-        void tick().then(update);
+        window.addEventListener("resize", onLayoutChange);
+        void tick().then(onLayoutChange);
 
         return () => {
             resizeObserver.disconnect();
             clearStickySlide();
+            clearLayoutAnchor();
             window.removeEventListener("wheel", onWheel);
             window.removeEventListener("scroll", onScroll);
-            window.removeEventListener("resize", update);
+            window.removeEventListener("resize", onLayoutChange);
         };
     });
 

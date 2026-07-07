@@ -9,6 +9,7 @@
         getYearLabel,
         type Topic as TopicType,
     } from "$lib/data/education-modes";
+    import { scrollToPageTop } from "$lib/scroll-to-top";
     import { marked } from "marked";
 
     let { data } = $props();
@@ -58,6 +59,36 @@
         return null;
     });
 
+    let displayedTopic = $state<SelectedTopic | null>(null);
+    let hydrated = false;
+    let topicScrollToken = 0;
+
+    $effect(() => {
+        const next = selectedTopic;
+
+        // First run after page load: show the topic from the URL directly.
+        if (!hydrated) {
+            hydrated = true;
+            displayedTopic = next;
+            return;
+        }
+
+        if (!next) {
+            displayedTopic = null;
+            return;
+        }
+
+        if (displayedTopic?.key === next.key) return;
+
+        // Scroll up while the old content (and its open accordions) is
+        // still visible, then swap to the new topic at the top.
+        const token = ++topicScrollToken;
+        void scrollToPageTop().then(() => {
+            if (token !== topicScrollToken) return;
+            displayedTopic = next;
+        });
+    });
+
     const getTopicHref = (yearIndex: number, topicIndex: number) =>
         `${page.url.pathname}?year=${yearIndex}&topic=${topicIndex}`;
 </script>
@@ -83,12 +114,14 @@
             {getTopicHref}
         />
 
-        {#if selectedTopic}
+        {#if displayedTopic}
             <section class="topics-content">
-                <Topic
-                    topic={selectedTopic.topic}
-                    yearLabel={selectedTopic.yearLabel}
-                />
+                {#key displayedTopic.key}
+                    <Topic
+                        topic={displayedTopic.topic}
+                        yearLabel={displayedTopic.yearLabel}
+                    />
+                {/key}
             </section>
         {/if}
     </div>
@@ -99,6 +132,10 @@
 {/if}
 
 <style>
+    :global(.page-foreground:has(.mode-route)) {
+        overflow: visible;
+    }
+
     .mode-grid {
         display: grid;
         grid-template-columns: repeat(var(--grid-columns), minmax(0, 1fr));

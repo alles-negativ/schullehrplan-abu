@@ -1,6 +1,5 @@
 <script lang="ts">
     import { browser } from "$app/environment";
-    import { afterNavigate } from "$app/navigation";
     import { onMount, tick } from "svelte";
     import { fade, slide } from "svelte/transition";
     import arrowIcon from "$lib/assets/arrow.svg";
@@ -18,6 +17,8 @@
     const DROPDOWN_MEDIA = "(max-width: 1100px)";
     const DROPDOWN_FADE_MS = 280;
     const DROPDOWN_SLIDE_MS = 220;
+    const STICKY_SLIDE_MS = 280;
+    const STICKY_SLIDE_THRESHOLD = 8;
 
     let {
         mode,
@@ -39,10 +40,197 @@
     let dropdownOpen = $state(false);
     let dropdownExpanded = $state(false);
     let dropdownRootElement = $state<HTMLDivElement | null>(null);
-    let pendingTopicScroll = false;
+    let asideElement = $state<HTMLElement | null>(null);
+    let stickyTopPx = $state<number | null>(null);
+    let isStickyActive = $state(false);
+    let isFrozen = $state(false);
+    let freezeTranslateY = $state(0);
+    let isSlidingTop = $state(false);
     let reducedMotion = $state(false);
+    let lastScrollY = 0;
+    let slideTimeout: ReturnType<typeof setTimeout> | undefined;
 
     const useDropdown = $derived(isNarrowViewport && !expanded);
+    const useStickyScroll = $derived(!useDropdown);
+
+    const SCROLL_DIRECTION_THRESHOLD = 2;
+
+    const getUnit = () => {
+        if (!browser) return 1;
+        const raw = getComputedStyle(document.documentElement)
+            .getPropertyValue("--u")
+            .trim();
+        const parsed = Number.parseFloat(raw);
+        return Number.isFinite(parsed) && parsed > 0 ? parsed : 1;
+    };
+
+    const computeIdealStickyTop = (
+        topGap: number,
+        bottomGap: number,
+        navHeight: number,
+        viewportHeight: number,
+        parentTop: number,
+        parentHeight: number,
+        scrollY: number,
+    ) => {
+        const availableHeight = viewportHeight - topGap - bottomGap;
+
+        if (navHeight <= availableHeight) {
+            return topGap;
+        }
+
+        const parentBottom = parentTop + parentHeight;
+        const maxTop = topGap;
+        const minTop = viewportHeight - navHeight - bottomGap;
+        const scrollStart = parentTop - topGap;
+        const scrollEnd = parentBottom - viewportHeight + bottomGap;
+
+        if (scrollY <= scrollStart) return maxTop;
+        if (scrollY >= scrollEnd) return minTop;
+        return maxTop - (scrollY - scrollStart);
+    };
+
+    const getStickyMetrics = () => {
+        const u = getUnit();
+        const topGap = 30 * u + 70 * u;
+        const bottomGap = 30 * u;
+        const scrollY = window.scrollY;
+        const viewportHeight = window.innerHeight;
+        const navHeight = asideElement?.offsetHeight ?? 0;
+        const parent = asideElement?.parentElement;
+
+        if (!parent) {
+            return { topGap, bottomGap, idealTop: topGap };
+        }
+
+        const parentTop = parent.getBoundingClientRect().top + scrollY;
+        const parentHeight = parent.offsetHeight;
+        const idealTop = computeIdealStickyTop(
+            topGap,
+            bottomGap,
+            navHeight,
+            viewportHeight,
+            parentTop,
+            parentHeight,
+            scrollY,
+        );
+
+        return { topGap, bottomGap, idealTop };
+    };
+
+    const clearStickySlide = () => {
+        if (slideTimeout) clearTimeout(slideTimeout);
+        slideTimeout = undefined;
+        isSlidingTop = false;
+    };
+
+    const moveStickyTo = (idealTop: number, fromOverride?: number) => {
+        if (!asideElement || isSlidingTop) return;
+
+        if (reducedMotion) {
+            clearStickySlide();
+            stickyTopPx = idealTop;
+            return;
+        }
+
+        const fromTop =
+            fromOverride ??
+            stickyTopPx ??
+            asideElement.getBoundingClientRect().top;
+        const shouldAnimate =
+            fromOverride !== undefined ||
+            stickyTopPx === null ||
+            Math.abs(fromTop - idealTop) >= STICKY_SLIDE_THRESHOLD;
+
+        if (!shouldAnimate) {
+            clearStickySlide();
+            stickyTopPx = idealTop;
+            return;
+        }
+
+        clearStickySlide();
+        stickyTopPx = fromTop;
+
+        requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+                isSlidingTop = true;
+                stickyTopPx = idealTop;
+                slideTimeout = setTimeout(() => {
+                    isSlidingTop = false;
+                    slideTimeout = undefined;
+                }, STICKY_SLIDE_MS);
+            });
+        });
+    };
+
+    const freezeNav = () => {
+        if (!asideElement || isFrozen) return;
+
+        const rect = asideElement.getBoundingClientRect();
+        const parent = asideElement.parentElement;
+        if (!parent) return;
+
+        freezeTranslateY = rect.top - parent.getBoundingClientRect().top;
+        clearStickySlide();
+        isStickyActive = false;
+        stickyTopPx = null;
+        isFrozen = true;
+    };
+
+    const unfreezeWithSlide = () => {
+        if (!asideElement) return;
+
+        const fromTop = asideElement.getBoundingClientRect().top;
+        isFrozen = false;
+        freezeTranslateY = 0;
+        isStickyActive = true;
+
+        const { idealTop } = getStickyMetrics();
+        moveStickyTo(idealTop, fromTop);
+    };
+
+    const updateStickyScrollPosition = () => {
+        if (!browser || !asideElement || !useStickyScroll) {
+            stickyTopPx = null;
+            isStickyActive = false;
+            isFrozen = false;
+            freezeTranslateY = 0;
+            clearStickySlide();
+            return;
+        }
+
+        const scrollY = window.scrollY;
+        if (scrollY <= 1) {
+            isFrozen = false;
+            freezeTranslateY = 0;
+            isStickyActive = true;
+        }
+
+        if (isFrozen) {
+            lastScrollY = scrollY;
+            return;
+        }
+
+        if (!isStickyActive) {
+            stickyTopPx = null;
+            lastScrollY = scrollY;
+            return;
+        }
+
+        const { idealTop } = getStickyMetrics();
+        moveStickyTo(idealTop);
+        lastScrollY = scrollY;
+    };
+
+    const setScrollDirection = (direction: "up" | "down") => {
+        if (direction === "down") {
+            if (!isFrozen) freezeNav();
+        } else if (isFrozen) {
+            unfreezeWithSlide();
+        } else {
+            isStickyActive = true;
+        }
+    };
 
     if (browser) {
         const stored = localStorage.getItem(LESSONS_STORAGE_KEY);
@@ -69,30 +257,9 @@
         else openDropdown();
     };
 
-    const scrollToPageTop = () => {
-        if (!browser) return;
-
-        const prefersReducedMotion = window.matchMedia(
-            "(prefers-reduced-motion: reduce)",
-        ).matches;
-        const behavior = prefersReducedMotion ? "auto" : "smooth";
-
-        window.scrollTo({ top: 0, left: 0, behavior });
-        document.documentElement.scrollTo({ top: 0, left: 0, behavior });
-        document.body.scrollTo?.({ top: 0, left: 0, behavior });
-    };
-
     const onTopicNavigate = () => {
         if (useDropdown) closeDropdown();
-        pendingTopicScroll = true;
     };
-
-    afterNavigate(async () => {
-        if (!pendingTopicScroll) return;
-        pendingTopicScroll = false;
-        await tick();
-        scrollToPageTop();
-    });
 
     const toggleLessons = () => {
         showLessons = !showLessons;
@@ -138,6 +305,64 @@
             dropdownOpen = false;
             dropdownExpanded = false;
         }
+    });
+
+    $effect(() => {
+        if (!browser || !asideElement || !useStickyScroll) {
+            stickyTopPx = null;
+            isStickyActive = false;
+            isFrozen = false;
+            freezeTranslateY = 0;
+            return;
+        }
+
+        showLessons;
+        expanded;
+        mode;
+
+        isFrozen = false;
+        freezeTranslateY = 0;
+        isStickyActive = window.scrollY <= 1;
+        lastScrollY = window.scrollY;
+
+        const onWheel = (event: WheelEvent) => {
+            if (Math.abs(event.deltaY) < 1) return;
+            setScrollDirection(event.deltaY > 0 ? "down" : "up");
+            updateStickyScrollPosition();
+        };
+
+        const onScroll = () => {
+            const scrollY = window.scrollY;
+            const scrollDelta = scrollY - lastScrollY;
+
+            if (scrollDelta > SCROLL_DIRECTION_THRESHOLD) {
+                setScrollDirection("down");
+            } else if (scrollDelta < -SCROLL_DIRECTION_THRESHOLD) {
+                setScrollDirection("up");
+            }
+
+            updateStickyScrollPosition();
+        };
+
+        const update = () => updateStickyScrollPosition();
+        const resizeObserver = new ResizeObserver(update);
+        resizeObserver.observe(asideElement);
+
+        const parent = asideElement.parentElement;
+        if (parent) resizeObserver.observe(parent);
+
+        window.addEventListener("wheel", onWheel, { passive: true });
+        window.addEventListener("scroll", onScroll, { passive: true });
+        window.addEventListener("resize", update);
+        void tick().then(update);
+
+        return () => {
+            resizeObserver.disconnect();
+            clearStickySlide();
+            window.removeEventListener("wheel", onWheel);
+            window.removeEventListener("scroll", onScroll);
+            window.removeEventListener("resize", update);
+        };
     });
 
     $effect(() => {
@@ -302,6 +527,16 @@
             class="side-navigation"
             class:is-expanded={expanded}
             class:show-lessons={showLessons}
+            class:has-sticky-scroll={isStickyActive}
+            class:is-frozen={isFrozen}
+            class:is-sliding-top={isSlidingTop}
+            bind:this={asideElement}
+            style:top={isStickyActive && stickyTopPx != null
+                ? `${stickyTopPx}px`
+                : undefined}
+            style:transform={isFrozen
+                ? `translateY(${freezeTranslateY}px)`
+                : undefined}
         >
             {@render navigationContent()}
         </aside>
@@ -315,6 +550,21 @@
         gap: calc(50 * var(--u));
         min-width: 0;
         position: relative;
+    }
+
+    .side-navigation.has-sticky-scroll {
+        position: sticky;
+        align-self: start;
+    }
+
+    .side-navigation.has-sticky-scroll.is-sliding-top {
+        transition: top 280ms cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .side-navigation.has-sticky-scroll.is-sliding-top {
+            transition: none;
+        }
     }
 
     .side-navigation.is-dropdown {

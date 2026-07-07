@@ -74,7 +74,7 @@
         crossorigin="anonymous"
     />
     <link
-        href="https://fonts.googleapis.com/css2?family=Intel+One+Mono:wght@400&family=Inter:wght@400;500;600&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Intel+One+Mono:wght@300;400&family=Inter:wght@300;400;500;600&display=swap"
         rel="stylesheet"
     />
 </svelte:head>

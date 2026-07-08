@@ -5,6 +5,7 @@
     import QvAccordion from "$lib/components/QvAccordion.svelte";
     import QvSideNavigation from "$lib/components/QvSideNavigation.svelte";
     import { getQvChapterLabel } from "$lib/data/qv";
+    import { scrollToPageTop } from "$lib/scroll-to-top";
 
     let { data } = $props();
 
@@ -27,9 +28,39 @@
         return -1;
     });
 
-    const selectedChapter = $derived(
-        selectedChapterIndex >= 0
-            ? (data.qv.chapters[selectedChapterIndex] ?? null)
+    let displayedChapterIndex = $state(-1);
+    let hydrated = false;
+    let chapterScrollToken = 0;
+
+    $effect(() => {
+        const nextIndex = selectedChapterIndex;
+
+        // First run after page load: show the chapter from the URL directly.
+        if (!hydrated) {
+            hydrated = true;
+            displayedChapterIndex = nextIndex;
+            return;
+        }
+
+        if (nextIndex === -1) {
+            displayedChapterIndex = -1;
+            return;
+        }
+
+        if (displayedChapterIndex === nextIndex) return;
+
+        // Scroll up while the old content (and its open accordions) is
+        // still visible, then swap to the new chapter at the top.
+        const token = ++chapterScrollToken;
+        void scrollToPageTop().then(() => {
+            if (token !== chapterScrollToken) return;
+            displayedChapterIndex = nextIndex;
+        });
+    });
+
+    const displayedChapter = $derived(
+        displayedChapterIndex >= 0
+            ? (data.qv.chapters[displayedChapterIndex] ?? null)
             : null,
     );
 
@@ -50,23 +81,24 @@
         {getChapterHref}
     />
 
-    {#if selectedChapter}
+    {#if displayedChapter}
         <section class="topics-content">
+            {#key displayedChapterIndex}
             <article class="qv-chapter">
                 <div class="content-wrap">
                     <h1 class="topic-title">
-                        {getQvChapterLabel(selectedChapter)}
+                        {getQvChapterLabel(displayedChapter)}
                     </h1>
 
-                    {#if selectedChapter.intro}
+                    {#if displayedChapter.intro}
                         <div class="description">
                             {@html marked.parse(
-                                selectedChapter.intro,
+                                displayedChapter.intro,
                             ) as string}
                         </div>
                     {/if}
 
-                    {#each selectedChapter.tables ?? [] as table}
+                    {#each displayedChapter.tables ?? [] as table}
                         <div class="chapter-table-wrap">
                             <div class="chapter-table-scroll">
                                 <table class="chapter-table">
@@ -102,27 +134,32 @@
                         </div>
                     {/each}
 
-                    {#if selectedChapter.additional_content}
+                    {#if displayedChapter.additional_content}
                         <div class="additional-content">
                             {@html marked.parse(
-                                selectedChapter.additional_content,
+                                displayedChapter.additional_content,
                             ) as string}
                         </div>
                     {/if}
                 </div>
 
-                {#if selectedChapter.sections.length > 0}
+                {#if displayedChapter.sections.length > 0}
                     <QvAccordion
-                        sections={selectedChapter.sections}
-                        chapterNumber={selectedChapter.number}
+                        sections={displayedChapter.sections}
+                        chapterNumber={displayedChapter.number}
                     />
                 {/if}
             </article>
+            {/key}
         </section>
     {/if}
 </div>
 
 <style>
+    :global(.page-foreground:has(.qv-route)) {
+        overflow: visible;
+    }
+
     .mode-grid {
         display: grid;
         grid-template-columns: minmax(0, 5fr) minmax(0, 1fr) minmax(0, 10fr);

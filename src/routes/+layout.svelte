@@ -67,15 +67,47 @@
 <svelte:head>
     <link rel="icon" type="image/png" sizes="32x32" href={favicon} />
     <link rel="apple-touch-icon" sizes="180x180" href={appleTouchIcon} />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link
-        rel="preconnect"
-        href="https://fonts.gstatic.com"
+        rel="preload"
+        href="/fonts/inter-300.ttf"
+        as="font"
+        type="font/ttf"
         crossorigin="anonymous"
     />
     <link
-        href="https://fonts.googleapis.com/css2?family=Intel+One+Mono:wght@300;400&family=Inter:wght@300;400;500;600&display=swap"
-        rel="stylesheet"
+        rel="preload"
+        href="/fonts/inter-400.ttf"
+        as="font"
+        type="font/ttf"
+        crossorigin="anonymous"
+    />
+    <link
+        rel="preload"
+        href="/fonts/inter-500.ttf"
+        as="font"
+        type="font/ttf"
+        crossorigin="anonymous"
+    />
+    <link
+        rel="preload"
+        href="/fonts/inter-600.ttf"
+        as="font"
+        type="font/ttf"
+        crossorigin="anonymous"
+    />
+    <link
+        rel="preload"
+        href="/fonts/intel-one-mono-300.ttf"
+        as="font"
+        type="font/ttf"
+        crossorigin="anonymous"
+    />
+    <link
+        rel="preload"
+        href="/fonts/intel-one-mono-400.ttf"
+        as="font"
+        type="font/ttf"
+        crossorigin="anonymous"
     />
 </svelte:head>
 

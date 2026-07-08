@@ -141,7 +141,7 @@
     }
 
     .impressum-content :global(strong) {
-        font-weight: 600;
+        font-weight: 700;
     }
 
     .impressum-content :global(a) {

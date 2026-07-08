@@ -97,6 +97,7 @@
         </h1>
         {#if getTopicDescription(topic)}
             <div class="description">
+                <h2 class="section-label">Leitidee</h2>
                 {@html marked.parse(getTopicDescription(topic) ?? "") as string}
             </div>
         {/if}

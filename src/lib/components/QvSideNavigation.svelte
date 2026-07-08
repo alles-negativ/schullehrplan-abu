@@ -5,13 +5,10 @@
     import arrowIcon from "$lib/assets/arrow.svg";
     import pdfIcon from "$lib/assets/pdf-icon.svg";
     import type { QvChapter } from "$lib/data/qv";
-import { getLayoutScale } from "$lib/layout-scale";
 
     const DROPDOWN_MEDIA = "(max-width: 1100px)";
     const DROPDOWN_FADE_MS = 280;
     const DROPDOWN_SLIDE_MS = 220;
-    const STICKY_SLIDE_MS = 280;
-
     let {
         chapters,
         ebaToEfzPdf,
@@ -32,122 +29,9 @@ import { getLayoutScale } from "$lib/layout-scale";
     let dropdownOpen = $state(false);
     let dropdownExpanded = $state(false);
     let dropdownRootElement = $state<HTMLDivElement | null>(null);
-    let asideElement = $state<HTMLElement | null>(null);
-    // phase: "flow" (in normal document flow, at top of page),
-    //        "released" (scrolling down; held in place then scrolls away),
-    //        "pinned" (scrolling up; fixed near the top of the viewport)
-    let phase = $state<"flow" | "released" | "pinned">("flow");
-    let releaseTranslateY = $state(0);
-    let fixedTop = $state(0);
-    let fixedLeft = $state(0);
-    let fixedWidth = $state(0);
-    let isSlidingTop = $state(false);
-    let slidePending = false;
     let reducedMotion = $state(false);
-    let lastScrollY = 0;
-    let slideTimeout: ReturnType<typeof setTimeout> | undefined;
 
     const useDropdown = $derived(isNarrowViewport && !expanded);
-    const useStickyScroll = $derived(!useDropdown);
-
-    const SCROLL_DIRECTION_THRESHOLD = 2;
-
-    const getPinTopPx = () => 150 * getLayoutScale();
-
-    const clearStickySlide = () => {
-        if (slideTimeout) clearTimeout(slideTimeout);
-        slideTimeout = undefined;
-        isSlidingTop = false;
-        slidePending = false;
-    };
-
-    const toFlow = () => {
-        clearStickySlide();
-        phase = "flow";
-        releaseTranslateY = 0;
-    };
-
-    const release = () => {
-        if (!asideElement || phase === "released") return;
-        const parent = asideElement.parentElement;
-        if (!parent) return;
-
-        const top = asideElement.getBoundingClientRect().top;
-        const parentTop = parent.getBoundingClientRect().top;
-        clearStickySlide();
-        releaseTranslateY = top - parentTop;
-        phase = "released";
-    };
-
-    // The pinned nav should never float above the top of its own container
-    // (.qv-route). Clamp the fixed offset to the container's current top so it
-    // rejoins normal flow seamlessly near the top of the page.
-    const getPinnedTop = () => {
-        const parent = asideElement?.parentElement;
-        const parentTop = parent ? parent.getBoundingClientRect().top : 0;
-        return Math.max(getPinTopPx(), parentTop);
-    };
-
-    const pin = () => {
-        if (!asideElement || phase === "pinned") return;
-
-        const rect = asideElement.getBoundingClientRect();
-        const fromTop = rect.top;
-        fixedLeft = rect.left;
-        fixedWidth = rect.width;
-        const target = getPinnedTop();
-
-        clearStickySlide();
-        releaseTranslateY = 0;
-        fixedTop = fromTop;
-        phase = "pinned";
-
-        if (reducedMotion || Math.abs(fromTop - target) < 1) {
-            fixedTop = target;
-            return;
-        }
-
-        // Block onScrollUpdate from snapping to the target before the slide starts.
-        slidePending = true;
-        requestAnimationFrame(() => {
-            requestAnimationFrame(() => {
-                slidePending = false;
-                isSlidingTop = true;
-                fixedTop = target;
-                slideTimeout = setTimeout(() => {
-                    isSlidingTop = false;
-                    slideTimeout = undefined;
-                }, STICKY_SLIDE_MS);
-            });
-        });
-    };
-
-    const remeasurePinned = () => {
-        if (!asideElement || phase !== "pinned") return;
-        const parent = asideElement.parentElement;
-        if (!parent) return;
-        const parentRect = parent.getBoundingClientRect();
-        fixedLeft = parentRect.left;
-        fixedWidth = parentRect.width;
-    };
-
-    const setScrollDirection = (direction: "up" | "down") => {
-        if (direction === "down") {
-            release();
-        } else {
-            pin();
-        }
-    };
-
-    const onScrollUpdate = () => {
-        if (!browser || !asideElement || !useStickyScroll) return;
-        if (window.scrollY <= 1) {
-            toFlow();
-        } else if (phase === "pinned" && !isSlidingTop && !slidePending) {
-            fixedTop = getPinnedTop();
-        }
-        lastScrollY = window.scrollY;
-    };
 
     const openDropdown = () => {
         dropdownOpen = true;
@@ -209,46 +93,6 @@ import { getLayoutScale } from "$lib/layout-scale";
             dropdownOpen = false;
             dropdownExpanded = false;
         }
-    });
-
-    $effect(() => {
-        if (!browser || !asideElement || !useStickyScroll) {
-            toFlow();
-            return;
-        }
-
-        toFlow();
-        lastScrollY = window.scrollY;
-
-        const onWheel = (event: WheelEvent) => {
-            if (Math.abs(event.deltaY) < 1) return;
-            setScrollDirection(event.deltaY > 0 ? "down" : "up");
-            onScrollUpdate();
-        };
-
-        const onScroll = () => {
-            const scrollY = window.scrollY;
-            const scrollDelta = scrollY - lastScrollY;
-
-            if (scrollDelta > SCROLL_DIRECTION_THRESHOLD) {
-                setScrollDirection("down");
-            } else if (scrollDelta < -SCROLL_DIRECTION_THRESHOLD) {
-                setScrollDirection("up");
-            }
-
-            onScrollUpdate();
-        };
-
-        window.addEventListener("wheel", onWheel, { passive: true });
-        window.addEventListener("scroll", onScroll, { passive: true });
-        window.addEventListener("resize", remeasurePinned);
-
-        return () => {
-            clearStickySlide();
-            window.removeEventListener("wheel", onWheel);
-            window.removeEventListener("scroll", onScroll);
-            window.removeEventListener("resize", remeasurePinned);
-        };
     });
 
     $effect(() => {
@@ -359,16 +203,6 @@ import { getLayoutScale } from "$lib/layout-scale";
         id="qv-side-navigation-panel"
         class="side-navigation"
         class:is-expanded={expanded}
-        class:is-pinned={phase === "pinned"}
-        class:is-released={phase === "released"}
-        class:is-sliding-top={isSlidingTop}
-        bind:this={asideElement}
-        style:top={phase === "pinned" ? `${fixedTop}px` : undefined}
-        style:left={phase === "pinned" ? `${fixedLeft}px` : undefined}
-        style:width={phase === "pinned" ? `${fixedWidth}px` : undefined}
-        style:transform={phase === "released"
-            ? `translateY(${releaseTranslateY}px)`
-            : undefined}
     >
         {@render navigationContent()}
     </aside>
@@ -381,26 +215,6 @@ import { getLayoutScale } from "$lib/layout-scale";
         gap: calc(50 * var(--u));
         min-width: 0;
         position: relative;
-    }
-
-    .side-navigation.is-released {
-        position: relative;
-    }
-
-    .side-navigation.is-pinned {
-        position: fixed;
-        z-index: 100;
-        margin: 0;
-    }
-
-    .side-navigation.is-pinned.is-sliding-top {
-        transition: top 280ms cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-        .side-navigation.is-pinned.is-sliding-top {
-            transition: none;
-        }
     }
 
     .side-navigation.is-dropdown {

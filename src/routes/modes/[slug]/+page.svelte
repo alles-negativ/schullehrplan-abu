@@ -1,6 +1,7 @@
 <script lang="ts">
     import { browser } from "$app/environment";
     import { page } from "$app/state";
+    import { tick } from "svelte";
     import CircularityOverview from "$lib/components/CircularityOverview.svelte";
     import SideNavigation from "$lib/components/SideNavigation.svelte";
     import Topic from "$lib/components/Topic.svelte";
@@ -9,8 +10,8 @@
         getYearLabel,
         type Topic as TopicType,
     } from "$lib/data/education-modes";
-    import { scrollToPageTop } from "$lib/scroll-to-top";
     import { marked } from "marked";
+    import { scrollToPageTop } from "$lib/scroll-to-top";
 
     let { data } = $props();
     const years = $derived(getModeYears(data.mode));
@@ -63,29 +64,25 @@
     let hydrated = false;
     let topicScrollToken = 0;
 
+    // Swap content immediately when URL params change, then scroll afterwards.
+    // This avoids "scrolling up before the content changes".
     $effect(() => {
         const next = selectedTopic;
 
-        // First run after page load: show the topic from the URL directly.
         if (!hydrated) {
             hydrated = true;
             displayedTopic = next;
             return;
         }
 
-        if (!next) {
-            displayedTopic = null;
-            return;
-        }
+        if (displayedTopic?.key === next?.key) return;
 
-        if (displayedTopic?.key === next.key) return;
-
-        // Scroll up while the old content (and its open accordions) is
-        // still visible, then swap to the new topic at the top.
+        displayedTopic = next;
         const token = ++topicScrollToken;
-        void scrollToPageTop().then(() => {
+
+        void tick().then(() => {
             if (token !== topicScrollToken) return;
-            displayedTopic = next;
+            void scrollToPageTop();
         });
     });
 

@@ -1,10 +1,9 @@
 <script lang="ts">
     import { browser } from "$app/environment";
-    import { onMount, tick } from "svelte";
+    import { onMount } from "svelte";
     import { fade, slide } from "svelte/transition";
     import arrowIcon from "$lib/assets/arrow.svg";
     import pdfIcon from "$lib/assets/pdf-icon.svg";
-import { getLayoutScale } from "$lib/layout-scale";
     import {
         getModeYears,
         getTopicLessons,
@@ -18,9 +17,6 @@ import { getLayoutScale } from "$lib/layout-scale";
     const DROPDOWN_MEDIA = "(max-width: 1100px)";
     const DROPDOWN_FADE_MS = 280;
     const DROPDOWN_SLIDE_MS = 220;
-    const STICKY_SLIDE_MS = 280;
-    const STICKY_SLIDE_THRESHOLD = 8;
-    const LESSON_LAYOUT_MS = 400;
 
     let {
         mode,
@@ -42,198 +38,9 @@ import { getLayoutScale } from "$lib/layout-scale";
     let dropdownOpen = $state(false);
     let dropdownExpanded = $state(false);
     let dropdownRootElement = $state<HTMLDivElement | null>(null);
-    let asideElement = $state<HTMLElement | null>(null);
-    let stickyTopPx = $state<number | null>(null);
-    let isStickyActive = $state(false);
-    let isFrozen = $state(false);
-    let freezeTranslateY = $state(0);
-    let isSlidingTop = $state(false);
     let reducedMotion = $state(false);
-    let lastScrollY = 0;
-    let slideTimeout: ReturnType<typeof setTimeout> | undefined;
-    let layoutAnchorTop: number | null = null;
-    let layoutAnchorTimer: ReturnType<typeof setTimeout> | undefined;
 
     const useDropdown = $derived(isNarrowViewport && !expanded);
-    const useStickyScroll = $derived(!useDropdown);
-
-    const SCROLL_DIRECTION_THRESHOLD = 2;
-
-    const getStickyTopPx = () => 200 * getLayoutScale();
-
-    const clearStickySlide = () => {
-        if (slideTimeout) clearTimeout(slideTimeout);
-        slideTimeout = undefined;
-        isSlidingTop = false;
-    };
-
-    const moveStickyTo = (idealTop: number, fromOverride?: number) => {
-        if (!asideElement || isSlidingTop) return;
-
-        if (reducedMotion) {
-            clearStickySlide();
-            stickyTopPx = idealTop;
-            return;
-        }
-
-        const fromTop =
-            fromOverride ??
-            stickyTopPx ??
-            asideElement.getBoundingClientRect().top;
-        const shouldAnimate =
-            fromOverride !== undefined ||
-            stickyTopPx === null ||
-            Math.abs(fromTop - idealTop) >= STICKY_SLIDE_THRESHOLD;
-
-        if (!shouldAnimate) {
-            clearStickySlide();
-            stickyTopPx = idealTop;
-            return;
-        }
-
-        clearStickySlide();
-        stickyTopPx = fromTop;
-
-        requestAnimationFrame(() => {
-            requestAnimationFrame(() => {
-                isSlidingTop = true;
-                stickyTopPx = idealTop;
-                slideTimeout = setTimeout(() => {
-                    isSlidingTop = false;
-                    slideTimeout = undefined;
-                }, STICKY_SLIDE_MS);
-            });
-        });
-    };
-
-    const freezeNav = () => {
-        if (!asideElement || isFrozen) return;
-
-        const rect = asideElement.getBoundingClientRect();
-        const parent = asideElement.parentElement;
-        if (!parent) return;
-
-        freezeTranslateY = rect.top - parent.getBoundingClientRect().top;
-        clearStickySlide();
-        isStickyActive = false;
-        stickyTopPx = null;
-        isFrozen = true;
-    };
-
-    const unfreezeWithSlide = () => {
-        if (!asideElement) return;
-
-        const fromTop = asideElement.getBoundingClientRect().top;
-        isFrozen = false;
-        freezeTranslateY = 0;
-        isStickyActive = true;
-        moveStickyTo(getStickyTopPx(), fromTop);
-    };
-
-    const updateStickyScrollPosition = () => {
-        if (!browser || !asideElement || !useStickyScroll) {
-            stickyTopPx = null;
-            isStickyActive = false;
-            isFrozen = false;
-            freezeTranslateY = 0;
-            clearStickySlide();
-            return;
-        }
-
-        const scrollY = window.scrollY;
-        if (scrollY <= 1) {
-            isFrozen = false;
-            freezeTranslateY = 0;
-            isStickyActive = true;
-        }
-
-        if (isFrozen) {
-            lastScrollY = scrollY;
-            return;
-        }
-
-        if (!isStickyActive) {
-            stickyTopPx = null;
-            lastScrollY = scrollY;
-            return;
-        }
-
-        lastScrollY = scrollY;
-    };
-
-    const clearLayoutAnchor = () => {
-        if (layoutAnchorTimer) clearTimeout(layoutAnchorTimer);
-        layoutAnchorTimer = undefined;
-        layoutAnchorTop = null;
-    };
-
-    const beginLayoutAnchor = () => {
-        if (!asideElement) return;
-        layoutAnchorTop = asideElement.getBoundingClientRect().top;
-        if (layoutAnchorTimer) clearTimeout(layoutAnchorTimer);
-        layoutAnchorTimer = setTimeout(() => {
-            clearLayoutAnchor();
-        }, LESSON_LAYOUT_MS);
-    };
-
-    const applyLayoutAnchor = () => {
-        if (!asideElement || layoutAnchorTop === null) return;
-
-        if (isFrozen) {
-            const parent = asideElement.parentElement;
-            if (!parent) return;
-            freezeTranslateY =
-                layoutAnchorTop - parent.getBoundingClientRect().top;
-            return;
-        }
-
-        if (isStickyActive) {
-            clearStickySlide();
-            stickyTopPx = layoutAnchorTop;
-        }
-    };
-
-    const maintainVisualPosition = () => {
-        if (!asideElement) return;
-
-        if (isFrozen) {
-            const parent = asideElement.parentElement;
-            if (!parent) return;
-            freezeTranslateY =
-                asideElement.getBoundingClientRect().top -
-                parent.getBoundingClientRect().top;
-            return;
-        }
-
-        if (isStickyActive && !isSlidingTop) {
-            clearStickySlide();
-            stickyTopPx = asideElement.getBoundingClientRect().top;
-        }
-    };
-
-    const onLayoutChange = () => {
-        if (layoutAnchorTop !== null) {
-            applyLayoutAnchor();
-            return;
-        }
-
-        if (isFrozen || isStickyActive) {
-            maintainVisualPosition();
-            return;
-        }
-
-        updateStickyScrollPosition();
-    };
-
-    const setScrollDirection = (direction: "up" | "down") => {
-        if (direction === "down") {
-            if (!isFrozen) freezeNav();
-        } else if (isFrozen) {
-            unfreezeWithSlide();
-        } else {
-            isStickyActive = true;
-        }
-    };
 
     if (browser) {
         const stored = localStorage.getItem(LESSONS_STORAGE_KEY);
@@ -265,12 +72,10 @@ import { getLayoutScale } from "$lib/layout-scale";
     };
 
     const toggleLessons = () => {
-        beginLayoutAnchor();
         showLessons = !showLessons;
         if (browser) {
             localStorage.setItem(LESSONS_STORAGE_KEY, String(showLessons));
         }
-        void tick().then(onLayoutChange);
     };
 
     onMount(() => {
@@ -310,61 +115,6 @@ import { getLayoutScale } from "$lib/layout-scale";
             dropdownOpen = false;
             dropdownExpanded = false;
         }
-    });
-
-    $effect(() => {
-        if (!browser || !asideElement || !useStickyScroll) {
-            stickyTopPx = null;
-            isStickyActive = false;
-            isFrozen = false;
-            freezeTranslateY = 0;
-            clearLayoutAnchor();
-            clearStickySlide();
-            return;
-        }
-
-        isFrozen = false;
-        freezeTranslateY = 0;
-        isStickyActive = window.scrollY <= 1;
-        lastScrollY = window.scrollY;
-
-        const onWheel = (event: WheelEvent) => {
-            if (Math.abs(event.deltaY) < 1) return;
-            setScrollDirection(event.deltaY > 0 ? "down" : "up");
-            updateStickyScrollPosition();
-        };
-
-        const onScroll = () => {
-            const scrollY = window.scrollY;
-            const scrollDelta = scrollY - lastScrollY;
-
-            if (scrollDelta > SCROLL_DIRECTION_THRESHOLD) {
-                setScrollDirection("down");
-            } else if (scrollDelta < -SCROLL_DIRECTION_THRESHOLD) {
-                setScrollDirection("up");
-            }
-
-            updateStickyScrollPosition();
-        };
-
-        const resizeObserver = new ResizeObserver(onLayoutChange);
-        resizeObserver.observe(asideElement);
-
-        const parent = asideElement.parentElement;
-        if (parent) resizeObserver.observe(parent);
-
-        window.addEventListener("wheel", onWheel, { passive: true });
-        window.addEventListener("scroll", onScroll, { passive: true });
-        window.addEventListener("resize", onLayoutChange);
-
-        return () => {
-            resizeObserver.disconnect();
-            clearLayoutAnchor();
-            clearStickySlide();
-            window.removeEventListener("wheel", onWheel);
-            window.removeEventListener("scroll", onScroll);
-            window.removeEventListener("resize", onLayoutChange);
-        };
     });
 
     $effect(() => {
@@ -529,16 +279,6 @@ import { getLayoutScale } from "$lib/layout-scale";
             class="side-navigation"
             class:is-expanded={expanded}
             class:show-lessons={showLessons}
-            class:has-sticky-scroll={isStickyActive}
-            class:is-frozen={isFrozen}
-            class:is-sliding-top={isSlidingTop}
-            bind:this={asideElement}
-            style:top={isStickyActive && stickyTopPx != null
-                ? `${stickyTopPx}px`
-                : undefined}
-            style:transform={isFrozen
-                ? `translateY(${freezeTranslateY}px)`
-                : undefined}
         >
             {@render navigationContent()}
         </aside>
@@ -552,22 +292,6 @@ import { getLayoutScale } from "$lib/layout-scale";
         gap: calc(50 * var(--u));
         min-width: 0;
         position: relative;
-    }
-
-    .side-navigation.has-sticky-scroll {
-        position: sticky;
-        top: calc(100 * var(--u));
-        align-self: start;
-    }
-
-    .side-navigation.has-sticky-scroll.is-sliding-top {
-        transition: top 280ms cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-        .side-navigation.has-sticky-scroll.is-sliding-top {
-            transition: none;
-        }
     }
 
     .side-navigation.is-dropdown {

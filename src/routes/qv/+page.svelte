@@ -1,6 +1,7 @@
 <script lang="ts">
     import { browser } from "$app/environment";
     import { page } from "$app/state";
+    import { tick } from "svelte";
     import { marked } from "marked";
     import QvAccordion from "$lib/components/QvAccordion.svelte";
     import QvSideNavigation from "$lib/components/QvSideNavigation.svelte";
@@ -32,29 +33,25 @@
     let hydrated = false;
     let chapterScrollToken = 0;
 
+    // Swap content immediately when URL params change, then scroll afterwards.
+    // This avoids "scrolling up before the content changes".
     $effect(() => {
         const nextIndex = selectedChapterIndex;
 
-        // First run after page load: show the chapter from the URL directly.
         if (!hydrated) {
             hydrated = true;
             displayedChapterIndex = nextIndex;
             return;
         }
 
-        if (nextIndex === -1) {
-            displayedChapterIndex = -1;
-            return;
-        }
-
         if (displayedChapterIndex === nextIndex) return;
 
-        // Scroll up while the old content (and its open accordions) is
-        // still visible, then swap to the new chapter at the top.
+        displayedChapterIndex = nextIndex;
         const token = ++chapterScrollToken;
-        void scrollToPageTop().then(() => {
+
+        void tick().then(() => {
             if (token !== chapterScrollToken) return;
-            displayedChapterIndex = nextIndex;
+            void scrollToPageTop();
         });
     });
 
@@ -84,72 +81,72 @@
     {#if displayedChapter}
         <section class="topics-content">
             {#key displayedChapterIndex}
-            <article class="qv-chapter">
-                <div class="content-wrap">
-                    <h1 class="topic-title">
-                        {getQvChapterLabel(displayedChapter)}
-                    </h1>
+                <article class="qv-chapter">
+                    <div class="content-wrap">
+                        <h1 class="topic-title">
+                            {getQvChapterLabel(displayedChapter)}
+                        </h1>
 
-                    {#if displayedChapter.intro}
-                        <div class="description">
-                            {@html marked.parse(
-                                displayedChapter.intro,
-                            ) as string}
-                        </div>
-                    {/if}
+                        {#if displayedChapter.intro}
+                            <div class="description">
+                                {@html marked.parse(
+                                    displayedChapter.intro,
+                                ) as string}
+                            </div>
+                        {/if}
 
-                    {#each displayedChapter.tables ?? [] as table}
-                        <div class="chapter-table-wrap">
-                            <div class="chapter-table-scroll">
-                                <table class="chapter-table">
-                                    <thead>
-                                        <tr>
-                                            {#each table.columns as col}
-                                                <th scope="col">{col}</th>
-                                            {/each}
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {#each table.rows as row}
+                        {#each displayedChapter.tables ?? [] as table}
+                            <div class="chapter-table-wrap">
+                                <div class="chapter-table-scroll">
+                                    <table class="chapter-table">
+                                        <thead>
                                             <tr>
-                                                {#each row as cell, i}
-                                                    {#if i === 0}
-                                                        <th scope="row"
-                                                            >{cell}</th
-                                                        >
-                                                    {:else}
-                                                        <td>{cell}</td>
-                                                    {/if}
+                                                {#each table.columns as col}
+                                                    <th scope="col">{col}</th>
                                                 {/each}
                                             </tr>
-                                        {/each}
-                                    </tbody>
-                                </table>
+                                        </thead>
+                                        <tbody>
+                                            {#each table.rows as row}
+                                                <tr>
+                                                    {#each row as cell, i}
+                                                        {#if i === 0}
+                                                            <th scope="row"
+                                                                >{cell}</th
+                                                            >
+                                                        {:else}
+                                                            <td>{cell}</td>
+                                                        {/if}
+                                                    {/each}
+                                                </tr>
+                                            {/each}
+                                        </tbody>
+                                    </table>
+                                </div>
+                                {#if table.caption}
+                                    <p class="chapter-table-caption">
+                                        {table.caption}
+                                    </p>
+                                {/if}
                             </div>
-                            {#if table.caption}
-                                <p class="chapter-table-caption">
-                                    {table.caption}
-                                </p>
-                            {/if}
-                        </div>
-                    {/each}
+                        {/each}
 
-                    {#if displayedChapter.additional_content}
-                        <div class="additional-content">
-                            {@html marked.parse(
-                                displayedChapter.additional_content,
-                            ) as string}
-                        </div>
+                        {#if displayedChapter.additional_content}
+                            <div class="additional-content">
+                                {@html marked.parse(
+                                    displayedChapter.additional_content,
+                                ) as string}
+                            </div>
+                        {/if}
+                    </div>
+
+                    {#if displayedChapter.sections.length > 0}
+                        <QvAccordion
+                            sections={displayedChapter.sections}
+                            chapterNumber={displayedChapter.number}
+                        />
                     {/if}
-                </div>
-
-                {#if displayedChapter.sections.length > 0}
-                    <QvAccordion
-                        sections={displayedChapter.sections}
-                        chapterNumber={displayedChapter.number}
-                    />
-                {/if}
-            </article>
+                </article>
             {/key}
         </section>
     {/if}
@@ -219,7 +216,7 @@
     }
 
     .description :global(strong) {
-        font-weight: 600;
+        font-weight: 700;
     }
 
     .chapter-table-wrap {
@@ -304,7 +301,7 @@
     }
 
     .additional-content :global(strong) {
-        font-weight: 600;
+        font-weight: 700;
     }
 
     @media (max-width: 1100px) {

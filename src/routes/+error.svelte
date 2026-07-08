@@ -1,6 +1,9 @@
 <script lang="ts">
     import { onMount } from "svelte";
-    import { pickRandomCompetenceColor } from "$lib/competence-colors";
+    import {
+        getCompetenceColors,
+        pickRandomCompetenceColor,
+    } from "$lib/competence-colors";
 
     let { status } = $props<{
         error: App.Error;
@@ -8,9 +11,67 @@
     }>();
 
     let cardColor = $state("#87E8F7");
+    let sparks = $state<
+        Array<{
+            id: number;
+            x: number;
+            y: number;
+            size: number;
+            color: string;
+            drift: number;
+            durationMs: number;
+        }>
+    >([]);
 
     onMount(() => {
         cardColor = pickRandomCompetenceColor();
+        const colors = getCompetenceColors();
+        let sparkId = 0;
+        let lastX = -1;
+        let lastY = -1;
+        let lastEmitAt = 0;
+        const MAX_SPARKS = 90;
+
+        const emitSparks = (x: number, y: number) => {
+            for (let i = 0; i < 3; i += 1) {
+                const durationMs = 650 + Math.floor(Math.random() * 500);
+                const spark = {
+                    id: sparkId++,
+                    x: x + (Math.random() - 0.5) * 18,
+                    y: y + (Math.random() - 0.5) * 12,
+                    size: 10 + Math.random() * 16,
+                    color:
+                        colors[Math.floor(Math.random() * colors.length)] ??
+                        "#87E8F7",
+                    drift: (Math.random() - 0.5) * 34,
+                    durationMs,
+                };
+                sparks = [...sparks.slice(-MAX_SPARKS), spark];
+                window.setTimeout(() => {
+                    sparks = sparks.filter((item) => item.id !== spark.id);
+                }, durationMs + 120);
+            }
+        };
+
+        const onMouseMove = (event: MouseEvent) => {
+            const now = performance.now();
+            const dx = event.clientX - lastX;
+            const dy = event.clientY - lastY;
+            const movedEnough = Math.hypot(dx, dy) > 10;
+            const cooledDown = now - lastEmitAt > 22;
+            if (!movedEnough || !cooledDown) return;
+            lastX = event.clientX;
+            lastY = event.clientY;
+            lastEmitAt = now;
+            emitSparks(event.clientX, event.clientY);
+        };
+
+        window.addEventListener("mousemove", onMouseMove, { passive: true });
+
+        return () => {
+            window.removeEventListener("mousemove", onMouseMove);
+            sparks = [];
+        };
     });
 </script>
 
@@ -19,6 +80,22 @@
 </svelte:head>
 
 <main class="error-page">
+    <div class="spark-layer" aria-hidden="true">
+        {#each sparks as spark (spark.id)}
+            <span
+                class="spark"
+                style={`
+                    --spark-x: ${spark.x}px;
+                    --spark-y: ${spark.y}px;
+                    --spark-size: ${spark.size}px;
+                    --spark-color: ${spark.color};
+                    --spark-drift: ${spark.drift}px;
+                    --spark-duration: ${spark.durationMs}ms;
+                `}
+            ></span>
+        {/each}
+    </div>
+
     <section class="error-content">
         <h1>Oje, diese Seite ist verschwunden!</h1>
         <p>
@@ -30,6 +107,27 @@
 </main>
 
 <style>
+    .spark-layer {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 3;
+        overflow: hidden;
+    }
+
+    .spark {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: var(--spark-size);
+        height: var(--spark-size);
+        border-radius: 9999px;
+        background: var(--spark-color);
+        transform: translate(var(--spark-x), var(--spark-y));
+        animation: spark-fall var(--spark-duration) ease-out forwards;
+        will-change: transform, opacity;
+    }
+
     .error-page {
         min-height: calc(100vh - calc(60 * var(--u)));
         display: grid;
@@ -95,5 +193,26 @@
 
     .home-button:active {
         filter: brightness(1.2);
+    }
+
+    @keyframes spark-fall {
+        0% {
+            opacity: 0.95;
+            transform: translate(var(--spark-x), var(--spark-y)) scale(1);
+        }
+        100% {
+            opacity: 0;
+            transform: translate(
+                    calc(var(--spark-x) + var(--spark-drift)),
+                    calc(var(--spark-y) + 58px)
+                )
+                scale(0.7);
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .spark-layer {
+            display: none;
+        }
     }
 </style>

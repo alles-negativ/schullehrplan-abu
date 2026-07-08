@@ -209,9 +209,7 @@
         }
     };
 
-    const addAspectPillsWithShake = (
-        aspect: (typeof aspectOrder)[number],
-    ) => {
+    const addAspectPillsWithShake = (aspect: (typeof aspectOrder)[number]) => {
         clearAspectDropTimeout();
         displayedAspect = aspect;
         isShaking = true;
@@ -317,10 +315,7 @@
          * Mobile design unit. Authored at 400px viewport width; scales linearly
          * below and above, capped at 700px.
          */
-        --mobile-scale: min(
-            calc(700 / 400),
-            calc(100vw / 400px)
-        );
+        --mobile-scale: min(calc(700 / 400), calc(100vw / 400px));
         --pill-max-width: calc(300px * var(--mobile-scale));
         --pill-h-padding: calc(48px * var(--mobile-scale));
         --pill-min-content: calc(120px * var(--mobile-scale));
@@ -363,7 +358,7 @@
         color: var(--color-black);
         font-size: calc(23px * var(--mobile-scale));
         line-height: 1.12;
-        font-weight: 300;
+        font-weight: 400;
         letter-spacing: var(--h2-letter-spacing);
         white-space: pre-line;
         text-align: center;
@@ -390,7 +385,8 @@
             transform: rotate(0deg) translateX(0);
         }
         10% {
-            transform: rotate(-1deg) translateX(calc(-4px * var(--mobile-scale)));
+            transform: rotate(-1deg)
+                translateX(calc(-4px * var(--mobile-scale)));
         }
         20% {
             transform: rotate(1deg) translateX(calc(4px * var(--mobile-scale)));
@@ -400,7 +396,8 @@
                 translateX(calc(-4px * var(--mobile-scale)));
         }
         40% {
-            transform: rotate(0.75deg) translateX(calc(4px * var(--mobile-scale)));
+            transform: rotate(0.75deg)
+                translateX(calc(4px * var(--mobile-scale)));
         }
     }
 
@@ -411,7 +408,8 @@
             transform: rotate(0deg) translateX(0);
         }
         10% {
-            transform: rotate(-1deg) translateX(calc(-4px * var(--mobile-scale)));
+            transform: rotate(-1deg)
+                translateX(calc(-4px * var(--mobile-scale)));
         }
         20% {
             transform: rotate(1deg) translateX(calc(4px * var(--mobile-scale)));
@@ -421,7 +419,8 @@
                 translateX(calc(-4px * var(--mobile-scale)));
         }
         40% {
-            transform: rotate(0.75deg) translateX(calc(4px * var(--mobile-scale)));
+            transform: rotate(0.75deg)
+                translateX(calc(4px * var(--mobile-scale)));
         }
     }
 

@@ -462,10 +462,7 @@
                 const minX = stagePadding + halfDiag;
                 const maxX = width - stagePadding - halfDiag;
                 const minY = stagePadding + halfDiag;
-                const maxY = Math.max(
-                    minY,
-                    height / 2 - halfDiag,
-                );
+                const maxY = Math.max(minY, height / 2 - halfDiag);
 
                 return {
                     x:
@@ -763,14 +760,18 @@
                     if (shakeSessionStartAt === null) {
                         shakeSessionStartAt = now;
                     } else if (
-                        now - shakeSessionStartAt >= shakeVanishDurationMs
+                        now - shakeSessionStartAt >=
+                        shakeVanishDurationMs
                     ) {
                         onShakeSustained?.();
                         shakeSessionStartAt = now;
                     }
                 }
 
-                if (intensity < SHAKE_INTENSITY_THRESHOLD || now - lastShakeAt < 70) {
+                if (
+                    intensity < SHAKE_INTENSITY_THRESHOLD ||
+                    now - lastShakeAt < 70
+                ) {
                     return;
                 }
 
@@ -981,7 +982,7 @@
         min-width: 0;
         font-size: calc(18px * var(--mobile-scale, 1));
         line-height: 1.25;
-        font-weight: 300;
+        font-weight: 400;
         letter-spacing: 0.01em;
         text-align: center;
         overflow-wrap: normal;

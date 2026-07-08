@@ -782,7 +782,7 @@
             padding-inline: calc(25 * var(--u));
             font-size: calc(32 * var(--u));
             line-height: 1;
-            font-weight: 300;
+            font-weight: 400;
             letter-spacing: 0.01em;
         }
     }

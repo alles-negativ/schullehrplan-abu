@@ -403,7 +403,7 @@
         color: var(--color-black);
         font-size: clamp(24px, 3.47vw, calc(50 * var(--u)));
         line-height: 1.12;
-        font-weight: 300;
+        font-weight: 400;
         letter-spacing: var(--h2-letter-spacing);
         cursor: pointer;
         transition:

@@ -96,7 +96,7 @@
         margin: 0;
         font-size: 1.125rem;
         line-height: 1.4;
-        font-weight: 300;
+        font-weight: 400;
         letter-spacing: 0.01em;
         text-wrap: balance;
     }
@@ -122,7 +122,7 @@
         font: inherit;
         font-size: 1rem;
         line-height: 1.25;
-        font-weight: 300;
+        font-weight: 400;
         letter-spacing: 0.01em;
         cursor: pointer;
         transition:

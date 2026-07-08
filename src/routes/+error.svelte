@@ -174,7 +174,7 @@
         text-decoration: none;
         font-size: calc(32 * var(--u));
         line-height: calc(40 * var(--u));
-        font-weight: 300;
+        font-weight: 400;
         letter-spacing: 0.01em;
         white-space: nowrap;
         text-align: center;

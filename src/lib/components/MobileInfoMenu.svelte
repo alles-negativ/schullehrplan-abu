@@ -475,7 +475,7 @@
         margin: 0;
         font-size: 1.125rem;
         line-height: 1.4;
-        font-weight: 300;
+        font-weight: 400;
         letter-spacing: 0.01em;
         text-wrap: pretty;
     }

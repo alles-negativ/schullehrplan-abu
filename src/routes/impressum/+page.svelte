@@ -14,29 +14,46 @@
             <div class="content-wrap">
                 <h1 class="topic-title">{data.impressum.title}</h1>
 
-                {#if data.impressum.content}
+                {#if data.impressum.content_before_image}
+                    <div class="impressum-content">
+                        {@html marked.parse(
+                            data.impressum.content_before_image,
+                        ) as string}
+                    </div>
+                {/if}
+
+                {#if data.impressum.image}
+                    <figure class="impressum-image-wrap">
+                        <img
+                            src={data.impressum.image}
+                            alt={data.impressum.image_alt ?? ""}
+                            class="impressum-image"
+                        />
+                        {#if data.impressum.image_caption}
+                            <figcaption class="impressum-image-text">
+                                {@html marked.parseInline(
+                                    data.impressum.image_caption,
+                                ) as string}
+                            </figcaption>
+                        {/if}
+                    </figure>
+                {/if}
+
+                {#if data.impressum.content_after_image}
+                    <div
+                        class="impressum-content impressum-content-after-image"
+                    >
+                        {@html marked.parse(
+                            data.impressum.content_after_image,
+                        ) as string}
+                    </div>
+                {:else if data.impressum.content}
                     <div class="impressum-content">
                         {@html marked.parse(data.impressum.content) as string}
                     </div>
                 {/if}
             </div>
         </article>
-        {#if data.impressum.image}
-            <figure class="impressum-image-wrap">
-                <img
-                    src={data.impressum.image}
-                    alt={data.impressum.image_alt ?? ""}
-                    class="impressum-image"
-                />
-                {#if data.impressum.image_caption}
-                    <figcaption class="impressum-image-text">
-                        {@html marked.parseInline(
-                            data.impressum.image_caption,
-                        ) as string}
-                    </figcaption>
-                {/if}
-            </figure>
-        {/if}
     </section>
 </div>
 
@@ -61,13 +78,13 @@
 
     .impressum-image-wrap {
         margin: 0;
-        padding: 0 calc(33 * var(--u));
+        /* padding: 0 calc(33 * var(--u)); */
     }
 
     .impressum-image {
         display: block;
         width: 100%;
-        margin-top: calc(120 * var(--u));
+        margin-top: calc(40 * var(--u));
     }
 
     .impressum-image-text {
@@ -93,6 +110,10 @@
 
     .impressum-content {
         margin-top: calc(80 * var(--u));
+    }
+
+    .impressum-content-after-image {
+        margin-top: calc(50 * var(--u));
     }
 
     .impressum-content :global(h2) {

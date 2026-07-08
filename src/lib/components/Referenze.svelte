@@ -30,7 +30,7 @@
 
 {#if references.length > 0}
     <section class="referenze">
-        <h4 class="section-label">Lebensbezüge und Kompetenzen</h4>
+        <h4 class="section-label">Individuelle Lebensbezüge und Kompetenzen</h4>
         {#each references as ref, index}
             <div
                 class="reference-item"

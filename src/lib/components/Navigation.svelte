@@ -290,7 +290,11 @@
     const applyNavScroll = () => {
         if (!browser) return;
 
-        const scrollY = window.scrollY;
+        // Safari can temporarily report negative `scrollY` during the elastic
+        // overscroll/bounce at the top. Clamp to prevent the fixed nav from
+        // translating in response and "bouncing" visually.
+        const rawScrollY = window.scrollY;
+        const scrollY = Math.max(0, rawScrollY);
         const delta = scrollY - lastScrollY;
         lastScrollY = scrollY;
 
@@ -348,7 +352,7 @@
         // effect re-run on every scroll (re-measuring mid-animation and
         // corrupting the hide offset).
         untrack(() => {
-            lastScrollY = window.scrollY;
+            lastScrollY = Math.max(0, window.scrollY);
             measureNav();
             applyNavScroll();
         });

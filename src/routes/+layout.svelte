@@ -97,6 +97,13 @@
     />
     <link
         rel="preload"
+        href="/fonts/inter-700.ttf"
+        as="font"
+        type="font/ttf"
+        crossorigin="anonymous"
+    />
+    <link
+        rel="preload"
         href="/fonts/intel-one-mono-300.ttf"
         as="font"
         type="font/ttf"

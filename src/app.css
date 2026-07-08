@@ -31,6 +31,14 @@
 }
 
 @font-face {
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 700;
+    font-display: swap;
+    src: url("/fonts/inter-700.ttf") format("truetype");
+}
+
+@font-face {
     font-family: "Intel One Mono";
     font-style: normal;
     font-weight: 300;

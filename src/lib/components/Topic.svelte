@@ -111,9 +111,7 @@
                             easing: (t) => t * (2 - t),
                         }}
                     >
-                        <h4 class="additional-description-title">
-                            Detaillierte Erweiterung
-                        </h4>
+                        <h4 class="section-label">Detaillierte Erweiterung</h4>
                         {@html marked.parse(
                             getAdditionalTopicDescription(topic) ?? "",
                         ) as string}

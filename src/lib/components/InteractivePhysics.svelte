@@ -340,11 +340,15 @@
 
                 evicting = true;
                 evictingGravityFlipped = false;
-                evictingGravityFlipAt = performance.now() + EVICT_GRAVITY_DELAY_MS;
+                evictingGravityFlipAt =
+                    performance.now() + EVICT_GRAVITY_DELAY_MS;
 
                 if (mouseConstraint?.body) {
-                    (mouseConstraint as { body: import("matter-js").Body | null }).body =
-                        null;
+                    (
+                        mouseConstraint as {
+                            body: import("matter-js").Body | null;
+                        }
+                    ).body = null;
                     dragging = false;
                 }
 
@@ -699,7 +703,7 @@
         width: 100vw;
         height: 100vh;
         pointer-events: none;
-        top: calc(-85 * var(--u));
+        top: calc(-95 * var(--u));
         left: calc(-30 * var(--u));
     }
 
@@ -743,7 +747,9 @@
         flex: 0 0 auto;
         width: var(--pill-inner-w, auto);
         min-width: 0;
-        max-width: calc(var(--pill-max-width, 550px) - var(--pill-h-padding, 76px));
+        max-width: calc(
+            var(--pill-max-width, 550px) - var(--pill-h-padding, 76px)
+        );
     }
 
     .pill-title {

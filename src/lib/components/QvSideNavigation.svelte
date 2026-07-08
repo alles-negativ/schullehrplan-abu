@@ -5,6 +5,7 @@
     import arrowIcon from "$lib/assets/arrow.svg";
     import pdfIcon from "$lib/assets/pdf-icon.svg";
     import type { QvChapter } from "$lib/data/qv";
+import { getLayoutScale } from "$lib/layout-scale";
 
     const DROPDOWN_MEDIA = "(max-width: 1100px)";
     const DROPDOWN_FADE_MS = 280;
@@ -51,16 +52,7 @@
 
     const SCROLL_DIRECTION_THRESHOLD = 2;
 
-    const getUnit = () => {
-        if (!browser) return 1;
-        const raw = getComputedStyle(document.documentElement)
-            .getPropertyValue("--u")
-            .trim();
-        const parsed = Number.parseFloat(raw);
-        return Number.isFinite(parsed) && parsed > 0 ? parsed : 1;
-    };
-
-    const getPinTopPx = () => 100 * getUnit();
+    const getPinTopPx = () => 150 * getLayoutScale();
 
     const clearStickySlide = () => {
         if (slideTimeout) clearTimeout(slideTimeout);

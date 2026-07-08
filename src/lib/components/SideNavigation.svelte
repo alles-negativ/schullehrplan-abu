@@ -4,6 +4,7 @@
     import { fade, slide } from "svelte/transition";
     import arrowIcon from "$lib/assets/arrow.svg";
     import pdfIcon from "$lib/assets/pdf-icon.svg";
+import { getLayoutScale } from "$lib/layout-scale";
     import {
         getModeYears,
         getTopicLessons,
@@ -58,16 +59,7 @@
 
     const SCROLL_DIRECTION_THRESHOLD = 2;
 
-    const getUnit = () => {
-        if (!browser) return 1;
-        const raw = getComputedStyle(document.documentElement)
-            .getPropertyValue("--u")
-            .trim();
-        const parsed = Number.parseFloat(raw);
-        return Number.isFinite(parsed) && parsed > 0 ? parsed : 1;
-    };
-
-    const getStickyTopPx = () => 100 * getUnit();
+    const getStickyTopPx = () => 200 * getLayoutScale();
 
     const clearStickySlide = () => {
         if (slideTimeout) clearTimeout(slideTimeout);

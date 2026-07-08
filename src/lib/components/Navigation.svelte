@@ -3,10 +3,12 @@
     import { page } from "$app/state";
     import closeIcon from "$lib/assets/close-icon.svg";
     import { getAllEducationModes } from "$lib/data/education-modes";
-    import { tick } from "svelte";
+    import { tick, untrack } from "svelte";
     import { fade } from "svelte/transition";
 
     const SUBMENU_MOTION_MS = 220;
+    const NAV_HIDE_MS = 220;
+    const SCROLL_DIRECTION_THRESHOLD = 2;
     const CONTRACTED_MEDIA = "(max-width: 1399px)";
 
     const educationModes = getAllEducationModes();
@@ -38,6 +40,14 @@
     let navToggleElement = $state<HTMLButtonElement | null>(null);
     let modeListWrapElement = $state<HTMLDivElement | null>(null);
     let reducedMotion = $state(false);
+    let navElement = $state<HTMLElement | null>(null);
+    let navSpacerHeight = $state<number | null>(null);
+    let navHideOffset = 0;
+    let navTranslateY = $state(0);
+    let navAnimating = $state(false);
+    let navMode: "attached" | "floating" = "attached";
+    let navHidden = $state(false);
+    let lastScrollY = 0;
 
     const showContractedSubmenu = $derived(
         isContractedViewport && activeModeIndex >= 0,
@@ -210,11 +220,7 @@
     });
 
     $effect(() => {
-        if (
-            !browser ||
-            !isContractedViewport ||
-            !navMenuExpanded
-        ) {
+        if (!browser || !isContractedViewport || !navMenuExpanded) {
             return;
         }
 
@@ -257,12 +263,128 @@
         });
     });
 
+    // Measures two things while the nav sits at its natural (translateY: 0)
+    // resting spot: the spacer height that keeps page content below the fixed
+    // nav, and the full reach to the bottom of the submenu, which is the
+    // distance we translate upward to hide the nav completely.
+    const measureNav = () => {
+        if (!navElement) return;
+
+        navSpacerHeight = navElement.offsetHeight;
+
+        const navRect = navElement.getBoundingClientRect();
+        let bottom = navRect.bottom;
+
+        if (submenuTrackElement && submenuMounted) {
+            bottom = Math.max(
+                bottom,
+                submenuTrackElement.getBoundingClientRect().bottom,
+            );
+        }
+
+        // getBoundingClientRect already includes the current transform, so we
+        // subtract it to recover the untranslated reach from the viewport top.
+        navHideOffset = bottom - navTranslateY;
+    };
+
+    const applyNavScroll = () => {
+        if (!browser) return;
+
+        const scrollY = window.scrollY;
+        const delta = scrollY - lastScrollY;
+        lastScrollY = scrollY;
+
+        if (navMenuExpanded) {
+            navMode = "attached";
+            navAnimating = false;
+            navHidden = false;
+            navTranslateY = 0;
+            return;
+        }
+
+        if (navMode === "attached") {
+            // At/near the top the nav rides along with the page (no animation),
+            // exactly mirroring where it would sit in normal document flow.
+            navAnimating = false;
+            navHidden = false;
+
+            if (navHideOffset > 0 && scrollY >= navHideOffset) {
+                // Fully scrolled out of view: hand off to floating mode at the
+                // identical offset, so the switch is visually seamless.
+                navMode = "floating";
+                navHidden = true;
+                navTranslateY = -navHideOffset;
+            } else {
+                navTranslateY = -scrollY;
+            }
+            return;
+        }
+
+        // Floating mode: animate in on scroll up, out on scroll down.
+        if (scrollY <= 0) {
+            navMode = "attached";
+            navAnimating = false;
+            navHidden = false;
+            navTranslateY = 0;
+            return;
+        }
+
+        if (delta > SCROLL_DIRECTION_THRESHOLD && !navHidden) {
+            navHidden = true;
+            navAnimating = true;
+            navTranslateY = -navHideOffset;
+        } else if (delta < -SCROLL_DIRECTION_THRESHOLD && navHidden) {
+            navHidden = false;
+            navAnimating = true;
+            navTranslateY = 0;
+        }
+    };
+
+    $effect(() => {
+        if (!browser) return;
+
+        // Set up the scroll listener exactly once. The initial measure/apply
+        // must be untracked, otherwise reading nav state here would make this
+        // effect re-run on every scroll (re-measuring mid-animation and
+        // corrupting the hide offset).
+        untrack(() => {
+            lastScrollY = window.scrollY;
+            measureNav();
+            applyNavScroll();
+        });
+
+        const onScroll = () => applyNavScroll();
+
+        window.addEventListener("scroll", onScroll, { passive: true });
+        return () => {
+            window.removeEventListener("scroll", onScroll);
+        };
+    });
+
+    $effect(() => {
+        if (!browser) return;
+
+        submenuMounted;
+        submenuVisible;
+        navMenuExpanded;
+        showContractedSubmenu;
+        isContractedViewport;
+        activeModeIndex;
+
+        requestAnimationFrame(() => {
+            measureNav();
+            applyNavScroll();
+        });
+    });
+
     $effect(() => {
         if (typeof window === "undefined") return;
         const onResize = () => {
             applyViewport(window.matchMedia(CONTRACTED_MEDIA).matches);
             updateSubmenuPosition();
             updateModeButtonWidthVar();
+            measureNav();
+            applyNavScroll();
         };
         window.addEventListener("resize", onResize);
         return () => {
@@ -346,132 +468,170 @@
     </li>
 {/snippet}
 
-<nav class="main-nav" aria-label="Ausbildungsmodi">
-    <div class="nav-top">
-        <a
-            class="mode-button nav-home"
-            href="/"
-            onclick={(e) => {
-                if (page.url.pathname === "/") {
-                    e.preventDefault();
-                    location.reload();
-                }
-                collapseNavMenu();
-            }}
-        >Schullehrplan ABU</a
-        >
-        <div
-            class="mode-list-wrap"
-            class:is-contracted={isContractedViewport}
-            class:is-expanded={navMenuExpanded}
-            bind:this={modeListWrapElement}
-        >
-            {#if showContractedSubmenu}
-                <ul
-                    class="mode-list-sub mode-list-sub--contracted"
-                    in:fade={{
-                        duration: reducedMotion ? 0 : SUBMENU_MOTION_MS,
-                    }}
-                >
-                    {@render submenuLinks()}
-                </ul>
-            {/if}
-
-            <div class="nav-dropdown-anchor">
-                {#if isContractedViewport}
-                    <button
-                        type="button"
-                        class="nav-toggle"
-                        class:is-active={navMenuExpanded}
-                        bind:this={navToggleElement}
-                        aria-expanded={navMenuExpanded}
-                        aria-controls="nav-mode-list"
-                        aria-label={navMenuExpanded
-                            ? "Navigation schliessen"
-                            : "Navigation öffnen"}
-                        onclick={toggleNavMenu}
+<div
+    class="nav-anchor"
+    style:height={navSpacerHeight != null ? `${navSpacerHeight}px` : undefined}
+>
+    <nav
+        class="main-nav"
+        class:is-animating={navAnimating}
+        class:is-hidden={navHidden}
+        bind:this={navElement}
+        style={`--nav-hide-ms: ${reducedMotion ? 0 : NAV_HIDE_MS}ms; transform: translateY(${navTranslateY}px);`}
+        aria-label="Ausbildungsmodi"
+        aria-hidden={navHidden ? true : undefined}
+    >
+        <div class="nav-top">
+            <a
+                class="mode-button nav-home"
+                href="/"
+                onclick={(e) => {
+                    if (page.url.pathname === "/") {
+                        e.preventDefault();
+                        location.reload();
+                    }
+                    collapseNavMenu();
+                }}>Schullehrplan ABU</a
+            >
+            <div
+                class="mode-list-wrap"
+                class:is-contracted={isContractedViewport}
+                class:is-expanded={navMenuExpanded}
+                bind:this={modeListWrapElement}
+            >
+                {#if showContractedSubmenu}
+                    <ul
+                        class="mode-list-sub mode-list-sub--contracted"
+                        in:fade={{
+                            duration: reducedMotion ? 0 : SUBMENU_MOTION_MS,
+                        }}
                     >
-                        <img
-                            src={closeIcon}
-                            alt=""
-                            class="nav-toggle-icon"
-                            class:is-plus={!navMenuExpanded}
-                        />
-                    </button>
+                        {@render submenuLinks()}
+                    </ul>
                 {/if}
 
-                <div
-                    class="mode-menu"
-                    class:is-open={navMenuExpanded}
-                    class:no-transition={suppressMenuTransition}
-                    inert={isContractedViewport && !navMenuExpanded}
-                >
-                    <ul
-                        id="nav-mode-list"
-                        class="mode-list"
-                        bind:this={modeListElement}
+                <div class="nav-dropdown-anchor">
+                    {#if isContractedViewport}
+                        <button
+                            type="button"
+                            class="nav-toggle"
+                            class:is-active={navMenuExpanded}
+                            bind:this={navToggleElement}
+                            aria-expanded={navMenuExpanded}
+                            aria-controls="nav-mode-list"
+                            aria-label={navMenuExpanded
+                                ? "Navigation schliessen"
+                                : "Navigation öffnen"}
+                            onclick={toggleNavMenu}
+                        >
+                            <img
+                                src={closeIcon}
+                                alt=""
+                                class="nav-toggle-icon"
+                                class:is-plus={!navMenuExpanded}
+                            />
+                        </button>
+                    {/if}
+
+                    <div
+                        class="mode-menu"
+                        class:is-open={navMenuExpanded}
+                        class:no-transition={suppressMenuTransition}
+                        inert={isContractedViewport && !navMenuExpanded}
                     >
-                        {#each educationModes as mode, index}
-                            <li>
+                        <ul
+                            id="nav-mode-list"
+                            class="mode-list"
+                            bind:this={modeListElement}
+                        >
+                            {#each educationModes as mode, index}
+                                <li>
+                                    <a
+                                        class="mode-button"
+                                        class:is-current={activeModeIndex ===
+                                            index}
+                                        href={getModeHref(mode.slug)}
+                                        aria-current={page.url.pathname ===
+                                        getModePath(mode.slug)
+                                            ? "page"
+                                            : undefined}
+                                        bind:this={modeButtonRefs[index]}
+                                        onclick={isContractedViewport
+                                            ? collapseNavMenu
+                                            : undefined}
+                                    >
+                                        {mode.title}
+                                    </a>
+                                </li>
+                            {/each}
+                            <li class="mode-qv-item">
                                 <a
-                                    class="mode-button"
-                                    class:is-current={activeModeIndex === index}
-                                    href={getModeHref(mode.slug)}
-                                    aria-current={page.url.pathname ===
-                                    getModePath(mode.slug)
+                                    class="mode-button mode-button--qv"
+                                    class:is-current={isQvRoute}
+                                    href={qvPath}
+                                    aria-current={isQvRoute
                                         ? "page"
                                         : undefined}
-                                    bind:this={modeButtonRefs[index]}
                                     onclick={isContractedViewport
                                         ? collapseNavMenu
                                         : undefined}
                                 >
-                                    {mode.title}
+                                    QV
                                 </a>
                             </li>
-                        {/each}
-                        <li class="mode-qv-item">
-                            <a
-                                class="mode-button mode-button--qv"
-                                class:is-current={isQvRoute}
-                                href={qvPath}
-                                aria-current={isQvRoute ? "page" : undefined}
-                                onclick={isContractedViewport
-                                    ? collapseNavMenu
-                                    : undefined}
-                            >
-                                QV
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-
-            {#if !isContractedViewport && submenuMounted}
-                <div
-                    class="mode-submenu-track"
-                    class:no-slide={suppressSlideTransition}
-                    bind:this={submenuTrackElement}
-                    style={`transform: translateX(${submenuLeft}px);`}
-                >
-                    <div
-                        class="mode-submenu-panel"
-                        class:is-visible={submenuVisible}
-                    >
-                        <ul class="mode-list-sub">
-                            {@render submenuLinks()}
                         </ul>
                     </div>
                 </div>
-            {/if}
+
+                {#if !isContractedViewport && submenuMounted}
+                    <div
+                        class="mode-submenu-track"
+                        class:no-slide={suppressSlideTransition}
+                        bind:this={submenuTrackElement}
+                        style={`transform: translateX(${submenuLeft}px);`}
+                    >
+                        <div
+                            class="mode-submenu-panel"
+                            class:is-visible={submenuVisible}
+                        >
+                            <ul class="mode-list-sub">
+                                {@render submenuLinks()}
+                            </ul>
+                        </div>
+                    </div>
+                {/if}
+            </div>
         </div>
-    </div>
-</nav>
+    </nav>
+</div>
 
 <style>
-    .main-nav {
+    :root {
+        --z-main-navigation: 2147483647;
+    }
+
+    .nav-anchor {
         position: relative;
-        z-index: 4;
+        z-index: var(--z-main-navigation);
+    }
+
+    .main-nav {
+        position: fixed;
+        top: calc(30 * var(--u));
+        left: calc(30 * var(--u));
+        right: calc(30 * var(--u));
+        z-index: var(--z-main-navigation);
+        padding-bottom: calc(10 * var(--u));
+        background: none;
+        will-change: transform;
+    }
+
+    .main-nav.is-animating {
+        transition: transform var(--nav-hide-ms, 220ms) ease-in-out;
+    }
+
+    .main-nav.is-hidden {
+        pointer-events: none;
     }
 
     .nav-top {
@@ -805,6 +965,10 @@
     }
 
     @media (prefers-reduced-motion: reduce) {
+        .main-nav {
+            --nav-hide-ms: 0ms;
+        }
+
         .mode-submenu-track,
         .mode-submenu-panel,
         .mode-menu,

@@ -6,8 +6,8 @@
     import type { Competence } from "$lib/data/education-modes";
 
     const FADE_MS = 280;
-    const SLIDE_MS = 400;
-    const SLIDE_DELAY_MS = 100;
+    const SLIDE_MS = 250;
+    const SLIDE_DELAY_MS = 50;
 
     let {
         competence = $bindable<Competence | null>(null),

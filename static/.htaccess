@@ -1,0 +1,15 @@
+# Serve the prerendered SvelteKit pages from a plain Apache static host.
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # Map extensionless URLs to their prerendered .html file
+    # e.g. /impressum -> /impressum.html, /modes/2-jahre-eba -> /modes/2-jahre-eba.html
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_FILENAME}.html -f
+    RewriteRule ^(.+?)/?$ $1.html [L]
+</IfModule>
+
+# Show the custom SvelteKit error page for unknown URLs
+ErrorDocument 404 /404.html
